@@ -190,8 +190,7 @@ while true do
 	-- Display kill tracker
 	i = 0
 	for char,kcount in pairs(kills) do
-		console.write(char .. " " .. kcount)
-		gui.text(20, 240 + i * 10, "slot " .. bizstring.hex(char)
+		gui.text(20, 240 + i * 10, "slot " .. char
 					   .. " kills: " .. kcount)
 		i = i + 1
     	end
