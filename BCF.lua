@@ -1,0 +1,198 @@
+frame_counter = 0;
+kills = {}
+in_battle = memory.read_u8(0x3A76) > 0 and memory.read_u8(0x3A77) > 0 and
+            memory.read_u8(0x3A76) <= 4 and memory.read_u8(0x3A77) <= 6
+enemies_alive = 0
+
+--comm.httpTest()
+--comm.httpGetPostUrl()
+--comm.httpSetPostUrl()
+--comm.httpPost(ip_addr, "test")
+
+-- character slot order
+_CHARS = {
+	"TERRA",
+	"LOCKE",
+	"CYAN",
+	"SHADOW",
+	"EDGAR",
+	"SABIN",
+	"CELES",
+	"STRAGO",
+	"RELM",
+	"SETZER",
+	"MOG",
+	"GAU",
+	"GOGO",
+	"UMARO",
+	"EXTRA1",
+	"EXTRA2"
+}
+
+
+
+while true do
+
+	prev_state = in_battle
+	in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
+        	    memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
+	if prev_state ~= in_battle and in_battle then
+		enemies_alive = memory.read_u8(0x3A77)
+	end
+
+	-- also check $1F64 (map index)
+	map_id = memory.read_u16_le(0x1F64)
+	area_id = memory.read_u8(0x0520)
+	miab_id = memory.read_u8(0x0789)
+
+	-- buffered values
+	char1_hp = memory.read_u16_le(0x2E78);
+	char2_hp = memory.read_u16_le(0x2E7A);
+	char3_hp = memory.read_u16_le(0x2E7C);
+	char4_hp = memory.read_u16_le(0x2E7E);
+
+	--[[
+        -- this works but only changes the graphics
+	if (char2_hp ~= 0xFF) and (char2_hp > 0) then
+		memory.write_u16_le(0x2E7A, memory.read_u16_le(0x2E82))
+	end
+	--]]
+
+	char1_status_1 = memory.read_u16_le(0x2E98);
+	char2_status_1 = memory.read_u16_le(0x2E9A);
+	char3_status_1 = memory.read_u16_le(0x2E9C);
+	char4_status_1 = memory.read_u16_le(0x2E9E);
+
+	-- need to learn offsets relative to ASCII
+	offset_lower = 169 - 112
+	name_1 = string.char(math.max(memory.read_u8(0x2EAF) - offset_lower, 0))
+	name_2 = string.char(math.max(memory.read_u8(0x2EB0) - offset_lower, 0))
+	name_3 = string.char(math.max(memory.read_u8(0x2EB1) - offset_lower, 0))
+	name_4 = string.char(math.max(memory.read_u8(0x2EB2) - offset_lower, 0))
+	name_5 = string.char(math.max(memory.read_u8(0x2EB3) - offset_lower, 0))
+	name_6 = string.char(math.max(memory.read_u8(0x2EB4) - offset_lower, 0))
+
+	atk_name_1 = string.char(math.max(memory.read_u8(0x57D5) - offset_lower, 0))
+	atk_name_2 = string.char(math.max(memory.read_u8(0x57D6) - offset_lower, 0))
+	atk_name_3 = string.char(math.max(memory.read_u8(0x57D7) - offset_lower, 0))
+	atk_name_4 = string.char(math.max(memory.read_u8(0x57D8) - offset_lower, 0))
+	atk_name_5 = string.char(math.max(memory.read_u8(0x57D9) - offset_lower, 0))
+	atk_name_6 = string.char(math.max(memory.read_u8(0x57E0) - offset_lower, 0))
+
+	-- next two work
+	nchar_alive = memory.read_u8(0x3A76)
+	nenem_alive = memory.read_u8(0x3A77)
+
+	-- appears to work, but only for party, not enemies
+	alive_mask = memory.read_u8(0x3A74)
+
+	emu.frameadvance();
+
+	gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | area id " .. area_id .. " | miab id " .. miab_id .. " | map id " .. map_id .. " | commmand name " .. atk_name_1 .. atk_name_2 .. atk_name_3 .. atk_name_4 .. atk_name_5 .. atk_name_6)
+	gui.text(20, 20, "alive mask: " .. bizstring.binary((0xF + 1) + alive_mask) .. " total enemies " .. enemies_alive)
+	gui.text(20, 30, "chars alive: " .. nchar_alive)
+	gui.text(20, 40, "monsters alive: " .. nenem_alive)
+
+	-- $EBFF-$EC06 monster names (4 items, 2 bytes each)
+	-- must be pointers
+	e1_name = string.char(math.max(memory.read_u8(0xEBFF) - offset_lower, 0)) .. 
+		  string.char(math.max(memory.read_u8(0xEC00) - offset_lower, 0))
+
+    	-- $EC07-$EC0E number of monsters alive for each name (4 items, 2 bytes each)
+	e1_count = memory.read_u8(0xEC07)
+	--gui.text(20, 70, "enemy slot 1: " .. e1_name .. " (" .. e1_count  .. ")")
+
+	-- map slot to actor
+	chars = {[0xFF] = "ERROR"}
+	for i,char in ipairs(_CHARS) do
+		cslot = memory.read_u8(0x3000 + i - 1)
+		if cslot <= 0xF then
+			if cslot == 0 then
+				cslot = 1
+			end
+			chars[cslot] = char
+			--gui.text(20, 360 + i * 10, i .. " " .. " " .. char .. " " .. cslot .. " " ..chars[cslot])
+		else
+			chars[cslot] = "ERROR"
+		end
+	end
+
+	-- Crowd control potential
+	--[[
+	s = 5
+	d = 6
+	for j=0,3 do
+		memory.write_u8(0x1602 + 0x25 * d + j, memory.read_u8(0x1602 + 0x25 * s + j))
+	end
+	j = 4
+	-- increment character in certain position
+	memory.write_u8(0x1602 + 0x25 * d + j, memory.read_u8(0x1602 + 0x25 * s + j) + 1)
+
+	-- write char names to screen
+	for i,char in ipairs(_CHARS) do
+		cname = ""
+		for j=0,5 do
+			cname = cname .. string.char(math.max(memory.read_u8(0x1602 + 0x25 * (i - 1) + j) - offset_lower, 0))
+		end
+		
+		gui.text(20, 360 + i * 10, i .. " " .. cname)
+	end
+	--]]
+
+	-- targetting 0x3290 - 0x3297 slots 1-4 (indicates "masks")
+	for i=0,3 do
+		c_last_targetted = memory.read_u8(0x3290 + i)
+		curr_hp = memory.read_u16_le(0x3BF4 + 2 * i)
+		slot_mask = memory.read_u16_le(0x3018 + 2 * i)
+		char_status_1 = memory.read_u16_le(0x2E98 + 2 * i)
+
+		if chars[slot_mask] ~= nil then
+			char = chars[slot_mask]
+		else
+			char = "EMPTY"
+		end
+		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
+
+		gui.text(20, 60 + i * 10, char .. " (slot " .. slot_mask .. " |" .. curr_hp .. ") targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: " .. bizstring.binary(char_status_1))
+	end
+
+	-- 0x3298 monster slots 1-6? (indicates "masks")
+	for i=0,5 do
+		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
+		curr_hp = memory.read_u16_le(0x3BF4 + 8 + 2 * i)
+		_slot_mask = memory.read_u16_le(0x3020 + 2 * i)
+		slot_mask = bizstring.hex(memory.read_u16_le(0x3020 + 2 * i))
+		status = ""
+
+		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255 and
+		   curr_hp == 0 and nenem_alive < enemies_alive then
+			status = "killed by " .. c_last_targetted
+			if c_last_targetted ~= nil then
+				c_last_targetted = chars[c_last_targetted]
+			end
+			if kills[c_last_targetted] == nil then
+				kills[c_last_targetted] = 1
+			else	
+				kills[c_last_targetted] = kills[c_last_targetted] + 1
+			end
+			enemies_alive = enemies_alive - 1
+		else
+			status = bizstring.hex(c_last_targetted)
+		end
+
+		gui.text(20, 120 + i * 10, "slot " .. slot_mask .. " (" .. curr_hp .. ") targetted by: " .. status)
+	end
+
+	i = 0
+	--print(#kills)
+	for char,kcount in pairs(kills) do
+		--print(char)
+		gui.text(20, 240 + i * 10, "slot " .. bizstring.hex(char) .. " kills: " .. kcount)
+		i = i + 1
+    	end
+
+	--atb_count = memory.read_s16_le(0x3218)
+	--gui.text(20, 240, "ATB: " .. bizstring.hex(atb_count))
+	
+	frame_counter = frame_counter + 1;
+end
