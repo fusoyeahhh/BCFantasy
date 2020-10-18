@@ -163,6 +163,9 @@ while true do
 		   curr_hp == 0 and nenem_alive < enemies_alive then
 			status = "killed by " .. c_last_targetted
 			-- Attribute kill to the last character that targetted this
+			if c_last_targetted == 1 then
+				c_last_targetted = 0
+			else
 			if c_last_targetted ~= nil then
 				c_last_targetted = chars[c_last_targetted]
 			end
@@ -187,6 +190,7 @@ while true do
 	-- Display kill tracker
 	i = 0
 	for char,kcount in pairs(kills) do
+		console.write(bizstring.hex(char) .. " " .. kcount)
 		gui.text(20, 240 + i * 10, "slot " .. bizstring.hex(char)
 					   .. " kills: " .. kcount)
 		i = i + 1
