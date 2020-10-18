@@ -27,6 +27,7 @@ _CHARS = {
 	"EXTRA2"
 }
 
+offset_lower = 169 - 112
 
 -- Main loop
 while true do
@@ -44,7 +45,6 @@ while true do
 
 	-- need to learn offsets relative to ASCII
 	--[[
-	offset_lower = 169 - 112
 	name_1 = string.char(math.max(memory.read_u8(0x2EAF) - offset_lower, 0))
 	name_2 = string.char(math.max(memory.read_u8(0x2EB0) - offset_lower, 0))
 	name_3 = string.char(math.max(memory.read_u8(0x2EB1) - offset_lower, 0))
