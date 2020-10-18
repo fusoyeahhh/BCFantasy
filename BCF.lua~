@@ -1,4 +1,3 @@
-frame_counter = 0;
 kills = {}
 -- in_battle requires the number of enemies and characters alive to be greater
 -- than zero, and less than their allowed slot numbers (6 and 4 respectively).
@@ -28,6 +27,14 @@ _CHARS = {
 }
 
 offset_lower = 169 - 112
+
+-- At some point it would be nice to get this working
+--ip = comm.socketServerGetIp()
+--port = comm.socketServerGetPort()
+ip = nil
+port = nil
+
+logfile = io.open("logfile.txt", "a+")
 
 -- Main loop
 while true do
@@ -184,6 +191,18 @@ while true do
 					   .. " kills: " .. kcount)
 		i = i + 1
     	end
+
+	if ip ~= nil and port ~= nil then
+		gui.text(20, 360, "socket address: " .. ip .. ":" .. port)
+	end
+
+	frame_counter = emu.framecount()
+	out_json = "{\n"
+	out_json = out_json .. "  'frame': " .. frame_counter
+	out_json = out_json .. "  'miab_id': " .. miab_id
+	out_json = out_json .. "  'area_id': " .. area_id
+	out_json = out_json .. "  'map_id': " .. map_id
+	out_json = out_json .. "\n}" 
+	logfile:write(out_json .. "\n")
 	
-	frame_counter = frame_counter + 1;
 end
