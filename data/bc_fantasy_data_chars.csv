@@ -1,0 +1,15 @@
+Character,Kills Enemy,Kills Boss,Buff,Debuff,Cost
+Terra,1,5,1,-1,100
+Locke,1,2,1,-1,200
+Edgar,1,3,1,-1,200
+Sabin,1,3,1,-1,200
+Shadow,2,10,1,-1,50
+Cyan,1,3,1,-1,250
+Gau,1,3,1,-1,250
+Celes,1,4,1,-1,250
+Setzer,2,5,2,-2,200
+Strago,3,7,2,-2,300
+Relm,3,7,2,-2,300
+Mog,3,10,3,-3,200
+Umaro,5,20,3,-3,200
+Gogo,2,10,3,-3,500
