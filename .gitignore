@@ -1,5 +1,7 @@
-
+*~
 *.swp
 *.un~
 *.lua~
 logfile.txt
+venv
+.idea
