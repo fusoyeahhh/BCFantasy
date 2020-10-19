@@ -202,13 +202,13 @@ while true do
 	frame_counter = emu.framecount()
 	out_json = "{"
 	-- General information
-	out_json = out_json .. "'frame': " .. frame_counter .. ","
-	out_json = out_json .. "'miab_id': " .. miab_id .. ","
-	out_json = out_json .. "'area_id': " .. area_id .. ","
-	out_json = out_json .. "'map_id': " .. map_id .. ","
+	out_json = out_json .. "\"frame\": " .. frame_counter .. ","
+	out_json = out_json .. "\"miab_id\": " .. miab_id .. ","
+	out_json = out_json .. "\"area_id\": " .. area_id .. ","
+	out_json = out_json .. "\"map_id\": " .. map_id .. ","
 
 	-- Kill information
-	out_json = out_json .. "  'kills': {" .. ""
+	out_json = out_json .. "  \"kills\": {" .. ""
 	i = 0
 	for char,kcount in pairs(kills) do
 		app =  ", "
