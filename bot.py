@@ -12,6 +12,7 @@ with open("config.json") as fin:
     opts = json.load(fin)
 
 bot = commands.Bot(**opts)
+bot._last_status = {}
 
 _ROOT = {"fusoyeahhh"}
 # add additional admin names here
@@ -158,15 +159,26 @@ async def event_message(ctx):
             await bot.handle_commands(ctx)
 
     # Trigger a check of the local buffer
+    buff = []
     try:
         buff = read.read_local_queue()
     except AttributeError:
-        buff = []
+        pass
+
+    # Read in emulator log
+    try:
+        cmds, last = read.parse_log_file(last_status=bot._last_status)
+        bot._last_status = last
+        buff += cmds
+    except Exception as e:
+        print(e)
+        print("Couldn't read logfile")
 
     for line in filter(lambda l: l, buff):
         # Co-op ctx
         ctx.content = line
 
+        command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
             # HACKZORS
             #ctx.author.name = 'fusoyeahhh'
@@ -176,12 +188,6 @@ async def event_message(ctx):
             HISTORY[current_time] = ctx.content
             await bot.handle_commands(ctx)
             _AUTHORIZED.discard(ctx.author.name)
-
-    try:
-        from_emu = read.parse_log_file()
-    except Exception as e:
-        print(e)
-        print("Couldn't read logfile")
 
     print(ctx.content)
 
@@ -390,7 +396,7 @@ async def nextarea(ctx):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
-    area = _CONTEXT["area"]
+    area = _CONTEXT["area"] or "Narshe (WoB)"
     # FIXME: catch OOB
     idx = numpy.roll(_AREA_INFO["Area"] == area, 1)
     new_area = str(_AREA_INFO["Area"][idx].iloc[0])
@@ -406,7 +412,7 @@ async def nextboss(ctx):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
-    boss = _CONTEXT["boss"]
+    boss = _CONTEXT["boss"] or "Whelk"
     # FIXME: catch OOB
     idx = numpy.roll(_BOSS_INFO["Boss"] == boss, 1)
     new_area = str(_BOSS_INFO["Boss"][idx].iloc[0])
