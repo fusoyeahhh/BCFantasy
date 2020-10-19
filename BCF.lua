@@ -211,10 +211,9 @@ while true do
 	out_json = out_json .. "  'kills': {" .. ""
 	i = 0
 	for char,kcount in pairs(kills) do
+		app =  ", "
 		if i == (#kills - 1) then
-			app = ", "
-		else
-			app ""
+			app = ""
 		end
 		out_json = out_json .. "'" .. char .. "': " ..  kcount .. app
     	end
