@@ -14,6 +14,9 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
 
     last_frame = last_status.get("frame", None) or last_frame
     with open(os.path.join(os.getcwd(), path), "r") as fin:
+        lines = fin.readlines()
+        for line in lines:
+            print(line)
         logf = [json.loads(line) for line in fin.readlines() if line]
     logf = [l for l in logf if l["frame"] >= last_frame]
 
@@ -31,6 +34,7 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
             if diff > 0:
                 cmds.append(f"!event enemykill {char} {diff}")
                 
+
         last_status = status
 
     return cmds, last_status
