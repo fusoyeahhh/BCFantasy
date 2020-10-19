@@ -200,22 +200,26 @@ while true do
 	end
 
 	frame_counter = emu.framecount()
-	out_json = "{\n"
+	out_json = "{"
 	-- General information
-	out_json = out_json .. "  'frame': " .. frame_counter .. ",\n"
-	out_json = out_json .. "  'miab_id': " .. miab_id .. ",\n"
-	out_json = out_json .. "  'area_id': " .. area_id .. ",\n"
-	out_json = out_json .. "  'map_id': " .. map_id .. ",\n"
+	out_json = out_json .. "'frame': " .. frame_counter .. ","
+	out_json = out_json .. "'miab_id': " .. miab_id .. ","
+	out_json = out_json .. "'area_id': " .. area_id .. ","
+	out_json = out_json .. "'map_id': " .. map_id .. ","
 
 	-- Kill information
-	out_json = out_json .. "  'kills': {" .. "\n"
+	out_json = out_json .. "  'kills': {" .. ""
 	i = 0
 	for char,kcount in pairs(kills) do
-		out_json = out_json .. "    '" .. char .. "': " ..  kcount .. ",\n"
+		if i == (#kills - 1) then
+			app = ", "
+		else:
+			app ""
+		out_json = out_json .. "'" .. char .. "': " ..  kcount .. app
     	end
-	out_json = out_json .. "  }\n"
+	out_json = out_json .. "}"
 
-	out_json = out_json .. "\n}" 
+	out_json = out_json .. "}" 
 	if in_battle then
 		logfile:write(out_json .. "\n")
 	end
