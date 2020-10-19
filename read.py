@@ -30,5 +30,7 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
             diff = k - lkills.get(char, 0)
             if diff > 0:
                 cmds.append(f"!event enemykill {char} {diff}")
+                
+        last_status = status
 
-    return cmds, status
+    return cmds, last_status
