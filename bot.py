@@ -8,7 +8,6 @@ from twitchio.ext import commands
 
 import read
 
-print(os.getcwd())
 with open("config.json") as fin:
     opts = json.load(fin)
 
@@ -163,6 +162,7 @@ async def event_message(ctx):
         buff = read.read_local_queue()
     except AttributeError:
         buff = []
+
     for line in filter(lambda l: l, buff):
         # Co-op ctx
         ctx.content = line
@@ -176,6 +176,12 @@ async def event_message(ctx):
             HISTORY[current_time] = ctx.content
             await bot.handle_commands(ctx)
             _AUTHORIZED.discard(ctx.author.name)
+
+    try:
+        from_emu = read.parse_log_file()
+    except Exception as e:
+        print(e)
+        print("Couldn't read logfile")
 
     print(ctx.content)
 
