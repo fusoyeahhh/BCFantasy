@@ -216,7 +216,7 @@ while true do
 	out_json = out_json .. "  }\n"
 
 	out_json = out_json .. "\n}" 
-	--if in_battle then
-	logfile:write(out_json .. "\n")
-	--end
+	if in_battle then
+		logfile:write(out_json .. "\n")
+	end
 end
