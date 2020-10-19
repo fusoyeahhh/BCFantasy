@@ -215,7 +215,7 @@ while true do
 		if i == (#kills - 1) then
 			app = ""
 		end
-		out_json = out_json .. "'" .. char .. "': " ..  kcount .. app
+		out_json = out_json .. "\"" .. char .. "\": " ..  kcount .. app
     	end
 	out_json = out_json .. "}"
 
