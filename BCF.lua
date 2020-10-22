@@ -159,7 +159,7 @@ while true do
 		-- 	* have curr_hp == 0 (this may not be sufficient)
 		-- 	* have less enemies alive than last time we checked
 		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
-		status = "killed by "
+		status = " killed by "
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255 and
 		   curr_hp == 0 and nenem_alive < enemies_alive then
 			status = status .. c_last_targetted
@@ -188,6 +188,7 @@ while true do
 
 		gui.text(20, 120 + i * 10, "slot " .. slot_mask
 					   .. " (" .. curr_hp .. ") targetted by: "
+					   .. c_last_targetted
 					   .. status)
 	end
 
