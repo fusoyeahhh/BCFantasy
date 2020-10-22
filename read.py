@@ -16,7 +16,7 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
     with open(os.path.join(os.getcwd(), path), "r") as fin:
         try:
             # FIXME: this actually needs fixed on the Lua side
-            lines = [l.replace(",}", "}") for l in fin.readlines()]
+            lines = [l.replace(",}", "}").replace(", }", "}") for l in fin.readlines()]
             logf = [json.loads(line) for line in lines if line]
             logf = [l for l in logf if l["frame"] >= last_frame]
         except Exception as e:
