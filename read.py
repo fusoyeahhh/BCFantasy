@@ -26,12 +26,15 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
                 print("JSON reading failed:", e)
                 print(line)
 
+    print(f"Read {len(logf)} new lines.")
+
     cmds = []
     for status in sorted(logf, key=lambda l: l["frame"]):
         # check for map change
         # FIXME: need the mapid to area map
         if status["map_id"] != last_status.get("map_id", None):
             cmds.append("!nextarea")
+            print("emu>", cmds[-1])
 
         # check for kills
         lkills = last_status.get("kills", {})
@@ -39,9 +42,10 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
             diff = k - lkills.get(char, 0)
             if diff > 0:
                 cmds.append(f"!event enemykill {char} {diff}")
-
-        print("emu>", cmds[-1])
+                print("emu>", cmds[-1])
 
         last_status = status
+
+    print("Last status:", last_status)
 
     return cmds, last_status
