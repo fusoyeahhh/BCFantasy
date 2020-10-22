@@ -16,9 +16,10 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
     with open(os.path.join(os.getcwd(), path), "r") as fin:
         try:
             logf = [json.loads(line) for line in fin.readlines() if line]
+            logf = [l for l in logf if l["frame"] >= last_frame]
         except Exception as e:
             print("JSON reading failed:", e)
-    logf = [l for l in logf if l["frame"] >= last_frame]
+            logf = []
 
     cmds = []
     for status in sorted(logf, key=lambda l: l["frame"]):
