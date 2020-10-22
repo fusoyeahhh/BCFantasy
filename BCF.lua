@@ -217,7 +217,8 @@ while true do
 	i = 0
 	for char,kcount in pairs(kills) do
 		app =  ", "
-		if i == (#kills - 1) then
+		i = i + 1
+		if i == #kills then
 			app = ""
 		end
 		out_json = out_json .. "\"" .. char .. "\": " ..  kcount .. app
