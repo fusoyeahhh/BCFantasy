@@ -158,10 +158,10 @@ while true do
 		-- 	* not have an invalid (read nil) character targetting us
 		-- 	* have curr_hp == 0 (this may not be sufficient)
 		-- 	* have less enemies alive than last time we checked
+		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
 		status = "killed by "
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255 and
 		   curr_hp == 0 and nenem_alive < enemies_alive then
-			c_last_targetted = memory.read_u8(0x3298 + 2 * i)
 			status = status .. c_last_targetted
 			-- Attribute kill to the last character that targetted this
 			if c_last_targetted == 0 then
@@ -171,8 +171,7 @@ while true do
 				c_last_targetted = chars[c_last_targetted]
 			else
 				-- Attempt to handle error
-				c_last_targetted = -1
-				status = "ERROR"
+				c_last_targetted = "ERROR"
 			end
 
 			-- Initialize and/or increment
