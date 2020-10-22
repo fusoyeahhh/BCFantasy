@@ -146,9 +146,9 @@ async def _arena(ctx):
 
 @bot.event
 async def event_message(ctx):
-    if (ctx.author.name.lower() == "crackboombot" and
-        "Type !arena to start" in ctx.content):
-        ctx.content = '!doarena' + " " + ctx.content
+    #if (ctx.author.name.lower() == "crackboombot" and
+        #"Type !arena to start" in ctx.content):
+        #ctx.content = '!doarena' + " " + ctx.content
 
     if ctx.content.startswith("!"):
         command = ctx.content.split(" ")[0][1:]
