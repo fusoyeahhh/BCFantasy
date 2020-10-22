@@ -167,10 +167,10 @@ while true do
 				c_last_targetted = 1
 			end
 			if c_last_targetted ~= nil then
-				c_last_targetted = -1
+				c_last_targetted = chars[c_last_targetted]
 			else
 				-- Attempt to handle error
-				c_last_targetted = chars[c_last_targetted]
+				c_last_targetted = -1
 				status = "ERROR"
 			end
 
