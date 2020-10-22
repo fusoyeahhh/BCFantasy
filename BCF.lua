@@ -146,7 +146,6 @@ while true do
 
 	-- 0x3298 monster slots 1-6? (indicates "masks")
 	for i=0,5 do
-		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
 		curr_hp = memory.read_u16_le(0x3BF4 + 8 + 2 * i)
 		_slot_mask = memory.read_u16_le(0x3020 + 2 * i)
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3020 + 2 * i))
@@ -161,13 +160,18 @@ while true do
 		-- 	* have less enemies alive than last time we checked
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255 and
 		   curr_hp == 0 and nenem_alive < enemies_alive then
+			c_last_targetted = memory.read_u8(0x3298 + 2 * i)
 			status = "killed by " .. c_last_targetted
 			-- Attribute kill to the last character that targetted this
 			if c_last_targetted == 0 then
 				c_last_targetted = 1
 			end
 			if c_last_targetted ~= nil then
+				c_last_targetted = -1
+			else
+				-- Attempt to handle error
 				c_last_targetted = chars[c_last_targetted]
+				status = "ERROR"
 			end
 
 			-- Initialize and/or increment
