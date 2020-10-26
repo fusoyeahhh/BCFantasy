@@ -100,8 +100,8 @@ while true do
 				--cslot = 1
 			--end
 			chars[cslot] = char
-		else
-			chars[cslot] = "ERROR slot reported" .. cslot
+		elseif cslot ~= 0xFF then
+			chars[cslot] = "ERROR slot reported -> " .. cslot
 		end
 	end
 
@@ -134,10 +134,10 @@ while true do
 		slot_mask = memory.read_u16_le(0x3018 + 2 * i)
 		char_status_1 = memory.read_u16_le(0x2E98 + 2 * i)
 
-		if chars[slot_mask] ~= nil then
+		if slot_mask ~= 0xFF and chars[slot_mask] ~= nil then
 			char = chars[slot_mask]
 		else
-			char = "EMPTY"
+			char = "EMPTY? (" .. slot_mask .. ")"
 		end
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
