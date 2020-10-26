@@ -107,13 +107,14 @@ while true do
 
 		-- Strange mapping here
 		if cslot == 0 then
-			chars[1] = char
+			chars[0x1] = char
 		elseif cslot == 2 then
-			chars[2] = char
+			chars[0x2] = char
 		elseif cslot == 4 then
-			chars[4] = char
+			chars[0x4] = char
 		elseif cslot == 6 then
-			chars[8] = char
+			chars[0x8] = char
+		end
 	end
 
 	-- Crowd control potential
