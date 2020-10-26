@@ -205,8 +205,8 @@ while true do
 		i = i + 1
     	end
 
-	if ip ~= nil and port ~= nil then
-		gui.text(20, 360, "socket address: " .. ip .. ":" .. port)
+	for char,slot in pairs(chars) do
+		gui.text(20, 360, char .. " " .. slot)
 	end
 
 	frame_counter = emu.framecount()
