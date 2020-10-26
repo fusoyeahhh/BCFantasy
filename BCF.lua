@@ -176,7 +176,10 @@ while true do
 
 			-- Initialize and/or increment
 			if kills[c_last_targetted] == nil then
-				kills[c_last_targetted] = 1
+				-- How we get to this, I don't know...
+				if c_last_targetted ~= nil then
+					kills[c_last_targetted] = 1
+				end
 			else	
 				kills[c_last_targetted] = kills[c_last_targetted] + 1
 			end
