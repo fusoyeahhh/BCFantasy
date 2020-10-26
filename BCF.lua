@@ -95,7 +95,7 @@ while true do
 	for i,char in ipairs(_CHARS) do
 		cslot = memory.read_u8(0x3000 + i - 1)
 		-- Strange mapping here
-		if cslot == 0 then
+		if cslot < 0xF then
 			chars[cslot] = char
 		elseif cslot ~= 0xFF then
 			chars[cslot] = "ERROR slot reported -> " .. cslot
