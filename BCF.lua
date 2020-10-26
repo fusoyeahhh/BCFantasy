@@ -172,7 +172,7 @@ while true do
 				c_last_targetted = chars[c_last_targetted]
 				-- How we get to this, I don't know...
 				if c_last_targetted == nil then
-					c_last_targetted = 'NIL lookup ' .. c_last_targetted
+					c_last_targetted = 'NIL lookup'
 				end
 			else
 				-- Attempt to handle error
