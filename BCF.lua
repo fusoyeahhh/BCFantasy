@@ -96,9 +96,9 @@ while true do
 		cslot = memory.read_u8(0x3000 + i - 1)
 		if cslot <= 0xF then
 			-- Some weirdness here, so this is a manual fix
-			if cslot == 0 then
-				cslot = 1
-			end
+			--if cslot == 0 then
+				--cslot = 1
+			--end
 			chars[cslot] = char
 		else
 			chars[cslot] = "ERROR"
@@ -141,7 +141,7 @@ while true do
 		end
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
-		gui.text(20, 60 + i * 10, char .. " (slot " .. slot_mask .. " |" .. curr_hp .. ") targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: " .. bizstring.binary(char_status_1))
+		gui.text(20, 60 + i * 10, char .. " | slot " .. slot_mask .. " | " .. curr_hp .. " | targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: " .. bizstring.binary(char_status_1))
 	end
 
 	-- 0x3298 monster slots 1-6? (indicates "masks")
