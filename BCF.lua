@@ -94,17 +94,6 @@ while true do
 	chars = {[0xFF] = "ERROR"}
 	for i,char in ipairs(_CHARS) do
 		cslot = memory.read_u8(0x3000 + i - 1)
-		if cslot <= 0xF then
-			-- Some weirdness here, so this is a manual fix
-			--if cslot == 0 then
-				--cslot = 1
-			--end
-			-- Why this is multiplied by two?
-			chars[cslot] = char // 2
-		elseif cslot ~= 0xFF then
-			chars[cslot] = "ERROR slot reported -> " .. cslot
-		end
-
 		-- Strange mapping here
 		if cslot == 0 then
 			chars[0x1] = char
@@ -114,6 +103,8 @@ while true do
 			chars[0x4] = char
 		elseif cslot == 6 then
 			chars[0x8] = char
+		elseif cslot ~= 0xFF then
+			chars[cslot] = "ERROR slot reported -> " .. cslot
 		end
 	end
 
