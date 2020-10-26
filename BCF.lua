@@ -163,12 +163,17 @@ while true do
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255 and
 		   curr_hp == 0 and nenem_alive < enemies_alive then
 			status = status .. c_last_targetted
+
 			-- Attribute kill to the last character that targetted this
 			if c_last_targetted == 0 then
 				c_last_targetted = 1
 			end
 			if c_last_targetted ~= nil then
 				c_last_targetted = chars[c_last_targetted]
+				-- How we get to this, I don't know...
+				if c_last_targetted == nil then
+					c_last_targetted = 'NIL'
+				end
 			else
 				-- Attempt to handle error
 				c_last_targetted = "ERROR"
@@ -176,10 +181,7 @@ while true do
 
 			-- Initialize and/or increment
 			if kills[c_last_targetted] == nil then
-				-- How we get to this, I don't know...
-				if c_last_targetted ~= nil then
-					kills[c_last_targetted] = 1
-				end
+				kills[c_last_targetted] = 1
 			else	
 				kills[c_last_targetted] = kills[c_last_targetted] + 1
 			end
