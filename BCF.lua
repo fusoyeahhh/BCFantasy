@@ -206,7 +206,7 @@ while true do
     	end
 
 	for char,slot in pairs(chars) do
-		gui.text(20, 360 + i * 10, char .. " " .. bizstring.hex(slot))
+		gui.text(20, 360 + i * 10, char .. " " .. slot)
 	end
 
 	frame_counter = emu.framecount()
