@@ -99,10 +99,21 @@ while true do
 			--if cslot == 0 then
 				--cslot = 1
 			--end
-			chars[cslot] = char
+			-- Why this is multiplied by two?
+			chars[cslot] = char // 2
 		elseif cslot ~= 0xFF then
 			chars[cslot] = "ERROR slot reported -> " .. cslot
 		end
+
+		-- Strange mapping here
+		if cslot == 0 then
+			chars[1] = char
+		elseif cslot == 2 then
+			chars[2] = char
+		elseif cslot == 4 then
+			chars[4] = char
+		elseif cslot == 6 then
+			chars[8] = char
 	end
 
 	-- Crowd control potential
