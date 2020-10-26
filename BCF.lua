@@ -96,13 +96,7 @@ while true do
 		cslot = memory.read_u8(0x3000 + i - 1)
 		-- Strange mapping here
 		if cslot == 0 then
-			chars[0x1] = char
-		elseif cslot == 2 then
-			chars[0x2] = char
-		elseif cslot == 4 then
-			chars[0x4] = char
-		elseif cslot == 6 then
-			chars[0x8] = char
+			chars[cslot] = char
 		elseif cslot ~= 0xFF then
 			chars[cslot] = "ERROR slot reported -> " .. cslot
 		end
@@ -168,9 +162,6 @@ while true do
 			status = status .. c_last_targetted
 
 			-- Attribute kill to the last character that targetted this
-			if c_last_targetted == 0 then
-				c_last_targetted = 1
-			end
 			if c_last_targetted ~= nil then
 				c_last_targetted = chars[c_last_targetted]
 				-- How we get to this, I don't know...
