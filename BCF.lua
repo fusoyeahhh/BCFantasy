@@ -131,7 +131,8 @@ while true do
 		slot_mask = memory.read_u16_le(0x3018 + 2 * i)
 		char_status_1 = memory.read_u16_le(0x2E98 + 2 * i)
 
-		if slot_mask ~= 0xFF and chars[2 * (i + 1)] ~= nil then
+		--if slot_mask ~= 0xFF and chars[2 * (i + 1)] ~= nil then
+		if chars[2 * (i + 1)] ~= nil then
 			--char = chars[slot_mask]
 			char = chars[2 * (i + 1)]
 		else
