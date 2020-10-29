@@ -1,4 +1,5 @@
 kills = {}
+ekilled = {}
 -- in_battle requires the number of enemies and characters alive to be greater
 -- than zero, and less than their allowed slot numbers (6 and 4 respectively).
 -- It's probably not perfect, but seems to work so far
@@ -44,6 +45,7 @@ while true do
         	    memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 	if prev_state ~= in_battle and in_battle then
 		enemies_alive = memory.read_u8(0x3A77)
+		ekilled = {}
 	end
 
 	map_id = memory.read_u16_le(0x1F64)
@@ -172,14 +174,17 @@ while true do
 				c_last_targetted = "ERROR"
 			end
 
-			-- Initialize and/or increment
-			if kills[c_last_targetted] == nil then
-				kills[c_last_targetted] = 1
-			else	
-				kills[c_last_targetted] = kills[c_last_targetted] + 1
+			if ekilled[slot_mask] ~= nil then
+				-- Initialize and/or increment
+				if kills[c_last_targetted] == nil then
+					kills[c_last_targetted] = 1
+				else	
+					kills[c_last_targetted] = kills[c_last_targetted] + 1
+				end
+				-- Decrement running enemy count
+				enemies_alive = enemies_alive - 1
+				ekilled[slot_mask] = 1
 			end
-			-- Decrement running enemy count
-			enemies_alive = enemies_alive - 1
 		--else
 			--status = bizstring.hex(c_last_targetted)
 		end
@@ -199,8 +204,14 @@ while true do
     	end
 
 	i = 0
+	for e,kcount in pairs(ekilled) do
+		gui.text(20, 360 + i * 10, e .. " DED")
+		i = i + 1
+    	end
+
+	i = 0
 	for char,slot in pairs(chars) do
-		gui.text(20, 360 + i * 10, char .. " " .. slot)
+		--gui.text(20, 360 + i * 10, char .. " " .. slot)
 		i = i + 1
 	end
 
