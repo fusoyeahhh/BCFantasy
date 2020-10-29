@@ -131,9 +131,9 @@ while true do
 		slot_mask = memory.read_u16_le(0x3018 + 2 * i)
 		char_status_1 = memory.read_u16_le(0x2E98 + 2 * i)
 
-		char = "EMPTY? (" .. (2 * (i + 1)) .. ")"
-		if chars[2 * (i + 1)] ~= nil then
-			char = chars[2 * (i + 1)]
+		char = "EMPTY? (" .. (2 * i ) .. ")"
+		if chars[2 * i] ~= nil then
+			char = chars[2 * i]
 		end
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
