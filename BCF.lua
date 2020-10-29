@@ -135,7 +135,7 @@ while true do
 			--char = chars[slot_mask]
 			char = chars[2 * (i + 1)]
 		else
-			char = "EMPTY? (" .. slot_mask .. ")"
+			char = "EMPTY? (" .. (2 * (i + 1)) .. ")"
 		end
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
