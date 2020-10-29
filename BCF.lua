@@ -133,7 +133,7 @@ while true do
 		slot_mask = memory.read_u16_le(0x3018 + 2 * i)
 		char_status_1 = memory.read_u16_le(0x2E98 + 2 * i)
 
-		char = "EMPTY? (" .. (2 * i ) .. ")"
+		char = "EMPTY?"
 		if chars[2 * i] ~= nil then
 			char = chars[2 * i]
 		end
@@ -174,7 +174,7 @@ while true do
 				c_last_targetted = "ERROR"
 			end
 
-			if ekilled[slot_mask] ~= nil then
+			if ekilled[slot_mask] == nil then
 				-- Initialize and/or increment
 				if kills[c_last_targetted] == nil then
 					kills[c_last_targetted] = 1
@@ -183,6 +183,7 @@ while true do
 				end
 				-- Decrement running enemy count
 				enemies_alive = enemies_alive - 1
+				-- Mark as dead
 				ekilled[slot_mask] = 1
 			end
 		--else
