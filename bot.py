@@ -32,6 +32,8 @@ def _authenticate(ctx):
 _AREA_INFO = pandas.read_csv("data/bc_fantasy_data_areas.csv")
 _BOSS_INFO = pandas.read_csv("data/bc_fantasy_data_bosses.csv")
 _CHAR_INFO = pandas.read_csv("data/bc_fantasy_data_chars.csv")
+_MAP_INFO = pandas.read_csv("data/map_ids.csv", names=["id", "name"])
+_MAP_INFO["id"] = [int(n, 16) for n in _MAP_INFO["id"]]
 
 COMMANDS = {}
 
