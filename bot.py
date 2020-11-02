@@ -32,8 +32,9 @@ def _authenticate(ctx):
 _AREA_INFO = pandas.read_csv("data/bc_fantasy_data_areas.csv")
 _BOSS_INFO = pandas.read_csv("data/bc_fantasy_data_bosses.csv")
 _CHAR_INFO = pandas.read_csv("data/bc_fantasy_data_chars.csv")
-_MAP_INFO = pandas.read_csv("data/map_ids.csv", names=["id", "name"])
+_MAP_INFO = pandas.read_csv("data/map_ids.csv")
 _MAP_INFO["id"] = [int(n, 16) for n in _MAP_INFO["id"]]
+_MAP_INFO.set_index("id")
 
 COMMANDS = {}
 
@@ -66,7 +67,7 @@ def _set_context(content):
 
         # Need a preliminary mapid to area setting
         if cat == "area" and item.isdigit():
-            item = _MAP_INFO[_MAP_INFO["id"] == int(item)][0]
+            item = _MAP_INFO.loc[int(item)]
 
         lookup, info = LOOKUPS[cat]
         # FIXME: zozo vs. mt. zozo
