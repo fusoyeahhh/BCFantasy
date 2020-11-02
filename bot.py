@@ -180,13 +180,15 @@ async def event_message(ctx):
         print(e)
         print("Couldn't read logfile")
 
+    buff = ["test"]
     for line in filter(lambda l: l, buff):
         bot._skip_auth = True
         # Co-op ctx
         ctx.content = line
         # HACKZORS
-        # ctx.author._name = "crackboombot"
-        ctx.author = User(bot._ws, name="crackboombot")
+        ctx.author._name = "crackboombot"
+        print(ctx.author.name)
+        #ctx.author = User(bot._ws, name="crackboombot")
 
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
