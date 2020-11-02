@@ -52,6 +52,7 @@ while true do
 	area_id = memory.read_u8(0x0520)
 	miab_id = memory.read_u8(0x0789)
     eform_id = memory.read_u16_le(0x11E0)
+    battle_type = memory.read_u8(0x3EBC)
 
 	-- need to learn offsets relative to ASCII
 	--[[
@@ -79,7 +80,7 @@ while true do
 
 	emu.frameadvance();
 
-	gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. " | map id " .. map_id .. " | commmand name " .. atk_name_1 .. atk_name_2 .. atk_name_3 .. atk_name_4 .. atk_name_5 .. atk_name_6)
+	gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. " | map id " .. map_id .. " | battle type " .. bizstring.binary(battle_type))
 	gui.text(20, 20, "alive mask: " .. bizstring.binary((0xF + 1) + alive_mask) .. " total enemies " .. enemies_alive)
 	gui.text(20, 30, "chars alive: " .. nchar_alive)
 	gui.text(20, 40, "monsters alive: " .. nenem_alive)
@@ -240,7 +241,13 @@ while true do
 	out_json = out_json .. "}"
 
 	out_json = out_json .. "}" 
+
+	--prev_state = in_battle
+	--in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
+        	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
+
 	if in_battle then
+	--if prev_state ~= in_battle and ~in_battle then
 		logfile:write(out_json .. "\n")
 	end
 end
