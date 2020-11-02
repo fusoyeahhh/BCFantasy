@@ -67,7 +67,7 @@ def _set_context(content):
         if cat == "area" and item.isdigit():
             item = int(item)
             if item in _MAP_INFO.index:
-                item = _MAP_INFO.loc[item]
+                item = _MAP_INFO.loc[item]["scoring_area"]
             else:
                 raise ValueError(f"No valid area mapping for id {item}")
 
