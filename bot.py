@@ -186,13 +186,13 @@ async def event_message(ctx):
         ctx.content = line
         # HACKZORS
         ctx.author._name = "crackboombot"
-        print(ctx.author.name)
         #ctx.author = User(bot._ws, name="crackboombot")
 
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
+            print(f"Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
     bot._skip_auth = False
 
