@@ -65,7 +65,11 @@ def _set_context(content):
 
         # Need a preliminary mapid to area setting
         if cat == "area" and item.isdigit():
-            item = _MAP_INFO.loc[int(item)]
+            item = int(item)
+            if item in _MAP_INFO.index:
+                item = _MAP_INFO.loc[item]
+            else:
+                raise ValueError(f"No valid area mapping for id {item}")
 
         lookup, info = LOOKUPS[cat]
         # FIXME: zozo vs. mt. zozo
