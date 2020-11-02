@@ -64,6 +64,10 @@ def _set_context(content):
         cat, item = selection.split("=")
         print(cat, item)
 
+        # Need a preliminary mapid to area setting
+        if cat == "area" and item.isdigit():
+            item = _MAP_INFO[_MAP_INFO["id"] == int(item)][0]
+
         lookup, info = LOOKUPS[cat]
         # FIXME: zozo vs. mt. zozo
         item = _check_term(item, lookup, info)

@@ -31,9 +31,8 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
     cmds = []
     for status in sorted(logf, key=lambda l: l["frame"]):
         # check for map change
-        # FIXME: need the mapid to area map
         if status["map_id"] != last_status.get("map_id", None):
-            cmds.append("!nextarea")
+            cmds.append(f"!set area={status['map_id']}")
             print("emu>", cmds[-1])
 
         # check for kills
