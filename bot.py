@@ -14,15 +14,12 @@ with open("config.json") as fin:
 bot = commands.Bot(**opts)
 bot._last_status = {}
 
-_ROOT = {"fusoyeahhh"}
+_ROOT = {"darkslash88"}
 # add additional admin names here
-_AUTHORIZED = _ROOT | {"fusoyeahhh"}
+_AUTHORIZED = _ROOT | {"fusoyeahhh", "crackboombot"}
 
 def _write(ctx, strn, prefix="BCFBot>"):
     pass
-
-def _debug_authenticate(ctx):
-    ctx.author.name in _ROOT
 
 def _authenticate(ctx):
     print(ctx.author.name, _AUTHORIZED)
@@ -143,9 +140,8 @@ def search(term, lookup, info):
 @bot.event
 async def event_ready():
     print("HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
+    bot._skip_auth = False
     ws = bot._ws
-    #await ws.send_privmsg("#darkslash88",
-            #"/me (BCBOT) HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
 
 @bot.command(name='doarena')
 async def _arena(ctx):
@@ -156,6 +152,8 @@ async def event_message(ctx):
     #if (ctx.author.name.lower() == "crackboombot" and
         #"Type !arena to start" in ctx.content):
         #ctx.content = '!doarena' + " " + ctx.content
+
+    print(ctx.content)
 
     if ctx.content.startswith("!"):
         command = ctx.content.split(" ")[0][1:]
@@ -181,6 +179,7 @@ async def event_message(ctx):
         print(e)
         print("Couldn't read logfile")
 
+    bot._skip_auth = True
     for line in filter(lambda l: l, buff):
         # Co-op ctx
         ctx.content = line
@@ -188,15 +187,11 @@ async def event_message(ctx):
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
             # HACKZORS
-            #ctx.author.name = 'fusoyeahhh'
-            _AUTHORIZED.add(ctx.author.name)
-            # FIXME: disable error reporting
+            ctx.author.name = "crackboombot"
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
             await bot.handle_commands(ctx)
-            _AUTHORIZED.discard(ctx.author.name)
-
-    print(ctx.content)
+    bot._skip_auth = False
 
 @bot.command(name='hi')
 async def hi(ctx):
@@ -399,7 +394,7 @@ COMMANDS["context"] = context
 @bot.command(name='nextarea')
 async def nextarea(ctx):
     user = ctx.author.name
-    if not _authenticate(ctx):
+    if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
@@ -410,12 +405,13 @@ async def nextarea(ctx):
     if _set_context(f"!set area={new_area}"):
         return
 
-    await ctx.send(f"Sorry @{user}, that didn't work.")
+    if not bot._skip_auth:
+        await ctx.send(f"Sorry @{user}, that didn't work.")
 
 @bot.command(name='nextboss')
 async def nextboss(ctx):
     user = ctx.author.name
-    if not _authenticate(ctx):
+    if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
@@ -426,19 +422,20 @@ async def nextboss(ctx):
     if _set_context(f"!set boss={new_area}"):
         return
 
-    await ctx.send(f"Sorry @{user}, that didn't work.")
+    if not bot._skip_auth:
+        await ctx.send(f"Sorry @{user}, that didn't work.")
 
 @bot.command(name='set')
 async def _set(ctx):
     user = ctx.author.name
-    if not _authenticate(ctx):
+    if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
     if _set_context(ctx.content):
         return
-
-    await ctx.send(f"Sorry @{user}, that didn't work.")
+    if not bot._skip_auth:
+        await ctx.send(f"Sorry @{user}, that didn't work.")
 
 # FIXME: these are the columns of the individual files
 _EVENTS = {
@@ -449,7 +446,7 @@ _EVENTS = {
 @bot.command(name='event')
 async def event(ctx):
     user = ctx.author.name
-    if not _authenticate(ctx):
+    if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
@@ -468,7 +465,7 @@ async def event(ctx):
         if len(cats) == 0:
             raise IndexError()
     except IndexError:
-        await ctx.send("Invalid event command.")
+        await ctx.send(f"Invalid event command: {event}, {'.'.join(args)}")
         return
 
     print(event, args, cats)
