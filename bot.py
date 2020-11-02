@@ -32,7 +32,7 @@ _BOSS_INFO = pandas.read_csv("data/bc_fantasy_data_bosses.csv")
 _CHAR_INFO = pandas.read_csv("data/bc_fantasy_data_chars.csv")
 _MAP_INFO = pandas.read_csv("data/map_ids.csv")
 _MAP_INFO["id"] = [int(n, 16) for n in _MAP_INFO["id"]]
-_MAP_INFO.set_index("id")
+_MAP_INFO = _MAP_INFO.set_index("id")
 
 COMMANDS = {}
 
@@ -80,7 +80,7 @@ def _set_context(content):
             _CONTEXT[cat] = item
 
     except Exception as e:
-        print(type(e))
+        print(e)
         return False
 
     return True
