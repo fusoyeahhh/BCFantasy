@@ -180,7 +180,6 @@ async def event_message(ctx):
         print(e)
         print("Couldn't read logfile")
 
-    buff = ["test"]
     for line in filter(lambda l: l, buff):
         bot._skip_auth = True
         # Co-op ctx
