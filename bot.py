@@ -5,6 +5,7 @@ import numpy
 import pandas
 import json
 from twitchio.ext import commands
+from twitchio.dataclasses import User
 
 import read
 
@@ -179,15 +180,16 @@ async def event_message(ctx):
         print(e)
         print("Couldn't read logfile")
 
-    bot._skip_auth = True
     for line in filter(lambda l: l, buff):
+        bot._skip_auth = True
         # Co-op ctx
         ctx.content = line
+        # HACKZORS
+        # ctx.author._name = "crackboombot"
+        ctx.author = User(bot._ws, name="crackboombot")
 
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
-            # HACKZORS
-            ctx.author.name = "crackboombot"
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
             await bot.handle_commands(ctx)
