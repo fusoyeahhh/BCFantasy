@@ -1,56 +1,56 @@
-Boss,Kills Character,Gameover,Cost,Id
-Whelk,50,500,50,432
-Vargas,40,200,100,435
-Ultros 1,40,300,150,544
-Ghost Train,40,300,150,437
-Rizopas,50,200,75,79
-Tunnel Armor,50,300,150,436
-Kefka at Narshe,30,500,100,505
-Dadaluma,30,400,200,438
-Ultros 2,60,500,250,546
-Ifrit & Shiva,40,500,250,478
-Number 024,50,400,200,441
-Number 128,30,400,200,442
-Cranes,20,600,300,480
-Flame Eater,30,700,350,449
-Ultros 3,20,300,350,475
-Kefka 2,0,1000,100,504
-Ultros 4,60,600,300,477
-Air Force,30,800,400,459
-Atma Weapon,20,1000,500,450
-Nerapa,100,500,250,451
-Tentacles,30,1250,650,508
-Dullahan,20,1150,750,455
-Phunbaba,30,1350,800,423
-Doom Gaze,40,1500,1000,463
-Chadarnook,60,1500,1200,456
-Tritoch,80,1750,1000,488
-Umaro,70,1750,750,444
-Sr Behemoth,20,1350,800,452
-Hidon,50,1750,800,464
-Dream Stooges,60,1350,1000,460
-Wrex Soul,30,1500,1200,462
-L.255 Magic,10,1600,1500,354
-Storm Dragon,10,1750,1500,367
-Ice Dragon,80,2000,1200,366
-Gold Dragon,90,2000,1000,369
-White Dragon,80,1600,800,481
-Red Dragon,50,2000,1400,372
-Blue Dragon,40,2000,1300,371
-Skull Dragon,40,1500,1200,370
-Dirt Dragon,70,1500,1100,368
-Presenter,30,1000,500,433
-Pugs,10,1500,750,253
-Master Pug,10,1500,750,483
-Katana Soul,10,1500,750,465
-Inferno,10,4000,2000,484
-Atma,10,3000,2500,482
-Guardian,50,4500,1500,446
-Doom,30,4000,1500,468
-Goddess,10,3000,2500,469
-Poltrgeist,10,4000,2000,470
-First Tier,10,4000,2500,471
-Second Tier,10,5000,2500,512
-Third Tier,10,4500,3500,513
-False Kefka,50,5000,2500,0
-Final Kefka,10,5000,4000,514
+Boss,Kills Character,Gameover,Cost
+Whelk,50,500,50
+Vargas,40,200,100
+Ultros 1,40,300,150
+Ghost Train,40,300,150
+Rizopas,50,200,75
+Tunnel Armor,50,300,150
+Kefka at Narshe,30,500,100
+Dadaluma,30,400,200
+Ultros 2,60,500,250
+Ifrit & Shiva,40,500,250
+Number 024,50,400,200
+Number 128,30,400,200
+Cranes,20,600,300
+Flame Eater,30,700,350
+Ultros 3,20,300,350
+Kefka 2,0,1000,100
+Ultros 4,60,600,300
+Air Force,30,800,400
+Atma Weapon,20,1000,500
+Nerapa,100,500,250
+Tentacles,30,1250,650
+Dullahan,20,1150,750
+Phunbaba,30,1350,800
+Doom Gaze,40,1500,1000
+Chadarnook,60,1500,1200
+Tritoch,80,1750,1000
+Umaro,70,1750,750
+Sr Behemoth,20,1350,800
+Hidon,50,1750,800
+Dream Stooges,60,1350,1000
+Wrex Soul,30,1500,1200
+L.255 Magic,10,1600,1500
+Storm Dragon,10,1750,1500
+Ice Dragon,80,2000,1200
+Gold Dragon,90,2000,1000
+White Dragon,80,1600,800
+Red Dragon,50,2000,1400
+Blue Dragon,40,2000,1300
+Skull Dragon,40,1500,1200
+Dirt Dragon,70,1500,1100
+Presenter,30,1000,500
+Pugs,10,1500,750
+Master Pug,10,1500,750
+Katana Soul,10,1500,750
+Inferno,10,4000,2000
+Atma,10,3000,2500
+Guardian,50,4500,1500
+Doom,30,4000,1500
+Goddess,10,3000,2500
+Poltrgeist,10,4000,2000
+First Tier,10,4000,2500
+Second Tier,10,5000,2500
+Third Tier,10,4500,3500
+False Kefka,50,5000,2500
+Final Kefka,10,5000,4000
