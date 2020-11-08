@@ -139,7 +139,7 @@ while true do
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
 		_wound = bit.band(char_status_1, bit.lshift(1, 7))
-		if _wound and ~_wound[i] then
+		if _wound and (not _wound[i]) then
 		    if pdeath[char] ~= nil then
     		    pdeath[char] = pdeath[char] + 1
     		else
