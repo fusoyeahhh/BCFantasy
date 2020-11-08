@@ -28,11 +28,16 @@ def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
 
     print(f"Read {len(logf)} new lines.")
 
+    # FIXME: move this upward to bot to handle more cleanly
     cmds = []
     for status in sorted(logf, key=lambda l: l["frame"]):
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
             cmds.append(f"!set area={status['map_id']}")
+            print("emu>", cmds[-1])
+
+        if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None):
+            cmds.append(f"!set boss={status['eform_id']}")
             print("emu>", cmds[-1])
 
         # check for kills

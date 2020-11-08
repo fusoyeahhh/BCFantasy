@@ -71,6 +71,13 @@ def _set_context(content):
             else:
                 raise ValueError(f"No valid area mapping for id {item}")
 
+        if cat == "boss" and item.isdigit():
+            item = int(item)
+            if item in _BOSS_INFO["Id"]:
+                item = _MAP_INFO.set_index("Id").loc[item]["Boss"]
+            else:
+                raise ValueError(f"No valid boss mapping for id {item} (this may be intended)")
+
         lookup, info = LOOKUPS[cat]
         # FIXME: zozo vs. mt. zozo
         item = _check_term(item, lookup, info)
