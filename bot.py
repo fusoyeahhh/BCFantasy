@@ -65,7 +65,7 @@ def convert_buffer_to_commands(logf, **kwargs):
             print("emu>", cmds[-1])
 
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None) \
-            and status["eform_id"] is in _BOSS_INFO["Id"]:
+            and int(status["eform_id"]) in _BOSS_INFO["Id"].values:
             cmds.append(f"!set boss={status['eform_id']}")
             print("emu>", cmds[-1])
 
@@ -104,7 +104,7 @@ def _set_context(content):
         if cat == "boss" and item.isdigit():
             item = int(item)
             if item in _BOSS_INFO["Id"]:
-                item = _MAP_INFO.set_index("Id").loc[item]["Boss"]
+                item = _BOSS_INFO.set_index("Id").loc[item]["Boss"]
             else:
                 raise ValueError(f"No valid boss mapping for id {item} (this may be intended)")
 
