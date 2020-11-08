@@ -232,7 +232,7 @@ async def event_message(ctx):
 
     # Read in emulator log
     try:
-        cmds = read.parse_log_file()
+        cmds = read.parse_log_file(last_frame=bot._last_status.get("frame", -1))
         cmds, last = convert_buffer_to_commands(cmds, last_status=bot._last_status)
         bot._last_status = last
         buff += cmds

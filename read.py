@@ -7,12 +7,12 @@ def read_local_queue(path='local'):
     os.close(fifo)
     return data.decode().split("\n")
 
-def parse_log_file(path="logfile.txt", last_status={}, last_frame=-1):
+def parse_log_file(path="logfile.txt", last_frame=-1):
 
     if not os.path.exists(os.path.join(os.getcwd(), path)):
         return {}
 
-    last_frame = last_status.get("frame", None) or last_frame
+    #last_frame = last_status.get("frame", None) or last_frame
     with open(os.path.join(os.getcwd(), path), "r") as fin:
         logf = []
         for line in fin.readlines():
