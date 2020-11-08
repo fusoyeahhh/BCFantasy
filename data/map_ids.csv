@@ -2,17 +2,17 @@ id,name,scoring_area
 0,World of Balance,WoB Overworld
 1,World of Ruin,WoR Overworld
 2,Serpent Trench,Serpent Trench
-6,Setzer's Airship (black background),N/A
-7,Setzer's Airship--Rooms,N/A
-9,Scenario Selection Screen,N/A
-00A,Setzer's Airship; flying through the sky,N/A
-00B,Darryl's Airship; with Darryl at the helm,N/A
-00C,Setzer's Airship--Casino Room (no exits),N/A
-00D,Setzer's Airship; party standing on deck,N/A
-00E,Chocobo Stable (World of Balance),N/A
+6,Setzer's Airship (black background),
+7,Setzer's Airship--Rooms,
+9,Scenario Selection Screen,
+00A,Setzer's Airship; flying through the sky,
+00B,Darryl's Airship; with Darryl at the helm,
+00C,Setzer's Airship--Casino Room (no exits),
+00D,Setzer's Airship; party standing on deck,
+00E,Chocobo Stable (World of Balance),
 00F,Houses in South Figaro,Towns
-10,Chocobo Stable (World of Ruin),N/A
-11,Airship (World of Ruin; Bahamut magicite received),N/A
+10,Chocobo Stable (World of Ruin),
+11,Airship (World of Ruin; Bahamut magicite received),
 12,Narshe (WoB)-Mountaintop cliff (from intro),Narshe Ice Fields
 13,Narshe (WoB) (from intro--some places are inaccessible),Narshe (WoB)
 14,Narshe (WoB) (normal),Narshe (WoB)
@@ -26,7 +26,7 @@ id,name,scoring_area
 01C,Narshe-Inn,Narshe (WoB)
 01D,Narshe-Cafe,Narshe (WoB)
 01E,Narshe-Elder's House,Narshe (WoB)
-01F,Chocobo Stable,N/A
+01F,Chocobo Stable,
 20,Narshe (WoR),Narshe (WoR)
 21,Narshe (WoR)-Mountains between Narshe and the caves above Narshe,Narshe (WoR)
 22,Narshe (WoR)-Mountaintop maze above Narshe (Ice Dragon),Narshe (WoR)
@@ -55,7 +55,7 @@ id,name,scoring_area
 54,South Figaro-Duncan's House; basement,Towns
 56,South Figaro-Duncan's House,Towns
 58,South Figaro-Inn,Towns
-05E,Nikeah (?)-Some rooms (as well as Cid's house on the Solitary Island),N/A
+05E,Nikeah (?)-Some rooms (as well as Cid's house on the Solitary Island),
 60,Mt. Kolts,Mt. Koltz
 61,Mt. Kolts with Fog,Mt. Koltz
 62,Mt. Kolts-last area (where Vargas is),Mt. Koltz
@@ -67,17 +67,17 @@ id,name,scoring_area
 06F,Returners' Hideout-Inn,Towns
 71,Lete River,Lete River
 72,Lete River-Inner Caves,Lete River
-73,Crazy Old Man's House,N/A
+73,Crazy Old Man's House,
 74,Albrook-Shops,Towns
 75,Imperial Camp,Imperial Camp
-78,Doma Castle-from poison scene?,N/A
+78,Doma Castle-from poison scene?,
 79,Doma Castle-World of Balance,Doma Castle
 07B,Doma Castle-inner rooms,Doma Castle
 07D,Doma Castle-dimmed with enemies (from Cyan's dream),Cyan's Dream
 07E,Doma Castle-dimmed rooms with enemies (from Cyan's dream),Cyan's Dream
-07F,Duncan's Cabin--World of Ruin; exterior,N/A
-80,Duncan's Cabin--World of Ruin; interior,N/A
-83,Crazy Old Man's House--World of Ruin,N/A
+07F,Duncan's Cabin--World of Ruin; exterior,
+80,Duncan's Cabin--World of Ruin; interior,
+83,Crazy Old Man's House--World of Ruin,
 84,Phantom Forest--Entrance,Phantom Forest
 85,Phantom Forest--Recovery Spring,Phantom Forest
 86,Phantom Forest--Exit,Phantom Forest
@@ -96,7 +96,7 @@ id,name,scoring_area
 09C,Baren Falls--Cliff,Baren Falls
 09D,Mobliz--World of Balance,Towns
 09E,Mobliz--World of Ruin,Towns
-09F,Riverbank where Gau finds the party,N/A
+09F,Riverbank where Gau finds the party,
 0A0,Mobliz--Inn,Towns
 0A1,Mobliz--Arsenal,Towns
 0A2,Mobliz--Relics,Towns
@@ -107,14 +107,14 @@ id,name,scoring_area
 0A7,Mt. Crescent,Serpent Trench
 0A8,River leading to Serpent Trench,Serpent Trench
 0A9,Nikeah--World of Balance,Towns
-0AA,Riverbank with Clyde and Baram,N/A
+0AA,Riverbank with Clyde and Baram,
 0AF,Serpent Trench--Caves,Serpent Trench
 0B0,Mt. Zozo--Outside,Mt. Zozo
 0B1,Mt. Zozo--Outside; cliff with treasure chest,Mt. Zozo
 0B2,Mt. Zozo--Outside; cliff connecting dragon room to Cyan's room,Mt. Zozo
 0B3,Mt. Zozo--First inner chamber,Mt. Zozo
 0B5,Mt. Zozo--Cliff outside Cyan's room,Mt. Zozo
-0B9,Colloseum Builder's House--World of Balance,N/A
+0B9,Colloseum Builder's House--World of Balance,
 0BB,Nikeah--Port,Towns
 0BC,Kohlingen--World of Balance,Towns
 0BD,Kohlingen--World of Ruin,Towns
@@ -132,16 +132,16 @@ id,name,scoring_area
 0CF,Jidoor--Owzer's House (dimmed; enemies),Owzer's Mansion
 0D0,Jidoor--Owzer's House (dimmed; no enemies),Towns
 0D1,Jidoor--Owzer's House,Towns
-0D7,Airship flying scene,N/A
-0D8,Gestahl; Madonna; and Maduin outside Esperville,N/A
-0D9,Esperville,N/A
-0DA,Esper Cave,N/A
-0DB,Esperville Houses,N/A
+0D7,Airship flying scene,
+0D8,Gestahl; Madonna; and Maduin outside Esperville,
+0D9,Esperville,
+0DA,Esper Cave,
+0DB,Esperville Houses,
 0DD,Zozo,Zozo
-0.00E+00,Zozo--Buildings,Zozo
-0.00E+00,Zozo--Buildings,Zozo
-0.00E+00,Opera House--Stage; dancing,Opera House
-0.00E+00,Opera House--Stage; fighting,Opera House
+0E1,Zozo--Buildings,Zozo
+0E2,Zozo--Buildings,Zozo
+0E7,Opera House--Stage; dancing,Opera House
+0E9,Opera House--Stage; fighting,Opera House
 0EB,Opera House--Rafters,Opera House
 0EC,Opera House--Castle Scene,Opera House
 0EE,Opera House--Dressing Room,Opera House
@@ -247,13 +247,13 @@ id,name,scoring_area
 181,Cave to the Sealed Gate--Small Lava Room with moving bridges,Cave to the Sealed Gate
 182,Cave to the Sealed Gate--Basement 4,Cave to the Sealed Gate
 183,Cave to the Sealed Gate--Basement 4,Cave to the Sealed Gate
-186,Land that rises and breaks for the World of Ruin,N/A
+186,Land that rises and breaks for the World of Ruin,
 187,Sealed Gate,Cave to the Sealed Gate
-188,Jidoor--Floating Island casting shadow,Towns
+188,Jidoor--Floating Island casting shadow,
 189,Floating Island--being destroyed; Naughtys attack,Floating Continent
 18A,Floating Island,Floating Continent
-18B,Piece of land that gets torn apart,N/A
-18C,Cid's House on Solitary Island--Outside,N/A
+18B,Piece of land that gets torn apart,
+18C,Cid's House on Solitary Island--Outside,
 18E,Solitary Island--Beach,WoR Overworld
 18F,Solitary Island--Cliff,WoR Overworld
 190,Solitary Island--Beach,WoR Overworld
@@ -266,4 +266,4 @@ id,name,scoring_area
 198,Ancient Castle--Basement 1,Ancient Castle
 199,Kefka's Domain--Pipe Room,Kefka's Tower
 19A,Kefka's Domain,Kefka's Tower
-19D,Colloseum--Rooms,N/A
+19D,Colloseum--Rooms,
