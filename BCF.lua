@@ -246,7 +246,20 @@ while true do
 			app = ""
 		end
 		out_json = out_json .. "\"" .. char .. "\": " ..  kcount .. app
-    	end
+    end
+	out_json = out_json .. "}"
+
+	-- death information
+	out_json = out_json .. ", \"deaths\": {" .. ""
+	i = 0
+	for char,dcount in pairs(pdeath) do
+		app =  ", "
+		i = i + 1
+		if i == #pdeath then
+			app = ""
+		end
+		out_json = out_json .. "\"" .. char .. "\": " ..  dcount .. app
+    end
 	out_json = out_json .. "}"
 
 	out_json = out_json .. "}" 
@@ -256,7 +269,7 @@ while true do
         	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 
 	if in_battle or map_change then
-	--if prev_state ~= in_battle and ~in_battle then
+	--if prev_state ~= in_battle and (not in_battle) then
 		logfile:write(out_json .. "\n")
 	end
 end
