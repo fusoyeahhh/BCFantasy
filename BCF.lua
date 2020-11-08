@@ -51,7 +51,7 @@ while true do
 		ekilled = {}
 	end
 
-    map_change = memory.read_u16_le(0x1F64) != map_id
+    map_change = memory.read_u16_le(0x1F64) ~= map_id
 	map_id = memory.read_u16_le(0x1F64)
 	area_id = memory.read_u8(0x0520)
 	miab_id = memory.read_u8(0x0789)
