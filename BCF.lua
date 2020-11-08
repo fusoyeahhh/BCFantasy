@@ -208,23 +208,21 @@ while true do
 	-- Display kill tracker
 	i = 0
 	for char,kcount in pairs(kills) do
+	    if pdeath[char] ~= nil then
+	        kcount = kcount .. " deaths: " .. pdeath[char]
+	    end
 		gui.text(20, 240 + i * 10, "slot " .. char
 					   .. " kills: " .. kcount)
 		i = i + 1
-    	end
+    end
 
+    --[[
 	i = 0
 	for e,kcount in pairs(ekilled) do
 		gui.text(20, 360 + i * 10, e .. " DED")
 		i = i + 1
-    	end
-
-	i = 0
-	for char,slot in pairs(chars) do
-		--gui.text(20, 360 + i * 10, char .. " " .. slot)
-		i = i + 1
-	end
-
+    end
+    --]]
 
 	frame_counter = emu.framecount()
 	out_json = "{"
