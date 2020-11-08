@@ -225,6 +225,7 @@ while true do
 		i = i + 1
 	end
 
+
 	frame_counter = emu.framecount()
 	out_json = "{"
 	-- General information
@@ -232,7 +233,7 @@ while true do
 	out_json = out_json .. "\"miab_id\": " .. miab_id .. ","
 	out_json = out_json .. "\"area_id\": " .. area_id .. ","
 	out_json = out_json .. "\"eform_id\": " .. eform_id .. ","
-	out_json = out_json .. "\"in_battle\":" .. in_battle .. ","
+	out_json = out_json .. "\"in_battle\":" .. tostring(in_battle) .. ","
 	out_json = out_json .. "\"map_id\": " .. map_id .. ","
 
 	-- Kill information
