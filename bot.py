@@ -13,7 +13,6 @@ with open("config.json") as fin:
     opts = json.load(fin)
 
 bot = commands.Bot(**opts)
-bot._last_status = {}
 
 _ROOT = {"darkslash88"}
 # add additional admin names here
@@ -52,6 +51,37 @@ _CONTEXT = {
     #"skill": None,
     #"character": None
 }
+
+#
+# Parsing
+#
+def convert_buffer_to_commands(logf, **kwargs):
+    cmds = []
+    last_status = kwargs.get("last_status", {})
+    for status in sorted(logf, key=lambda l: l["frame"]):
+        # check for map change
+        if status["map_id"] != last_status.get("map_id", None):
+            cmds.append(f"!set area={status['map_id']}")
+            print("emu>", cmds[-1])
+
+        if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None) \
+            and status["eform_id"] is in _BOSS_INFO["Id"]:
+            cmds.append(f"!set boss={status['eform_id']}")
+            print("emu>", cmds[-1])
+
+        # check for kills
+        lkills = last_status.get("kills", {})
+        for char, k in status.get("kills", {}).items():
+            diff = k - lkills.get(char, 0)
+            if diff > 0:
+                cmds.append(f"!event enemykill {char} {diff}")
+                print("emu>", cmds[-1])
+
+        last_status = status
+
+    print("Last status:", last_status)
+
+    return cmds, last_status
 
 #
 # Utils
@@ -153,6 +183,7 @@ def search(term, lookup, info):
 async def event_ready():
     print("HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
     bot._skip_auth = False
+    bot._last_status = {}
     ws = bot._ws
 
 @bot.command(name='doarena')
@@ -184,7 +215,8 @@ async def event_message(ctx):
 
     # Read in emulator log
     try:
-        cmds, last = read.parse_log_file(last_status=bot._last_status)
+        cmds = read.parse_log_file()
+        cmds, last = convert_buffer_to_commands(cmds, last_status=bot._last_status)
         bot._last_status = last
         buff += cmds
     except Exception as e:
