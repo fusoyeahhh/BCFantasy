@@ -1,11 +1,14 @@
 kills = {}
+wound = {false, false, false, false}
 ekilled = {}
+pdeath = {}
 -- in_battle requires the number of enemies and characters alive to be greater
 -- than zero, and less than their allowed slot numbers (6 and 4 respectively).
 -- It's probably not perfect, but seems to work so far
 in_battle = memory.read_u8(0x3A76) > 0 and memory.read_u8(0x3A77) > 0
  	    and memory.read_u8(0x3A76) <= 4 and memory.read_u8(0x3A77) <= 6
 enemies_alive = 0
+map_id = nil
 
 -- character slot order
 _CHARS = {
@@ -48,6 +51,7 @@ while true do
 		ekilled = {}
 	end
 
+    map_change = memory.read_u16_le(0x1F64) != map_id
 	map_id = memory.read_u16_le(0x1F64)
 	area_id = memory.read_u8(0x0520)
 	miab_id = memory.read_u8(0x0789)
@@ -63,13 +67,6 @@ while true do
 	name_5 = string.char(math.max(memory.read_u8(0x2EB3) - offset_lower, 0))
 	name_6 = string.char(math.max(memory.read_u8(0x2EB4) - offset_lower, 0))
 	--]]
-
-	atk_name_1 = string.char(math.max(memory.read_u8(0x57D5) - offset_lower, 0))
-	atk_name_2 = string.char(math.max(memory.read_u8(0x57D6) - offset_lower, 0))
-	atk_name_3 = string.char(math.max(memory.read_u8(0x57D7) - offset_lower, 0))
-	atk_name_4 = string.char(math.max(memory.read_u8(0x57D8) - offset_lower, 0))
-	atk_name_5 = string.char(math.max(memory.read_u8(0x57D9) - offset_lower, 0))
-	atk_name_6 = string.char(math.max(memory.read_u8(0x57E0) - offset_lower, 0))
 
 	-- next two work
 	nchar_alive = memory.read_u8(0x3A76)
@@ -140,6 +137,16 @@ while true do
 			char = chars[2 * i]
 		end
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
+
+		_wound = char_status_1 & (1 << 7)
+		if _wound and ~_wound[i] then
+		    if pdeath[char] ~= nil then
+    		    pdeath[char] = pdeath[char] + 1
+    		else
+        		pdeath[char] = 1
+		    end
+		end
+		wound[i] = _wound
 
 		gui.text(20, 60 + i * 10, char .. " (" .. (2 * i ) .. ") | slot " .. slot_mask .. " | " .. curr_hp .. " | targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: " .. bizstring.binary(char_status_1))
 	end
@@ -225,6 +232,7 @@ while true do
 	out_json = out_json .. "\"miab_id\": " .. miab_id .. ","
 	out_json = out_json .. "\"area_id\": " .. area_id .. ","
 	out_json = out_json .. "\"eform_id\": " .. eform_id .. ","
+	out_json = out_json .. "\"in_battle\":" .. in_battle .. ","
 	out_json = out_json .. "\"map_id\": " .. map_id .. ","
 
 	-- Kill information
@@ -246,7 +254,7 @@ while true do
 	--in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
         	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 
-	if in_battle then
+	if in_battle or map_change then
 	--if prev_state ~= in_battle and ~in_battle then
 		logfile:write(out_json .. "\n")
 	end
