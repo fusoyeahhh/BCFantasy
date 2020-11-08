@@ -64,9 +64,16 @@ def convert_buffer_to_commands(logf, **kwargs):
             cmds.append(f"!set area={status['map_id']}")
             print("emu>", cmds[-1])
 
+        # check for boss encounter
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None) \
             and int(status["eform_id"]) in _BOSS_INFO["Id"].values:
             cmds.append(f"!set boss={status['eform_id']}")
+            print("emu>", cmds[-1])
+
+        # check for miab
+        if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None) \
+            and int(status["eform_id"]) == int(last_status.get("miab_id", -1)):
+            cmds.append(f"!event miab")
             print("emu>", cmds[-1])
 
         # check for kills
@@ -74,7 +81,17 @@ def convert_buffer_to_commands(logf, **kwargs):
         for char, k in status.get("kills", {}).items():
             diff = k - lkills.get(char, 0)
             if diff > 0:
-                cmds.append(f"!event enemykill {char} {diff}")
+                # FIXME: should probably in_check battle status
+                etype = "boss" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else "enemy"
+                cmds.append(f"!event {etype}kill {char} {diff}")
+                print("emu>", cmds[-1])
+
+        # check for deaths
+        ldeaths = last_status.get("deaths", {})
+        for char, k in status.get("deaths", {}).items():
+            diff = k - ldeaths.get(char, 0)
+            if diff > 0:
+                cmds.append(f"!event chardeath {char} {diff}")
                 print("emu>", cmds[-1])
 
         last_status = status
