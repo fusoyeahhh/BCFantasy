@@ -38,6 +38,28 @@ offset_lower = 169 - 112
 ip = nil
 port = nil
 
+-- Read seed and flag information
+--[[
+    replace_credits_text(0x6625, "flags")
+    replace_credits_text(0x663A, display_flags, split=True)
+    replace_credits_text(0x6661, codestatus)
+    replace_credits_text(0x6682, "seed")
+    replace_credits_text(0x668C, text.upper())
+    replace_credits_text(0x669E, "ver.")
+
+-- FIXME: These are locations *in the ROM* not in memory
+-- and they're compressed too...
+flags = ""
+for i=0x663A..0x6661 do
+	flags = flags .. memory.read_u8(i) .. "|"
+end
+
+seed = ""
+for i=0x668C..0x669E do
+	seed = seed .. memory.read_u8(i) .. "|"
+end
+--]]
+
 logfile = io.open("logfile.txt", "w+")
 
 -- Main loop
