@@ -533,7 +533,7 @@ async def give(ctx):
         for user in cmd:
             if user in _USERS:
                 print(f"Adding {val} to {user} score")
-                _USERS[user]["score"] += int(cmd[-1])
+                _USERS[user]["score"] += val
 COMMANDS["give"] = give
 
 @bot.command(name='event')
