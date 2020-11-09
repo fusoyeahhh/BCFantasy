@@ -196,6 +196,13 @@ def search(term, lookup, info):
     else:
         return str(found.to_dict(orient='records')[0])[1:-1]
 
+def serialize():
+    with open("history.json", "w") as fout:
+        json.dump(HISTORY, fout, indent=2)
+
+    with open(f"user_data.json", "w") as fout:
+        json.dump(_USERS, fout, indent=2)
+
 #
 # Bot commands
 #
@@ -282,12 +289,7 @@ async def event_message(ctx):
 
     # Only every minute
     if curtime - bot._last_state_drop > 60:
-        with open("history.json", "w") as fout:
-            json.dump(HISTORY, fout, indent=2)
-
-        with open(f"user_data.json", "w") as fout:
-            json.dump(_USERS, fout, indent=2)
-
+        serialize()
         bot._last_state_drop = curtime
 
 @bot.command(name='hi')
