@@ -518,7 +518,7 @@ async def give(ctx):
         return
 
     cmd = ctx.content.split(" ")[1:]
-    if len(cmd == 0):
+    if len(cmd) == 0:
         await ctx.send("Invalid !give command")
         return
 
