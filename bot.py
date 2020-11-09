@@ -536,13 +536,6 @@ async def _set(ctx):
     if not bot._skip_auth:
         await ctx.send(f"Sorry @{user}, that didn't work.")
 
-# FIXME: these are the columns of the individual files
-_EVENTS = {
-    frozenset({"gameover", "chardeath", "miab", "backattack", "cantrun"}): "area",
-    frozenset({"gameover", "bchardeath"}): "boss",
-    frozenset({"enemykill", "bosskill", "buff", "debuff"}): "char"
-}
-
 @bot.command(name='give')
 async def give(ctx):
     """
@@ -571,6 +564,13 @@ async def give(ctx):
                 print(f"Adding {val} to {user} score")
                 _USERS[user]["score"] += val
 COMMANDS["give"] = give
+
+# FIXME: these are the columns of the individual files
+_EVENTS = {
+    frozenset({"gameover", "chardeath", "miab", "backattack", "cantrun"}): "area",
+    frozenset({"gameover", "bchardeath"}): "boss",
+    frozenset({"enemykill", "bosskill", "buff", "debuff"}): "char"
+}
 
 @bot.command(name='event')
 async def event(ctx):
