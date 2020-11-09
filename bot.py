@@ -6,6 +6,7 @@ import pandas
 import json
 from twitchio.ext import commands
 from twitchio.dataclasses import User
+import glob
 
 import read
 
@@ -133,6 +134,9 @@ def _set_context(content):
         if cat in _CONTEXT:
             _CONTEXT[cat] = item
 
+        with open("context.json", "w") as fout:
+            json.dump(_CONTEXT, fout, indent=2)
+
     except Exception as e:
         print(e)
         return False
@@ -199,8 +203,26 @@ def search(term, lookup, info):
 @bot.event
 async def event_ready():
     print("HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
+    if os.path.exists("context.json"):
+
+    if os.path.exists("context.json"):
+        with open("context.json", "r") as fin:
+            _CONTEXT = json.load(fin)
+    print(_CONTEXT)
+
+    # find latest
+    try:
+        latest = sorted(glob.glob("user_data*.json"),
+                        key=lambda f: os.path.getmtime(f))[-1]
+        with open(latest, "r") as fin:
+            _USERS = json.load(fin)
+        print(_USERS)
+    except IndexError:
+        pass
+
     bot._skip_auth = False
     bot._last_status = {}
+    bot._last_state_drop = -1
     ws = bot._ws
 
 @bot.command(name='doarena')
@@ -255,6 +277,18 @@ async def event_message(ctx):
             print(f"Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
     bot._skip_auth = False
+
+    curtime = int(time.time())
+
+    # Only every minute
+    if curtime - bot._last_state_drop > 60:
+        with open("history.json", "w") as fout:
+            json.dump(HISTORY, fout, indent=2)
+
+        with open(f"user_data.json", "w") as fout:
+            json.dump(_USERS, fout, indent=2)
+
+        bot._last_state_drop = curtime
 
 @bot.command(name='hi')
 async def hi(ctx):
@@ -642,24 +676,6 @@ async def explain(ctx):
 COMMANDS["bcf"] = explain
 
 if __name__ == "__main__":
-    import time
-    import glob
-    import json
-
-    # find latest
-    try:
-        latest = sorted(glob.glob("user_data*.json"),
-                        key=lambda f: os.path.getmtime(f))[-1]
-        with open(latest, "r") as fin:
-            _USERS = json.load(fin)
-        print(_USERS)
-    except IndexError:
-        pass
-
-    if os.path.exists("context.json"):
-        with open("context.json", "r") as fin:
-            _CONTEXT = json.load(fin)
-        print(_CONTEXT)
 
     # for local stuff
     try:
@@ -673,13 +689,3 @@ if __name__ == "__main__":
     bot.run()
 
     os.remove("local")
-
-    with open("context.json", "w") as fout:
-        json.dump(_CONTEXT, fout, indent=2)
-
-    with open("history.json", "w") as fout:
-        json.dump(HISTORY, fout, indent=2)
-
-    time = int(time.time())
-    with open(f"user_data_{time}.json", "w") as fout:
-        json.dump(_USERS, fout, indent=2)
