@@ -210,7 +210,6 @@ def serialize():
 @bot.event
 async def event_ready():
     print("HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
-    if os.path.exists("context.json"):
 
     if os.path.exists("context.json"):
         with open("context.json", "r") as fin:
@@ -638,6 +637,27 @@ async def event(ctx):
             #elif event == "cantrun" and has_item:
                 #sel["score"] += 2
             print(f"\t{event}, {user} {sel['score'] - _score}")
+
+@bot.command(name='stop')
+async def stop(ctx):
+    """
+    !stop [|annihilated|kefkadown] Tell the bot to save its contents, possibly for a reason (game over, Kefka beaten).
+    """
+    user = ctx.author.name
+    if not (bot._skip_auth or _authenticate(ctx)):
+        await ctx.send(f"I'm sorry, @{user}, I can't do that...")
+        return
+
+    serialize()
+    cmd = ctx.message.split()[1:]
+    if cmd[0] == "annihilated":
+        serialize()
+        # Possibly do a report?
+        #reset_bot
+    elif cmd[0] == "kefkadown":
+        await ctx.send("!cb darksl5GG darksl5Kitty ")
+    else:
+        await ctx.send(f"Urecognized stop reason {cmd[0]}")
 
 #
 # Help commands
