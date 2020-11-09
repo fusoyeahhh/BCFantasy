@@ -120,7 +120,7 @@ def _set_context(content):
 
         if cat == "boss" and item.isdigit():
             item = int(item)
-            if item in _BOSS_INFO["Id"]:
+            if item in set(_BOSS_INFO["Id"]):
                 item = _BOSS_INFO.set_index("Id").loc[item]["Boss"]
             else:
                 raise ValueError(f"No valid boss mapping for id {item} (this may be intended)")
