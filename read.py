@@ -1,6 +1,8 @@
 import os
 import json
 
+_QUIET = True
+
 def read_local_queue(path='local'):
     fifo = os.open(path, os.O_NONBLOCK)
     data = os.read(fifo, 1024)
@@ -12,6 +14,7 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
     if not os.path.exists(os.path.join(os.getcwd(), path)):
         return {}
 
+    nerrors = 0
     #last_frame = last_status.get("frame", None) or last_frame
     with open(os.path.join(os.getcwd(), path), "r") as fin:
         logf = []
@@ -23,8 +26,10 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 if line.get("frame", -float("inf")) >= last_frame:
                     logf.append(line)
             except Exception as e:
-                print("JSON reading failed:", e)
-                print(line)
+                if not _QUIET:
+                    print("JSON reading failed:", e)
+                    print(line)
+                nerrors += 1
 
-    print(f"Read {len(logf)} new lines.")
+    print(f"Read {len(logf)} new lines, with {nerrors} errors.")
     return logf
