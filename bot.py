@@ -517,17 +517,23 @@ async def give(ctx):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
-    cmd = ctx.content.split(" ")[2:]
-    if len(cmd) == 1:
+    cmd = ctx.content.split(" ")[1:]
+    if len(cmd == 0):
+        await ctx.send("Invalid !give command")
+        return
+
+    val = int(cmd.pop())
+    if len(cmd) == 0:
         # Give everyone points
-        for user in _USERS:
-            user["score"] += int(cmd[0])
-    elif len(cmd) > 1:
+        for user, scr in _USERS.items():
+            print(f"Adding {val} to {user} score")
+            scr["score"] += val
+    elif len(cmd) >= 1:
         # Give specified chatters points
-        pts = int(cmd[-1])
-        for user in cmd[:-1]:
+        for user in cmd:
             if user in _USERS:
-                _USERS[user]["score"] += int(cmd[0])
+                print(f"Adding {val} to {user} score")
+                _USERS[user]["score"] += int(cmd[-1])
 COMMANDS["give"] = give
 
 @bot.command(name='event')
