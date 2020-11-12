@@ -60,7 +60,9 @@ for i=0x668C..0x669E do
 end
 --]]
 
+-- Truncate any existing logfile
 logfile = io.open("logfile.txt", "w+")
+logfile.close()
 
 -- Main loop
 while true do
@@ -290,6 +292,10 @@ while true do
 
 	if in_battle or map_change then
 	--if prev_state ~= in_battle and (not in_battle) then
+		-- Truncate any existing logfile
+		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
+		logfile:flush()
+		logfile:close()
 	end
 end
