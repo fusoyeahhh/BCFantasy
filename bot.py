@@ -677,10 +677,13 @@ async def _help(ctx):
     cnt.pop(0)
     if not cnt:
         await ctx.send(f"Available commands: {' '.join(COMMANDS.keys())}. Use '!help cmd' (no excl. point on 'cmd) to get more help.")
+        return
+
     arg = cnt.pop(0)
     if arg not in COMMANDS:
         await ctx.send(f"@{user}, that's not a command I have help for. Available commands: {' '.join(COMMANDS.keys())}.")
         return
+
     doc = COMMANDS[arg]._callback.__doc__
     print(COMMANDS[arg])
     await ctx.send(f"help | {arg}: {doc}")
