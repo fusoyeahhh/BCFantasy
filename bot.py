@@ -164,7 +164,7 @@ def _chunk_string(inlist, joiner=", "):
         outstr += joiner + str(inlist.pop(0))
 
 def _check_term(term, lookup, info, full=False):
-    _term = term.replace("(", r"\(").replace(")", r"\)")
+    _term = str(term).replace("(", r"\(").replace(")", r"\)")
     found = info[lookup].str.lower().str.contains(_term.lower())
     found = info.loc[found]
 
