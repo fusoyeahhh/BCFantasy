@@ -62,7 +62,7 @@ end
 
 -- Truncate any existing logfile
 logfile = io.open("logfile.txt", "w+")
-logfile.close()
+io.close(logfile)
 
 -- Main loop
 while true do
@@ -295,7 +295,7 @@ while true do
 		-- Truncate any existing logfile
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
-		logfile:flush()
-		logfile:close()
+		io.flush(logfile)
+		io.close(logfile)
 	end
 end
