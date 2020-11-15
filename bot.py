@@ -678,6 +678,10 @@ async def reset(ctx):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
+    global _CONTEXT
+    global _USERS
+    bot._last_state_drop = -1
+    bot._last_status = {}
     _CONTEXT, _USERS = {}, {}
 
 #
