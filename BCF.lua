@@ -75,9 +75,9 @@ while true do
 		ekilled = {}
 	end
 
-    map_change = bit.band(memory.read_u16_le(0x1F64), 0x2000 - 1)
+    map_change = bit.band(memory.read_u16_le(0x1F64), 0x1000 - 1)
 	map_change = map_change ~= map_id
-	map_id = bit.band(memory.read_u16_le(0x1F64), 0x2000 - 1)
+	map_id = bit.band(memory.read_u16_le(0x1F64), 0x1000 - 1)
 	area_id = memory.read_u8(0x0520)
 	miab_id = memory.read_u8(0x0789)
     eform_id = memory.read_u16_le(0x11E0)
