@@ -173,7 +173,7 @@ while true do
 		end
 		wound[i] = _wound
 
-		gui.text(20, 60 + i * 10, char .. " (" .. (2 * i ) .. ") | slot " .. slot_mask .. " | " .. curr_hp .. " | targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: " .. bizstring.binary(char_status_1))
+		gui.text(20, 60 + i * 10, char .. " (" .. (2 * i ) .. ") | slot " .. slot_mask .. " | " .. curr_hp .. " | targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: " .. bizstring.binary(char_status_1) .. " | wound: " .. tostring(_wound))
 	end
 
 	-- 0x3298 monster slots 1-6? (indicates "masks")
