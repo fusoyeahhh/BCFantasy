@@ -211,6 +211,9 @@ def serialize():
 async def event_ready():
     print("HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
 
+    # FIXME: these should just live inside the bot
+    global _USERS
+    global _CONTEXT
     if os.path.exists("context.json"):
         with open("context.json", "r") as fin:
             _CONTEXT = json.load(fin)
