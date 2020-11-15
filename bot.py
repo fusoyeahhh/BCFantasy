@@ -667,6 +667,18 @@ async def stop(ctx):
     else:
         await ctx.send(f"Urecognized stop reason {cmd[0]}")
 
+@bot.command(name='reset')
+async def reset(ctx):
+    """
+    !reset -> no arguments; reset all contextual and user stores
+    """
+    user = ctx.author.name
+    if not (bot._skip_auth or _authenticate(ctx)):
+        await ctx.send(f"I'm sorry, @{user}, I can't do that...")
+        return
+
+    _CONTEXT, _USERS = {}, {}
+
 #
 # Help commands
 #
