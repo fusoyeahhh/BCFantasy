@@ -19,6 +19,8 @@ _ROOT = {"darkslash88"}
 # add additional admin names here
 _AUTHORIZED = _ROOT | {"fusoyeahhh", "crackboombot"}
 
+_CHAT_READBACK = False
+
 def _write(ctx, strn, prefix="BCFBot>"):
     pass
 
@@ -246,7 +248,8 @@ async def event_message(ctx):
         #"Type !arena to start" in ctx.content):
         #ctx.content = '!doarena' + " " + ctx.content
 
-    print(ctx.content)
+    if _CHAT_READBACK:
+        print(ctx.content)
 
     if ctx.content.startswith("!"):
         command = ctx.content.split(" ")[0][1:]
