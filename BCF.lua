@@ -163,7 +163,7 @@ while true do
 		end
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
-		_wound = bit.band(char_status_1, bit.lshift(1, 7))
+		_wound = bit.band(char_status_1, bit.lshift(1, 7)) == 128
 		if _wound and (not wound[i]) then
 		    if pdeath[char] ~= nil then
     		    pdeath[char] = pdeath[char] + 1
@@ -292,7 +292,7 @@ while true do
         	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 
 	--if in_battle or map_change then
-	if map_change or (prev_state ~= in_battle and (not in_battle)) then
+	if map_change or (prev_state ~= in_battle) then
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
 		io.flush(logfile)
