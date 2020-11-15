@@ -169,7 +169,7 @@ while true do
 		-- 1. We're in battle and we didn't *just* get here
 		-- If we did, then only record the wound status (e.g. we were dead coming in)
 		-- 2. The wound status got toggled
-		if in_battle and (prev_state == in_battle) and (_wound and (not wound[i])) and then
+		if in_battle and (prev_state == in_battle) and (_wound and (not wound[i])) then
 		    if pdeath[char] ~= nil then
     		    pdeath[char] = pdeath[char] + 1
     		else
