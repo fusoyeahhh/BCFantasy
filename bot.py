@@ -83,7 +83,7 @@ def convert_buffer_to_commands(logf, **kwargs):
         lkills = last_status.get("kills", {})
         for char, k in status.get("kills", {}).items():
             diff = k - lkills.get(char, 0)
-            if diff > 0:
+            if diff > 0 and char != "NIL_lookup":
                 # FIXME: should probably in_check battle status
                 etype = "boss" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else "enemy"
                 cmds.append(f"!event {etype}kill {char} {diff}")
@@ -93,7 +93,7 @@ def convert_buffer_to_commands(logf, **kwargs):
         ldeaths = last_status.get("deaths", {})
         for char, k in status.get("deaths", {}).items():
             diff = k - ldeaths.get(char, 0)
-            if diff > 0:
+            if diff > 0 and char != "NIL_lookup":
                 cmds.append(f"!event chardeath {char} {diff}")
                 print("emu>", cmds[-1])
 
