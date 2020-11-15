@@ -150,6 +150,7 @@ while true do
 	end
 	--]]
 
+	-- TODO: short circuit all of this outside of battle
 	-- targetting 0x3290 - 0x3297 slots 1-4 (indicates "masks")
 	for i=0,3 do
 		c_last_targetted = memory.read_u8(0x3290 + i)
@@ -164,7 +165,11 @@ while true do
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
 		_wound = bit.band(char_status_1, bit.lshift(1, 7)) == 128
-		if _wound and (not wound[i]) then
+		-- Check if
+		-- 1. We're in battle and we didn't *just* get here
+		-- If we did, then only record the wound status (e.g. we were dead coming in)
+		-- 2. The wound status got toggled
+		if in_battle and (prev_state == in_battle) and (_wound and (not wound[i])) and then
 		    if pdeath[char] ~= nil then
     		    pdeath[char] = pdeath[char] + 1
     		else
