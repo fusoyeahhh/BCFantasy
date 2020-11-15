@@ -291,9 +291,8 @@ while true do
 	--in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
         	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 
-	if in_battle or map_change then
-	--if prev_state ~= in_battle and (not in_battle) then
-		-- Truncate any existing logfile
+	--if in_battle or map_change then
+	if map_change or (prev_state ~= in_battle and (not in_battle)) then
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
 		io.flush(logfile)
