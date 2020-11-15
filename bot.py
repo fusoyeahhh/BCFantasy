@@ -231,6 +231,8 @@ async def event_ready():
     bot._last_state_drop = -1
     ws = bot._ws
 
+    print(f"Init'd: {bot._last_state_drop}, {bot._last_status}\nUsers: {len(_USERS)}")
+
 @bot.command(name='doarena')
 async def _arena(ctx):
     await ctx.send('!arena')
@@ -708,6 +710,7 @@ if __name__ == "__main__":
     except AttributeError:
         pass
 
+    bot._last_state_drop = -1
     bot.run()
 
     os.remove("local")
