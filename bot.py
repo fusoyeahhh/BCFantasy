@@ -69,7 +69,7 @@ def convert_buffer_to_commands(logf, **kwargs):
 
         # check for boss encounter
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None):
-            print("New encounter: {status['eform_id']}")
+            print(f"New encounter: {status['eform_id']}")
             if int(status["eform_id"]) in _BOSS_INFO["Id"].values:
                 cmds.append(f"!set boss={status['eform_id']}")
                 print("emu>", cmds[-1])
