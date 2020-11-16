@@ -169,7 +169,10 @@ while true do
 		-- 1. We're in battle and we didn't *just* get here
 		-- If we did, then only record the wound status (e.g. we were dead coming in)
 		-- 2. The wound status got toggled
-		if in_battle and (prev_state == in_battle) and (_wound and (not wound[i])) and char ~= "EMPTY?" then
+		-- 3. How many enemies are there? It's possible that the game starts overwriting battle memory before
+		-- we can catch the transition for in_battle. This attempts to catch if there aren't any enemies alive
+		-- and takes no action if there isn't
+		if in_battle and (prev_state == in_battle) and nenem_alive > 0 and (_wound and (not wound[i])) and char ~= "EMPTY?" then
 		    if pdeath[char] ~= nil then
     		    pdeath[char] = pdeath[char] + 1
     		else
