@@ -69,6 +69,9 @@ _HUD = true
 -- Main loop
 while true do
 
+	-- FIXME: do variable state comparison here
+	emu.frameadvance()
+
 	prev_state = in_battle
 	in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
         	    memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
@@ -103,8 +106,6 @@ while true do
 
 	-- appears to work, but only for party, not enemies
 	alive_mask = memory.read_u8(0x3A74)
-
-	emu.frameadvance();
 
 	if _HUD then
 		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. " | map id " .. map_id .. " | battle type " .. bizstring.binary(battle_type))
