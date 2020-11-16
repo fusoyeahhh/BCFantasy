@@ -64,6 +64,8 @@ end
 logfile = io.open("logfile.txt", "w+")
 io.close(logfile)
 
+_HUD = true
+
 -- Main loop
 while true do
 
@@ -102,14 +104,16 @@ while true do
 
 	emu.frameadvance();
 
-	gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. " | map id " .. map_id .. " | battle type " .. bizstring.binary(battle_type))
-	gui.text(20, 20, "alive mask: " .. bizstring.binary((0xF + 1) + alive_mask) .. " total enemies " .. enemies_alive)
-	gui.text(20, 30, "chars alive: " .. nchar_alive)
-	gui.text(20, 40, "monsters alive: " .. nenem_alive)
+	if _HUD then
+		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. " | map id " .. map_id .. " | battle type " .. bizstring.binary(battle_type))
+		gui.text(20, 20, "alive mask: " .. bizstring.binary((0xF + 1) + alive_mask) .. " total enemies " .. enemies_alive)
+		gui.text(20, 30, "chars alive: " .. nchar_alive)
+		gui.text(20, 40, "monsters alive: " .. nenem_alive)
+	end
 
 	-- $EBFF-$EC06 monster names (4 items, 2 bytes each)
 	-- must be pointers
-	e1_name = string.char(math.max(memory.read_u8(0xEBFF) - offset_lower, 0)) .. 
+	e1_name = string.char(math.max(memory.read_u8(0xEBFF) - offset_lower, 0)) ..
 		  string.char(math.max(memory.read_u8(0xEC00) - offset_lower, 0))
 
     	-- $EC07-$EC0E number of monsters alive for each name (4 items, 2 bytes each)
@@ -181,7 +185,11 @@ while true do
 		end
 		wound[i] = _wound
 
-		gui.text(20, 60 + i * 10, char .. " (" .. (2 * i ) .. ") | slot " .. slot_mask .. " | " .. curr_hp .. " | targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: " .. bizstring.binary(char_status_1) .. " | wound: " .. tostring(_wound))
+		if _HUD then
+			gui.text(20, 60 + i * 10, char .. " (" .. (2 * i ) .. ") | slot " .. slot_mask .. " | " .. curr_hp
+					.. " | targetted by: " .. bizstring.hex(c_last_targetted) .. " | status: "
+					.. bizstring.binary(char_status_1) .. " | wound: " .. tostring(_wound))
+		end
 	end
 
 	-- 0x3298 monster slots 1-6? (indicates "masks")
@@ -201,7 +209,7 @@ while true do
 		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
 		status = " killed by "
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255 and
-		   curr_hp == 0 and nenem_alive < enemies_alive then
+				curr_hp == 0 and nenem_alive < enemies_alive then
 			status = status .. c_last_targetted
 
 			-- Attribute kill to the last character that targetted this
@@ -220,7 +228,7 @@ while true do
 				-- Initialize and/or increment
 				if kills[c_last_targetted] == nil then
 					kills[c_last_targetted] = 1
-				else	
+				else
 					kills[c_last_targetted] = kills[c_last_targetted] + 1
 				end
 				-- Decrement running enemy count
@@ -228,14 +236,16 @@ while true do
 				-- Mark as dead
 				ekilled[slot_mask] = 1
 			end
-		--else
+			--else
 			--status = bizstring.hex(c_last_targetted)
 		end
 
-		gui.text(20, 120 + i * 10, "slot " .. slot_mask
-					   .. " (" .. curr_hp .. ") targetted by: "
-					   .. c_last_targetted
-					   .. status)
+		if _HUD then
+			gui.text(20, 120 + i * 10, "slot " .. slot_mask
+					.. " (" .. curr_hp .. ") targetted by: "
+					.. c_last_targetted
+					.. status)
+		end
 	end
 
 	-- Display kill tracker
@@ -244,8 +254,10 @@ while true do
 	    if pdeath[char] ~= nil then
 	        kcount = kcount .. " deaths: " .. pdeath[char]
 	    end
-		gui.text(20, 240 + i * 10, "slot " .. char
-					   .. " kills: " .. kcount)
+
+		if _HUD then
+			gui.text(20, 240 + i * 10, "slot " .. char .. " kills: " .. kcount)
+		end
 		i = i + 1
     end
 
