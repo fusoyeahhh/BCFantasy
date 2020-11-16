@@ -1,5 +1,6 @@
 import os
 import json
+import time
 
 _QUIET = True
 
@@ -32,5 +33,5 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 nerrors += 1
 
     if len(logf) > 0:
-        print(f"Read {len(logf)} new lines, with {nerrors} errors.")
+        print(f"{time.time()}: Read {len(logf)} new lines, with {nerrors} errors.")
     return logf
