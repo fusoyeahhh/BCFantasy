@@ -31,5 +31,6 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                     print(line)
                 nerrors += 1
 
-    print(f"Read {len(logf)} new lines, with {nerrors} errors.")
+    if len(logf) > 0:
+        print(f"Read {len(logf)} new lines, with {nerrors} errors.")
     return logf
