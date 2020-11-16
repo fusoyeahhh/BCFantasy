@@ -100,7 +100,8 @@ def convert_buffer_to_commands(logf, **kwargs):
 
         last_status = status
 
-    print("Last status:", last_status)
+    if len(logf) > 0:
+        print("Last status:", last_status)
 
     return cmds, last_status
 
