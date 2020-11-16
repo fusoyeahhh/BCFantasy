@@ -23,7 +23,7 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 # FIXME: this actually needs fixed on the Lua side
                 line = line.replace(",}", "}").replace(", }", "}")
                 line = json.loads(line or "{}")
-                if line.get("frame", -float("inf")) >= last_frame:
+                if line.get("frame", -float("inf")) > last_frame:
                     logf.append(line)
             except Exception as e:
                 if not _QUIET:
