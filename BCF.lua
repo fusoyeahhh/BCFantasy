@@ -75,6 +75,8 @@ while true do
 	if prev_state ~= in_battle and in_battle then
 		enemies_alive = memory.read_u8(0x3A77)
 		ekilled = {}
+		-- FIXME: Initialize this properly
+		wound = {}
 	end
 
     map_change = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
