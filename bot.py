@@ -648,6 +648,7 @@ async def event(ctx):
                 #sel["score"] += 2
             print(f"\t{event}, {user} {sel['score'] - _score}")
 
+# TODO: is map id 5 the gameover screen?
 @bot.command(name='stop')
 async def stop(ctx):
     """
@@ -685,6 +686,8 @@ async def reset(ctx):
     bot._last_status = {}
     # FIXME: to function
     _CONTEXT, _USERS = {"area": None, "boss": None}, {}
+    # FIXME: delete log so as not to update any further
+    await ctx.send("User and context info reset.")
 
 #
 # Help commands
