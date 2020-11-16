@@ -682,7 +682,8 @@ async def reset(ctx):
     global _USERS
     bot._last_state_drop = -1
     bot._last_status = {}
-    _CONTEXT, _USERS = {}, {}
+    # FIXME: to function
+    _CONTEXT, _USERS = {"area": None, "boss": None}, {}
 
 #
 # Help commands
