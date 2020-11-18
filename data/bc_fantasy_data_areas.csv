@@ -1,40 +1,40 @@
-Area,Kills Character,MIAB,Gameover,Cost
-Narshe (WoB),50,500,1000,10
-WoB Overworld,10,N/A,500,250
-South Figaro Cave,50,500,100,25
-Mt. Koltz,30,500,200,100
-Lete River,30,N/A,160,80
-Imperial Camp,50,500,200,50
-Phantom Forest,30,N/A,150,75
-Phantom Train,25,300,300,100
-Baren Falls,50,N/A,500,25
-Veldt,20,N/A,200,125
-Serpent Trench,50,500,200,75
-South Figaro Basement,50,500,200,75
-Narshe Ice Fields,10,N/A,400,20
-Zozo,30,300,700,500
-Opera House,50,N/A,600,300
-Magitek Facility,20,200,1500,750
-Cave to the Sealed Gate,20,200,1500,800
-Burning House,30,300,2000,1200
-Esper Mountain,30,300,2000,1000
-Doma Castle,50,500,1000,50
-Floating Continent,20,200,2500,2000
-WoR Overworld,20,N/A,3000,2500
-Collapsing House,0,1000,2500,2200
-Castle Figaro Basement,50,500,3000,2500
-Daryl's Tomb,30,300,4000,3000
-Cave on the Veldt,50,500,5000,2500
-Gogo's Cave,30,300,4500,3500
-Mt. Zozo,30,300,4000,3000
-Narshe (WoR),50,500,4000,2500
-Umaro's Cave,30,300,4000,2200
-Owzer's Mansion,50,500,5000,2500
-Ebot's Cave,50,N/A,5000,2500
-Underground Strata,30,300,5000,3000
-Ancient Castle,20,200,5000,3000
-Cyan's Dream,20,200,5000,4000
-Phoenix Cave,20,10,5000,4000
-Fanatic's Tower,10,500,5500,5000
-Kefka's Tower,10,100,5500,5000
-Towns,50,500,1000,250
+Area,Kills Character,MIAB,Gameover,Cost,Sell
+Narshe (WoB),500,500,10000,10,5
+WoB Overworld,100,N/A,5000,250,125
+South Figaro Cave,500,500,1000,30,15
+Mt. Koltz,300,500,2000,100,50
+Lete River,300,N/A,1600,80,40
+Imperial Camp,500,500,2000,50,25
+Phantom Forest,300,N/A,1500,80,40
+Phantom Train,250,300,3000,100,50
+Baren Falls,500,N/A,5000,30,15
+Veldt,200,N/A,2000,120,60
+Serpent Trench,500,500,2000,80,40
+South Figaro Basement,500,500,2000,80,40
+Narshe Ice Fields,100,N/A,4000,20,10
+Zozo,300,300,7000,500,250
+Opera House,500,N/A,6000,300,150
+Magitek Facility,200,200,15000,750,375
+Cave to the Sealed Gate,200,200,15000,800,400
+Burning House,300,300,20000,1200,600
+Esper Mountain,300,300,20000,1000,500
+Doma Castle,500,500,10000,50,25
+Floating Continent,200,200,25000,2000,1000
+WoR Overworld,200,N/A,30000,2500,1250
+Collapsing House,0,1000,25000,2200,1100
+Castle Figaro Basement,500,500,30000,2500,1250
+Daryl's Tomb,300,300,40000,3000,1500
+Cave on the Veldt,500,500,50000,2500,1250
+Gogo's Cave,300,300,45000,3500,1750
+Mt. Zozo,300,300,40000,3000,1500
+Narshe (WoR),500,500,40000,2500,1250
+Umaro's Cave,300,300,40000,2200,1100
+Owzer's Mansion,500,500,50000,2500,1250
+Ebot's Cave,500,N/A,50000,2500,1250
+Underground Strata,300,300,50000,3000,1500
+Ancient Castle,200,200,50000,3000,1500
+Cyan's Dream,200,200,50000,4000,2000
+Phoenix Cave,200,10,50000,4000,2000
+Fanatic's Tower,100,500,55000,5000,2500
+Kefka's Tower,100,100,55000,5000,2500
+Towns,500,500,10000,250,125
