@@ -659,7 +659,7 @@ async def stop(ctx):
         return
 
     serialize()
-    cmd = ctx.message.split()[1:]
+    cmd = ctx.content.split()[1:]
     if cmd[0] == "annihilated":
         serialize()
         # Possibly do a report?
