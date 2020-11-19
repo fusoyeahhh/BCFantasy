@@ -22,6 +22,7 @@ Unzip the code to a location. Open this location and in a new file named `config
     "client_id":"<CLIENT_ID>",
     "nick":"<BOT_OR_YOUR_USERNAME>",
     "prefix":"!",
+    "admins": ["your_twitch_name", "a_bot_name"]
     "initial_channels":["#<CHANNEL>"]
 }
 ```
