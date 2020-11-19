@@ -13,11 +13,10 @@ import read
 with open("config.json") as fin:
     opts = json.load(fin)
 
-bot = commands.Bot(**opts)
-
-_ROOT = {"darkslash88"}
 # add additional admin names here
-_AUTHORIZED = _ROOT | {"fusoyeahhh", "crackboombot"}
+_AUTHORIZED = opts.pop("admins", {})
+
+bot = commands.Bot(**opts)
 
 _CHAT_READBACK = False
 
