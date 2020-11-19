@@ -461,8 +461,8 @@ async def listchars(ctx):
     """
     !listchars --> no arguments, list all available characters
     """
-    info = [f"{i[0]} ({i[1]})"
-                for _, i in _CHAR_INFO[["Character", "Cost"]].iterrows()]
+    info = [f"{i[0]} ({i[1]}, kills: {i[2]})"
+                for _, i in _CHAR_INFO[["Character", "Cost", "Kills Enemy"]].iterrows()]
     for outstr in _chunk_string(info):
         await ctx.send(outstr)
 COMMANDS["listchars"] = listchars
