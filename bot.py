@@ -451,7 +451,7 @@ async def listareas(ctx):
     """
     !listareas --> no arguments, link to all available areas
     """
-    await ctx.sent(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
+    await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
     return
 
     # FIXME: move to mod only command
@@ -479,7 +479,7 @@ async def listbosses(ctx):
     """
     !listbosses --> no arguments, link to all available bosses
     """
-    await ctx.sent(f"{_GITHUB_DOC_BASE}bc_fantasy_data_bosses.csv")
+    await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_bosses.csv")
     return
 
     # TODO: Move to mod only command
@@ -507,7 +507,7 @@ async def listchars(ctx):
     """
     !listchars --> no arguments, link to all available characters
     """
-    await ctx.sent(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
+    await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
     return
 
     # FIXME: move to mod only command
