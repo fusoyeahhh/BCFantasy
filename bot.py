@@ -271,7 +271,6 @@ async def event_message(ctx):
         print("Couldn't read logfile")
 
     for line in filter(lambda l: l, buff):
-        bot._skip_auth = True
         # Co-op ctx
         ctx.content = line
         # HACKZORS
@@ -282,7 +281,8 @@ async def event_message(ctx):
         if command in bot.commands:
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
-            print(f"Internally sending command as {ctx.author.name}: '{ctx.content}'")
+            bot._skip_auth = True
+            print(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
     bot._skip_auth = False
 
@@ -566,12 +566,15 @@ async def nextboss(ctx):
 @bot.command(name='set')
 async def _set(ctx):
     user = ctx.author.name
+    print(f"_set | checking auth: {bot._skip_auth}")
     if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
+    print(f"_set | attempting set: {bot._skip_auth}")
     if _set_context(ctx.content):
         return
+    print(f"_set | attempt failed: {bot._skip_auth}")
     if not bot._skip_auth:
         await ctx.send(f"Sorry @{user}, that didn't work.")
 
