@@ -382,7 +382,7 @@ async def sell(ctx):
     item = _USERS[user].pop(cat)
     lookup, info = LOOKUPS[cat]
     value = info.set_index(lookup).loc[item]["Sell"]
-    _USERS[user]["score"] += value
+    _USERS[user]["score"] += int(value)
 
     await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
 COMMANDS["sell"] = sell
