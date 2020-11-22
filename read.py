@@ -54,8 +54,8 @@ def read_memory(fname="memfile"):
     return mem
 
 def write_instructions(byte_arr, fname="instr", check_compl=3):
-    with open(fname, "w") as fout:
-        fout.write(byte_arr)
+    with open(fname, "wb") as fout:
+        fout.write(bytearray(byte_arr))
 
     for _ in range(int(3)):
         time.sleep(1)
