@@ -656,7 +656,11 @@ async def event(ctx):
                 item = args[0]
                 if len(args) > 1:
                     multi = int(args[1])
-                item = _check_term(item, lookup, info, full=True)
+                try:
+                    item = _check_term(item, lookup, info, full=True)
+                except Exception as e:
+                    print(f"Failed lookup for {item}:", e)
+                    continue
             #print(item, user)
 
             _score = sel["score"]
