@@ -734,6 +734,50 @@ async def explain(ctx):
         await ctx.send(outstr)
 COMMANDS["bcf"] = explain
 
+#
+# Crowd Control
+#
+
+CC_CMDS = {
+    "arb_write": write_arbitrary,
+}
+def write_arbitrary(*args):
+    """
+    Write a sequence of one or more address / value pairs to memory.
+
+    Should be used sparingly by admins as it can write arbitrary data to any location.
+    """
+    # Need address value pairs
+    assert(len(args) % 2 == 0)
+
+    instr = []
+    while len(args) > 0:
+        # assume hex
+        addr = int(args.pop(0), 16)
+        # FIXME: how to deal with 16 bit values
+        value = int(args.pop(0), 16) & 0xFF
+        # Break into high byte, low byte, and value to write
+        instr.extend(bytes[addr >> 8), addr & 0xFF, value))])
+
+    return instr
+
+if config.get("crowd_control", None) is not None:
+    @bot.command(name='cc')
+    async def cc(ctx):
+        user = ctx.author.name
+        if not (bot._skip_auth or _authenticate(ctx)):
+            await ctx.send(f"I'm sorry, @{user}, I can't do that...")
+            return
+
+        args = ctx.content.split(" ")[1:]
+        if args[0].lower() not in CC_CMDS:
+            await ctx.send(f"@{user}: the crowd control command {args[0]} is not recognized.")
+            return
+
+        cmd = args.pop(0)
+        read.write_instructions(CC_CMDS[cmd](*args))
+
+
 if __name__ == "__main__":
 
     # for local stuff
