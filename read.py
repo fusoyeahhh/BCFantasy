@@ -35,3 +35,20 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
     if len(logf) > 0:
         print(f"{time.time()}: Read {len(logf)} new lines, with {nerrors} errors.")
     return logf
+
+def read_memory(fname="memfile"):
+    with open(fname, "rb") as fin:
+        bytes = fin.read()
+
+    mem = {}
+    while len(bytes) > 0:
+        addr = bytes[1] + bytes[0] * 0x100
+        size = bytes[3] + bytes[2] * 0x100
+        # Find out why this is being reported one smaller than normal
+        size += 1
+        #print(hex(addr), hex(size), len(bytes))
+        mem[addr] = bytes[4:4 + size]
+        bytes = bytes[4 + size:]
+        #print(bytes)
+
+    return mem
