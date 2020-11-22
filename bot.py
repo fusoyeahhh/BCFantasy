@@ -16,6 +16,7 @@ with open("config.json") as fin:
 # add additional admin names here
 _AUTHORIZED = opts.pop("admins", {})
 _ENABLE_CC = opts.pop("crowd_control", None)
+_GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/data/")
 
 bot = commands.Bot(**opts)
 
@@ -448,12 +449,18 @@ COMMANDS["select"] = select
 @bot.command(name='listareas')
 async def listareas(ctx):
     """
-    !listareas --> no arguments, list all available areas
+    !listareas --> no arguments, link to all available areas
+    """
+    await ctx.sent(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
+    return
+
+    # FIXME: move to mod only command
     """
     info = [f"{i[0]} ({i[1]})"
                 for _, i in _AREA_INFO[["Area", "Cost"]].iterrows()]
     for outstr in _chunk_string(info):
         await ctx.send(outstr)
+    """
 COMMANDS["listareas"] = listareas
 
 @bot.command(name='areainfo')
@@ -470,12 +477,18 @@ COMMANDS["areainfo"] = areainfo
 @bot.command(name='listbosses')
 async def listbosses(ctx):
     """
-    !listbosses --> no arguments, list all available bosses
+    !listbosses --> no arguments, link to all available bosses
+    """
+    await ctx.sent(f"{_GITHUB_DOC_BASE}bc_fantasy_data_bosses.csv")
+    return
+
+    # TODO: Move to mod only command
     """
     info = [f"{i[0]} ({i[1]})"
                 for _, i in _BOSS_INFO[["Boss", "Cost"]].iterrows()]
     for outstr in _chunk_string(info):
         await ctx.send(outstr)
+    """
 COMMANDS["listbosses"] = listbosses
 
 @bot.command(name='bossinfo')
@@ -492,12 +505,18 @@ COMMANDS["bossinfo"] = bossinfo
 @bot.command(name='listchars')
 async def listchars(ctx):
     """
-    !listchars --> no arguments, list all available characters
+    !listchars --> no arguments, link to all available characters
+    """
+    await ctx.sent(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
+    return
+
+    # FIXME: move to mod only command
     """
     info = [f"{i[0]} ({i[1]}, kills: {i[2]})"
                 for _, i in _CHAR_INFO[["Character", "Cost", "Kills Enemy"]].iterrows()]
     for outstr in _chunk_string(info):
         await ctx.send(outstr)
+    """
 COMMANDS["listchars"] = listchars
 
 @bot.command(name='charinfo')
