@@ -15,6 +15,7 @@ with open("config.json") as fin:
 
 # add additional admin names here
 _AUTHORIZED = opts.pop("admins", {})
+_ENABLE_CC = opts.pop("crowd_control", None)
 
 bot = commands.Bot(**opts)
 
@@ -761,7 +762,7 @@ def write_arbitrary(*args):
 
     return instr
 
-if config.get("crowd_control", None) is not None:
+if _ENABLE_CC is not None:
     @bot.command(name='cc')
     async def cc(ctx):
         """
