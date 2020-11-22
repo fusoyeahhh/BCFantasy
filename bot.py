@@ -362,6 +362,31 @@ async def userscore(ctx):
     await ctx.send(f"@{user}, score: {_USERS[user]['score']}")
 COMMANDS["userscore"] = userscore
 
+@bot.command(name='sell')
+async def sell(ctx):
+    """
+    !sell [area|boss|char] sell indicated category and recoup its sell value
+    """
+    user = ctx.author.name
+    if user not in _USERS:
+        await ctx.send(f"@{user}, you are not registered, use !register first.")
+        return
+
+    selection = ctx.content.lower().split(" ")[1:]
+    cat = selection[0]
+
+    if cat not in _USERS[user]:
+        await ctx.send(f"@{user}, you have no selection for {cat}.")
+        return
+
+    item = _USERS[user].pop(cat)
+    lookup, info = LOOKUPS[cat]
+    value = info.set_index(lookup).loc[item]["Sell"]
+    _USERS[user]["score"] += value
+
+    await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
+COMMANDS["sell"] = sell
+
 @bot.command(name='select')
 async def select(ctx):
     """
