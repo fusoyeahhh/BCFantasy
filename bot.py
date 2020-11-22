@@ -757,7 +757,7 @@ def write_arbitrary(*args):
         # FIXME: how to deal with 16 bit values
         value = int(args.pop(0), 16) & 0xFF
         # Break into high byte, low byte, and value to write
-        instr.extend(bytes[addr >> 8), addr & 0xFF, value))])
+        instr.extend(bytes([addr >> 8, addr & 0xFF, value])))
 
     return instr
 
