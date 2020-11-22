@@ -386,7 +386,7 @@ async def select(ctx):
                 return
             cost = info.set_index(lookup).loc[item]["Cost"]
 
-            if _CONTEXT[cat] == item:
+            if cat in _CONTEXT and _CONTEXT[cat] == item:
                 await ctx.send(f"@{user}: you cannot select the current area / boss.")
                 return
 
