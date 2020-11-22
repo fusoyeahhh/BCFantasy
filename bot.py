@@ -764,6 +764,9 @@ def write_arbitrary(*args):
 if config.get("crowd_control", None) is not None:
     @bot.command(name='cc')
     async def cc(ctx):
+        """
+        cc [subcmd] [args] Execute crowd control subcmd, with possibly optional arguments.
+        """
         user = ctx.author.name
         if not (bot._skip_auth or _authenticate(ctx)):
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
@@ -776,6 +779,7 @@ if config.get("crowd_control", None) is not None:
 
         cmd = args.pop(0)
         read.write_instructions(CC_CMDS[cmd](*args))
+    COMMANDS["cc"] = cc
 
 
 if __name__ == "__main__":
