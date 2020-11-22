@@ -52,3 +52,14 @@ def read_memory(fname="memfile"):
         #print(bytes)
 
     return mem
+
+def write_instructions(byte_arr, fname="instr", check_compl=3):
+    with open(fname, "w") as fout:
+        fout.write(byte_arr)
+
+    for _ in range(int(3)):
+        time.sleep(1)
+        if os.path.getsize(fname) == 0:
+            break
+    else:
+        raise ValueError("Lua script did not seem to consume instruction file.")
