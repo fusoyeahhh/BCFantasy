@@ -9,3 +9,5 @@ config.json.txt
 config.json
 __pycache__
 *.json
+memfile
+instr
