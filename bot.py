@@ -252,14 +252,6 @@ async def event_message(ctx):
     if _CHAT_READBACK:
         print(ctx.content)
 
-    if ctx.content.startswith("!"):
-        command = ctx.content.split(" ")[0][1:]
-        if command in bot.commands:
-            current_time = int(time.time() * 1e3)
-            HISTORY[current_time] = ctx.content
-
-            await bot.handle_commands(ctx)
-
     # Trigger a check of the local buffer
     buff = []
     try:
@@ -292,6 +284,15 @@ async def event_message(ctx):
             print(f"Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
     bot._skip_auth = False
+
+    # We do this after the emulator updates to prevent area / boss sniping
+    if ctx.content.startswith("!"):
+        command = ctx.content.split(" ")[0][1:]
+        if command in bot.commands:
+            current_time = int(time.time() * 1e3)
+            HISTORY[current_time] = ctx.content
+
+            await bot.handle_commands(ctx)
 
     curtime = int(time.time())
 
@@ -383,6 +384,10 @@ async def select(ctx):
                 await ctx.send(f"@{user}: that {cat} selection is invalid.")
                 return
             cost = info.set_index(lookup).loc[item]["Cost"]
+
+            if _CONTEXT[cat] == item:
+                await ctx.send(f"@{user}: you cannot select the current area / boss.")
+                return
 
             _user = _USERS[user]
             if cost <= _user["score"]:
