@@ -175,7 +175,7 @@ def _check_term(term, lookup, info, full=False):
         found = info.loc[found]
 
     if len(found) != 1:
-        raise KeyError()
+        raise KeyError(f"Too many matches found for {term}")
     if full:
         return found
     return str(found[lookup].iloc[0])
