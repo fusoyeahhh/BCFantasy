@@ -739,15 +739,13 @@ COMMANDS["bcf"] = explain
 # Crowd Control
 #
 
-CC_CMDS = {
-    "arb_write": write_arbitrary,
-}
 def write_arbitrary(*args):
     """
     Write a sequence of one or more address / value pairs to memory.
 
     Should be used sparingly by admins as it can write arbitrary data to any location.
     """
+    args = list(args)
     # Need address value pairs
     assert(len(args) % 2 == 0)
 
@@ -761,6 +759,29 @@ def write_arbitrary(*args):
         instr.extend(bytes([addr >> 8, addr & 0xFF, value]))
 
     return instr
+
+def modify_item(*args):
+    args = list(args)
+    # FIXME: This will overwrite any item in this position\
+    # FIXME: convert string to hex
+    item = int(args.pop(0), 16)
+    instr = [0x2686 >> 8, 0x2686 & 0xFF, item,
+             0x2689 >> 8, 0x2689 & 0xFF, 0x1]
+    # FIXME: increment
+
+    return instr
+
+CC_CMDS = {
+    "arb_write": write_arbitrary,
+    "modify_item": modify_item,
+    #"cant_run": cant_run (0x00B1)
+    #"activate_golem": activate_golem (0x3A36)
+    #"nullify_element": nullify_element (0x3EC8)
+    #"fallen_one": fallen_one,
+    #"change_name": change_name,
+    #"swap_chars": swap_chars,
+}
+
 
 if _ENABLE_CC is not None:
     @bot.command(name='cc')
