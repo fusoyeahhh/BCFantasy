@@ -574,7 +574,7 @@ async def partynames(ctx):
         ctx.send("No party name information available.")
         return
 
-    s = "".join([f"{name}: {alias}" for name, alias in bot._last_status["party"].items()])
+    s = [f"{name}: {alias}" for name, alias in bot._last_status["party"].items()]
     for os in _chunk_string(s, joiner=" | "):
         await ctx.send(os)
 COMMANDS["partynames"] = partynames
