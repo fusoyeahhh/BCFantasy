@@ -527,9 +527,14 @@ async def mapinfo(ctx):
         await ctx.send(f"{map_id}: {_MAP_INFO.loc[map_id]['name']} (area: {_MAP_INFO.loc[map_id]['scoring_area']})")
         return
 
+    idx = _MAP_INFO.index.searchsorted(map_id)
+    left = _MAP_INFO.iloc[idx-1]["name"]
+    right = _MAP_INFO.iloc[idx]["name"]
+
     with open("missing_maps.txt", "a") as fout:
         fout.write(f"{map_id} ")
-    await ctx.send(f"Map ID {map_id} is not in the list")
+    await ctx.send(f"Map ID {map_id} is not in the list; "
+                   f"between: {left} | {right}")
 COMMANDS["mapinfo"] = mapinfo
 
 # Bosses
