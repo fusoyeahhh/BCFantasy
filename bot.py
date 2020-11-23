@@ -521,7 +521,7 @@ async def mapinfo(ctx):
     """
     map_id = int(ctx.content.split()[1])
     if map_id in _MAP_INFO.index:
-        await ctx.send(f"{map_id}: {_MAP_INFO['name']} (area: {_MAP_INFO['scoring_area']})")
+        await ctx.send(f"{map_id}: {_MAP_INFO.loc[map_id]['name']} (area: {_MAP_INFO.loc[map_id]['scoring_area']})")
         return
 
     with open("missing_maps.txt", "a") as fout:
