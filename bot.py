@@ -63,6 +63,14 @@ def convert_buffer_to_commands(logf, **kwargs):
     cmds = []
     last_status = kwargs.get("last_status", {})
     for status in sorted(logf, key=lambda l: l["frame"]):
+        # parse current party
+        if "party" in status:
+            status["party"] = {int(act): [int(c) for c in name.strip().split()]
+                                                 for act, name in status["party"].items()}
+            for act in list(status["party"]):
+                status["party"][act] = "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
+                                                    for c in status["party"][act] if c != 255]))
+
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
             cmds.append(f"!set area={status['map_id']}")
