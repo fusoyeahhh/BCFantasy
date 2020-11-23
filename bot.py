@@ -376,7 +376,7 @@ async def register(ctx):
     # Init user
     _USERS[user] = {"score": 1000}
     await ctx.send(f"@{user}, you are now registered, and have "
-                   f"{_USERS[user]['score']} points to use. "
+                   f"{_USERS[user]['score']} Fantasy Points to use. "
                     "Choose a character (char), area, and boss with "
                     "!select [category]=[item]")
 COMMANDS["register"] = register
@@ -437,7 +437,7 @@ COMMANDS["sell"] = sell
 @bot.command(name='select')
 async def select(ctx):
     """
-    !select [area|boss|char]=[selection] set the selection for a given category. Must have enough points to pay the cost.
+    !select [area|boss|char]=[selection] set the selection for a given category. Must have enough Fantasy Points to pay the cost.
     """
     user = ctx.author.name
     if user not in _USERS:
@@ -696,13 +696,13 @@ async def give(ctx):
     if len(cmd) == 0:
         # Give everyone points
         for user, scr in _USERS.items():
-            print(f"Adding {val} to {user} score")
+            print(f"Adding {val} to {user} Fantasy Points")
             scr["score"] += val
     elif len(cmd) >= 1:
         # Give specified chatters points
         for user in cmd:
             if user in _USERS:
-                print(f"Adding {val} to {user} score")
+                print(f"Adding {val} to {user} Fantasy Points")
                 _USERS[user]["score"] += val
 COMMANDS["give"] = give
 
@@ -857,11 +857,11 @@ async def explain(ctx):
     """
     user = ctx.author.name
     for outstr in _chunk_string([f"@{user}: Use '!register' to get started.",
-                     "You'll start with 1000 points to spend.",
+                     "You'll start with 1000 Fantasy Points to spend.",
                      "You will !select a character (!listchars), boss (!listbosses), and area (!listareas).",
-                     "The chosen character will accrue points for killing enemies and bosses.",
-                     "Bosses get points for kills and gameovers.",
-                     "Areas get points for MIAB, character kills, and gameovers."],
+                     "The chosen character will accrue Fantasy Points for killing enemies and bosses.",
+                     "Bosses get Fantasy Points for kills and gameovers.",
+                     "Areas get Fantasy Points for MIAB, character kills, and gameovers."],
                      joiner=' '):
         await ctx.send(outstr)
 COMMANDS["bcf"] = explain
