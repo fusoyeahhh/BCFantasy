@@ -84,14 +84,17 @@ def convert_buffer_to_commands(logf, **kwargs):
     for status in sorted(logf, key=lambda l: l["frame"]):
         # parse current party
         if "party" in status:
-            status["party"] = {_ACTOR_MAP[int(act)]: [max(int(c), 0) for c in name.strip().split()]
-                                                 for act, name in status["party"].items()
-                                                                    if int(act) in _ACTOR_MAP}
-            for act in status["party"]:
-                status["party"][act] = \
-                    "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
-                                                   for c in status["party"][act]
-                                                        if c != 255]))
+            try:
+                status["party"] = {_ACTOR_MAP[int(act)]: [max(int(c), 0) for c in name.strip().split()]
+                                                     for act, name in status["party"].items()
+                                                                        if int(act) in _ACTOR_MAP}
+                for act in status["party"]:
+                    status["party"][act] = \
+                        "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
+                                                       for c in status["party"][act]
+                                                            if c != 255]))
+            except Exception as e:
+                print("Couldn't parse party: ", status["party"])
 
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
