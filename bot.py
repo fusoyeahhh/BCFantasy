@@ -22,6 +22,25 @@ bot = commands.Bot(**opts)
 
 _CHAT_READBACK = False
 
+_ACTOR_MAP = {
+    0x0: "Terra",
+    0x1: "Locke",
+    0x2: "Cyan",
+    0x3: "Shadow",
+    0x4: "Edgar",
+    0x5: "Sabin",
+    0x6: "Celes",
+    0x7: "Strago",
+    0x8: "Relm",
+    0x9: "Setzer",
+    0xA: "Mog",
+    0xB: "Gau",
+    0xC: "Gogo",
+    0xD: "Umaro",
+    0xE: "Guest actor 1",
+    0xF: "Guest actor 2"
+}
+
 def _write(ctx, strn, prefix="BCFBot>"):
     pass
 
@@ -65,11 +84,14 @@ def convert_buffer_to_commands(logf, **kwargs):
     for status in sorted(logf, key=lambda l: l["frame"]):
         # parse current party
         if "party" in status:
-            status["party"] = {int(act): [int(c) for c in name.strip().split()]
-                                                 for act, name in status["party"].items()}
-            for act in list(status["party"]):
-                status["party"][act] = "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
-                                                    for c in status["party"][act] if c != 255]))
+            status["party"] = {_ACTOR_MAP[int(act)]: [int(c) for c in name.strip().split()]
+                                                 for act, name in status["party"].items()
+                                                                    if int(act) in _ACTOR_MAP}
+            for act in set(status["party"]) & set(_ACTOR_MAP):
+                status["party"][act] = \
+                    "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
+                                                   for c in status["party"][act]
+                                                        if c != 255]))
 
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
@@ -537,6 +559,20 @@ async def charinfo(ctx):
     print(char)
     await ctx.send(search(char, "Character", _CHAR_INFO))
 COMMANDS["charinfo"] = charinfo
+
+@bot.command(name='partynames')
+async def partynames(ctx):
+    """
+    !partynames -> no arguments, list the names of the party
+    """
+    if "party" not in bot._last_status:
+        ctx.send("No party name information available.")
+        return
+
+    s = "".join([f"{name}: {alias}" for name, alias in bot._last_status["party"].items()])
+    for os in _chunk_string(s, joiner=" | "):
+        await ctx.send(os)
+COMMANDS["partynames"] = partynames
 
 # General
 @bot.command(name='context')
