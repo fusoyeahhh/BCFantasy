@@ -302,7 +302,6 @@ while true do
 		name = memory.readbyterange(0x1602 + i * 0x25 - 1, 7)
 		out_json = out_json .. "\"" .. actor .. "\": \""
 		for j,c in ipairs(name) do
-			print(actor .. " " .. j .. " " .. c)
 			out_json = out_json .. c .. " "
 		end
 		out_json = out_json .. "\""
