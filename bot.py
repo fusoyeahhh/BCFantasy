@@ -95,8 +95,9 @@ def convert_buffer_to_commands(logf, **kwargs):
         ldeaths = last_status.get("deaths", {})
         for char, k in status.get("deaths", {}).items():
             diff = k - ldeaths.get(char, 0)
+            etype = "b" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else ""
             if diff > 0 and char != "NIL_lookup":
-                cmds.append(f"!event chardeath {char} {diff}")
+                cmds.append(f"!event {etype}chardeath {char} {diff}")
                 print("emu>", cmds[-1])
 
         last_status = status
