@@ -84,7 +84,7 @@ def convert_buffer_to_commands(logf, **kwargs):
     for status in sorted(logf, key=lambda l: l["frame"]):
         # parse current party
         if "party" in status:
-            status["party"] = {_ACTOR_MAP[int(act)]: [int(c) for c in name.strip().split()]
+            status["party"] = {_ACTOR_MAP[int(act)]: [max(int(c), 0) for c in name.strip().split()]
                                                  for act, name in status["party"].items()
                                                                     if int(act) in _ACTOR_MAP}
             for act in status["party"]:
