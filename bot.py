@@ -514,6 +514,21 @@ async def areainfo(ctx):
     await ctx.send(search(area, "Area", _AREA_INFO))
 COMMANDS["areainfo"] = areainfo
 
+@bot.command(name='mapinfo')
+async def mapinfo(ctx):
+    """
+    !mapinfo [map ID] list description of map id
+    """
+    map_id = int(ctx.content.split()[1])
+    if map_id in _MAP_INFO.index:
+        await ctx.send(f"{map_id}: {_MAP_INFO['name']} (area: {_MAP_INFO['scoring_area']})")
+        return
+
+    with open("missing_maps.txt", "a") as fout:
+        fout.write(f"{map_id} ")
+    await ctx.send(f"Map ID {map_id} is not in the list")
+COMMANDS["mapinfo"] = mapinfo
+
 # Bosses
 @bot.command(name='listbosses')
 async def listbosses(ctx):
