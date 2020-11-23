@@ -295,6 +295,23 @@ while true do
     end
 	out_json = out_json .. "}"
 
+	-- party information
+	out_json = out_json .. ", \"party\": {"
+	for i=0,15 do
+		actor = memory.read_u8(0x1600 + i * 0x25)
+		name = memory.readbyterange(0x1602 + i * 0x25 - 1, 7)
+		out_json = out_json .. "\"" .. actor .. "\": \""
+		for j,c in ipairs(name) do
+			print(actor .. " " .. j .. " " .. c)
+			out_json = out_json .. c .. " "
+		end
+		out_json = out_json .. "\""
+		if i ~= 15 then
+			out_json = out_json .. ", "
+		end
+	end
+	out_json = out_json .. "}"
+
 	-- death information
 	out_json = out_json .. ", \"deaths\": {" .. ""
 	i = 0
