@@ -4,7 +4,6 @@ import time
 import numpy
 import pandas
 import json
-import copy
 from twitchio.ext import commands
 from twitchio.dataclasses import User
 import glob
@@ -310,7 +309,8 @@ async def event_message(ctx):
         print(e)
         print("Couldn't read logfile")
 
-    orig_ctx = copy.deepcopy(ctx)
+    orig_author = ctx.author._name
+    orig_content = ctx.content
     for line in filter(lambda l: l, buff):
         # Co-op ctx
         ctx.content = line
@@ -328,7 +328,8 @@ async def event_message(ctx):
     bot._skip_auth = False
 
     # restore original messasge
-    ctx = orig_ctx
+    ctx.author._name = orig_author
+    ctx.content = orig_content
     # We do this after the emulator updates to prevent area / boss sniping
     if ctx.content.startswith("!"):
         command = ctx.content.split(" ")[0][1:]
