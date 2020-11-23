@@ -147,11 +147,16 @@ def _set_context(content):
         cat, item = selection.split("=")
         print(cat, item)
 
-        # Need a preliminary mapid to area setting
+        # Preliminary mapid to area setting
         if cat == "area" and item.isdigit():
             item = int(item)
-            if item in _MAP_INFO.index and not pandas.isna(_MAP_INFO.loc[item]["scoring_area"]):
+            if item in _MAP_INFO.index:
                 item = _MAP_INFO.loc[item]["scoring_area"]
+                # This map id exists, but is not mapped to an area
+                if pandas.isna(item):
+                    # FIXME: probably gonna break something
+                    _CONTEXT["area"] = None
+                    return True
             else:
                 #raise ValueError(f"No valid area mapping for id {item}")
                 print(f"No valid area mapping for id {item}")
