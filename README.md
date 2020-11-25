@@ -22,7 +22,7 @@ Unzip the code to a location. Open this location and in a new file named `config
     "client_id": "<CLIENT_ID>",
     "nick": "<BOT_OR_YOUR_USERNAME>",
     "prefix": "!",
-    "admins": ["your_twitch_name", "a_bot_name"]
+    "admins": ["your_twitch_name", "a_bot_name"],
     "initial_channels": ["#<CHANNEL>"]
 }
 ```
@@ -31,4 +31,4 @@ And replace the `<...>` values with their approrpriate values. To get an IRC tok
 
 Load `BCF.lua` into `Tools > Lua Console` in bizhawk. This will begin writing to a log at `logfile.txt` within the same directory. Then start the bot (either by running `python3 bot.py` or with your OS associated interpreter.
 
-You can check for bot prescence by issuing the "!hi" command in twitch chat.
+You can check for bot prescence by issuing the `!hi` command in twitch chat.
