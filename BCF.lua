@@ -1,5 +1,6 @@
 kills = {}
 wound = {false, false, false, false}
+cparty = {nil, nil, nil, nil}
 ekilled = {}
 pdeath = {}
 -- in_battle requires the number of enemies and characters alive to be greater
@@ -80,6 +81,7 @@ while true do
 		ekilled = {}
 		-- FIXME: Initialize this properly
 		wound = {}
+		cparty = {nil, nil, nil, nil}
 	end
 
     map_change = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
@@ -168,6 +170,7 @@ while true do
 		char = "EMPTY?"
 		if chars[2 * i] ~= nil then
 			char = chars[2 * i]
+			cparty[i + 1] = char
 		end
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
@@ -294,6 +297,20 @@ while true do
 		out_json = out_json .. "\"" .. char .. "\": " ..  kcount .. app
     end
 	out_json = out_json .. "}"
+
+	-- battle party information
+	out_json = out_json .. ", \"cparty\": ["
+	for i=1,4 do
+		if cparty[i] ~= nil then
+			out_json = out_json .. "\"" .. cparty[i] .. "\""
+		else
+			out_json = out_json .. "\"EMPTY\""
+		end
+		if i ~= 4 then
+			out_json = out_json .. ", "
+		end
+	end
+	out_json = out_json .. "],"
 
 	-- party information
 	out_json = out_json .. ", \"party\": {"
