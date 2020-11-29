@@ -913,6 +913,7 @@ CC_CMDS = {
     #"fallen_one": fallen_one,
     #"change_name": change_name,
     #"swap_chars": swap_chars,
+    #"give_doggo": give_interceptor # enemy or player
 }
 
 
