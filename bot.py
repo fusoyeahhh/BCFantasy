@@ -22,8 +22,7 @@ _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/
 _FLAGS = opts.pop("flags", None)
 _SEED = opts.pop("seed", None)
 _SEASON_LABEL = opts.pop("season", None)
-
-_CHKPT_DIR = "./checkpoint/"
+_CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 
 bot = commands.Bot(**opts)
 
