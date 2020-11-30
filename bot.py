@@ -213,10 +213,14 @@ def _chunk_string(inlist, joiner=", "):
 
         outstr += joiner + str(inlist.pop(0))
 
-def _check_term(term, lookup, info, full=False):
+def _check_term(term, lookup, info, space_suppress=True, full=False):
     _term = str(term).replace("(", r"\(").replace(")", r"\)")
     found = info[lookup].str.lower().str.contains(_term.lower())
     found = info.loc[found]
+
+    if space_suppress and len(found) == 0:
+        found = info[lookup].str.lower().replace(" ", "") == _term.lower()
+        found = info.loc[found]
 
     if len(found) > 1:
         found = info[lookup].str.lower() == _term.lower()
