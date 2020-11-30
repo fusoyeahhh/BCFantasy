@@ -106,16 +106,15 @@ def convert_buffer_to_commands(logf, **kwargs):
 
         # check for boss encounter
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None):
-            print(f"New encounter: {status['eform_id']}")
+            print(f"New encounter: {status['eform_id']}, is miab? {status['is_miab']}")
             if int(status["eform_id"]) in _BOSS_INFO["Id"].values:
                 cmds.append(f"!set boss={status['eform_id']}")
                 print("emu>", cmds[-1])
 
-        # check for miab
-        if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None) \
-            and int(status["eform_id"]) == int(last_status.get("miab_id", -1)):
-            cmds.append(f"!event miab")
-            print("emu>", cmds[-1])
+            # Check for miab
+            if status.get("is_miab", False):
+                cmds.append(f"!event miab")
+                print("emu>", cmds[-1])
 
         # check for kills
         lkills = last_status.get("kills", {})
