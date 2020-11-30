@@ -63,6 +63,7 @@ _MAP_INFO["id"] = [int(n, 16) for n in _MAP_INFO["id"]]
 _MAP_INFO = _MAP_INFO.set_index("id")
 
 COMMANDS = {}
+ADMIN_COMMANDS = {}
 
 HISTORY = {}
 
@@ -663,8 +664,15 @@ async def leaderboard(ctx):
         await ctx.send(os)
 COMMANDS["context"] = context
 
+#
+# Admin commands
+#
+
 @bot.command(name='nextarea')
 async def nextarea(ctx):
+    """
+    !nextarea -> no arguments, cycle to the next area in the sequence defined by the area table.
+    """
     user = ctx.author.name
     if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
@@ -679,9 +687,13 @@ async def nextarea(ctx):
 
     if not bot._skip_auth:
         await ctx.send(f"Sorry @{user}, that didn't work.")
+ADMIN_COMMANDS["nextarea"] = nextarea
 
 @bot.command(name='nextboss')
 async def nextboss(ctx):
+    """
+    !nextboss -> no arguments, cycle to the next boss in the sequence defined by the boss table.
+    """
     user = ctx.author.name
     if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
@@ -696,9 +708,15 @@ async def nextboss(ctx):
 
     if not bot._skip_auth:
         await ctx.send(f"Sorry @{user}, that didn't work.")
+ADMIN_COMMANDS["nextboss"] = nextboss
 
 @bot.command(name='set')
 async def _set(ctx):
+    """
+    !set [boss|area]=value
+
+    Manually set a context category to a value.
+    """
     user = ctx.author.name
     print(f"_set | checking auth: {bot._skip_auth}")
     if not (bot._skip_auth or _authenticate(ctx)):
@@ -711,6 +729,7 @@ async def _set(ctx):
     print(f"_set | attempt failed: {bot._skip_auth}")
     if not bot._skip_auth:
         await ctx.send(f"Sorry @{user}, that didn't work.")
+ADMIN_COMMANDS["set"] = _set
 
 @bot.command(name='give')
 async def give(ctx):
@@ -739,7 +758,7 @@ async def give(ctx):
             if user in _USERS:
                 print(f"Adding {val} to {user} Fantasy Points")
                 _USERS[user]["score"] += val
-COMMANDS["give"] = give
+ADMIN_COMMANDS["give"] = give
 
 # FIXME: these are the columns of the individual files
 _EVENTS = {
@@ -819,11 +838,21 @@ async def event(ctx):
                 #sel["score"] += 2
             print(f"\t{event}, {user} {sel['score'] - _score}")
 
+_EVENT_TYPES = set().union(*_EVENTS.keys())
+event._callback.__doc__ = f"""
+    !event eventtype [arguments] -- Manually trigger an event
+
+    valid eventtypes: {', '.join(_EVENT_TYPES)}    
+"""
+ADMIN_COMMANDS["event"] = event
+
 # TODO: is map id 5 the gameover screen?
 @bot.command(name='stop')
 async def stop(ctx):
     """
     !stop [|annihilated|kefkadown] Tell the bot to save its contents, possibly for a reason (game over, Kefka beaten).
+
+    Will set the bot to 'paused' state.
     """
     user = ctx.author.name
     if not (bot._skip_auth or _authenticate(ctx)):
@@ -849,6 +878,7 @@ async def stop(ctx):
         await ctx.send("!cb darksl5GG darksl5Kitty ")
     elif len(cmd) > 0:
         await ctx.send(f"Urecognized stop reason {cmd[0]}")
+ADMIN_COMMANDS["stop"] = stop
 
 @bot.command(name='pause')
 async def pause(ctx):
@@ -866,6 +896,7 @@ async def pause(ctx):
     elif bot._status is None:
         bot._status = "paused"
         await ctx.send("Pausing.")
+ADMIN_COMMANDS["pause"] = pause
 
 @bot.command(name='reset')
 async def reset(ctx):
@@ -886,6 +917,7 @@ async def reset(ctx):
     _CONTEXT, _USERS = {"area": None, "boss": None}, {}
     # FIXME: delete log so as not to update any further
     await ctx.send("User and context info reset.")
+ADMIN_COMMANDS["reset"] = reset
 
 #
 # Help commands
@@ -899,7 +931,7 @@ async def _help(ctx):
     cnt = ctx.content.lower().split(" ")
     cnt.pop(0)
     if not cnt:
-        await ctx.send(f"Available commands: {' '.join(COMMANDS.keys())}. Use '!help cmd' (no excl. point on 'cmd) to get more help.")
+        await ctx.send(f"Available commands: {' '.join(COMMANDS.keys())}. Use '!help cmd' (no excl. point on cmd) to get more help.")
         return
 
     arg = cnt.pop(0)
