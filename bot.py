@@ -388,6 +388,21 @@ async def register(ctx):
                     "!select [category]=[item]")
 COMMANDS["register"] = register
 
+@bot.command(name='exploder')
+async def exploder(ctx):
+    """
+    !exploder -> no arguments, deregisters user
+    """
+    user = ctx.author.name
+    if not _check_user(user):
+        await ctx.send(f"@{user}, you are not registered.")
+        return
+
+    # Remove user
+    del _USERS[user]
+    await ctx.send(f"Bye bye, @{user}")
+COMMANDS["exploder"] = exploder
+
 @bot.command(name='userinfo')
 async def userinfo(ctx):
     """
