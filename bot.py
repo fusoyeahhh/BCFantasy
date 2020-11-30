@@ -1,8 +1,6 @@
 import os
 import errno
 import time
-import datetime
-import shutil
 import numpy
 import pandas
 import json
@@ -19,10 +17,6 @@ with open("config.json") as fin:
 _AUTHORIZED = opts.pop("admins", {})
 _ENABLE_CC = opts.pop("crowd_control", None)
 _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/data/")
-_FLAGS = opts.pop("flags", None)
-_SEED = opts.pop("seed", None)
-_SEASON_LABEL = opts.pop("season", None)
-_CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 
 bot = commands.Bot(**opts)
 
@@ -78,6 +72,8 @@ _USERS = {}
 _CONTEXT = {
     "area": None,
     "boss": None,
+    #"skill": None,
+    #"character": None
 }
 
 #
@@ -253,30 +249,12 @@ def search(term, lookup, info):
     else:
         return str(found.to_dict(orient='records')[0])[1:-1]
 
-def serialize(pth="./", reset=False, archive=None):
-
-    if not os.path.exists(pth):
-        os.makedirs(pth)
-
-    with open(os.path.join(pth, "history.json"), "w") as fout:
+def serialize():
+    with open("history.json", "w") as fout:
         json.dump(HISTORY, fout, indent=2)
 
-    with open(os.path.join(pth, "user_data.json"), "w") as fout:
+    with open(f"user_data.json", "w") as fout:
         json.dump(_USERS, fout, indent=2)
-
-    if archive is not None:
-        spath = os.path.join("./", archive)
-        os.makedirs(spath)
-        shutil.move(pth, spath)
-
-    if reset:
-        os.makedirs("TRASH")
-        # FIXME: here?
-        # Renames instead of deleting to make sure user data integrity is only minimally threatened
-        if os.path.exists(_CHKPT_DIR):
-            shutil.move(_CHKPT_DIR, "TRASH")
-        if os.path.exists("TRASH/"):
-            shutil.move("logfile.txt", "TRASH/")
 
 #
 # Bot commands
@@ -289,16 +267,14 @@ async def event_ready():
     # FIXME: these should just live inside the bot
     global _USERS
     global _CONTEXT
-    ctx_file = os.path.join(_CHKPT_DIR, "context.json")
-    if os.path.exists(ctx_file):
-        with open(ctx_file, "r") as fin:
+    if os.path.exists("context.json"):
+        with open("context.json", "r") as fin:
             _CONTEXT = json.load(fin)
     print(_CONTEXT)
 
     # find latest
     try:
-        udata_file = os.path.join(_CHKPT_DIR, "user_data*.json")
-        latest = sorted(glob.glob(udata_file),
+        latest = sorted(glob.glob("user_data*.json"),
                         key=lambda f: os.path.getmtime(f))[-1]
         with open(latest, "r") as fin:
             _USERS = json.load(fin)
@@ -307,7 +283,6 @@ async def event_ready():
         pass
 
     bot._skip_auth = False
-    bot._status = None
     bot._last_status = {}
     bot._last_state_drop = -1
     ws = bot._ws
@@ -347,10 +322,6 @@ async def event_message(ctx):
     orig_author = ctx.author._name
     orig_content = ctx.content
     for line in filter(lambda l: l, buff):
-        if bot._status == "paused":
-            print("Bot is paused; ignoring log.")
-            break
-
         # Co-op ctx
         ctx.content = line
         # HACKZORS
@@ -366,7 +337,7 @@ async def event_message(ctx):
             await bot.handle_commands(ctx)
     bot._skip_auth = False
 
-    # restore original message
+    # restore original messasge
     ctx.author._name = orig_author
     ctx.content = orig_content
     # We do this after the emulator updates to prevent area / boss sniping
@@ -382,7 +353,7 @@ async def event_message(ctx):
 
     # Only every minute
     if curtime - bot._last_state_drop > 60:
-        serialize(pth=_CHKPT_DIR)
+        serialize()
         bot._last_state_drop = curtime
 
 @bot.command(name='hi')
@@ -859,44 +830,17 @@ async def stop(ctx):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
-    # pause command processing
-    bot._status = "paused"
+    serialize()
     cmd = ctx.content.split()[1:]
-
-    # Just stopping for the moment, checkpoint and move on.
-    if len(cmd) == 0:
-        serialize(pth=_CHKPT_DIR)
-        await ctx.send("Checkpointing complete.")
-        return
-
-    pth = os.path.join("./", _SEED or datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     if cmd[0] == "annihilated":
+        serialize()
         # Possibly do a report?
-        serialize(pth, archive=_SEASON_LABEL, reset=True)
+        #reset_bot
     elif cmd[0] == "kefkadown":
-        serialize(pth, archive=_SEASON_LABEL, reset=True)
         await ctx.send("!cb darksl5GG darksl5Kitty ")
-    elif len(cmd) > 0:
+    else:
         await ctx.send(f"Urecognized stop reason {cmd[0]}")
 ADMIN_COMMANDS["stop"] = stop
-
-@bot.command(name='pause')
-async def pause(ctx):
-    """
-    !pause -> no argument, toggle pause for processing of log. Automatically invoked by !reset and !stop
-    """
-    user = ctx.author.name
-    if not (bot._skip_auth or _authenticate(ctx)):
-        await ctx.send(f"I'm sorry, @{user}, I can't do that...")
-        return
-
-    if bot._status == "paused":
-        bot._status = None
-        await ctx.send("Unpausing.")
-    elif bot._status is None:
-        bot._status = "paused"
-        await ctx.send("Pausing.")
-ADMIN_COMMANDS["pause"] = pause
 
 @bot.command(name='reset')
 async def reset(ctx):
@@ -912,7 +856,6 @@ async def reset(ctx):
     global _USERS
     bot._last_state_drop = -1
     bot._last_status = {}
-    bot._status = "paused"
     # FIXME: to function
     _CONTEXT, _USERS = {"area": None, "boss": None}, {}
     # FIXME: delete log so as not to update any further
