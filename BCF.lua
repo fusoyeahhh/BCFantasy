@@ -205,6 +205,13 @@ while true do
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3020 + 2 * i))
 		status = ""
 
+		-- status reads
+		sbyte_1 = memory.read_u8(0x3EE4 + 8 + 2 * i)
+		is_wounded = bit.band(sbyte_1, 0x80)
+		is_petrified = bit.band(sbyte_1, 0x40)
+		is_zombied = bit.band(sbyte_1, 0x2)
+		sbyte_1 = bizstring.binary(sbyte_1)
+
 		-- Determine who killed this monster
 		-- We must:
 		-- 	* be in battle
@@ -215,7 +222,9 @@ while true do
 		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
 		status = " killed by "
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255 and
-				curr_hp == 0 and nenem_alive < enemies_alive then
+				curr_hp == 0
+				--(curr_hp == 0 or is_wounded or is_zombied or is_petrified)
+				and nenem_alive < enemies_alive then
 			status = status .. c_last_targetted
 
 			-- Attribute kill to the last character that targetted this
@@ -248,6 +257,7 @@ while true do
 
 		if _HUD then
 			gui.text(20, 120 + i * 10, "slot " .. slot_mask
+					.. " status byte: " .. sbyte_1
 					.. " (" .. curr_hp .. ") targetted by: "
 					.. c_last_targetted
 					.. status)
