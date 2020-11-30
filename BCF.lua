@@ -285,6 +285,11 @@ while true do
     end
     --]]
 
+	-- MIAB detection, thanks to Myriachan
+	is_miab = memory.read_u16_le(208, "WRAM") == 2960
+	-- clear miab flag
+	memory.write_u16_le(208, 0, "WRAM")
+
 	frame_counter = emu.framecount()
 	out_json = "{"
 	-- General information
@@ -293,6 +298,7 @@ while true do
 	out_json = out_json .. "\"area_id\": " .. area_id .. ","
 	out_json = out_json .. "\"eform_id\": " .. eform_id .. ","
 	out_json = out_json .. "\"in_battle\":" .. tostring(in_battle) .. ","
+	out_json = out_json .. "\"is_miab\":" .. tostring(is_miab) .. ","
 	out_json = out_json .. "\"map_id\": " .. map_id .. ","
 
 	-- Kill information
