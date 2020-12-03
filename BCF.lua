@@ -326,7 +326,7 @@ while true do
 			out_json = out_json .. ", "
 		end
 	end
-	out_json = out_json .. "],"
+	out_json = out_json .. "]"
 
 	-- party information
 	out_json = out_json .. ", \"party\": {"
