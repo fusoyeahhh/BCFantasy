@@ -304,6 +304,7 @@ async def event_ready():
         pass
 
     bot._skip_auth = False
+    bot._status = None
     bot._last_status = {}
     bot._last_state_drop = -1
     ws = bot._ws
@@ -353,6 +354,10 @@ async def event_message(ctx):
     orig_author = ctx.author._name
     orig_content = ctx.content
     for line in filter(lambda l: l, buff):
+        if bot._status == "paused":
+            print("Bot is paused; ignoring log.")
+            break
+
         # Co-op ctx
         ctx.content = line
         # HACKZORS
@@ -368,7 +373,7 @@ async def event_message(ctx):
             await bot.handle_commands(ctx)
     bot._skip_auth = False
 
-    # restore original messasge
+    # restore original message
     ctx.author._name = orig_author
     ctx.content = orig_content
     # We do this after the emulator updates to prevent area / boss sniping
@@ -878,7 +883,8 @@ async def stop(ctx):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
-    serialize()
+    # pause command processing
+    bot._status = "paused"
     cmd = ctx.content.split()[1:]
     if cmd[0] == "annihilated":
         serialize()
@@ -889,6 +895,24 @@ async def stop(ctx):
     else:
         await ctx.send(f"Urecognized stop reason {cmd[0]}")
 ADMIN_COMMANDS["stop"] = stop
+
+@bot.command(name='pause')
+async def pause(ctx):
+    """	
+    !pause -> no argument, toggle pause for processing of log. Automatically invoked by !reset and !stop	
+    """
+    user = ctx.author.name
+    if not (bot._skip_auth or _authenticate(ctx)):
+        await ctx.send(f"I'm sorry, @{user}, I can't do that...")
+        return
+
+    if bot._status == "paused":
+        bot._status = None
+        await ctx.send("Unpausing.")
+    elif bot._status is None:
+        bot._status = "paused"
+        await ctx.send("Pausing.")
+ADMIN_COMMANDS["pause"] = pause
 
 @bot.command(name='reset')
 async def reset(ctx):
@@ -904,6 +928,7 @@ async def reset(ctx):
     global _USERS
     bot._last_state_drop = -1
     bot._last_status = {}
+    bot._status = "paused"
     # FIXME: to function
     _CONTEXT, _USERS = {"area": None, "boss": None}, {}
     # FIXME: delete log so as not to update any further
