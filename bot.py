@@ -307,6 +307,7 @@ async def event_message(ctx):
         buff = read.read_local_queue()
     except AttributeError:
         pass
+    print(f"Local buffer length: {len(buff)}")
 
     # Read in emulator log
     try:
@@ -314,10 +315,12 @@ async def event_message(ctx):
         cmds, last = convert_buffer_to_commands(cmds, last_status=bot._last_status)
         bot._last_status = last
         buff += cmds
+        print(f"emu buffer length: {len(cmds)}")
     except Exception as e:
         print(e)
         print("Couldn't read logfile")
 
+    print("Processing command buffer...")
     orig_author = ctx.author._name
     orig_content = ctx.content
     for line in filter(lambda l: l, buff):
@@ -343,6 +346,7 @@ async def event_message(ctx):
     if ctx.content.startswith("!"):
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
+            print("Processing user command...")
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
 
@@ -352,6 +356,7 @@ async def event_message(ctx):
 
     # Only every minute
     if curtime - bot._last_state_drop > 60:
+        print("Serializing state...")
         serialize()
         bot._last_state_drop = curtime
 
