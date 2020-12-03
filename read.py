@@ -12,12 +12,14 @@ def read_local_queue(path='local'):
 
 def parse_log_file(path="logfile.txt", last_frame=-1):
 
-    if not os.path.exists(os.path.join(os.getcwd(), path)):
+    logpath = os.path.join(os.getcwd(), path)
+    if not os.path.exists(logpath):
+        print(f"Could not find logfile, expected at {logpath}")
         return {}
 
     nerrors = 0
     #last_frame = last_status.get("frame", None) or last_frame
-    with open(os.path.join(os.getcwd(), path), "r") as fin:
+    with open(logpath, "r") as fin:
         logf = []
         for line in fin.readlines():
             try:
