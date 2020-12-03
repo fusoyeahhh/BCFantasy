@@ -93,13 +93,18 @@ def convert_buffer_to_commands(logf, **kwargs):
                 status["party"] = {_ACTOR_MAP[int(act)]: [max(int(c), 0) for c in name.strip().split()]
                                                      for act, name in status["party"].items()
                                                                         if int(act) in _ACTOR_MAP}
-                cparty = status.get("cparty", [])
+                cparty = [s.lower() for s in status.get("cparty", [])]
+                in_cparty = []
                 for act in status["party"]:
-                    act = f"({act})" if act in cparty else act
+                    if act.lower() in cparty:
+                        in_cparty.append(act)
                     status["party"][act] = \
                         "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
                                                        for c in status["party"][act]
                                                             if c != 255]))
+                for act in in_cparty:
+                    status["party"][f"({act})"] = status["party"].pop(act)
+
             except Exception as e:
                 print("Couldn't parse party: ", status["party"])
 
