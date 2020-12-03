@@ -288,14 +288,16 @@ async def event_ready():
     # FIXME: these should just live inside the bot
     global _USERS
     global _CONTEXT
-    if os.path.exists("context.json"):
-        with open("context.json", "r") as fin:
+    ctx_file = os.path.join(_CHKPT_DIR, "context.json")
+    if os.path.exists(ctx_file):
+        with open(ctx_file, "r") as fin:
             _CONTEXT = json.load(fin)
     print(_CONTEXT)
 
     # find latest
     try:
-        latest = sorted(glob.glob("user_data*.json"),
+        udata_file = os.path.join(_CHKPT_DIR, "user_data*.json")
+        latest = sorted(glob.glob(udata_file),
                         key=lambda f: os.path.getmtime(f))[-1]
         with open(latest, "r") as fin:
             _USERS = json.load(fin)
@@ -391,7 +393,7 @@ async def event_message(ctx):
     # Only every minute
     if curtime - bot._last_state_drop > 60:
         print("Serializing state...")
-        serialize()
+        serialize(pth=_CHKPT_DIR)
         bot._last_state_drop = curtime
 
 @bot.command(name='hi')
@@ -886,13 +888,21 @@ async def stop(ctx):
     # pause command processing
     bot._status = "paused"
     cmd = ctx.content.split()[1:]
+
+    # Just stopping for the moment, checkpoint and move on.
+    if len(cmd) == 0:
+        serialize(pth=_CHKPT_DIR)
+        await ctx.send("Checkpointing complete.")
+        return
+
+    pth = os.path.join("./", _SEED or datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     if cmd[0] == "annihilated":
-        serialize()
         # Possibly do a report?
-        #reset_bot
+        serialize(pth, archive=_SEASON_LABEL, reset=True)
     elif cmd[0] == "kefkadown":
+        serialize(pth, archive=_SEASON_LABEL, reset=True)
         await ctx.send("!cb darksl5GG darksl5Kitty ")
-    else:
+    elif len(cmd) > 0:
         await ctx.send(f"Urecognized stop reason {cmd[0]}")
 ADMIN_COMMANDS["stop"] = stop
 
