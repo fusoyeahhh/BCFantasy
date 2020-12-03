@@ -303,10 +303,12 @@ async def event_message(ctx):
 
     # Trigger a check of the local buffer
     buff = []
+    """
     try:
         buff = read.read_local_queue()
     except AttributeError:
         pass
+    """
     print(f"Local buffer length: {len(buff)}")
 
     # Read in emulator log
