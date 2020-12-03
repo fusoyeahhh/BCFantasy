@@ -2,7 +2,7 @@ import os
 import json
 import time
 
-_QUIET = True
+_QUIET = False
 
 def read_local_queue(path='local'):
     fifo = os.open(path, os.O_NONBLOCK)
@@ -12,15 +12,16 @@ def read_local_queue(path='local'):
 
 def parse_log_file(path="logfile.txt", last_frame=-1):
 
+    logf = []
     logpath = os.path.join(os.getcwd(), path)
     if not os.path.exists(logpath):
         print(f"Could not find logfile, expected at {logpath}")
-        return {}
+        return logf
 
     nerrors = 0
     #last_frame = last_status.get("frame", None) or last_frame
     with open(logpath, "r") as fin:
-        logf = []
+        print(f"{logpath} opened for reading")
         for line in fin.readlines():
             try:
                 # FIXME: this actually needs fixed on the Lua side
