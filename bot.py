@@ -93,9 +93,9 @@ def convert_buffer_to_commands(logf, **kwargs):
                 status["party"] = {_ACTOR_MAP[int(act)]: [max(int(c), 0) for c in name.strip().split()]
                                                      for act, name in status["party"].items()
                                                                         if int(act) in _ACTOR_MAP}
-                cparty = [s.lower() for s in status.get("cparty", [])]
+                cparty = status.get("cparty", [])
                 for act in status["party"]:
-                    act = f"({act})" if act.lower() in cparty else act
+                    act = f"({act})" if act in cparty else act
                     status["party"][act] = \
                         "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
                                                        for c in status["party"][act]
