@@ -313,8 +313,13 @@ async def event_message(ctx):
 
     # Read in emulator log
     try:
+        print("About reading logfile. Last status:")
+        print(bot._last_status)
         cmds = read.parse_log_file(last_frame=bot._last_status.get("frame", -1))
+        print(f"Logfile read with {len(cmds)} commands.")
         cmds, last = convert_buffer_to_commands(cmds, last_status=bot._last_status)
+        print("Conversion done. Last status:")
+        print(bot._last_status)
         bot._last_status = last
         buff += cmds
         print(f"emu buffer length: {len(cmds)}")
