@@ -265,7 +265,8 @@ def serialize(pth="./", reset=False, archive=None):
 
     if archive is not None:
         spath = os.path.join("./", archive)
-        os.makedirs(spath)
+        if not os.path.exists(spath):
+            os.makedirs(spath)
         shutil.move(pth, spath)
 
     if reset:
@@ -352,7 +353,7 @@ async def event_message(ctx):
         print(e)
         print("Couldn't read logfile")
 
-    print("Processing command buffer...")
+    print(f"Processing command buffer... status: {bot._status}")
     orig_author = ctx.author._name
     orig_content = ctx.content
     for line in filter(lambda l: l, buff):
