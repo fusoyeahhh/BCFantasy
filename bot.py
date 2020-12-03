@@ -20,7 +20,7 @@ _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/
 
 bot = commands.Bot(**opts)
 
-_CHAT_READBACK = False
+_CHAT_READBACK = True
 
 _ACTOR_MAP = {
     0x0: "Terra",
