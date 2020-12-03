@@ -1,6 +1,8 @@
 import os
 import errno
 import time
+import datetime
+import shutil
 import numpy
 import pandas
 import json
@@ -17,6 +19,10 @@ with open("config.json") as fin:
 _AUTHORIZED = opts.pop("admins", {})
 _ENABLE_CC = opts.pop("crowd_control", None)
 _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/data/")
+_FLAGS = opts.pop("flags", None)
+_SEED = opts.pop("seed", None)
+_SEASON_LABEL = opts.pop("season", None)
+_CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 
 bot = commands.Bot(**opts)
 
@@ -72,8 +78,6 @@ _USERS = {}
 _CONTEXT = {
     "area": None,
     "boss": None,
-    #"skill": None,
-    #"character": None
 }
 
 #
@@ -248,12 +252,30 @@ def search(term, lookup, info):
     else:
         return str(found.to_dict(orient='records')[0])[1:-1]
 
-def serialize():
-    with open("history.json", "w") as fout:
+def serialize(pth="./", reset=False, archive=None):
+
+    if not os.path.exists(pth):
+        os.makedirs(pth)
+
+    with open(os.path.join(pth, "history.json"), "w") as fout:
         json.dump(HISTORY, fout, indent=2)
 
-    with open(f"user_data.json", "w") as fout:
+    with open(os.path.join(pth, "user_data.json"), "w") as fout:
         json.dump(_USERS, fout, indent=2)
+
+    if archive is not None:
+        spath = os.path.join("./", archive)
+        os.makedirs(spath)
+        shutil.move(pth, spath)
+
+    if reset:
+        os.makedirs("TRASH")
+        # FIXME: here?
+        # Renames instead of deleting to make sure user data integrity is only minimally threatened
+        if os.path.exists(_CHKPT_DIR):
+            shutil.move(_CHKPT_DIR, "TRASH")
+        if os.path.exists("TRASH/"):
+            shutil.move("logfile.txt", "TRASH/")
 
 #
 # Bot commands
