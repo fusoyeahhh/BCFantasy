@@ -620,7 +620,7 @@ async def partynames(ctx):
     !partynames -> no arguments, list the names of the party
     """
     if "party" not in bot._last_status:
-        ctx.send("No party name information available.")
+        await ctx.send("No party name information available.")
         return
 
     s = [f"{name}: {alias}" for name, alias in bot._last_status["party"].items()]
