@@ -88,7 +88,7 @@ while true do
 	map_change = map_change ~= map_id
 	map_id = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
 	area_id = memory.read_u8(0x0520)
-	miab_id = memory.read_u16_le(208, "WRAM")
+	miab_id = memory.read_u16_le(0x00D0)
     eform_id = memory.read_u16_le(0x11E0)
     battle_type = memory.read_u8(0x3EBC)
 
@@ -286,9 +286,12 @@ while true do
     --]]
 
 	-- MIAB detection, thanks to Myriachan
-	is_miab = miab_id == 2960
+	is_miab = miab_id == 0x0B90
 	-- clear miab flag
-	memory.write_u16_le(208, 0, "WRAM")
+	-- FIXME: Reenable after debug
+	--if is_miab then
+		--memory.write_u16_le(0x00D0, 0)
+	--end
 
 	frame_counter = emu.framecount()
 	out_json = "{"
