@@ -88,7 +88,7 @@ def convert_buffer_to_commands(logf, **kwargs):
     last_status = kwargs.get("last_status", {})
     for status in sorted(logf, key=lambda l: l["frame"]):
         # parse current party
-        if "party" in status and status["in_battle"]:
+        if "party" in status:
             try:
                 status["party"] = {_ACTOR_MAP[int(act)]: [max(int(c), 0) for c in name.strip().split()]
                                                      for act, name in status["party"].items()
@@ -103,7 +103,7 @@ def convert_buffer_to_commands(logf, **kwargs):
                         "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
                                                        for c in status["party"][act]
                                                             if c != 255]))
-                for act in in_cparty:
+                for act in (in_cparty if status["in_battle"] else []):
                     status["party"][f"({act})"] = status["party"].pop(act)
 
             except Exception as e:
