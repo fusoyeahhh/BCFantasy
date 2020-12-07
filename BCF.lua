@@ -88,7 +88,7 @@ while true do
 	map_change = map_change ~= map_id
 	map_id = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
 	area_id = memory.read_u8(0x0520)
-	miab_id = memory.read_u8(0x0789)
+	miab_id = memory.read_u16_le(208, "WRAM")
     eform_id = memory.read_u16_le(0x11E0)
     battle_type = memory.read_u8(0x3EBC)
 
@@ -286,7 +286,7 @@ while true do
     --]]
 
 	-- MIAB detection, thanks to Myriachan
-	is_miab = memory.read_u16_le(208, "WRAM") == 2960
+	is_miab = miab_id == 2960
 	-- clear miab flag
 	memory.write_u16_le(208, 0, "WRAM")
 
