@@ -92,6 +92,14 @@ while true do
     eform_id = memory.read_u16_le(0x11E0)
     battle_type = memory.read_u8(0x3EBC)
 
+	-- MIAB detection, thanks to Myriachan
+	is_miab = miab_id == 0x0B90
+	-- clear miab flag
+	-- FIXME: Reenable after debug
+	--if is_miab then
+		--memory.write_u16_le(0x00D0, 0)
+	--end
+
 	-- need to learn offsets relative to ASCII
 	--[[
 	name_1 = string.char(math.max(memory.read_u8(0x2EAF) - offset_lower, 0))
@@ -110,7 +118,7 @@ while true do
 	alive_mask = memory.read_u8(0x3A74)
 
 	if _HUD then
-		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. " | map id " .. map_id .. " | battle type " .. bizstring.binary(battle_type))
+		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. "(" .. tostring(is_miab) .. ")" .. " | map id " .. map_id .. " | battle type " .. bizstring.binary(battle_type))
 		gui.text(20, 20, "alive mask: " .. bizstring.binary((0xF + 1) + alive_mask) .. " total enemies " .. enemies_alive)
 		gui.text(20, 30, "chars alive: " .. nchar_alive)
 		gui.text(20, 40, "monsters alive: " .. nenem_alive)
@@ -284,14 +292,6 @@ while true do
 		i = i + 1
     end
     --]]
-
-	-- MIAB detection, thanks to Myriachan
-	is_miab = miab_id == 0x0B90
-	-- clear miab flag
-	-- FIXME: Reenable after debug
-	--if is_miab then
-		--memory.write_u16_le(0x00D0, 0)
-	--end
 
 	frame_counter = emu.framecount()
 	out_json = "{"
