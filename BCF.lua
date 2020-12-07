@@ -100,6 +100,10 @@ while true do
 		--memory.write_u16_le(0x00D0, 0)
 	--end
 
+	-- Another from Myriachan
+	is_veldt = bit.band(memory.read_u8(0x11F9), 0x40) == 0x40
+	is_veldt = is_veldt and (map_id == 0)
+
 	-- need to learn offsets relative to ASCII
 	--[[
 	name_1 = string.char(math.max(memory.read_u8(0x2EAF) - offset_lower, 0))
@@ -302,6 +306,7 @@ while true do
 	out_json = out_json .. "\"eform_id\": " .. eform_id .. ","
 	out_json = out_json .. "\"in_battle\":" .. tostring(in_battle) .. ","
 	out_json = out_json .. "\"is_miab\":" .. tostring(is_miab) .. ","
+	out_json = out_json .. "\"is_veldt\":" .. tostring(is_veldt) .. ","
 	out_json = out_json .. "\"map_id\": " .. map_id .. ","
 
 	-- Kill information
