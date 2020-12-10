@@ -432,7 +432,7 @@ async def register(ctx):
     await ctx.send(f"@{user}, you are now registered, and have "
                    f"{_USERS[user]['score']} Fantasy Points to use. "
                     "Choose a character (char), area, and boss with "
-                    "!select [category]=[item]")
+                    "!buy [category]=[item]")
 COMMANDS["register"] = register
 
 @bot.command(name='exploder')
@@ -503,10 +503,10 @@ async def sell(ctx):
     await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
 COMMANDS["sell"] = sell
 
-@bot.command(name='select')
-async def select(ctx):
+@bot.command(name='buy')
+async def buy(ctx):
     """
-    !select [area|boss|char]=[selection] set the selection for a given category. Must have enough Fantasy Points to pay the cost.
+    !buy [area|boss|char]=[selection] set the selection for a given category. Must have enough Fantasy Points to pay the cost.
     """
     user = ctx.author.name
     if user not in _USERS:
@@ -528,7 +528,7 @@ async def select(ctx):
             cost = info.set_index(lookup).loc[item]["Cost"]
 
             if cat in _CONTEXT and _CONTEXT[cat] == item:
-                await ctx.send(f"@{user}: you cannot select the current area / boss.")
+                await ctx.send(f"@{user}: you cannot buy the current area / boss.")
                 return
 
             _user = _USERS[user]
@@ -552,7 +552,7 @@ async def select(ctx):
         print("Badness: " + str(e))
 
     await ctx.send(f"Sorry @{user}, that didn't work.")
-COMMANDS["select"] = select
+COMMANDS["buy"] = buy
 
 #
 # Context commands
@@ -985,7 +985,7 @@ async def explain(ctx):
     user = ctx.author.name
     for outstr in _chunk_string([f"@{user}: Use '!register' to get started.",
                      "You'll start with 1000 Fantasy Points to spend.",
-                     "You will !select a character (!listchars), boss (!listbosses), and area (!listareas).",
+                     "You will !buy a character (!listchars), boss (!listbosses), and area (!listareas).",
                      "The chosen character will accrue Fantasy Points for killing enemies and bosses.",
                      "Bosses get Fantasy Points for kills and gameovers.",
                      "Areas get Fantasy Points for MIAB, character kills, and gameovers."],
