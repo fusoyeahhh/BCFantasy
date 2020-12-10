@@ -423,6 +423,28 @@ async def blame(ctx):
 #
 # User-based commands
 #
+@bot.command(name='music')
+async def music(ctx):
+    """
+    !music -> with no arguments, lists all conversions, with an argument looks up info on mapping.
+    """
+    cmds = ctx.message.split(" ")
+
+    if len(cmds) == 1:
+        for outstr in _chunk_string("Known music: " + MUSIC_INFO["orig"], joiner=' '):
+            await ctx.send(outstr)
+
+    orig = cmds[1].strip()
+    song = MUSIC_INFO.loc[MUSIC_INFO["orig"] == orig]
+
+    if len(orig) != 1:
+        # Do nothing for now
+        return
+
+    song = song.iloc[0]
+    await ctx.send(f"{song['orig']} -> {song['new']} | {song['descr']}")
+
+COMMANDS["music"] = music
 
 @bot.command(name='register')
 async def register(ctx):
