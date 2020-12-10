@@ -431,6 +431,8 @@ async def music(ctx):
     cmds = ctx.content.split(" ")
     print(f"Querying music.")
 
+    """Myriachan: @fusoyeahhh if 0x1304 is 0x10, 0x11, 0x14, or 0x15, then 0x1305 should contain a song ID."""
+
     if len(cmds) == 1:
         for outstr in _chunk_string(["Known music: "] + MUSIC_INFO["orig"].to_list(),
                                     joiner=' '):
@@ -541,7 +543,7 @@ async def buy(ctx):
     """
     !buy [area|boss|char]=[selection] purchase a selection from a given category. Must have enough Fantasy Points to pay the cost.
     """
-    return select._callback(ctx)
+    await select._callback(ctx)
 
 @bot.command(name='select')
 async def select(ctx):
