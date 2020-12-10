@@ -428,7 +428,7 @@ async def music(ctx):
     """
     !music -> with no arguments, lists all conversions, with an argument looks up info on mapping.
     """
-    cmds = ctx.message.split(" ")
+    cmds = ctx.content.split(" ")
 
     if len(cmds) == 1:
         for outstr in _chunk_string("Known music: " + MUSIC_INFO["orig"], joiner=' '):
