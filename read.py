@@ -51,19 +51,27 @@ def read_spoiler(spoilerf):
         line = lines.pop(0)
     lines = lines[2:]
 
-    music_map, music_info = {}, {}
+    music_map = []
     while True:
+        _map = {}
+        music_map.append(_map)
         line = lines.pop(0)
         if "->" not in line:
             break
         line, mapped = line.split("->")
+        mapped = mapped.strip()
         sid, mapping = map(str.strip, line.split(":"))
-        music_map[mapping] = mapped.strip()
-        music_info[mapped] = lines.pop(0).strip()
-        music_info[mapped] += " | " + lines.pop(0).strip()
+        _map["new"] = mapped
+        _map["orig"] = mapping
+        line = lines.pop(0).strip()
+        _map["descr"] = line
+        if line == "":
+            continue
+
+        _map["descr"] += " | " + lines.pop(0).strip()
         lines.pop(0)
 
-    return flags, seed, (music_map, music_info)
+    return flags, seed, music_map
 
 
 def read_memory(fname="memfile"):

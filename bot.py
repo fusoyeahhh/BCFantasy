@@ -19,8 +19,15 @@ with open("config.json") as fin:
 _AUTHORIZED = opts.pop("admins", {})
 _ENABLE_CC = opts.pop("crowd_control", None)
 _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/data/")
-_FLAGS = opts.pop("flags", None)
-_SEED = opts.pop("seed", None)
+
+MUSIC_INFO = {}
+_FLAGS, _SEED = None, None
+_SPOILER_LOG = opts.pop("spoiler", None)
+if _SPOILER_LOG is not None:
+    _FLAGS, _SEED, mmaps = read.read_spoiler(_SPOILER_LOG)
+    MUSIC_INFO = pandas.DataFrame(mmaps).dropna()
+_FLAGS = opts.pop("flags", _FLAGS)
+_SEED = opts.pop("seed", _SEED)
 _SEASON_LABEL = opts.pop("season", None)
 _CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 
