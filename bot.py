@@ -440,7 +440,8 @@ async def music(ctx):
     print(f"Querying music, argument {orig}")
     song = MUSIC_INFO.loc[MUSIC_INFO["orig"] == orig]
 
-    if len(orig) != 1:
+    if len(song) != 1:
+        print(f"Problem finding {orig}")
         # Do nothing for now
         return
 
