@@ -276,6 +276,9 @@ def serialize(pth="./", reset=False, archive=None):
     with open(os.path.join(pth, "user_data.json"), "w") as fout:
         json.dump(_USERS, fout, indent=2)
 
+    with open(os.path.join(pth, "_last_status.json"), "w") as fout:
+        json.dump(bot._last_status, fout, indent=2)
+
     if archive is not None:
         spath = os.path.join("./", archive)
         if not os.path.exists(spath):
@@ -319,9 +322,14 @@ async def event_ready():
     except IndexError:
         pass
 
+    bot._last_status = {}
+    status_file = os.path.join(_CHKPT_DIR, "_last_status.json")
+    if os.path.exists(status_file):
+        with open(status_file, "r") as fin:
+            bot._last_status = json.load(fin)
+
     bot._skip_auth = False
     bot._status = None
-    bot._last_status = {}
     bot._last_state_drop = -1
     ws = bot._ws
 
