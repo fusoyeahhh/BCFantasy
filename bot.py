@@ -555,8 +555,6 @@ async def select(ctx):
         await ctx.send(f"@{user}, you are not registered, use !register first.")
         return
 
-    await ctx.send(f"@{user}, use !buy instead in the future.")
-
     try:
         selection = " ".join(ctx.content.lower().split(" ")[1:])
         cat, item = selection.split("=")
