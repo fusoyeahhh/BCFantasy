@@ -429,12 +429,15 @@ async def music(ctx):
     !music -> with no arguments, lists all conversions, with an argument looks up info on mapping.
     """
     cmds = ctx.content.split(" ")
+    print(f"Querying music.")
 
     if len(cmds) == 1:
-        for outstr in _chunk_string("Known music: " + MUSIC_INFO["orig"], joiner=' '):
+        for outstr in _chunk_string(["Known music: "] + MUSIC_INFO["orig"].to_list(),
+                                    joiner=' '):
             await ctx.send(outstr)
 
     orig = cmds[1].strip()
+    print(f"Querying music, argument {orig}")
     song = MUSIC_INFO.loc[MUSIC_INFO["orig"] == orig]
 
     if len(orig) != 1:
