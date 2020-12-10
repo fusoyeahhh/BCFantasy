@@ -503,6 +503,13 @@ async def sell(ctx):
     await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
 COMMANDS["sell"] = sell
 
+@bot.command(name='buy')
+async def buy(ctx):
+    """
+    !buy [area|boss|char]=[selection] purchase a selection from a given category. Must have enough Fantasy Points to pay the cost.
+    """
+    return select(ctx)
+
 @bot.command(name='select')
 async def select(ctx):
     """
