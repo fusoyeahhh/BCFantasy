@@ -44,8 +44,9 @@ def read_spoiler(spoilerf):
         lines = fout.readlines()
 
     # Get seed
-    _, _, flags, seed = lines[1].strip().split()
+    _, _, flags, seed = lines[0].split()[-1].strip().split(".")
 
+    line = lines.pop(0)
     while "MUSIC" not in line:
         line = lines.pop(0)
     lines = lines[2:]
@@ -55,9 +56,9 @@ def read_spoiler(spoilerf):
         line = lines.pop(0)
         if "->" not in line:
             break
-        line, mapped = line.split("->")[1].strip()
+        line, mapped = line.split("->")
         sid, mapping = map(str.strip, line.split(":"))
-        music_map[mapping] = mapped
+        music_map[mapping] = mapped.strip()
         music_info[mapped] = lines.pop(0).strip()
         music_info[mapped] += " | " + lines.pop(0).strip()
         lines.pop(0)
