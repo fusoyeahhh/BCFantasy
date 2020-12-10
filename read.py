@@ -39,6 +39,32 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
         print(f"{time.time()}: Read {len(logf)} new lines, with {nerrors} errors.")
     return logf
 
+def read_spoiler(spoilerf):
+    with open(spoilerf) as fout:
+        lines = fout.readlines()
+
+    # Get seed
+    _, _, flags, seed = lines[1].strip().split()
+
+    while "MUSIC" not in line:
+        line = lines.pop(0)
+    lines = lines[2:]
+
+    music_map, music_info = {}, {}
+    while True:
+        line = lines.pop(0)
+        if "->" not in line:
+            break
+        line, mapped = line.split("->")[1].strip()
+        sid, mapping = map(str.strip, line.split(":"))
+        music_map[mapping] = mapped
+        music_info[mapped] = lines.pop(0).strip()
+        music_info[mapped] += " | " + lines.pop(0).strip()
+        lines.pop(0)
+
+    return flags, seed, (music_map, music_info)
+
+
 def read_memory(fname="memfile"):
     with open(fname, "rb") as fin:
         bytes = fin.read()
