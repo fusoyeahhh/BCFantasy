@@ -541,7 +541,7 @@ async def buy(ctx):
     """
     !buy [area|boss|char]=[selection] purchase a selection from a given category. Must have enough Fantasy Points to pay the cost.
     """
-    return select(ctx)
+    return select._callback(ctx)
 
 @bot.command(name='select')
 async def select(ctx):
