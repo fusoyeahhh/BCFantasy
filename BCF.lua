@@ -65,7 +65,7 @@ end
 logfile = io.open("logfile.txt", "w+")
 io.close(logfile)
 
-_HUD = true
+_HUD = false
 
 -- Main loop
 while true do
