@@ -46,6 +46,33 @@ def read_spoiler(spoilerf):
     # Get seed
     _, _, flags, seed = lines[0].split()[-1].strip().split(".")
 
+    # Skip to characters section
+    line = lines.pop(0)
+    while "CHARACTERS" not in line:
+        line = lines.pop(0)
+    lines = lines[2:]
+
+    char_map = []
+    while True:
+        _map = {}
+        line = lines.pop(0)
+
+        # This is our stopping condition. The line contains no index number to parse
+        try:
+            id, _map["cname"] = line.split(" ")
+            int(id.replace(".", ""))
+        except ValueError:
+            break
+
+        _map["cname"] = _map["cname"].strip()
+        lines.pop(0)
+        _map["appearance"] = lines.pop(0).replace("Looks like: ", "").strip()
+        _map["orig"] = lines.pop(0).split(" ")[-1].strip().lower()
+        char_map.append(_map)
+        while line.strip() != "":
+            line = lines.pop(0)
+
+    # Skip to music section
     line = lines.pop(0)
     while "MUSIC" not in line:
         line = lines.pop(0)
@@ -71,7 +98,7 @@ def read_spoiler(spoilerf):
         _map["descr"] += " | " + lines.pop(0).strip()
         lines.pop(0)
 
-    return flags, seed, music_map
+    return flags, seed, (music_map, char_map)
 
 
 def read_memory(fname="memfile"):
