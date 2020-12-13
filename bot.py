@@ -20,12 +20,14 @@ _AUTHORIZED = opts.pop("admins", {})
 _ENABLE_CC = opts.pop("crowd_control", None)
 _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/data/")
 
-MUSIC_INFO = {}
+MUSIC_INFO, CHAR_MAP = {}, {}
 _FLAGS, _SEED = None, None
 _SPOILER_LOG = opts.pop("spoiler", None)
 if _SPOILER_LOG is not None:
-    _FLAGS, _SEED, mmaps = read.read_spoiler(_SPOILER_LOG)
+    _FLAGS, _SEED, maps = read.read_spoiler(_SPOILER_LOG)
+    mmaps, cmaps = maps
     MUSIC_INFO = pandas.DataFrame(mmaps).dropna()
+    CHAR_MAP = pandas.DataFrame(cmaps).dropna()
 _FLAGS = opts.pop("flags", _FLAGS)
 _SEED = opts.pop("seed", _SEED)
 _SEASON_LABEL = opts.pop("season", None)
@@ -457,8 +459,37 @@ async def music(ctx):
 
     song = song.iloc[0]
     await ctx.send(f"{song['orig']} -> {song['new']} | {song['descr']}")
-
 COMMANDS["music"] = music
+
+@bot.command(name='char')
+async def char(ctx):
+    """
+    !char -> with no arguments, lists all characters, with an argument looks up info on mapping.
+    """
+    cmds = ctx.content.split(" ")
+    print(f"Querying character.")
+
+    if len(CHAR_MAP) == 0:
+        await ctx.send("No character mapping data available.")
+        return
+
+    if len(cmds) == 1:
+        for outstr in _chunk_string(["Known chars: "] + CHAR_MAP["orig"].to_list(),
+                                    joiner=' '):
+            await ctx.send(outstr)
+
+    orig = cmds[1].strip().lower()
+    print(f"Querying character, argument {orig}")
+    char = CHAR_MAP.loc[CHAR_MAP["orig"] == orig]
+
+    if len(char) != 1:
+        print(f"Problem finding {orig}")
+        # Do nothing for now
+        return
+
+    char = char.iloc[0]
+    await ctx.send(f"{char['orig']} -> {char['cname']} | {char['appearance']}")
+COMMANDS["char"] = char
 
 @bot.command(name='register')
 async def register(ctx):
