@@ -75,7 +75,7 @@ while true do
 
 	prev_state = in_battle
 	in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
-        	    memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
+			memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 	if prev_state ~= in_battle and in_battle then
 		enemies_alive = memory.read_u8(0x3A77)
 		ekilled = {}
@@ -84,13 +84,22 @@ while true do
 		cparty = {nil, nil, nil, nil}
 	end
 
-    map_change = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
+	map_change = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
 	map_change = map_change ~= map_id
 	map_id = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
 	area_id = memory.read_u8(0x0520)
 	miab_id = memory.read_u16_le(0x00D0)
-    eform_id = memory.read_u16_le(0x11E0)
-    battle_type = memory.read_u8(0x3EBC)
+	eform_id = memory.read_u16_le(0x11E0)
+	battle_type = memory.read_u8(0x3EBC)
+
+	-- Music id detection, from Myriachan
+	-- "if 0x1304 is 0x10, 0x11, 0x14, or 0x15, then 0x1305 should contain a song ID."
+	mbit = memory.read_u8(0x1304)
+	if mbit == 0x10 or mbit == 0x11 or mbit == 0x14 or mbit == 0x15 then
+		music_id = memory.read_u8(0x1305)
+	else
+		music_id = -1
+	end
 
 	-- MIAB detection, thanks to Myriachan
 	is_miab = miab_id == 0x0B90
@@ -122,7 +131,7 @@ while true do
 	alive_mask = memory.read_u8(0x3A74)
 
 	if _HUD then
-		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. "(" .. tostring(is_miab) .. ")" .. " | map id " .. map_id .. " | battle type " .. bizstring.binary(battle_type))
+		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. "(" .. tostring(is_miab) .. ")" .. " | map id " .. map_id .. " | music id " .. music_id)
 		gui.text(20, 20, "alive mask: " .. bizstring.binary((0xF + 1) + alive_mask) .. " total enemies " .. enemies_alive)
 		gui.text(20, 30, "chars alive: " .. nchar_alive)
 		gui.text(20, 40, "monsters alive: " .. nenem_alive)
@@ -307,6 +316,7 @@ while true do
 	out_json = out_json .. "\"is_miab\":" .. tostring(is_miab) .. ","
 	out_json = out_json .. "\"is_veldt\":" .. tostring(is_veldt) .. ","
 	out_json = out_json .. "\"map_id\": " .. map_id .. ","
+	out_json = out_json .. "\"music_id\": " .. music_id .. ","
 
 	-- Kill information
 	out_json = out_json .. "  \"kills\": {" .. ""

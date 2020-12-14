@@ -441,8 +441,6 @@ async def music(ctx):
     cmds = ctx.content.split(" ")
     print(f"Querying music.")
 
-    """Myriachan: @fusoyeahhh if 0x1304 is 0x10, 0x11, 0x14, or 0x15, then 0x1305 should contain a song ID."""
-
     if len(cmds) == 1:
         for outstr in _chunk_string(["Known music: "] + MUSIC_INFO["orig"].to_list(),
                                     joiner=' '):
