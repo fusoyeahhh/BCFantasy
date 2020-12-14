@@ -88,6 +88,7 @@ def read_spoiler(spoilerf):
         line, mapped = line.split("->")
         mapped = mapped.strip()
         sid, mapping = map(str.strip, line.split(":"))
+        _map["song_id"] = int(sid, 16)
         _map["new"] = mapped
         _map["orig"] = mapping
         line = lines.pop(0).strip()
