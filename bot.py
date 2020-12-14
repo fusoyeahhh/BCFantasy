@@ -87,6 +87,7 @@ _USERS = {}
 _CONTEXT = {
     "area": None,
     "boss": None,
+    "song": None
 }
 
 #
@@ -117,6 +118,13 @@ def convert_buffer_to_commands(logf, **kwargs):
 
             except Exception as e:
                 print("Couldn't parse party: ", status["party"])
+
+        # music id lookup
+        # FIXME: do this the same way as other contexts
+        music_id = status.get("music_id", None)
+        if music_id is not None and MUSIC_INFO:
+            print(f"Setting music context to {music_id}")
+            _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")[music_id]["new"]
 
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
@@ -448,7 +456,10 @@ async def music(ctx):
 
     orig = cmds[1].strip()
     print(f"Querying music, argument {orig}")
-    song = MUSIC_INFO.loc[MUSIC_INFO["orig"] == orig]
+    try:
+        song = MUSIC_INFO.set_index("song_id")[orig]
+    except KeyError:
+        song = MUSIC_INFO.loc[MUSIC_INFO["orig"] == orig]
 
     if len(song) != 1:
         print(f"Problem finding {orig}")
