@@ -101,6 +101,11 @@ while true do
 		music_id = -1
 	end
 
+	-- Game over detection
+	-- Another from Myria: "another way to identify game over is reading the 24-bit value at 0x00E5.
+	-- 0xCCE5C5 is one of the event script pointers for the game over script."
+	is_gameover = bit.band(memory.read_u32_le(0x00E5), 0x0FFF) == 0xCCE5C5
+
 	-- MIAB detection, thanks to Myriachan
 	is_miab = miab_id == 0x0B90
 	-- clear miab flag
@@ -131,7 +136,7 @@ while true do
 	alive_mask = memory.read_u8(0x3A74)
 
 	if _HUD then
-		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | miab id " .. miab_id .. "(" .. tostring(is_miab) .. ")" .. " | map id " .. map_id .. " | music id " .. music_id)
+		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | is gameover " .. tostring(is_gameover) .. "(" .. tostring(is_miab) .. ")" .. " | map id " .. map_id .. " | music id " .. music_id)
 		gui.text(20, 20, "alive mask: " .. bizstring.binary((0xF + 1) + alive_mask) .. " total enemies " .. enemies_alive)
 		gui.text(20, 30, "chars alive: " .. nchar_alive)
 		gui.text(20, 40, "monsters alive: " .. nenem_alive)
@@ -315,6 +320,7 @@ while true do
 	out_json = out_json .. "\"in_battle\":" .. tostring(in_battle) .. ","
 	out_json = out_json .. "\"is_miab\":" .. tostring(is_miab) .. ","
 	out_json = out_json .. "\"is_veldt\":" .. tostring(is_veldt) .. ","
+	out_json = out_json .. "\"is_gameover\":" .. tostring(is_gameover) .. ","
 	out_json = out_json .. "\"map_id\": " .. map_id .. ","
 	out_json = out_json .. "\"music_id\": " .. music_id .. ","
 
