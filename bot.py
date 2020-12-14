@@ -122,7 +122,7 @@ def convert_buffer_to_commands(logf, **kwargs):
         # music id lookup
         # FIXME: do this the same way as other contexts
         music_id = status.get("music_id", None)
-        if music_id is not None and MUSIC_INFO:
+        if music_id is not None and len(MUSIC_INFO) > 0:
             print(f"Setting music context to {music_id}")
             _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")[music_id]["new"]
 
