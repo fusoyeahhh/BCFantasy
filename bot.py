@@ -87,7 +87,7 @@ _USERS = {}
 _CONTEXT = {
     "area": None,
     "boss": None,
-    "song": None
+    "music": None
 }
 
 #
@@ -970,6 +970,7 @@ event._callback.__doc__ = f"""
 ADMIN_COMMANDS["event"] = event
 
 # TODO: is map id 5 the gameover screen?
+# FIXME: 62 is the "Game over" music id
 @bot.command(name='stop')
 async def stop(ctx):
     """
