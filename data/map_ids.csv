@@ -1,269 +1,413 @@
 id,name,scoring_area
-0,World of Balance,WoB Overworld
-1,World of Ruin,WoR Overworld
-2,Serpent Trench,Serpent Trench
-6,Setzer's Airship (black background),
-7,Setzer's Airship--Rooms,
-9,Scenario Selection Screen,
-00A,Setzer's Airship; flying through the sky,
-00B,Darryl's Airship; with Darryl at the helm,
-00C,Setzer's Airship--Casino Room (no exits),
-00D,Setzer's Airship; party standing on deck,
-00E,Chocobo Stable (World of Balance),
-00F,Houses in South Figaro,Towns
-10,Chocobo Stable (World of Ruin),
-11,Airship (World of Ruin; Bahamut magicite received),
-12,Narshe (WoB)-Mountaintop cliff (from intro),Narshe Ice Fields
-13,Narshe (WoB) (from intro--some places are inaccessible),Narshe (WoB)
-14,Narshe (WoB) (normal),Narshe (WoB)
-15,Narshe-Mountains between Narshe and the caves above Narshe,Narshe (WoB)
-16,Narshe-Mountaintop maze above Narshe,Narshe (WoB)
-17,Narshe-Mountaintop cliff (normal),Narshe Ice Fields
-18,Narshe-Weapon Shop,Narshe (WoB)
-19,Narshe-Armor Shop,Narshe (WoB)
-01A,Narshe-Item Shop,Narshe (WoB)
-01B,Narshe-Relic Shop,Narshe (WoB)
-01C,Narshe-Inn,Narshe (WoB)
-01D,Narshe-Cafe,Narshe (WoB)
-01E,Narshe-Elder's House,Narshe (WoB)
-01F,Chocobo Stable,
-20,Narshe (WoR),Narshe (WoR)
-21,Narshe (WoR)-Mountains between Narshe and the caves above Narshe,Narshe (WoR)
-22,Narshe (WoR)-Mountaintop maze above Narshe (Ice Dragon),Narshe (WoR)
-23,Narshe (WoR)-Mountaintop cliff,Narshe Ice Fields
-24,Narshe Caves (Mag Roader?),Narshe (WoR)
-25,Underneath Narshe,Narshe (WoR)
-26,Moogle's Cave,Narshe (WoR)
-27,Narshe-Mountain Path to Maze,Narshe Ice Fields
-28,Narshe Caves (no enemies),Narshe (WoB)
-29,Narhse Caves (beginning),Narshe (WoB)
-02C,Underneath Narshe (doesn't work),Narshe (WoB)
-02F,South Figaro (doesn't work),South Figaro Cave
-32,Underneath Narshe,Narshe (WoB)
-37,Figaro Castle,Towns
-39,Figaro Castle-various rooms,Towns
-03B,Figaro Castle-various rooms,Towns
-03C,Figaro Castle-library,Towns
-03D,Figaro Castle-various basement rooms,Castle Figaro Basement
-44,Cave to South Figaro (World of Ruin),South Figaro Cave
-45,Cave to South Figaro (World of Balance),South Figaro Cave
-04A,South Figaro (World of Ruin),Towns
-04B,South Figaro (World of Balance),Towns
-04E,South Figaro pub,Towns
-51,South Figaro-Large House,Towns
-53,South Figaro-Large House; basement,South Figaro Basement
-54,South Figaro-Duncan's House; basement,Towns
-56,South Figaro-Duncan's House,Towns
-58,South Figaro-Inn,Towns
-05E,Nikeah (?)-Some rooms (as well as Cid's house on the Solitary Island),
-60,Mt. Kolts,Mt. Koltz
-61,Mt. Kolts with Fog,Mt. Koltz
-62,Mt. Kolts-last area (where Vargas is),Mt. Koltz
-64,Mt. Kolts-Inner caves,Mt. Koltz
-69,Classroom-Advanced Battle Tactics,Narshe (WoB)
-06A,Classroom-Battle Tactics,Narshe (WoB)
-06B,Classroom-Environmental Science,Narshe (WoB)
-06D,Returners' Hideout,Towns
-06F,Returners' Hideout-Inn,Towns
-71,Lete River,Lete River
-72,Lete River-Inner Caves,Lete River
-73,Crazy Old Man's House,
-74,Albrook-Shops,Towns
-75,Imperial Camp,Imperial Camp
-78,Doma Castle-from poison scene?,
-79,Doma Castle-World of Balance,Doma Castle
-07B,Doma Castle-inner rooms,Doma Castle
-07D,Doma Castle-dimmed with enemies (from Cyan's dream),Cyan's Dream
-07E,Doma Castle-dimmed rooms with enemies (from Cyan's dream),Cyan's Dream
-07F,Duncan's Cabin--World of Ruin; exterior,
-80,Duncan's Cabin--World of Ruin; interior,
-83,Crazy Old Man's House--World of Ruin,
-84,Phantom Forest--Entrance,Phantom Forest
-85,Phantom Forest--Recovery Spring,Phantom Forest
-86,Phantom Forest--Exit,Phantom Forest
-87,Phantom Forest--to train platform,Phantom Forest
-89,Phantom Train Platform--Train left; Cyan sad,Phantom Train
-08E,Phantom Train,Phantom Train
-90,Phantom Train--Switch car; from Cyan's dream,Cyan's Dream|Phantom Forest
-91,Phantom Train--Seating car,Phantom Train
-92,Phantom Train--Engine room,Phantom Train
-93,Phantom Train--Dining car,Phantom Train
-95,Phantom Train--Seating car 2,Phantom Train
-97,Phantom Train--Rroom car 1,Phantom Train
-98,Phantom Train--Car with ghost,Phantom Train
-99,Phantom Train--Save point,Phantom Train
-09B,Baren Falls--Cave,Baren Falls
-09C,Baren Falls--Cliff,Baren Falls
-09D,Mobliz--World of Balance,Towns
-09E,Mobliz--World of Ruin,Towns
-09F,Riverbank where Gau finds the party,
-0A0,Mobliz--Inn,Towns
-0A1,Mobliz--Arsenal,Towns
-0A2,Mobliz--Relics,Towns
-0A3,Mobliz--Armor Shop,Towns
-0A4,Mobliz--Item Shop,Towns
-0A5,Mobliz--Wounded Soldier's House,Towns
-0A6,Baren Falls--Entrance,Baren Falls
-0A7,Mt. Crescent,Serpent Trench
-0A8,River leading to Serpent Trench,Serpent Trench
-0A9,Nikeah--World of Balance,Towns
-0AA,Riverbank with Clyde and Baram,
-0AF,Serpent Trench--Caves,Serpent Trench
-0B0,Mt. Zozo--Outside,Mt. Zozo
-0B1,Mt. Zozo--Outside; cliff with treasure chest,Mt. Zozo
-0B2,Mt. Zozo--Outside; cliff connecting dragon room to Cyan's room,Mt. Zozo
-0B3,Mt. Zozo--First inner chamber,Mt. Zozo
-0B5,Mt. Zozo--Cliff outside Cyan's room,Mt. Zozo
-0B9,Colloseum Builder's House--World of Balance,
-0BB,Nikeah--Port,Towns
-0BC,Kohlingen--World of Balance,Towns
-0BD,Kohlingen--World of Ruin,Towns
-0BF,Kohlingen--Inn,Towns
-0C0,Kohlingen--?,Towns
-0C1,Kohlingen--Arsenal,Towns
-0C2,Kohlingen--General Store,Towns
-0C6,Jidoor--World of Balance,Towns
-0C8,Jidoor--Auction House,Towns
-0C9,Jidoor--Item Shop,Towns
-0CA,Jidoor--Relics,Towns
-0CB,Jidoor--Armor Shop,Towns
-0CC,Jidoor--Weapon Shop,Towns
-0CE,Jidoor--Inn,Towns
-0CF,Jidoor--Owzer's House (dimmed; enemies),Owzer's Mansion
-0D0,Jidoor--Owzer's House (dimmed; no enemies),Towns
-0D1,Jidoor--Owzer's House,Towns
-0D7,Airship flying scene,
-0D8,Gestahl; Madonna; and Maduin outside Esperville,
-0D9,Esperville,
-0DA,Esper Cave,
-0DB,Esperville Houses,
-0DD,Zozo,Zozo
-0E1,Zozo--Buildings,Zozo
-0E2,Zozo--Buildings,Zozo
-0E7,Opera House--Stage; dancing,Opera House
-0E9,Opera House--Stage; fighting,Opera House
-0EB,Opera House--Rafters,Opera House
-0EC,Opera House--Castle Scene,Opera House
-0EE,Opera House--Dressing Room,Opera House
-0EF,Opera House--Rafters (alone),Opera House
-0F2,Vector,Towns
-0F3,Vector--Imperial Castle,Towns
-0F4,Vector--Imperial Castle; roof,Towns
-0F5,Vector--Inn,Towns
-0F6,Vector--Weapon Shop,Towns
-0F7,Vector--Cafe,Towns
-0F8,Vector--Armor Shop,Towns
-0F9,Vector--?,Towns
-0FA,Vector--Imperial Castle; inside,Towns
-0FD,Vector--on fire,Towns
-106,Magitek Factory--Inside,Magitek Facility
-107,Magitek Factory--Inside; 2nd,Magitek Facility
-108,Magitek Factory--Chamber where Shiva and Ifrit are found,Magitek Facility
-10A,Magitek Factory--Elevator with Cid,Magitek Facility
-112,Magitek Research Facility--Tube Room,Magitek Facility
-114,The place Zone Eater sucks you into,Gogo's Cave
-116,Gogo's Room,Gogo's Cave
-119,Umaro's Lair,Umaro's Cave
-11C,Maranda--World of Balance,Towns
-11D,Doma (after liberation?),Doma Castle
-11F,Kefka's Domain,Kefka's Tower
-120,Maranda--Inn,Towns
-121,Maranda--Weapon Shop,Towns
-122,Maranda--Armor Shop,Towns
-125,Kefka's Domain,Kefka's Tower
-126,Kefka's Domain,Kefka's Tower
-127,Kefka's Domain,Kefka's Tower
-128,Kefka's Domain,Kefka's Tower
-129,Daryll's Tomb,Daryl's Tomb
-12A,Daryll's Tomb--Basement 1,Daryl's Tomb
-12B,Daryll's Tomb--Basement 2,Daryl's Tomb
-12C,Daryll's Tomb--Basement 3,Daryl's Tomb
-12D,Daryll's Tomb--Long Staircase,Daryl's Tomb
-12F,Kefka's Domain,Kefka's Tower
-131,Tzen--World of Ruin; predestruction,Towns
-132,Tzen--World of Ruin; postdestruction,Towns
-133,Jidoor (WoR)--Item Shop,Towns
-134,Jidoor (WoR)--Inn,Towns
-135,Jidoor (WoR)--Weapon Shop,Towns
-136,Jidoor (WoR)--Armor Shop,Towns
-138,Jidoor (WoR)--Relics,Towns
-139,Phoenix Cave--Small Lava Room,Phoenix Cave
-13A,Phoenix Cave--Foggy Lava Room,Phoenix Cave
-13B,Phoenix Cave--Top Level,Phoenix Cave
-13E,Phoenix Cave--Entrance,Phoenix Cave
-13F,Mountain Cliff from Cyan's dream,Cyan's Dream
-140,Mines from Cyan's dream,Cyan's Dream
-141,Switch car from Cyan's dream,Cyan's Dream
-142,Seating car from Cyan's dream,Cyan's Dream
-143,Albrook--World of Balance,Towns
-144,Albrook--World of Ruin,Towns
-145,Albrook--Inn,Towns
-146,Albrook--Weapon Shop,Towns
-147,Albrook--Armor Shop,Towns
-148,Albrook--Item Shop,Towns
-14A,Albrook--Cafe,Towns
-14C,Albrook--Docks,Towns
-14E,Kefka's Domain--Main Area,Kefka's Tower
-150,Final Room--Confrontation with Kefka,Kefka's Tower
-151,Kefka's Domain--Room with Weights and Switches,Kefka's Tower
-154,Thamasa--World of Balance,Towns
-155,Thamasa--World of Balance (people lying on ground),Towns
-157,Thamasa--World of Balance,Towns
-158,Thamasa--World of Ruin,Towns
-159,Thamasa--Arsenal,Towns
-15A,Thamasa--Inn,Towns
-15B,Thamasa--Item Shop,Towns
-15C,Thamasa--Elder's House,Towns
-15F,Thamasa--Burning House,Burning House
-160,Magitek Research Facility,Magitek Facility
-161,Cave in the Veldt,Cave on the Veldt
-162,Kefka's Domain--Goddess room; etc.,Kefka's Tower
-164,Final Room--Confrontation with Kefka,Kefka's Tower
-165,Final Room--Confrontation with Kefka,Kefka's Tower
-166,Floating Island--Save Point,Floating Continent
-167,Fanatics Tower,Fanatic's Tower
-168,Fanatics Tower,Fanatic's Tower
-169,Fanatics Tower,Fanatic's Tower
-16A,Fanatics Tower--Entrance,Fanatic's Tower
-16B,Fanatics Tower,Fanatic's Tower
-16C,Fanatics Tower--Roof,Fanatic's Tower
-16D,Fanatics Tower--Treasure Room,Fanatic's Tower
-16E,Fanatics Tower--Treasure Room; on roof,Fanatic's Tower
-16F,Fanatics Tower--Treasure Room,Fanatic's Tower
-170,Fanatics Tower--Treasure Room; White Dragon,Fanatic's Tower
-171,Fanatics Tower--Treasure Room,Fanatic's Tower
-172,Fanatics Tower--Treasure Room,Fanatic's Tower
-173,Cave near Thamasa; with the Three Statues,Esper Mountain
-175,Cave near Thamasa; outside cliffs; left,Esper Mountain
-176,Cave near Thamasa; outside cliffs; right,Esper Mountain
-177,Cave near Thamasa; Esper room,Esper Mountain
-179,Imperial Base,Towns
-17A,Rooms in Vector and Imperial Base,Towns
-17B,Rooms in Vector and Imperial Base,Towns
-17C,Large Overworld Map (from Floating Island),Floating Continent
-17E,Cave to the Sealed Gate,Cave to the Sealed Gate
-17F,Cave to the Sealed Gate--Basement 1,Cave to the Sealed Gate
-180,Cave to the Sealed Gate--Basement 1 (Lava colored),Cave to the Sealed Gate
-181,Cave to the Sealed Gate--Small Lava Room with moving bridges,Cave to the Sealed Gate
-182,Cave to the Sealed Gate--Basement 4,Cave to the Sealed Gate
-183,Cave to the Sealed Gate--Basement 4,Cave to the Sealed Gate
-186,Land that rises and breaks for the World of Ruin,
-187,Sealed Gate,Cave to the Sealed Gate
-188,Jidoor--Floating Island casting shadow,
-189,Floating Island--being destroyed; Naughtys attack,Floating Continent
-18A,Floating Island,Floating Continent
-18B,Piece of land that gets torn apart,
-18C,Cid's House on Solitary Island--Outside,
-18E,Solitary Island--Beach,WoR Overworld
-18F,Solitary Island--Cliff,WoR Overworld
-190,Solitary Island--Beach,WoR Overworld
-191,Caves to the Ancient Castle,Ancient Castle
-192,Caves to the Ancient Castle,Ancient Castle
-194,Hidon's Cave,Ebot's Cave
-195,Hidon's Cave,Ebot's Cave
-196,Ancient Castle--Basement 1,Ancient Castle
-197,Ancient Castle--Entrance,Ancient Castle
-198,Ancient Castle--Basement 1,Ancient Castle
-199,Kefka's Domain--Pipe Room,Kefka's Tower
-19A,Kefka's Domain,Kefka's Tower
-19D,Colloseum--Rooms,
+0,"World of Balance, World Map",WoB Overworld
+1,"World of Ruin, World Map",WoR Overworld
+2,"Serpent Trench, World Map",Serpent Trench
+6,"Blackjack, Upper Deck (general use)",
+7,"Blackjack, Inside",
+9,“Choose A Scenario”,
+A,"Blackjack, Upper Deck (IAF sequence)",
+B,"Falcon, Upper Deck",
+C,"Falcon, Inside",
+D,"Falcon, Roof, Landing on Kefka's Tower",
+E,"Chocobo Stable, Outside (WOB, forested)",
+F,"Chocobo Stable, Inside",Towns
+10,"Chocobo Stable, Outside (WOR, forested)",
+11,"Falcon, Upper Deck",
+12,"Narshe, Northern Cliff, Intro",Narshe Ice Fields
+13,"Narshe, Town, Beginning (WOB)",Narshe (WoB)
+14,"Narshe, Town (WOB)",Narshe (WoB)
+15,"Narshe, North of Town, Beginning (WOB)",Narshe (WoB)
+16,"Narshe, Snow Battlefield (WOB)",Narshe (WoB)
+17,"Narshe, Northern Cliff (WOB)",Narshe Ice Fields
+18,"Narshe, Weapons Shop",Narshe (WoB)
+19,"Narshe, Armor Shop",Narshe (WoB)
+1A,"Narshe, Item Shop",Narshe (WoB)
+1B,"Narshe, Relics Shop",Narshe (WoB)
+1C,"Narshe, Inn",Narshe (WoB)
+1D,"Narshe, Pub",Narshe (WoB)
+1E,"Narshe, Elder's House",Narshe (WoB)
+1F,DUMMIED - Chocobo Stable,
+20,"Narshe, Outside (WOR)",Narshe (WoR)
+21,"Narshe, Outside, North (WOR)",Narshe (WoR)
+22,"Narshe, Outside, Battlefield (WOR)",Narshe (WoR)
+23,"Narshe, Outside, Northern Cliff (WOR)",Narshe Ice Fields
+24,"Narshe, Mines Cart Rail Rooms (WOR)",Narshe (WoR)
+25,"Narshe, Mines Battle Room (WOR)",Narshe (WoR)
+26,"Narshe, Mines 1 (WOR)",Narshe (WoR)
+27,"Narshe, Outside, North, Beginning",Narshe Ice Fields
+28,"Narshe, Mines 1, Beginning (WOB)",Narshe (WoB)
+29,"Narshe, Mines 1 (WOB)",Narshe (WoB)
+2C,"Narshe, Moogle's Room (WOR)",Narshe (WoB)
+2F,DUMMIED,South Figaro Cave
+32,"Narshe, Mines 2 (WOB)",Narshe (WoB)
+37,"Figaro Castle, Outside",Towns
+39,"Figaro Castle, King's Bedroom",Towns
+3B,"Figaro Castle, Inside",Towns
+3C,"Figaro Castle, Library",Towns
+3D,"Figaro Castle, Basement 1",Castle Figaro Basement
+44,Cave to South Figaro (WOR),South Figaro Cave
+45,"Cave to South Figaro, Rooms",South Figaro Cave
+4A,"South Figaro, Outside (WOR)",Towns
+4B,"South Figaro, Outside (WOB)",Towns
+4E,"South Figaro, Pub",Towns
+51,"South Figaro, Rich Man's House",Towns
+53,"South Figaro, Basement 1",South Figaro Basement
+54,"South Figaro, Basement 1 Clock Room",Towns
+56,"South Figaro, Duncan's House",Towns
+58,"South Figaro, Basement 1 Save Point",Towns
+5E,"Sabin's House, Inside",
+60,"Mt.Kolts, Outside",Mt. Koltz
+61,"Mt.Kolts, Outside Bridge",Mt. Koltz
+62,"Mt.Kolts, Outside Vargas Area",Mt. Koltz
+64,"Mt.Kolts, Cave",Mt. Koltz
+69,"Narshe, School, Adv. Battle Tactics",Narshe (WoB)
+6A,"Narshe, School, Battle TacticsNarshe, School, Environmental Science",Narshe (WoB)
+6B,"Returner's Hideout, Entrance",Narshe (WoB)
+6D,"Returner's Hideout, Rooms",Towns
+6F,Tunnel to Lete River,Towns
+71,Lete River Cave,Lete River
+72,"Gau's Father's House, Outside",Lete River
+73,"Gau's Father's House, Inside",
+74,Military Base Camp,Towns
+75,DUMMIED,Imperial Camp
+78,"Doma Castle, Outside Poisoning (WOB)",
+79,DUMMIED,Doma Castle
+7B,"Doma Castle, Cyan's Room",Doma Castle
+7D,"Cyan's Dream, Doma Castle Rooms",Cyan's Dream
+7E,"Duncan's House, Outside",Cyan's Dream
+7F,"Duncan's House, Inside",
+80,"Ending, sky with birds",
+83,Phantom Forest 1,
+84,Phantom Forest 2,Phantom Forest
+85,Phantom Forest 3,Phantom Forest
+86,Phantom Forest 4,Phantom Forest
+87,"Ending, mountain bridge",Phantom Forest
+89,"Phantom Train, Docking Station 2",Phantom Train
+8E,"Cyan's Dream, Phantom Train, Outside",Phantom Train
+90,"Phantom Train, Engineer's Room",Cyan's Dream|Phantom Forest
+91,"Phantom Train, Restaurant",Phantom Train
+92,"Mobliz, Outside during Light of Judgement",Phantom Train
+93,"Phantom Train, Inside 2",Phantom Train
+95,"Phantom Train, Inside 3",Phantom Train
+97,"Phantom Train, Inside Rooms",Phantom Train
+98,"Mobliz, Basement 2Waterfall Cave",Phantom Train
+99,Waterfall Cliff,Phantom Train
+9B,"Mobliz, Outside (WOR)",Baren Falls
+9C,Veldt Shore,Baren Falls
+9D,"Mobliz, Inn",Towns
+9E,"Mobliz, Arsenal",Towns
+9F,"Mobliz, Relics",
+A0,"Mobliz, Mail House",Towns
+A1,"Mobliz, Item Shop",Towns
+A2,"Mobliz, Basement 1",Towns
+A3,Waterfall Entrance,Towns
+A4,Veldt Cave to Waterfall,Towns
+A5,Veldt Waterfall,Towns
+A6,"Nikeah, Outside",Baren Falls
+A7,Veldt Shore,Serpent Trench
+A8,"Nikeah, Inn",Serpent Trench
+A9,"Nikeah, Pub",Towns
+AA,"Nikeah, Chocobo Stable",
+AF,"Mt.Zozo, Outside 2",Serpent Trench
+B0,"Mt.Zozo, Inside",Mt. Zozo
+B1,"Mt.Zozo, Cyan's Room",Mt. Zozo
+B2,"Mt.Zozo, Cliff",Mt. Zozo
+B3,"Ending, Relm, Shadow, Strago",Mt. Zozo
+B5,"Mobliz, Outside, Before Kefka Fight",Mt. Zozo
+B9,"Kohlingen, Outside (WOB)",
+BB,"Ending, Rapids",Towns
+BC,"Kohlingen, Inn (WOR)",Towns
+BD,DUMMIED - Kohlingen,Towns
+BF,"Kohlingen, General Store",Towns
+C0,"Kohlingen, Chemist's House",Towns
+C1,"Maranda, Flower Girl's House (WOR)",Towns
+C2,"Kohlingen, Rachel's House",Towns
+C6,"Jidoor, Item Shop",Towns
+C8,"Jidoor, Armor Shop",Towns
+C9,"Jidoor, Weapon Shop",Towns
+CA,"Jidoor, Chocobo Stable",Towns
+CB,"Jidoor, Inn",Towns
+CC,"Owzer's House, Basement",Towns
+CE,"Owzer's House, F1",Towns
+CF,"Ending, Cyan 1",Owzer's Mansion
+D0,"Ending, Umaro, Mog 1",Towns
+D1,"Ending, Gogo 1",Towns
+D7,"Esper World, Gate",
+D8,"Esper World, House",
+D9,DUMMIED - boat dock,
+DA,"Zozo, Outside",
+DB,FREE TO USE,
+DD,FREE TO USE,Zozo
+E1,FREE TO USE,Zozo
+E2,FREE TO USE,Zozo
+E7,"Opera House, Theater Play 1",Opera House
+E9,"Opera House, Castle Balcony",Opera House
+EB,"Opera House, Dressing Room",Opera House
+EC,DUMMIED - Opera House,Opera House
+EE,"Imperial Castle, Cranes Activating",Opera House
+EF,"Vector, Outside",Opera House
+F2,"Vector, Inn",Towns
+F3,"Vector, Weapon Shop",Towns
+F4,"Vector, Pub",Towns
+F5,"Vector, Armor Shop",Towns
+F6,"Vector, Healer's House",Towns
+F7,"Imperial Castle, Inside",Towns
+F8,"Imperial Castle, Banquet",Towns
+F9,"Imperial Castle, Bedroom",Towns
+FA,"Vector, Outside, Burning",Towns
+FD,"Ending, Umaro 2",Towns
+106,DUMMIED - Magitek Factory,Magitek Facility
+107,"Magitek Factory, Elevator",Magitek Facility
+108,DUMMIED - Magitek Factory,Magitek Facility
+10A,"Magitek Factory, Room 4",Magitek Facility
+112,"Zone Eater's Stomach, Room 4",Magitek Facility
+114,"Zone Eater's Stomach, Room 2",Gogo's Cave
+116,"Narshe, Umaro's Cave 1",Gogo's Cave
+119,"Maranda, Outside (WOR)",Umaro's Cave
+11C,"Kefka's Tower, Inside From Guardian",Towns
+11D,"Maranda, Inn (WOR)",Doma Castle
+11F,"Maranda, Armor Shop (WOR)",Kefka's Tower
+120,"Kefka's Tower, Guardian's Room",Towns
+121,"Kefka's Tower, Junk Room",Towns
+122,"Kefka's Tower, Inside from Factory Room",Towns
+125,"Kefka's Tower, Factory Room (Top Level)",Kefka's Tower
+126,"Darill's Tomb, Outside",Kefka's Tower
+127,"Darill's Tomb, Basement 1",Kefka's Tower
+128,"Darill's Tomb, Basement 2",Kefka's Tower
+129,"Darill's Tomb, Basement 3",Daryl's Tomb
+12A,"Darill's Tomb, Staircase",Daryl's Tomb
+12B,"Ending, Thamasa, Repairing burned house",Daryl's Tomb
+12C,"Kefka's Tower, Inside 1",Daryl's Tomb
+12D,"Kefka's Tower, Assassin Room",Daryl's Tomb
+12F,"Tzen, Outside, Before House Collapse (WOR)",Kefka's Tower
+131,"Tzen, Inn (WOR)",Towns
+132,"Tzen, Weapon Shop (WOR)",Towns
+133,"Tzen, Armor Shop (WOR)",Towns
+134,"Tzen, Inside Collapsing House",Towns
+135,"Tzen, Relics (WOR)",Towns
+136,"Phoenix Cave, Big Lava Room, Drained",Towns
+138,"Phoenix Cave, Main Room, Drained",Towns
+139,"Phoenix Cave, Main Room",Phoenix Cave
+13A,"Cyan's Dream, Three Stooges",Phoenix Cave
+13B,"Pheonix Cave, Outside Entrance",Phoenix Cave
+13E,"Cyan's Dream, Phantom Train, Inside 1",Phoenix Cave
+13F,"Cyan's Dream, Phantom Train, Inside 2",Cyan's Dream
+140,"Albrook, Outside (WOB)",Cyan's Dream
+141,"Albrook, Outside (WOR)",Cyan's Dream
+142,"Albrook, Inn",Cyan's Dream
+143,"Albrook, Weapon Shop",Towns
+144,"Albrook, Armor Shop",Towns
+145,"Albrook, Item Shop",Towns
+146,"Kefka's Tower, Room with Movers",Towns
+147,"Albrook, Pub",Towns
+148,"Kefka's Tower, Atma's Room",Towns
+14A,"DUMMIED - Kefka's Tower, factory",Towns
+14C,"Kefka's Tower, Gold Dragon Room",Towns
+14E,"Kefka's Tower, 4Ton Switch Room",Kefka's Tower
+150,"Kefka's Tower, Inside from Eastern Group",Kefka's Tower
+151,"Thamasa, Outside, at Leo's Grave",Kefka's Tower
+154,"Thamasa, Outside (WOB)",Towns
+155,"Thamasa, Outside (WOR)",Towns
+157,"Thamasa, Inn",Towns
+158,"Thamasa, Item Shop",Towns
+159,"Thamasa, Elder's House",Towns
+15A,"Thamasa, Strago's House",Towns
+15B,"Thamasa, Relics",Towns
+15C,"Thamasa, Inside Burning House",Towns
+15F,"Kefka's Tower, Red Carpet Rooms",Burning House
+160,"Kefka's Tower, Three Switch Room",Magitek Facility
+161,"Kefka's Tower, Left Statue Room",Cave on the Veldt
+162,"Kefka's Tower, Kefka's Lair 2",Kefka's Tower
+164,"Fanatic's Tower, Level 2",Kefka's Tower
+165,"Fanatic's Tower, Level 3",Kefka's Tower
+166,"Fanatic's Tower, Level 4",Floating Continent
+167,"Fanatic's Tower, Entrance",Fanatic's Tower
+168,"Fanatic's Tower, Level 1",Fanatic's Tower
+169,"Fanatic's Tower, Roof",Fanatic's Tower
+16A,"Fanatic's Tower, Treasure Room 2",Fanatic's Tower
+16B,"Fanatic's Tower, Gem Box Room",Fanatic's Tower
+16C,"Fanatic's Tower, Treasure Room 3",Fanatic's Tower
+16D,"Fanatic's Tower, Treasure Room 4",Fanatic's Tower
+16E,"Fanatic's Tower, Treasure Room 5",Fanatic's Tower
+16F,"Fanatic's Tower, Treasure Room 1",Fanatic's Tower
+170,"Esper Cave, Statue Room",Fanatic's Tower
+171,"Esper Cave, Outside 2",Fanatic's Tower
+172,"Esper Cave, Outside 1",Fanatic's Tower
+173,"Esper Cave, Outside 3",Esper Mountain
+175,"Floating Continent, Destruction",Esper Mountain
+176,Imperial Base,Esper Mountain
+177,"Imperial Base, House",Esper Mountain
+179,Overhead View of World Map,Towns
+17A,Mountains Destruction,Towns
+17B,"Cave to the Sealed Gate, Room 1",Towns
+17C,"Cave to the Sealed Gate, Basement 1",Floating Continent
+17E,"Cave to the Sealed Gate, Basement 2",Cave to the Sealed Gate
+17F,"Cave to the Sealed Gate, Save Point",Cave to the Sealed Gate
+180,"DUMMIED - Cave to the Sealed Gate, Basement 4",Cave to the Sealed Gate
+181,DUMMIED - Cave to the Sealed Gate,Cave to the Sealed Gate
+182,Grasslands Destruction,Cave to the Sealed Gate
+183,Highlands Destruction,Cave to the Sealed Gate
+186,"Floating Continent, Breaking Apart",
+187,"Floating Continent, Outside",Cave to the Sealed Gate
+188,Floating Continent Breakaway 1,
+189,"Cid's Island, Outside",Floating Continent
+18A,"Cid's Island, Inside House",Floating Continent
+18B,"Cid's Island, Beach",
+18C,"Cid's Island, Cliff",
+18E,Ancient Cave 1,WoR Overworld
+18F,Ancient Cave 2,WoR Overworld
+190,"DUMMIED - Cid's Island, Beach",WoR Overworld
+191,Hidon's Cave,Ancient Castle
+192,"Hidon's Cave, Entrance",Ancient Castle
+194,"Ancient Castle, Outside",Ebot's Cave
+195,"Ancient Castle, Eastern Room",Ebot's Cave
+196,"Kefka's Tower, Pipe Room",Ancient Castle
+197,"Kefka's Tower, Factory Room (Bottom Level)",Ancient Castle
+198,"Kefka's Tower, Final Room",Ancient Castle
+199,"Kefka's Tower, Guardian Path Save Point",Kefka's Tower
+19A,Colosseum,Kefka's Tower
+3,“On that day…“,
+4,Shadow's Dream 1,
+5,Mog's Explanation,
+8,"Blackjack, Back Room",
+2A,"Narshe, Mines Esper Room, Beginning (WOB)",
+2B,"Narshe, Mines Esper Room, Empty (WOB)",
+2D,DUMMIED,
+2E,DUMMIED,
+30,"Narshe, Mines 2, From Secret (WOB)",
+31,"Narshe, Mines Checkpoint (WOB)",
+33,"Narshe, Mines Battle Room (WOB)",
+34,"Narshe, Moogle's Room (WOB)",
+35,"Cave to Figaro Castle, Room 2",
+36,"Figaro Castle, Submerging",
+38,"Figaro Desert, Kefka & Troops",
+3A,"Figaro Castle, Throne Room",
+3E,"Figaro Castle, Basement 2",
+3F,"Figaro Castle, Basement 3",
+40,"Figaro Castle, Engine Room",
+41,"Figaro Castle, Treasure Room",
+42,"Figaro Castle, Regal Crown Room",
+43,"Figaro Castle, Outside, Nighttime",
+46,Cave to South Figaro (WOB),
+47,"Cave to South Figaro, Entrance",
+48,"Cave to South Figaro, Room 2",
+49,"Cave to South Figaro, Room 1",
+4C,"South Figaro, Inn/Relics",
+4D,"South Figaro, Arsenal",
+4F,DUMMIED,
+50,"South Figaro, Chocobo Stable",
+52,DUMMIED,
+55,"South Figaro, Item Shop",
+57,"South Figaro, Basement 1 Monster Room",
+59,"South Figaro, Basement 2",
+5A,"Cave to Figaro Castle, Entrance (WOR)",
+5B,"South Figaro, Dock (WOR)",
+5C,"Cave to Figaro Castle, Room 1",
+5D,"Sabin's House, Outside",
+5F,"Mt.Kolts, Entrance",
+63,DUMMIED,
+65,"Mt.Kolts, Exit",
+66,"Mt.Kolts, Cliffs",
+67,"Mt.Kolts, Cave Save Point",
+68,"Narshe, School",
+6C,"Returner's Hideout, Inside",
+6E,"Returner's Hideout, Inn",
+70,Lete River,
+76,Military Base Camp 2,
+77,"Doma Castle, Outside (WOB)",
+7A,"Doma Castle, Inside",
+7C,"Cyan's Dream, Doma Castle, Outside",
+81,"Ending, Phantom Forest",
+82,"Gau's Father's House, Outside (WOR)",
+88,"Phantom Train, Docking Station 4",
+8A,"Phantom Train, Docking Station 3",
+8B,"Phantom Train, Docking Station 1",
+8C,"Phantom Train, Outside 2",
+8D,"Phantom Train, Outside 1",
+8F,"Cyan's Dream, Phantom Train, InsidePhantom Train, Inside 1",
+94,"Mobliz, Basement 2, After Phunbaba 1",
+96,"Phantom Train, Inside 4",
+9A,"Mobliz, Outside (WOB)",
+AB,"Shadow's Dream 2, Phantom Forest",
+AC,Serpent Trench Cave 1,
+AD,"Mt.Zozo, Outside Bridge",
+AE,"Mt.Zozo, Outside 1",
+B4,"Mobliz, Basement 2, Before Kefka Fight",
+B6,"Crazy Man's House, Outside",
+B7,"Crazy Man's House, Inside",
+B8,"Nikeah, Ferry (WOB)",
+BA,"Kohlingen, Outside (WOR)",
+BE,"DUMMIED - Kohlingen, Arsenal",
+C3,"Jidoor, Outside",
+C4,FREE TO USE,
+C5,"Jidoor, Auction House",
+C7,"Jidoor, Relics",
+CD,"Owzer's House, Art Room",
+D2,"Ending, Gau 1",
+D3,"Cliff, Setzer waits for Darill",
+D4,"Ending, Falcon flying through sky",
+D5,"Esper World, Lake",
+D6,"Esper World, Outside",
+DC,FREE TO USE,
+DE,"Zozo, Inside House",
+DF,"Zozo, Terra's Room",
+E0,FREE TO USE,
+E3,FREE TO USE,
+E4,"Opera House, Theater",
+E5,"Opera House, Switch Room",
+E6,"Opera House, Theater Play 2",
+E8,"Opera House, Ceiling",
+EA,"Opera House, Main",
+ED,"Vector, after Magitek Factory",
+F0,Imperial Castle,
+F1,"Imperial Castle, Outside Roof",
+FB,"Ending, Cyan, Mog, Gogo 2",
+FC,"Ending, Setzer",
+FE,DUMMIED - Magitek Factory,
+FF,"Ending, Edgar and Sabin",
+100,"Ending, Falcon taking flight from Kefka's Tower",
+101,"Ending, Locke and Celes 1",
+102,"Ending, Shadow, Strago, Gau 2",
+103,"Magitek Factory, Room 1",
+104,"Magitek Factory, Room 2",
+105,"Magitek Factory, Room 3 (Espers)",
+109,"Ending, Terra",
+10B,"Magitek Factory, Room 5 (Save)",
+10C,"Magitek Res. Facility, Room 1",
+10D,"Magitek Factory, Minecart Dock",
+10E,"Magitek Res. Facility, Room 2 (Number 042)",
+10F,"Magitek Res. Facility, Espers",
+110,DUMMIED,
+111,"Zone Eater's Stomach, Room 1",
+113,"Zone Eater's Stomach, Room 6 (Gogo)",
+115,"Zone Eater's Stomach, Room 3,5",
+117,"Narshe, Umaro's Cave 2",
+118,"Narshe, Umaro's Lair",
+11A,"Doma Castle, Outside, Abandoned",
+11B,FREE TO USE,
+11E,"Maranda, Weapon Shop (WOR)",
+123,"Kefka's Tower, Inside 2",
+124,"Kefka's Tower, Inside 3",
+12E,"Tzen, Outside (WOR)",
+130,"Tzen, Item Shop (WOR)",
+137,"Pheonix Cave, Big Lava Room",
+13C,"Cyan's Dream, Magitek Caves, Outside",
+13D,"Cyan's Dream, Magitek Caves, Inside",
+149,"Albrook, Ship Deck",
+14B,"Kefka's Tower, Outside",
+14D,"Kefka's Tower, Kefka's Lair 1",
+14F,"Kefka's Tower, Inside from Central Group",
+152,"Thamasa, Outside, Kefka attacks",
+153,DUMMIED - Thamasa,
+156,"Thamasa, Arsenal",
+15D,"Kefka's Tower, Broken Capsules",
+15E,Cave in the Veldt (WOR),
+163,"Floating Continent, Save Point",
+174,Esper Cave,
+178,DUMMIED - Imperial Base,
+17D,"Cave to the Sealed Gate, Basement 3",
+184,Sealed Gate,
+185,Floating Continent shadow cast above Jidoor,
+18D,"Cid's Island, Beach, no fish",
+193,"Ancient Castle, Inside",
+19B,DUMMIED,
