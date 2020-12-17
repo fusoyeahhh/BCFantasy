@@ -632,14 +632,16 @@ async def select(ctx):
                 return
 
             _user = _USERS[user]
+            if _user.get(cat, None) is not None:
+                await ctx.send(f"@{user}: sell your {cat} item first.")
+                return
+
             if cost <= _user["score"]:
                 _user["score"] -= int(cost)
             else:
                 await ctx.send(f"@{user}: insufficient funds.")
                 return
 
-        elif _authenticate(ctx) and cat == "score":
-            item = int(item)
         else:
             await ctx.send(f"@{user}: {cat} is an invalid category")
             return
