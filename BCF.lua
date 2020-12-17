@@ -104,7 +104,7 @@ while true do
 	-- Game over detection
 	-- Another from Myria: "another way to identify game over is reading the 24-bit value at 0x00E5.
 	-- 0xCCE5C5 is one of the event script pointers for the game over script."
-	is_gameover = bit.band(memory.read_u32_le(0x00E5), 0xFFFFF) == 0xCCE5C5
+	is_gameover = bit.band(memory.read_u32_le(0x00E5), 0xFFFFFF) == 0xCCE5C5
 
 	-- MIAB detection, thanks to Myriachan
 	is_miab = miab_id == 0x0B90
