@@ -125,6 +125,7 @@ def convert_buffer_to_commands(logf, **kwargs):
         if music_id is not None and len(MUSIC_INFO) > 0:
             print(f"Setting music context to {music_id}")
             _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown")
+            print(_CONTEXT["music"])
 
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
