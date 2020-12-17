@@ -444,18 +444,28 @@ async def blame(ctx):
 @bot.command(name='music')
 async def music(ctx):
     """
-    !music -> with no arguments, lists all conversions, with an argument looks up info on mapping.
+    !music -> with no arguments, lists curent music. With 'list' lists all conversions, with an argument looks up info on mapping.
     """
     cmds = ctx.content.split(" ")
     print(f"Querying music.")
 
     if len(cmds) == 1:
-        for outstr in _chunk_string(["Known music: "] + MUSIC_INFO["orig"].to_list(),
-                                    joiner=' '):
-            await ctx.send(outstr)
+        if _CONTEXT["music"] is not None:
+            song = MUSIC_INFO.loc[MUSIC_INFO["new"] == _CONTEXT["music"]].iloc[0]
+            await ctx.send(f"{song['orig']} -> {song['new']} | {song['descr']}")
+        else:
+            await ctx.send("No known music currently.")
+        return
 
     orig = cmds[1].strip()
     print(f"Querying music, argument {orig}")
+
+    if orig.lower() == "list":
+        for outstr in _chunk_string(["Known music: "] + MUSIC_INFO["orig"].to_list(),
+                                    joiner=' '):
+            await ctx.send(outstr)
+        return
+
     try:
         song = MUSIC_INFO.set_index("song_id")[orig]
     except KeyError:
