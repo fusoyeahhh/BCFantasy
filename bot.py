@@ -163,6 +163,11 @@ def convert_buffer_to_commands(logf, **kwargs):
                 cmds.append(f"!event {etype}chardeath {char} {diff}")
                 print("emu>", cmds[-1])
 
+        # check for gameover
+        if status.get("is_gameover") and not last_status.get("is_gameover"):
+            cmds.append(f"!event gameover")
+            print("emu>", cmds[-1])
+
         last_status = status
 
     if len(logf) > 0:
