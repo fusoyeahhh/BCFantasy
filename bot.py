@@ -633,7 +633,7 @@ async def select(ctx):
 
             _user = _USERS[user]
             if _user.get(cat, None) is not None:
-                await ctx.send(f"@{user}: sell your {cat} item first.")
+                await ctx.send(f"@{user}: sell your current {cat} selection first.")
                 return
 
             if cost <= _user["score"]:
