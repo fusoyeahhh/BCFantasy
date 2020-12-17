@@ -935,7 +935,7 @@ async def event(ctx):
             lookup, info = LOOKUPS[cat]
             multi = 1
             if cat in {"boss", "area"}:
-                has_item = sel.get(cat, "").lower() == _CONTEXT[cat].lower()
+                has_item = sel.get(cat, "").lower() == (_CONTEXT[cat] or "").lower()
                 item = _check_term(_CONTEXT[cat], lookup, info, full=True)
             elif cat == "char":
                 has_item = sel.get(cat, "").lower() == args[0].lower()
