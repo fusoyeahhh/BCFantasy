@@ -104,7 +104,7 @@ while true do
 	-- Game over detection
 	-- Another from Myria: "another way to identify game over is reading the 24-bit value at 0x00E5.
 	-- 0xCCE5C5 is one of the event script pointers for the game over script."
-	is_gameover = bit.band(memory.read_u32_le(0x00E5), 0x0FFF) == 0xCCE5C5
+	is_gameover = bit.band(memory.read_u32_le(0x00E5), 0xFFFFF) == 0xCCE5C5
 
 	-- MIAB detection, thanks to Myriachan
 	is_miab = miab_id == 0x0B90
@@ -387,7 +387,7 @@ while true do
         	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 
 	--if in_battle or map_change then
-	if map_change or (prev_state ~= in_battle) then
+	if is_gameover or map_change or (prev_state ~= in_battle) then
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
 		io.flush(logfile)
