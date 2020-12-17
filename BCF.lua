@@ -92,11 +92,13 @@ while true do
 	eform_id = memory.read_u16_le(0x11E0)
 	battle_type = memory.read_u8(0x3EBC)
 
+	music_change = music_id
 	-- Music id detection, from Myriachan
 	-- "if 0x1304 is 0x10, 0x11, 0x14, or 0x15, then 0x1305 should contain a song ID."
 	mbit = memory.read_u8(0x1304)
 	if mbit == 0x10 or mbit == 0x11 or mbit == 0x14 or mbit == 0x15 then
 		music_id = memory.read_u8(0x1305)
+		music_change = music_change ~= music_id
 	else
 		music_id = -1
 	end
@@ -387,7 +389,7 @@ while true do
         	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
 
 	--if in_battle or map_change then
-	if is_gameover or map_change or (prev_state ~= in_battle) then
+	if is_gameover or map_change or music_change or (prev_state ~= in_battle) then
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
 		io.flush(logfile)
