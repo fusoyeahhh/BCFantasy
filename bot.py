@@ -441,6 +441,18 @@ async def blame(ctx):
 #
 # User-based commands
 #
+@bot.command(name='bcfflags')
+async def bcfflags(ctx):
+    """
+    !bcfflags -> no argument, print flags and seed
+    """
+
+    if _FLAGS is not None:
+        await ctx.send(f"flags: {_FLAGS} | seed: {_SEED}")
+        return
+    await ctx.send("No flag information.")
+COMMANDS["bcfflags"] = bcfflags
+
 @bot.command(name='music')
 async def music(ctx):
     """
