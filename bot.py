@@ -480,16 +480,16 @@ async def music(ctx):
     await ctx.send(f"{song['orig']} -> {song['new']} | {song['descr']}")
 COMMANDS["music"] = music
 
-@bot.command(name='char')
-async def char(ctx):
+@bot.command(name='sprite')
+async def sprite(ctx):
     """
-    !char -> with no arguments, lists all characters, with an argument looks up info on mapping.
+    !sprite -> with no arguments, lists all characters, with an argument looks up info on mapping.
     """
     cmds = ctx.content.split(" ")
-    print(f"Querying character.")
+    print(f"Querying character sprite.")
 
     if len(CHAR_MAP) == 0:
-        await ctx.send("No character mapping data available.")
+        await ctx.send("No character sprite mapping data available.")
         return
 
     if len(cmds) == 1:
@@ -498,7 +498,7 @@ async def char(ctx):
             await ctx.send(outstr)
 
     orig = cmds[1].strip().lower()
-    print(f"Querying character, argument {orig}")
+    print(f"Querying character sprite, argument {orig}")
     char = CHAR_MAP.loc[CHAR_MAP["orig"] == orig]
 
     if len(char) != 1:
@@ -508,7 +508,7 @@ async def char(ctx):
 
     char = char.iloc[0]
     await ctx.send(f"{char['orig']} -> {char['cname']} | {char['appearance']}")
-COMMANDS["char"] = char
+COMMANDS["sprite"] = sprite
 
 @bot.command(name='register')
 async def register(ctx):
