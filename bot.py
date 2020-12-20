@@ -264,6 +264,15 @@ def _check_term(term, lookup, info, space_suppress=True, full=False):
 def _check_user(user):
     return user in _USERS
 
+def _sell_all(users):
+    for user, inv in _USERS.items():
+        for cat, item in inv.items():
+            lookup, info = LOOKUPS[cat]
+            inv["score"] += int(info.set_index(lookup).loc[item]["Sell"])
+
+        # Clear out the user selections
+        _USERS[user] = {k: v for k, v in inv.items() if k == "score"}
+
 def search(term, lookup, info):
     _term = term.replace("(", r"\(").replace(")", r"\)")
     found = info[lookup].str.lower().str.contains(_term.lower())
@@ -1027,8 +1036,10 @@ async def stop(ctx):
     if cmd[0] == "annihilated":
         # Possibly do a report?
         serialize(pth, archive=_SEASON_LABEL, reset=True)
+        _sell_all(_USERS)
     elif cmd[0] == "kefkadown":
         serialize(pth, archive=_SEASON_LABEL, reset=True)
+        _sell_all(_USERS)
         await ctx.send("!cb darksl5GG darksl5Kitty ")
     elif len(cmd) > 0:
         await ctx.send(f"Urecognized stop reason {cmd[0]}")
