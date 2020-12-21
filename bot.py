@@ -38,7 +38,7 @@ _CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 
 bot = commands.Bot(**opts)
 
-_CHAT_READBACK = True
+_CHAT_READBACK = False
 
 _ACTOR_MAP = {
     0x0: "Terra",
@@ -387,6 +387,7 @@ async def event_message(ctx):
         #ctx.content = '!doarena' + " " + ctx.content
 
     if _CHAT_READBACK:
+        # This throws weird errors with string decoding issues
         logging.info(ctx.content)
 
     # Trigger a check of the local buffer
