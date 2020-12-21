@@ -2,6 +2,7 @@ import os
 import json
 import time
 import logging
+logging.basicConfig(level=logging.INFO)
 
 _QUIET = False
 
