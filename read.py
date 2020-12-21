@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import logging
 
 _QUIET = False
 
@@ -15,13 +16,13 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
     logf = []
     logpath = os.path.join(os.getcwd(), path)
     if not os.path.exists(logpath):
-        print(f"Could not find logfile, expected at {logpath}")
+        logging.error(f"Could not find logfile, expected at {logpath}")
         return logf
 
     nerrors = 0
     #last_frame = last_status.get("frame", None) or last_frame
     with open(logpath, "r") as fin:
-        print(f"{logpath} opened for reading")
+        logging.debug(f"{logpath} opened for reading")
         for line in fin.readlines():
             try:
                 # FIXME: this actually needs fixed on the Lua side
@@ -30,13 +31,13 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 if line.get("frame", -float("inf")) > last_frame:
                     logf.append(line)
             except Exception as e:
-                if not _QUIET:
-                    print("JSON reading failed:", e)
-                    print(line)
+                #if not _QUIET:
+                    #print("JSON reading failed:", e)
+                    #print(line)
                 nerrors += 1
 
     if len(logf) > 0:
-        print(f"{time.time()}: Read {len(logf)} new lines, with {nerrors} errors.")
+        logging.debug(f"{time.time()}: Read {len(logf)} new lines, with {nerrors} errors.")
     return logf
 
 def read_spoiler(spoilerf):
