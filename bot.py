@@ -278,7 +278,7 @@ def _sell_all(users):
             inv["score"] += int(info.set_index(lookup).loc[item]["Sell"])
 
         # Clear out the user selections
-        _USERS[user] = {k: v for k, v in inv.items() if k == "score"}
+        _USERS[user] = {k: max(v, 1000) for k, v in inv.items() if k == "score"}
 
 def search(term, lookup, info):
     _term = term.replace("(", r"\(").replace(")", r"\)")
