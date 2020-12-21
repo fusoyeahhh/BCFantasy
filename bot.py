@@ -6,6 +6,7 @@ import shutil
 import numpy
 import pandas
 import json
+import logging
 from twitchio.ext import commands
 from twitchio.dataclasses import User
 import glob
@@ -60,8 +61,8 @@ def _write(ctx, strn, prefix="BCFBot>"):
     pass
 
 def _authenticate(ctx):
-    print(ctx.author.name, _AUTHORIZED)
-    print(ctx.author.name in _AUTHORIZED)
+    #print(ctx.author.name, _AUTHORIZED)
+    logging.debug(ctx.author.name in _AUTHORIZED)
     return ctx.author.name in _AUTHORIZED
 
 _AREA_INFO = pandas.read_csv("data/bc_fantasy_data_areas.csv")
@@ -117,32 +118,32 @@ def convert_buffer_to_commands(logf, **kwargs):
                     status["party"][f"({act})"] = status["party"].pop(act)
 
             except Exception as e:
-                print("Couldn't parse party: ", status["party"])
+                logging.error("Couldn't parse party: ", status["party"])
 
         # music id lookup
         # FIXME: do this the same way as other contexts
         music_id = status.get("music_id", None)
         if music_id is not None and len(MUSIC_INFO) > 0:
-            print(f"Setting music context to {music_id}")
+            logging.info(f"Setting music context to {music_id}")
             _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown")
-            print(_CONTEXT["music"])
+            logging.debug(_CONTEXT["music"])
 
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
             cmds.append(f"!set area={status['map_id']}")
-            print("emu>", cmds[-1])
+            logging.info("emu>", cmds[-1])
 
         # check for boss encounter
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None):
-            print(f"New encounter: {status['eform_id']}, is miab? {status['is_miab']}")
+            logging.info(f"New encounter: {status['eform_id']}, is miab? {status['is_miab']}")
             if int(status["eform_id"]) in _BOSS_INFO["Id"].values:
                 cmds.append(f"!set boss={status['eform_id']}")
-                print("emu>", cmds[-1])
+                logging.info("emu>", cmds[-1])
 
             # Check for miab
             if status.get("is_miab", False):
                 cmds.append(f"!event miab")
-                print("emu>", cmds[-1])
+                logging.info("emu>", cmds[-1])
 
         # check for kills
         lkills = last_status.get("kills", {})
@@ -152,7 +153,7 @@ def convert_buffer_to_commands(logf, **kwargs):
                 # FIXME: should probably in_check battle status
                 etype = "boss" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else "enemy"
                 cmds.append(f"!event {etype}kill {char} {diff}")
-                print("emu>", cmds[-1])
+                logging.info("emu>", cmds[-1])
 
         # check for deaths
         ldeaths = last_status.get("deaths", {})
@@ -161,17 +162,17 @@ def convert_buffer_to_commands(logf, **kwargs):
             etype = "b" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else ""
             if diff > 0 and char != "NIL_lookup":
                 cmds.append(f"!event {etype}chardeath {char} {diff}")
-                print("emu>", cmds[-1])
+                logging.info("emu>", cmds[-1])
 
         # check for gameover
         if status.get("is_gameover") and not last_status.get("is_gameover"):
             cmds.append(f"!event gameover")
-            print("emu>", cmds[-1])
+            logging.info("emu>", cmds[-1])
 
         last_status = status
 
     if len(logf) > 0:
-        print("Last status:", last_status)
+        logging.debug("Last status:", last_status)
 
     return cmds, last_status
 
@@ -183,7 +184,7 @@ def _set_context(content):
     try:
         selection = " ".join(content.split(" ")[1:])
         cat, item = selection.split("=")
-        print(cat, item)
+        #print(cat, item)
 
         # Preliminary mapid to area setting
         if cat == "area" and item.isdigit():
@@ -197,7 +198,7 @@ def _set_context(content):
                     return True
             else:
                 #raise ValueError(f"No valid area mapping for id {item}")
-                print(f"No valid area mapping for id {item}")
+                logging.error(f"No valid area mapping for id {item}")
                 return True
 
         if cat == "boss" and item.isdigit():
@@ -211,7 +212,7 @@ def _set_context(content):
         # FIXME: zozo vs. mt. zozo
         item = _check_term(item, lookup, info)
 
-        print(cat, item, _CONTEXT)
+        logging.debug(cat, item, _CONTEXT)
         if cat in _CONTEXT:
             _CONTEXT[cat] = item
 
@@ -219,7 +220,7 @@ def _set_context(content):
             json.dump(_CONTEXT, fout, indent=2)
 
     except Exception as e:
-        print(e)
+        logging.error(e)
         return False
 
     return True
@@ -277,7 +278,7 @@ def search(term, lookup, info):
     _term = term.replace("(", r"\(").replace(")", r"\)")
     found = info[lookup].str.lower().str.contains(_term.lower())
     found = info.loc[found]
-    print(found)
+    #print(found)
     if len(found) > 1:
         found = info[lookup].str.lower() == _term.lower()
         found = info.loc[found]
@@ -325,7 +326,7 @@ def serialize(pth="./", reset=False, archive=None):
 
 @bot.event
 async def event_ready():
-    print("HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
+    logging.warning("HELLO HUMAN, I AM BCFANTASYBOT. FEAR AND LOVE ME.")
 
     # FIXME: these should just live inside the bot
     global _USERS
@@ -334,7 +335,7 @@ async def event_ready():
     if os.path.exists(ctx_file):
         with open(ctx_file, "r") as fin:
             _CONTEXT = json.load(fin)
-    print(_CONTEXT)
+    logging.debug(_CONTEXT)
 
     # find latest
     try:
@@ -343,7 +344,7 @@ async def event_ready():
                         key=lambda f: os.path.getmtime(f))[-1]
         with open(latest, "r") as fin:
             _USERS = json.load(fin)
-        print(_USERS)
+        logging.debug(_USERS)
     except IndexError:
         pass
 
@@ -358,7 +359,7 @@ async def event_ready():
     bot._last_state_drop = -1
     ws = bot._ws
 
-    print(f"Init'd: {bot._last_state_drop}, {bot._last_status}\nUsers: {len(_USERS)}")
+    logging.debug(f"Init'd: {bot._last_state_drop}, {bot._last_status}\nUsers: {len(_USERS)}")
 
 @bot.command(name='doarena')
 async def _arena(ctx):
@@ -371,7 +372,7 @@ async def event_message(ctx):
         #ctx.content = '!doarena' + " " + ctx.content
 
     if _CHAT_READBACK:
-        print(ctx.content)
+        logging.info(ctx.content)
 
     # Trigger a check of the local buffer
     buff = []
@@ -381,30 +382,30 @@ async def event_message(ctx):
     except AttributeError:
         pass
     """
-    print(f"Local buffer length: {len(buff)}")
+    logging.debug(f"Local buffer length: {len(buff)}")
 
     # Read in emulator log
     try:
-        print("About reading logfile. Last status:")
-        print(bot._last_status)
+        #print("About reading logfile. Last status:")
+        #print(bot._last_status)
         cmds = read.parse_log_file(last_frame=bot._last_status.get("frame", -1))
-        print(f"Logfile read with {len(cmds)} commands.")
+        logging.debug(f"Logfile read with {len(cmds)} commands.")
         cmds, last = convert_buffer_to_commands(cmds, last_status=bot._last_status)
-        print("Conversion done. Last status:")
-        print(bot._last_status)
+        #print("Conversion done. Last status:")
+        #print(bot._last_status)
         bot._last_status = last
         buff += cmds
-        print(f"emu buffer length: {len(cmds)}")
+        logging.debug(f"emu buffer length: {len(cmds)}")
     except Exception as e:
-        print(e)
-        print("Couldn't read logfile")
+        logging.error(e)
+        logging.error("Couldn't read logfile")
 
-    print(f"Processing command buffer... status: {bot._status}")
+    logging.debug(f"Processing command buffer... status: {bot._status}")
     orig_author = ctx.author._name
     orig_content = ctx.content
     for line in filter(lambda l: l, buff):
         if bot._status == "paused":
-            print("Bot is paused; ignoring log.")
+            logging.warning("Bot is paused; ignoring log.")
             break
 
         # Co-op ctx
@@ -418,7 +419,7 @@ async def event_message(ctx):
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
             bot._skip_auth = True
-            print(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
+            logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
     bot._skip_auth = False
 
@@ -429,7 +430,7 @@ async def event_message(ctx):
     if ctx.content.startswith("!"):
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
-            print("Processing user command...")
+            logging.debug("Processing user command...")
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
 
@@ -439,7 +440,7 @@ async def event_message(ctx):
 
     # Only every minute
     if curtime - bot._last_state_drop > 60:
-        print("Serializing state...")
+        logging.debug("Serializing state...")
         serialize(pth=_CHKPT_DIR)
         bot._last_state_drop = curtime
 
@@ -474,7 +475,7 @@ async def music(ctx):
     !music -> with no arguments, lists curent music. With 'list' lists all conversions, with an argument looks up info on mapping.
     """
     cmds = ctx.content.split(" ")
-    print(f"Querying music.")
+    logging.debug(f"Querying music.")
 
     if len(cmds) == 1:
         if _CONTEXT["music"] is not None:
@@ -485,7 +486,7 @@ async def music(ctx):
         return
 
     orig = cmds[1].strip()
-    print(f"Querying music, argument {orig}")
+    logging.debug(f"Querying music, argument {orig}")
 
     if orig.lower() == "list":
         for outstr in _chunk_string(["Known music: "] + MUSIC_INFO["orig"].to_list(),
@@ -499,7 +500,7 @@ async def music(ctx):
         song = MUSIC_INFO.loc[MUSIC_INFO["orig"] == orig]
 
     if len(song) != 1:
-        print(f"Problem finding {orig}")
+        logging.error(f"Problem finding {orig}")
         # Do nothing for now
         return
 
@@ -513,7 +514,7 @@ async def sprite(ctx):
     !sprite -> with no arguments, lists all characters, with an argument looks up info on mapping.
     """
     cmds = ctx.content.split(" ")
-    print(f"Querying character sprite.")
+    logging.debug(f"Querying character sprite.")
 
     if len(CHAR_MAP) == 0:
         await ctx.send("No character sprite mapping data available.")
@@ -525,11 +526,11 @@ async def sprite(ctx):
             await ctx.send(outstr)
 
     orig = cmds[1].strip().lower()
-    print(f"Querying character sprite, argument {orig}")
+    logging.debug(f"Querying character sprite, argument {orig}")
     char = CHAR_MAP.loc[CHAR_MAP["orig"] == orig]
 
     if len(char) != 1:
-        print(f"Problem finding {orig}")
+        logging.error(f"Problem finding {orig}")
         # Do nothing for now
         return
 
@@ -678,7 +679,7 @@ async def select(ctx):
         return
 
     except Exception as e:
-        print("Badness: " + str(e))
+        logging.error("Badness: " + str(e))
 
     await ctx.send(f"Sorry @{user}, that didn't work.")
 COMMANDS["buy"] = buy
@@ -711,7 +712,7 @@ async def areainfo(ctx):
     !areainfo [area] list information about given area
     """
     area = " ".join(ctx.content.split(" ")[1:]).lower()
-    print(area)
+    #print(area)
     await ctx.send(search(area, "Area", _AREA_INFO))
 COMMANDS["areainfo"] = areainfo
 
@@ -759,7 +760,7 @@ async def bossinfo(ctx):
     !bossinfo [boss] list information about given boss
     """
     boss = " ".join(ctx.content.split(" ")[1:]).lower()
-    print(boss)
+    #print(boss)
     await ctx.send(search(boss, "Boss", _BOSS_INFO))
 COMMANDS["bossinfo"] = bossinfo
 
@@ -787,7 +788,7 @@ async def charinfo(ctx):
     !charinfo [char] list information about given char
     """
     char = " ".join(ctx.content.split(" ")[1:]).lower()
-    print(char)
+    #print(char)
     await ctx.send(search(char, "Character", _CHAR_INFO))
 COMMANDS["charinfo"] = charinfo
 
@@ -880,15 +881,15 @@ async def _set(ctx):
     Manually set a context category to a value.
     """
     user = ctx.author.name
-    print(f"_set | checking auth: {bot._skip_auth}")
+    #print(f"_set | checking auth: {bot._skip_auth}")
     if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
-    print(f"_set | attempting set: {bot._skip_auth}")
+    #print(f"_set | attempting set: {bot._skip_auth}")
     if _set_context(ctx.content):
         return
-    print(f"_set | attempt failed: {bot._skip_auth}")
+    #print(f"_set | attempt failed: {bot._skip_auth}")
     if not bot._skip_auth:
         await ctx.send(f"Sorry @{user}, that didn't work.")
 ADMIN_COMMANDS["set"] = _set
@@ -912,13 +913,13 @@ async def give(ctx):
     if len(cmd) == 0:
         # Give everyone points
         for user, scr in _USERS.items():
-            print(f"Adding {val} to {user} Fantasy Points")
+            logging.debug(f"Adding {val} to {user} Fantasy Points")
             scr["score"] += val
     elif len(cmd) >= 1:
         # Give specified chatters points
         for user in cmd:
             if user in _USERS:
-                print(f"Adding {val} to {user} Fantasy Points")
+                logging.debug(f"Adding {val} to {user} Fantasy Points")
                 _USERS[user]["score"] += val
 ADMIN_COMMANDS["give"] = give
 
@@ -954,10 +955,10 @@ async def event(ctx):
         await ctx.send(f"Invalid event command: {event}, {'.'.join(args)}")
         return
 
-    print(event, args, cats)
+    logging.debug(event, args, cats)
     for cat in cats:
         for user, sel in _USERS.items():
-            #print(user, sel.get("area", "").lower(), _CONTEXT["area"].lower())
+            #logging.info(user, sel.get("area", "").lower(), _CONTEXT["area"].lower())
 
             lookup, info = LOOKUPS[cat]
             multi = 1
@@ -972,7 +973,7 @@ async def event(ctx):
                 try:
                     item = _check_term(item, lookup, info, full=True)
                 except Exception as e:
-                    print(f"Failed lookup for {item}:", e)
+                    logging.error(f"Failed lookup for {item}:", e)
                     continue
             #print(item, user)
 
@@ -998,7 +999,7 @@ async def event(ctx):
                 #sel["score"] += 1
             #elif event == "cantrun" and has_item:
                 #sel["score"] += 2
-            print(f"\t{event}, {user} {sel['score'] - _score}")
+            logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
 _EVENT_TYPES = set().union(*_EVENTS.keys())
 event._callback.__doc__ = f"""
@@ -1105,7 +1106,7 @@ async def _help(ctx):
         return
 
     doc = COMMANDS[arg]._callback.__doc__
-    print(COMMANDS[arg])
+    #print(COMMANDS[arg])
     await ctx.send(f"help | {arg}: {doc}")
 COMMANDS["help"] = _help
 
