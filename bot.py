@@ -174,7 +174,7 @@ def convert_buffer_to_commands(logf, **kwargs):
         last_status = status
 
     if len(logf) > 0:
-        logging.debug("Last status: " + last_status)
+        logging.debug("Last status: " + str(last_status))
 
     return cmds, last_status
 
@@ -975,7 +975,7 @@ async def event(ctx):
                 try:
                     item = _check_term(item, lookup, info, full=True)
                 except Exception as e:
-                    logging.error(f"Failed lookup for {item}:", e)
+                    logging.error(f"Failed lookup for {item}: " + str(e))
                     continue
             #print(item, user)
 
