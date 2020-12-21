@@ -2,7 +2,7 @@ import os
 import json
 import time
 import logging
-logging.basicConfig(filename=sys.stdout, level=logging.INFO)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 _QUIET = False
 
