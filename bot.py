@@ -120,7 +120,7 @@ def convert_buffer_to_commands(logf, **kwargs):
                     status["party"][f"({act})"] = status["party"].pop(act)
 
             except Exception as e:
-                logging.error("Couldn't parse party: " + status["party"])
+                logging.error("Couldn't parse party: " + str(status["party"]))
 
         # music id lookup
         # FIXME: do this the same way as other contexts
