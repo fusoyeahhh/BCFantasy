@@ -316,8 +316,8 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
         sfile = os.path.join("./", archive, "season.csv")
         if season_update:
             this_seed = pandas.DataFrame(_USERS)[["score"]]
-            this_seed[_FLAGS + "." + _SEED] = this_seed["score"]
-            this_seed.drop(columns="score", inplace=True)
+            this_seed[_SEED + "." + _FLAGS] = this_seed["score"]
+            this_seed.drop(columns=["score"], inplace=True)
             if os.file.exists(sfile):
                 season = pandas.join((pandas.read_csv(sfile),
                                       this_seed))
@@ -1051,10 +1051,10 @@ async def stop(ctx):
     pth = os.path.join("./", _SEED or datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     if cmd[0] == "annihilated":
         # Possibly do a report?
-        serialize(pth, archive=_SEASON_LABEL, reset=True)
+        serialize(pth, archive=_SEASON_LABEL, season_update=True, reset=True)
         _sell_all(_USERS)
     elif cmd[0] == "kefkadown":
-        serialize(pth, archive=_SEASON_LABEL, reset=True)
+        serialize(pth, archive=_SEASON_LABEL, season_update=True, reset=True)
         _sell_all(_USERS)
         await ctx.send("!cb darksl5GG darksl5Kitty ")
     elif len(cmd) > 0:
