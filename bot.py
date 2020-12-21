@@ -293,7 +293,7 @@ def search(term, lookup, info):
     else:
         return str(found.to_dict(orient='records')[0])[1:-1]
 
-def serialize(pth="./", reset=False, archive=None):
+def serialize(pth="./", reset=False, archive=None, season_update=False):
 
     if not os.path.exists(pth):
         os.makedirs(pth)
@@ -312,6 +312,19 @@ def serialize(pth="./", reset=False, archive=None):
         if not os.path.exists(spath):
             os.makedirs(spath)
         shutil.move(pth, spath)
+
+        sfile = os.path.join("./", archive, "season.csv")
+        if season_update:
+            this_seed = pandas.DataFrame(_USERS)[["score"]]
+            this_seed[_FLAGS + "." + _SEED] = this_seed["score"]
+            this_seed.drop(columns="score", inplace=True)
+            if os.file.exists(sfile):
+                season = pandas.join((pandas.read_csv(sfile),
+                                      this_seed))
+            else:
+                season = this_seed
+
+            season.to_csv(sfile, index=False)
 
     if reset:
         os.makedirs("TRASH")
