@@ -120,7 +120,7 @@ def convert_buffer_to_commands(logf, **kwargs):
                     status["party"][f"({act})"] = status["party"].pop(act)
 
             except Exception as e:
-                logging.error("Couldn't parse party: ", status["party"])
+                logging.error("Couldn't parse party: " + status["party"])
 
         # music id lookup
         # FIXME: do this the same way as other contexts
@@ -133,19 +133,19 @@ def convert_buffer_to_commands(logf, **kwargs):
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
             cmds.append(f"!set area={status['map_id']}")
-            logging.info("emu>", cmds[-1])
+            logging.info("emu> " + cmds[-1])
 
         # check for boss encounter
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None):
             logging.info(f"New encounter: {status['eform_id']}, is miab? {status['is_miab']}")
             if int(status["eform_id"]) in _BOSS_INFO["Id"].values:
                 cmds.append(f"!set boss={status['eform_id']}")
-                logging.info("emu>", cmds[-1])
+                logging.info("emu> " + cmds[-1])
 
             # Check for miab
             if status.get("is_miab", False):
                 cmds.append(f"!event miab")
-                logging.info("emu>", cmds[-1])
+                logging.info("emu> " + cmds[-1])
 
         # check for kills
         lkills = last_status.get("kills", {})
@@ -155,7 +155,7 @@ def convert_buffer_to_commands(logf, **kwargs):
                 # FIXME: should probably in_check battle status
                 etype = "boss" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else "enemy"
                 cmds.append(f"!event {etype}kill {char} {diff}")
-                logging.info("emu>", cmds[-1])
+                logging.info("emu> " + cmds[-1])
 
         # check for deaths
         ldeaths = last_status.get("deaths", {})
@@ -164,17 +164,17 @@ def convert_buffer_to_commands(logf, **kwargs):
             etype = "b" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else ""
             if diff > 0 and char != "NIL_lookup":
                 cmds.append(f"!event {etype}chardeath {char} {diff}")
-                logging.info("emu>", cmds[-1])
+                logging.info("emu> " + cmds[-1])
 
         # check for gameover
         if status.get("is_gameover") and not last_status.get("is_gameover"):
             cmds.append(f"!event gameover")
-            logging.info("emu>", cmds[-1])
+            logging.info("emu> " + cmds[-1])
 
         last_status = status
 
     if len(logf) > 0:
-        logging.debug("Last status:", last_status)
+        logging.debug("Last status: " + last_status)
 
     return cmds, last_status
 
@@ -214,7 +214,7 @@ def _set_context(content):
         # FIXME: zozo vs. mt. zozo
         item = _check_term(item, lookup, info)
 
-        logging.debug(cat, item, _CONTEXT)
+        logging.debug((cat, item, _CONTEXT))
         if cat in _CONTEXT:
             _CONTEXT[cat] = item
 
@@ -957,7 +957,7 @@ async def event(ctx):
         await ctx.send(f"Invalid event command: {event}, {'.'.join(args)}")
         return
 
-    logging.debug(event, args, cats)
+    logging.debug((event, args, cats))
     for cat in cats:
         for user, sel in _USERS.items():
             #logging.info(user, sel.get("area", "").lower(), _CONTEXT["area"].lower())
