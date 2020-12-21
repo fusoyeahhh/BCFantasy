@@ -28,7 +28,7 @@ _FLAGS, _SEED = None, None
 _SPOILER_LOG = opts.pop("spoiler", None)
 
 if _SPOILER_LOG and os.path.isdir(_SPOILER_LOG):
-    _SPOILER_LOG = glob.glob(os.path.join(_SPOILER_LOG), "*.txt")[0]
+    _SPOILER_LOG = glob.glob(os.path.join(_SPOILER_LOG, "*.txt"))[0]
 
 if _SPOILER_LOG is not None:
     _FLAGS, _SEED, maps = read.read_spoiler(_SPOILER_LOG)
