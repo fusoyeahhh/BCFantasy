@@ -33,9 +33,9 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 if line.get("frame", -float("inf")) > last_frame:
                     logf.append(line)
             except Exception as e:
-                #if not _QUIET:
-                    #print("JSON reading failed:", e)
-                    #print(line)
+                if not _QUIET:
+                    print("JSON reading failed:", e)
+                    print(line)
                 nerrors += 1
 
     if len(logf) > 0:
