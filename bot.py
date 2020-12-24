@@ -43,6 +43,7 @@ _CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 bot = commands.Bot(**opts)
 
 _CHAT_READBACK = False
+_STREAM_STATUS = True
 
 _ACTOR_MAP = {
     0x0: "Terra",
@@ -438,6 +439,8 @@ async def event_message(ctx):
         if command in bot.commands:
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
+            if _STREAM_STATUS:
+                print(f"{current_time}: {line}")
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
@@ -1019,7 +1022,10 @@ async def event(ctx):
                 #sel["score"] += 1
             #elif event == "cantrun" and has_item:
                 #sel["score"] += 2
-            logging.info(f"\t{event}, {user} {sel['score'] - _score}")
+            if _STREAM_STATUS:
+                print(f"\t{event}, {user} {sel['score'] - _score}")
+            else:
+                logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
 _EVENT_TYPES = set().union(*_EVENTS.keys())
 event._callback.__doc__ = f"""
