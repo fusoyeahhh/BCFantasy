@@ -1023,7 +1023,8 @@ async def event(ctx):
             #elif event == "cantrun" and has_item:
                 #sel["score"] += 2
             if _STREAM_STATUS:
-                print(f"\t{event}, {user} {sel['score'] - _score}")
+                if sel['score'] - _score > 0:
+                    print(f"\t{event}, {user} {sel['score'] - _score}")
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
