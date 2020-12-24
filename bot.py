@@ -462,10 +462,14 @@ async def event_message(ctx):
     curtime = int(time.time())
 
     # Only every minute
-    if curtime - bot._last_state_drop > 60:
+    if curtime - bot._last_state_drop > 30:
         logging.debug("Serializing state...")
         serialize(pth=_CHKPT_DIR)
         bot._last_state_drop = curtime
+        if _STREAM_STATUS:
+            status = " | ".join([f"{cat}: {val}" for cat, val in _CONTEXT.items()])
+            leaderboard = " | ".join([f"{user}: {inv.get('score', None)}" for user, inv in _USERS.items()])
+            print(status + "\n" + leaderboard)
 
 @bot.command(name='hi')
 async def hi(ctx):
