@@ -24,8 +24,9 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
     nerrors = 0
     #last_frame = last_status.get("frame", None) or last_frame
     with open(logpath, "r") as fin:
-        logging.debug(f"{logpath} opened for reading")
-        for line in fin.readlines():
+        lines = fin.readlines()
+        logging.debug(f"{logpath} opened for reading, {len(lines)} to process")
+        for line in lines:
             try:
                 # FIXME: this actually needs fixed on the Lua side
                 line = line.replace(",}", "}").replace(", }", "}")
