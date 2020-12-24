@@ -439,7 +439,7 @@ async def event_message(ctx):
         if command in bot.commands:
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
-            if _STREAM_STATUS:
+            if _STREAM_STATUS and line.startswith("!event"):
                 print(f"{current_time}: {line}")
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
