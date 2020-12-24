@@ -43,7 +43,8 @@ _CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 bot = commands.Bot(**opts)
 
 _CHAT_READBACK = False
-_STREAM_STATUS = True
+#_STREAM_STATUS = None
+_STREAM_STATUS = "./stream_status.txt"
 
 _ACTOR_MAP = {
     0x0: "Terra",
@@ -440,7 +441,8 @@ async def event_message(ctx):
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
             if _STREAM_STATUS and line.startswith("!event"):
-                print(f"{current_time}: {line}")
+                with open(_STREAM_STATUS, "a") as f:
+                    print(f"{current_time}: {line}", file=f, flush=True)
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
@@ -469,7 +471,9 @@ async def event_message(ctx):
         if _STREAM_STATUS:
             status = " | ".join([f"{cat}: {val}" for cat, val in _CONTEXT.items()])
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}" for user, inv in _USERS.items()])
-            print(status + "\n" + leaderboard)
+            # truncate file
+            with open(_STREAM_STATUS, "w") as f:
+                print(status + "\n" + leaderboard, file=f, flush=True)
 
 @bot.command(name='hi')
 async def hi(ctx):
@@ -1028,7 +1032,8 @@ async def event(ctx):
                 #sel["score"] += 2
             if _STREAM_STATUS:
                 if sel['score'] - _score > 0:
-                    print(f"\t{event}, {user} {sel['score'] - _score}")
+                    with open(_STREAM_STATUS, "a") as f:
+                        print(f"\t{event}, {user} {sel['score'] - _score}", file=f, flush=True)
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
