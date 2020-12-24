@@ -25,7 +25,7 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
     #last_frame = last_status.get("frame", None) or last_frame
     with open(logpath, "r") as fin:
         lines = fin.readlines()
-        logging.debug(f"{logpath} opened for reading, {len(lines)} to process")
+        logging.debug(f"{logpath} opened for reading, {len(lines)} to process.\nLast frame processed {last_frame}.")
         for line in lines:
             try:
                 # FIXME: this actually needs fixed on the Lua side
@@ -33,6 +33,8 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 line = json.loads(line or "{}")
                 if line.get("frame", -float("inf")) > last_frame:
                     logf.append(line)
+                else:
+                    print(f"Skipping line because of frame order. Skipped line:\n{line}")
             except Exception as e:
                 if not _QUIET:
                     print("JSON reading failed:", e)
