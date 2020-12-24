@@ -21,7 +21,7 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
         logging.error(f"Could not find logfile, expected at {logpath}")
         return logf
 
-    nerrors = 0
+    nerrors, skipped = 0, 0
     #last_frame = last_status.get("frame", None) or last_frame
     with open(logpath, "r") as fin:
         lines = fin.readlines()
@@ -34,7 +34,7 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 if line.get("frame", -float("inf")) > last_frame:
                     logf.append(line)
                 else:
-                    print(f"Skipping line because of frame order. Skipped line:\n{line}")
+                    skipped += 1
             except Exception as e:
                 if not _QUIET:
                     print("JSON reading failed:", e)
@@ -42,7 +42,7 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 nerrors += 1
 
     if len(logf) > 0:
-        logging.debug(f"{time.time()}: Read {len(logf)} new lines, with {nerrors} errors.")
+        logging.debug(f"{time.time()}: Read {len(logf)} new lines, with {nerrors} errors. Skipped {skipped} entries.")
     return logf
 
 def read_spoiler(spoilerf):
