@@ -1035,6 +1035,8 @@ async def event(ctx):
                 if sel['score'] - _score > 0:
                     with open(_STREAM_STATUS, "a") as f:
                         print(f"\t{event}, {user} {sel['score'] - _score}", file=f, flush=True)
+                    # Let the message persist for a bit longer
+                    bot._last_state_drop = int(time.time())
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
