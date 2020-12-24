@@ -8,7 +8,7 @@ import numpy
 import pandas
 import json
 import logging
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 from twitchio.ext import commands
 from twitchio.dataclasses import User
 import glob
