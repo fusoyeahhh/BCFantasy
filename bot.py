@@ -132,9 +132,8 @@ def convert_buffer_to_commands(logf, **kwargs):
         # FIXME: do this the same way as other contexts
         music_id = status.get("music_id", None)
         if music_id is not None and len(MUSIC_INFO) > 0:
-            logging.info(f"Setting music context to {music_id}")
             _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown")
-            logging.debug(_CONTEXT["music"])
+            logging.info(f"Setting music context to {music_id} => {_CONTEXT['music']}")
 
         # check for map change
         if status["map_id"] != last_status.get("map_id", None):
@@ -196,25 +195,27 @@ def _set_context(content):
 
         # Preliminary mapid to area setting
         if cat == "area" and item.isdigit():
-            item = int(item)
-            if item in _MAP_INFO.index:
-                item = _MAP_INFO.loc[item]["scoring_area"]
+            _item = int(item)
+            if _item in _MAP_INFO.index:
+                item = _MAP_INFO.loc[_item]["scoring_area"]
                 # This map id exists, but is not mapped to an area
                 if pandas.isna(item):
                     # FIXME: probably gonna break something
                     _CONTEXT["area"] = None
                     return True
+                logging.info(f"Area: {_item} => {item}")
             else:
                 #raise ValueError(f"No valid area mapping for id {item}")
                 logging.error(f"No valid area mapping for id {item}")
                 return True
 
         if cat == "boss" and item.isdigit():
-            item = int(item)
-            if item in set(_BOSS_INFO["Id"]):
-                item = _BOSS_INFO.set_index("Id").loc[item]["Boss"]
+            _item = int(item)
+            if _item in set(_BOSS_INFO["Id"]):
+                item = _BOSS_INFO.set_index("Id").loc[_item]["Boss"]
+                logging.info(f"Boss: {_item} => {item}")
             else:
-                raise ValueError(f"No valid boss mapping for id {item} (this may be intended)")
+                raise ValueError(f"No valid boss mapping for id {_item} (this may be intended)")
 
         lookup, info = LOOKUPS[cat]
         # FIXME: zozo vs. mt. zozo
