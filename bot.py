@@ -470,10 +470,11 @@ async def event_message(ctx):
         bot._last_state_drop = curtime
         if _STREAM_STATUS:
             status = " | ".join([f"{cat}: {val}" for cat, val in _CONTEXT.items()])
-            leaderboard = " | ".join([f"{user}: {inv.get('score', None)}" for user, inv in _USERS.items()])
+            leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
+                                      for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
             # truncate file
             with open(_STREAM_STATUS, "w") as f:
-                print(status + "\n" + leaderboard, file=f, flush=True)
+                print(status + "\n\n" + leaderboard + "\n", file=f, flush=True)
 
 @bot.command(name='hi')
 async def hi(ctx):
