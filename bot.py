@@ -342,6 +342,9 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
         if os.path.exists("TRASH/"):
             shutil.move("logfile.txt", "TRASH/")
 
+        bot._last_status = {}
+        bot._last_state_drop = -1
+
 #
 # Bot commands
 #
