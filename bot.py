@@ -28,13 +28,19 @@ _FLAGS, _SEED = None, None
 _SPOILER_LOG = opts.pop("spoiler", None)
 
 if _SPOILER_LOG and os.path.isdir(_SPOILER_LOG):
-    _SPOILER_LOG = glob.glob(os.path.join(_SPOILER_LOG, "*.txt"))[0]
+    try:
+        _SPOILER_LOG = glob.glob(os.path.join(_SPOILER_LOG, "*.txt"))[0]
+    except IndexError:
+        logging.warn(f"Directoy of spoiler log is not valid, no spoiler texts found: {_SPOILER_LOG}")
 
-if _SPOILER_LOG is not None:
+if _SPOILER_LOG and os.path.exists(_SPOILER_LOG):
     _FLAGS, _SEED, maps = read.read_spoiler(_SPOILER_LOG)
     mmaps, cmaps = maps
     MUSIC_INFO = pandas.DataFrame(mmaps).dropna()
     CHAR_MAP = pandas.DataFrame(cmaps).dropna()
+else:
+    logging.warn(f"Path to spoiler log is not valid and was not read: {_SPOILER_LOG}")
+
 _FLAGS = opts.pop("flags", _FLAGS)
 _SEED = opts.pop("seed", _SEED)
 _SEASON_LABEL = opts.pop("season", None)
