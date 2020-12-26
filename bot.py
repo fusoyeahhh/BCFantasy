@@ -141,8 +141,12 @@ def convert_buffer_to_commands(logf, **kwargs):
             _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown")
             logging.info(f"Setting music context to {music_id} => {_CONTEXT['music']}")
 
+        # Special check for Veldt area
+        if status.get("music_id", None) == 0x19:
+            cmds.append(f"!set area=Veldt")
+            logging.info("emu> " + cmds[-1])
         # check for map change
-        if status["map_id"] != last_status.get("map_id", None):
+        elif status["map_id"] != last_status.get("map_id", None):
             cmds.append(f"!set area={status['map_id']}")
             logging.info("emu> " + cmds[-1])
 
