@@ -34,7 +34,7 @@ F,"Chocobo Stable, Inside",Towns
 24,"Narshe, Mines Cart Rail Rooms (WOR)",Narshe (WoR)
 25,"Narshe, Mines Battle Room (WOR)",Narshe (WoR)
 26,"Narshe, Mines 1 (WOR)",Narshe (WoR)
-27,"Narshe, Outside, North, Beginning",Narshe Ice Fields
+27,"Narshe, Outside, North, Beginning",Narshe (WoB)
 28,"Narshe, Mines 1, Beginning (WOB)",Narshe (WoB)
 29,"Narshe, Mines 1 (WOB)",Narshe (WoB)
 2C,"Narshe, Moogle's Room (WOR)",Narshe (WoB)
@@ -86,14 +86,14 @@ F,"Chocobo Stable, Inside",Towns
 8E,"Cyan's Dream, Phantom Train, Outside",Phantom Train
 90,"Phantom Train, Engineer's Room",Cyan's Dream|Phantom Forest
 91,"Phantom Train, Restaurant",Phantom Train
-92,"Mobliz, Outside during Light of Judgement",Towns
+92,"Mobliz, Outside during Light of Judgement",Phantom Train
 93,"Phantom Train, Inside 2",Phantom Train
 95,"Phantom Train, Inside 3",Phantom Train
 97,"Phantom Train, Inside Rooms",Phantom Train
 98,"Mobliz, Basement 2Waterfall Cave",Baren Falls
 99,Waterfall Cliff,Baren Falls
-9B,"Mobliz, Outside (WOR)",Towns
-9C,Veldt Shore,Veldt
+9B,"Mobliz, Outside (WOR)",Phantom Train
+9C,Veldt Shore,Baren Falls
 9D,"Mobliz, Inn",Towns
 9E,"Mobliz, Arsenal",Towns
 9F,"Mobliz, Relics",Towns
