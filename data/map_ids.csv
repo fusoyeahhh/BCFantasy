@@ -160,7 +160,7 @@ FD,"Ending, Umaro 2",N/A
 107,"Magitek Factory, Elevator",Magitek Facility
 108,DUMMIED - Magitek Factory,Magitek Facility
 10A,"Magitek Factory, Room 4",Magitek Facility
-112,"Zone Eater's Stomach, Room 4",Gogo's Cave
+112,"Zone Eater's Stomach, Room 4",Magitek Facility
 114,"Zone Eater's Stomach, Room 2",Gogo's Cave
 116,"Narshe, Umaro's Cave 1",Umaro's Cave
 119,"Maranda, Outside (WOR)",Towns
@@ -359,7 +359,7 @@ E6,"Opera House, Theater Play 2",Opera House
 E8,"Opera House, Ceiling",Opera House
 EA,"Opera House, Main",Opera House
 ED,"Vector, after Magitek Factory",Opera House
-F0,Imperial Castle,Towns
+F0,Imperial Castle,Magitek Facility
 F1,"Imperial Castle, Outside Roof",Towns
 FB,"Ending, Cyan, Mog, Gogo 2",N/A
 FC,"Ending, Setzer",N/A
@@ -377,8 +377,8 @@ FF,"Ending, Edgar and Sabin",N/A
 10D,"Magitek Factory, Minecart Dock",Magitek Facility
 10E,"Magitek Res. Facility, Room 2 (Number 042)",Magitek Facility
 10F,"Magitek Res. Facility, Espers",Magitek Facility
-110,DUMMIED,N/A
-111,"Zone Eater's Stomach, Room 1",Gogo's Cave
+110,DUMMIED,Magitek Facility
+111,"Zone Eater's Stomach, Room 1",Magitek Facility
 113,"Zone Eater's Stomach, Room 6 (Gogo)",Gogo's Cave
 115,"Zone Eater's Stomach, Room 3,5",Gogo's Cave
 117,"Narshe, Umaro's Cave 2",Umaro's Cave
