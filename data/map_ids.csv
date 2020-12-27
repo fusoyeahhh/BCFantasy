@@ -214,7 +214,7 @@ FD,"Ending, Umaro 2",Towns
 15A,"Thamasa, Strago's House",Towns
 15B,"Thamasa, Relics",Towns
 15C,"Thamasa, Inside Burning House",Towns
-15F,"Kefka's Tower, Red Carpet Rooms",Kefka's Tower
+15F,"Kefka's Tower, Red Carpet Rooms",Burning House
 160,"Kefka's Tower, Three Switch Room",Kefka's Tower
 161,"Kefka's Tower, Left Statue Room",Kefka's Tower
 162,"Kefka's Tower, Kefka's Lair 2",Kefka's Tower
@@ -234,8 +234,8 @@ FD,"Ending, Umaro 2",Towns
 171,"Esper Cave, Outside 2",Esper Mountain
 172,"Esper Cave, Outside 1",Esper Mountain
 173,"Esper Cave, Outside 3",Esper Mountain
-175,"Floating Continent, Destruction",Floating Continent
-176,Imperial Base,Towns
+175,"Floating Continent, Destruction",Esper Mountain
+176,Imperial Base,Esper Mountain
 177,"Imperial Base, House",Towns
 179,Overhead View of World Map,Towns
 17A,Mountains Destruction,N/A
