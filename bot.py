@@ -67,8 +67,8 @@ _ACTOR_MAP = {
     0xB: "Gau",
     0xC: "Gogo",
     0xD: "Umaro",
-    0xE: "Guest actor 1",
-    0xF: "Guest actor 2"
+    #0xE: "Guest actor 1",
+    #0xF: "Guest actor 2"
 }
 
 def _write(ctx, strn, prefix="BCFBot>"):
