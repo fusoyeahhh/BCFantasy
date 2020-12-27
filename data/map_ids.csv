@@ -155,7 +155,7 @@ F7,"Imperial Castle, Inside",Towns
 F8,"Imperial Castle, Banquet",Towns
 F9,"Imperial Castle, Bedroom",Towns
 FA,"Vector, Outside, Burning",Towns
-FD,"Ending, Umaro 2",N/A
+FD,"Ending, Umaro 2",Towns
 106,DUMMIED - Magitek Factory,Magitek Facility
 107,"Magitek Factory, Elevator",Magitek Facility
 108,DUMMIED - Magitek Factory,Magitek Facility
@@ -202,7 +202,7 @@ FD,"Ending, Umaro 2",N/A
 147,"Albrook, Pub",Towns
 148,"Kefka's Tower, Atma's Room",Towns
 14A,"DUMMIED - Kefka's Tower, factory",Towns
-14C,"Kefka's Tower, Gold Dragon Room",Kefka's Tower
+14C,"Kefka's Tower, Gold Dragon Room",Towns
 14E,"Kefka's Tower, 4Ton Switch Room",Kefka's Tower
 150,"Kefka's Tower, Inside from Eastern Group",Kefka's Tower
 151,"Thamasa, Outside, at Leo's Grave",Towns
@@ -248,7 +248,7 @@ FD,"Ending, Umaro 2",N/A
 182,Grasslands Destruction,N/A
 183,Highlands Destruction,N/A
 186,"Floating Continent, Breaking Apart",Floating Continent
-187,"Floating Continent, Outside",Floating Continent
+187,"Floating Continent, Outside",Cave to the Sealed Gate
 188,Floating Continent Breakaway 1,Floating Continent
 189,"Cid's Island, Outside",Towns
 18A,"Cid's Island, Inside House",Towns
@@ -361,7 +361,7 @@ EA,"Opera House, Main",Opera House
 ED,"Vector, after Magitek Factory",Opera House
 F0,Imperial Castle,Magitek Facility
 F1,"Imperial Castle, Outside Roof",Towns
-FB,"Ending, Cyan, Mog, Gogo 2",N/A
+FB,"Ending, Cyan, Mog, Gogo 2",Towns
 FC,"Ending, Setzer",N/A
 FE,DUMMIED - Magitek Factory,Magitek Facility
 FF,"Ending, Edgar and Sabin",N/A
@@ -400,8 +400,8 @@ FF,"Ending, Edgar and Sabin",N/A
 152,"Thamasa, Outside, Kefka attacks",Towns
 153,DUMMIED - Thamasa,Towns
 156,"Thamasa, Arsenal",Towns
-15D,"Kefka's Tower, Broken Capsules",Kefka's Tower
-15E,Cave in the Veldt (WOR),Cave on the Veldt
+15D,"Kefka's Tower, Broken Capsules",Towns
+15E,Cave in the Veldt (WOR),Towns
 163,"Floating Continent, Save Point",Floating Continent
 174,Esper Cave,Esper Mountain
 178,DUMMIED - Imperial Base,Towns
