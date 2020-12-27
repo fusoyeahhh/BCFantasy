@@ -19,13 +19,13 @@ F,"Chocobo Stable, Inside",Towns
 15,"Narshe, North of Town, Beginning (WOB)",Narshe (WoB)
 16,"Narshe, Snow Battlefield (WOB)",Narshe Ice Fields
 17,"Narshe, Northern Cliff (WOB)",Narshe Ice Fields
-18,"Narshe, Weapons Shop",Narshe (WoB)
-19,"Narshe, Armor Shop",Narshe (WoB)
-1A,"Narshe, Item Shop",Narshe (WoB)
-1B,"Narshe, Relics Shop",Narshe (WoB)
-1C,"Narshe, Inn",Narshe (WoB)
-1D,"Narshe, Pub",Narshe (WoB)
-1E,"Narshe, Elder's House",Narshe (WoB)
+18,"Narshe, Weapons Shop",Towns
+19,"Narshe, Armor Shop",Towns
+1A,"Narshe, Item Shop",Towns
+1B,"Narshe, Relics Shop",Towns
+1C,"Narshe, Inn",Towns
+1D,"Narshe, Pub",Towns
+1E,"Narshe, Elder's House",Towns
 1F,DUMMIED - Chocobo Stable,N/A
 20,"Narshe, Outside (WOR)",Narshe (WoR)
 21,"Narshe, Outside, North (WOR)",Narshe (WoR)
@@ -91,24 +91,24 @@ F,"Chocobo Stable, Inside",Towns
 95,"Phantom Train, Inside 3",Phantom Train
 97,"Phantom Train, Inside Rooms",Phantom Train
 98,"Mobliz, Basement 2Waterfall Cave",Baren Falls
-99,Waterfall Cliff,Baren Falls
-9B,"Mobliz, Outside (WOR)",Phantom Train
+99,Waterfall Cliff,Phantom Train
+9B,"Mobliz, Outside (WOR)",Baren Falls
 9C,Veldt Shore,Baren Falls
 9D,"Mobliz, Inn",Towns
 9E,"Mobliz, Arsenal",Towns
-9F,"Mobliz, Relics",Towns
+9F,"Mobliz, Relics",Baren Falls
 A0,"Mobliz, Mail House",Towns
 A1,"Mobliz, Item Shop",Towns
 A2,"Mobliz, Basement 1",Towns
-A3,Waterfall Entrance,Veldt
-A4,Veldt Cave to Waterfall,Veldt
-A5,Veldt Waterfall,Veldt
-A6,"Nikeah, Outside",Towns
-A7,Veldt Shore,Veldt
+A3,Waterfall Entrance,Towns
+A4,Veldt Cave to Waterfall,Towns
+A5,Veldt Waterfall,Towns
+A6,"Nikeah, Outside",Baren Falls
+A7,Veldt Shore,Towns
 A8,"Nikeah, Inn",Towns
 A9,"Nikeah, Pub",Towns
 AA,"Nikeah, Chocobo Stable",Towns
-AF,"Mt.Zozo, Outside 2",Mt. Zozo
+AF,"Mt.Zozo, Outside 2",Serpent Trench
 B0,"Mt.Zozo, Inside",Mt. Zozo
 B1,"Mt.Zozo, Cyan's Room",Mt. Zozo
 B2,"Mt.Zozo, Cliff",Mt. Zozo
@@ -136,15 +136,15 @@ D7,"Esper World, Gate",Towns
 D8,"Esper World, House",Towns
 D9,DUMMIED - boat dock,N/A
 DA,"Zozo, Outside",Zozo
-DB,FREE TO USE,N/A
-DD,FREE TO USE,N/A
-E1,FREE TO USE,N/A
-E2,FREE TO USE,N/A
+DB,FREE TO USE,Zozo
+DD,FREE TO USE,Zozo
+E1,FREE TO USE,Zozo
+E2,FREE TO USE,Zozo
 E7,"Opera House, Theater Play 1",Opera House
 E9,"Opera House, Castle Balcony",Opera House
 EB,"Opera House, Dressing Room",Opera House
 EC,DUMMIED - Opera House,Opera House
-EE,"Imperial Castle, Cranes Activating",Towns
+EE,"Imperial Castle, Cranes Activating",Opera House
 EF,"Vector, Outside",Towns
 F2,"Vector, Inn",Towns
 F3,"Vector, Weapon Shop",Towns
@@ -185,8 +185,8 @@ FD,"Ending, Umaro 2",N/A
 133,"Tzen, Armor Shop (WOR)",Towns
 134,"Tzen, Inside Collapsing House",Towns
 135,"Tzen, Relics (WOR)",Towns
-136,"Phoenix Cave, Big Lava Room, Drained",Phoenix Cave
-138,"Phoenix Cave, Main Room, Drained",Phoenix Cave
+136,"Phoenix Cave, Big Lava Room, Drained",Towns
+138,"Phoenix Cave, Main Room, Drained",Towns
 139,"Phoenix Cave, Main Room",Phoenix Cave
 13A,"Cyan's Dream, Three Stooges",Cyan's Dream
 13B,"Pheonix Cave, Outside Entrance",Phoenix Cave
@@ -198,10 +198,10 @@ FD,"Ending, Umaro 2",N/A
 143,"Albrook, Weapon Shop",Towns
 144,"Albrook, Armor Shop",Towns
 145,"Albrook, Item Shop",Towns
-146,"Kefka's Tower, Room with Movers",Kefka's Tower
+146,"Kefka's Tower, Room with Movers",Towns
 147,"Albrook, Pub",Towns
-148,"Kefka's Tower, Atma's Room",Kefka's Tower
-14A,"DUMMIED - Kefka's Tower, factory",Kefka's Tower
+148,"Kefka's Tower, Atma's Room",Towns
+14A,"DUMMIED - Kefka's Tower, factory",Towns
 14C,"Kefka's Tower, Gold Dragon Room",Kefka's Tower
 14E,"Kefka's Tower, 4Ton Switch Room",Kefka's Tower
 150,"Kefka's Tower, Inside from Eastern Group",Kefka's Tower
@@ -269,7 +269,7 @@ FD,"Ending, Umaro 2",N/A
 3,“On that day…“,N/A
 4,Shadow's Dream 1,N/A
 5,Mog's Explanation,N/A
-8,"Blackjack, Back Room",AIrship
+8,"Blackjack, Back Room",Airship
 2A,"Narshe, Mines Esper Room, Beginning (WOB)",Narshe (WoB)
 2B,"Narshe, Mines Esper Room, Empty (WOB)",Narshe (WoB)
 2D,DUMMIED,N/A
@@ -328,7 +328,7 @@ FD,"Ending, Umaro 2",N/A
 94,"Mobliz, Basement 2, After Phunbaba 1",Towns
 96,"Phantom Train, Inside 4",Phantom Train
 9A,"Mobliz, Outside (WOB)",Towns
-AB,"Shadow's Dream 2, Phantom Forest",Phantom Forest
+AB,"Shadow's Dream 2, Phantom Forest",Towns
 AC,Serpent Trench Cave 1,Serpent Trench
 AD,"Mt.Zozo, Outside Bridge",Mt. Zozo
 AE,"Mt.Zozo, Outside 1",Mt. Zozo
@@ -358,7 +358,7 @@ E5,"Opera House, Switch Room",Opera House
 E6,"Opera House, Theater Play 2",Opera House
 E8,"Opera House, Ceiling",Opera House
 EA,"Opera House, Main",Opera House
-ED,"Vector, after Magitek Factory",Towns
+ED,"Vector, after Magitek Factory",Opera House
 F0,Imperial Castle,Towns
 F1,"Imperial Castle, Outside Roof",Towns
 FB,"Ending, Cyan, Mog, Gogo 2",N/A
@@ -390,7 +390,7 @@ FF,"Ending, Edgar and Sabin",N/A
 124,"Kefka's Tower, Inside 3",Kefka's Tower
 12E,"Tzen, Outside (WOR)",Towns
 130,"Tzen, Item Shop (WOR)",Towns
-137,"Pheonix Cave, Big Lava Room",Phoenix Cave
+137,"Pheonix Cave, Big Lava Room",Towns
 13C,"Cyan's Dream, Magitek Caves, Outside",Cyan's Dream
 13D,"Cyan's Dream, Magitek Caves, Inside",Cyan's Dream
 149,"Albrook, Ship Deck",Towns
