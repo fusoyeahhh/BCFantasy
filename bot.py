@@ -211,7 +211,7 @@ def _set_context(content):
                 # This map id exists, but is not mapped to an area
                 if pandas.isna(item):
                     # FIXME: probably gonna break something
-                    _CONTEXT["area"] = None
+                    #_CONTEXT["area"] = None
                     return True
                 logging.info(f"Area: {_item} => {item}")
             else:
