@@ -782,8 +782,11 @@ async def mapinfo(ctx):
         return
 
     idx = _MAP_INFO.index.searchsorted(map_id)
-    left = _MAP_INFO.iloc[idx-1]["name"]
-    right = _MAP_INFO.iloc[idx]["name"]
+    if idx >= len(_MAP_INFO):
+        left = _MAP_INFO.iloc[idx-1]["name"]
+        right = _MAP_INFO.iloc[idx]["name"]
+    else:
+        left, right = None, None
 
     with open("missing_maps.txt", "a") as fout:
         fout.write(f"{map_id} ")
