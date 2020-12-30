@@ -782,7 +782,7 @@ async def mapinfo(ctx):
         return
 
     idx = _MAP_INFO.index.searchsorted(map_id)
-    if idx >= len(_MAP_INFO):
+    if idx < len(_MAP_INFO):
         left = _MAP_INFO.iloc[idx-1]["name"]
         right = _MAP_INFO.iloc[idx]["name"]
     else:
