@@ -208,7 +208,7 @@ def _set_context(content):
             _item = int(item)
             if _item in _MAP_INFO.index:
                 # We don't change the context if on this map, since it can indicate a gameover
-                if _item != 5:
+                if _item == 5:
                     logging.info("Map id 5 detected, not changing area.")
                     return True
                 item = _MAP_INFO.loc[_item]["scoring_area"]
