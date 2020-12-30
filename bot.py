@@ -1085,6 +1085,10 @@ async def stop(ctx):
     bot._status = "paused"
     cmd = ctx.content.split()[1:]
 
+    # Have to reset frame counter for next emulator log restart
+    logging.info("Resetting frame counter to 0 for emulator restart.")
+    ctx._last_status["frame"] = 0
+
     # Just stopping for the moment, checkpoint and move on.
     if len(cmd) == 0:
         serialize(pth=_CHKPT_DIR)
