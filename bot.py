@@ -168,6 +168,7 @@ def convert_buffer_to_commands(logf, **kwargs):
             diff = k - lkills.get(char, 0)
             if status.get("map_id", None) == 0x19D:
                 logging.info("Colosseum detected, no character kills will be recorded.")
+                break
             elif diff > 0 and char != "NIL_lookup":
                 # FIXME: should probably in_check battle status
                 etype = "boss" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else "enemy"
