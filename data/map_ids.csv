@@ -72,7 +72,7 @@ F,"Chocobo Stable, Inside",Towns
 75,DUMMIED,N/A
 78,"Doma Castle, Outside Poisoning (WOB)",Doma Castle
 79,DUMMIED,N/A
-7B,"Doma Castle, Cyan's Room",Doma Castle
+7B,"Doma Castle, Cyan's Room",Cyan's Dream
 7D,"Cyan's Dream, Doma Castle Rooms",Cyan's Dream
 7E,"Duncan's House, Outside",Towns
 7F,"Duncan's House, Inside",Towns
@@ -165,7 +165,7 @@ FD,"Ending, Umaro 2",Towns
 116,"Narshe, Umaro's Cave 1",Gogo's Cave
 119,"Maranda, Outside (WOR)",Umaro's Cave
 11C,"Kefka's Tower, Inside From Guardian",Towns
-11D,"Maranda, Inn (WOR)",Towns
+11D,"Maranda, Inn (WOR)",Doma Castle
 11F,"Maranda, Armor Shop (WOR)",Towns
 120,"Kefka's Tower, Guardian's Room",Kefka's Tower
 121,"Kefka's Tower, Junk Room",Towns
@@ -193,7 +193,7 @@ FD,"Ending, Umaro 2",Towns
 13E,"Cyan's Dream, Phantom Train, Inside 1",Cyan's Dream
 13F,"Cyan's Dream, Phantom Train, Inside 2",Cyan's Dream
 140,"Albrook, Outside (WOB)",Towns
-141,"Albrook, Outside (WOR)",Towns
+141,"Albrook, Outside (WOR)",Cyan's Dream
 142,"Albrook, Inn",Towns
 143,"Albrook, Weapon Shop",Towns
 144,"Albrook, Armor Shop",Towns
@@ -324,7 +324,7 @@ FD,"Ending, Umaro 2",Towns
 8B,"Phantom Train, Docking Station 1",Phantom Train
 8C,"Phantom Train, Outside 2",Phantom Train
 8D,"Phantom Train, Outside 1",Phantom Train
-8F,"Cyan's Dream, Phantom Train, InsidePhantom Train, Inside 1",Phantom Train
+8F,"Cyan's Dream, Phantom Train, InsidePhantom Train, Inside 1",Cyan's Dream
 94,"Mobliz, Basement 2, After Phunbaba 1",Towns
 96,"Phantom Train, Inside 4",Towns
 9A,"Mobliz, Outside (WOB)",Towns
