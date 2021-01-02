@@ -138,7 +138,7 @@ def convert_buffer_to_commands(logf, **kwargs):
         # FIXME: do this the same way as other contexts
         music_id = status.get("music_id", None)
         if music_id is not None and len(MUSIC_INFO) > 0:
-            _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown")
+            _CONTEXT["Music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown")
             logging.info(f"Setting music context to {music_id} => {_CONTEXT['music']}")
 
         # Special check for Veldt area
@@ -494,10 +494,10 @@ async def event_message(ctx):
         if _STREAM_STATUS:
             status = " | ".join([f"{cat}: {val}" for cat, val in _CONTEXT.items()])
             # rename to last enc. boss
-            status = status.replace("boss: ", "last enc. boss: ")
+            status = status.replace("boss: ", "Last enc. boss: ")
             map_id = bot._last_status.get("map_id", None)
             if map_id in _MAP_INFO.index:
-                status += f" | map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
+                status += f" | Map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                                       for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
             # truncate file
@@ -524,7 +524,7 @@ async def bcfflags(ctx):
     """
 
     if _FLAGS is not None:
-        await ctx.send(f"flags: {_FLAGS} | seed: {_SEED}")
+        await ctx.send(f"Flags: {_FLAGS} | Seed: {_SEED}")
         return
     await ctx.send("No flag information.")
 COMMANDS["bcfflags"] = bcfflags
@@ -783,7 +783,7 @@ async def mapinfo(ctx):
     """
     map_id = int(ctx.content.split()[1])
     if map_id in _MAP_INFO.index:
-        await ctx.send(f"{map_id}: {_MAP_INFO.loc[map_id]['name']} (area: {_MAP_INFO.loc[map_id]['scoring_area']})")
+        await ctx.send(f"{map_id}: {_MAP_INFO.loc[map_id]['name']} (Area: {_MAP_INFO.loc[map_id]['scoring_area']})")
         return
 
     idx = _MAP_INFO.index.searchsorted(map_id)
