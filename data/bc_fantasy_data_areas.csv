@@ -1,5 +1,5 @@
 Area,Kills Character,MIAB,Gameover,Cost,Sell
-Narshe (WoB),500,500,10000,10,5
+Narshe (WoB),500,500,2000,10,5
 WoB Overworld,100,N/A,5000,250,125
 South Figaro Cave,500,500,1000,30,15
 Mt. Koltz,300,500,2000,100,50
@@ -7,36 +7,36 @@ Lete River,300,N/A,1600,80,40
 Imperial Camp,500,500,2000,50,25
 Phantom Forest,300,N/A,1500,80,40
 Phantom Train,250,300,3000,100,50
-Baren Falls,500,N/A,5000,30,15
+Baren Falls,500,N/A,2500,30,15
 Veldt,200,N/A,2000,120,60
 Serpent Trench,500,500,2000,80,40
 South Figaro Basement,500,500,2000,80,40
-Narshe Ice Fields,100,N/A,4000,20,10
+Narshe Ice Fields,100,N/A,4000,50,25
 Zozo,300,300,7000,500,250
-Opera House,500,N/A,6000,300,150
-Magitek Facility,200,200,15000,750,375
-Cave to the Sealed Gate,200,200,15000,800,400
-Burning House,300,300,20000,1200,600
-Esper Mountain,300,300,20000,1000,500
-Doma Castle,500,500,10000,50,25
-Floating Continent,200,200,25000,2000,1000
-WoR Overworld,200,N/A,30000,2500,1250
-Collapsing House,0,1000,25000,2200,1100
-Castle Figaro Basement,500,500,30000,2500,1250
-Daryl's Tomb,300,300,40000,3000,1500
-Cave on the Veldt,500,500,50000,2500,1250
-Gogo's Cave,300,300,45000,3500,1750
-Mt. Zozo,300,300,40000,3000,1500
-Narshe (WoR),500,500,40000,2500,1250
-Umaro's Cave,300,300,40000,2200,1100
-Owzer's Mansion,500,500,50000,2500,1250
-Ebot's Rock,500,N/A,50000,2500,1250
-Underground Strata,300,300,50000,3000,1500
-Ancient Castle,200,200,50000,3000,1500
-Cyan's Dream,200,200,50000,4000,2000
-Phoenix Cave,200,10,50000,4000,2000
-Fanatic's Tower,100,500,55000,5000,2500
-Kefka's Tower,100,100,55000,5000,2500
-Towns,500,250,10000,500,250
-Airship,300,N/A,10000,500,250
+Opera House,500,N/A,5000,300,150
+Magitek Facility,200,200,7000,500,250
+Cave to the Sealed Gate,200,200,7500,600,300
+Burning House,300,300,7000,650,325
+Esper Mountain,300,300,8000,700,350
+Doma Castle,500,500,5000,100,50
+Floating Continent,200,200,10000,850,425
+WoR Overworld,200,N/A,8000,750,375
+Collapsing House,0,500,6000,600,300
+Castle Figaro Basement,500,500,9000,800,400
+Daryl's Tomb,300,300,10000,900,450
+Cave on the Veldt,500,500,12000,1250,475
+Gogo's Cave,300,300,10000,1100,550
+Mt. Zozo,300,300,13000,1200,600
+Narshe (WoR),500,500,14000,1100,550
+Umaro's Cave,300,300,15000,1300,650
+Owzer's Mansion,500,500,12000,1400,700
+Ebot's Rock,500,N/A,15000,1250,625
+Underground Strata,300,300,13000,1500,750
+Ancient Castle,200,200,16000,1600,800
+Cyan's Dream,200,200,18000,1800,900
+Phoenix Cave,200,10,17000,1900,950
+Fanatic's Tower,100,500,20000,2000,1000
+Kefka's Tower,100,100,30000,2500,1250
+Towns,500,250,6000,500,250
+Airship,300,N/A,8000,500,250
 Colosseum (no scoring),0,,0,0,0
