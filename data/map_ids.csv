@@ -51,7 +51,7 @@ F,"Chocobo Stable, Inside",Towns
 4B,"South Figaro, Outside (WOB)",Towns
 4E,"South Figaro, Pub",Towns
 51,"South Figaro, Rich Man's House",Towns
-53,"South Figaro, Basement 1",South Figaro Basement
+53,"South Figaro, Basement 1",Towns
 54,"South Figaro, Basement 1 Clock Room",Towns
 56,"South Figaro, Duncan's House",Towns
 58,"South Figaro, Basement 1 Save Point",Towns
@@ -299,7 +299,7 @@ FD,"Ending, Umaro 2",Towns
 52,DUMMIED,N/A
 55,"South Figaro, Item Shop",Towns
 57,"South Figaro, Basement 1 Monster Room",South Figaro Basement
-59,"South Figaro, Basement 2",South Figaro Basement
+59,"South Figaro, Basement 2",Towns
 5A,"Cave to Figaro Castle, Entrance (WOR)",South Figaro Cave
 5B,"South Figaro, Dock (WOR)",Towns
 5C,"Cave to Figaro Castle, Room 1",South Figaro Cave
