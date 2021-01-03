@@ -139,7 +139,7 @@ def convert_buffer_to_commands(logf, **kwargs):
         music_id = status.get("music_id", None)
         if music_id is not None and len(MUSIC_INFO) > 0:
             _CONTEXT["Music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown")
-            logging.info(f"Setting music context to {music_id} => {_CONTEXT['music']}")
+            logging.info(f"Setting music context to {music_id} => {_CONTEXT['Music']}")
 
         # Special check for Veldt area
         if status.get("music_id", None) == 0x19:
