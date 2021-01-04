@@ -71,9 +71,6 @@ _ACTOR_MAP = {
     #0xF: "Guest actor 2"
 }
 
-def _write(ctx, strn, prefix="BCFBot>"):
-    pass
-
 def _authenticate(ctx):
     #print(ctx.author.name, _AUTHORIZED)
     logging.debug(ctx.author.name in _AUTHORIZED)
@@ -412,10 +409,6 @@ async def event_ready():
 
     logging.debug(f"Init'd: {bot._last_state_drop}, {bot._last_status}\nUsers: {len(_USERS)}")
 
-@bot.command(name='doarena')
-async def _arena(ctx):
-    await ctx.send('!arena')
-
 @bot.event
 async def event_message(ctx):
     #if (ctx.author.name.lower() == "crackboombot" and
@@ -515,13 +508,7 @@ async def event_message(ctx):
 
 @bot.command(name='hi')
 async def hi(ctx):
-    await ctx.send('/me HELLO HUMAN, I AM BCFANTASYBOT. FEAR --- EXCEPT NEBEL AND CJ, WHO ARE PRETTY COOL PEOPLE --- AND LOVE ME.')
-
-@bot.command(name='blame')
-async def blame(ctx):
-    blame = ctx.content
-    name = blame.split(" ")[-1].lower()
-    await ctx.send(f'/me #blame{name}')
+    await ctx.send("/me Hi. I'm BC Fantasy Bot. You may remember me from such seeds as the dumpster fire from last time and OHGODNOTHATCLOCKNOOOOOOO.")
 
 #
 # User-based commands
