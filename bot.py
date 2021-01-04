@@ -1119,8 +1119,10 @@ async def stop(ctx):
     pth = os.path.join("./", _SEED or datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     if cmd[0] == "annihilated":
         _sell_all(_USERS)
+        await ctx.send("Sold all users items.")
         # Possibly do a report?
         serialize(pth, archive=_SEASON_LABEL, season_update=True, reset=True)
+        await ctx.send("!wompwomp")
     elif cmd[0] == "kefkadown":
         _sell_all(_USERS)
         serialize(pth, archive=_SEASON_LABEL, season_update=True, reset=True)
