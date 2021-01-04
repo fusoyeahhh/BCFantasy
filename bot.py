@@ -471,9 +471,10 @@ async def event_message(ctx):
             HISTORY[current_time] = ctx.content
             if _STREAM_STATUS and line.startswith("!event"):
                 last_frame = bot._last_status.get("frame", 'unknown')
-                with open(_STREAM_STATUS, "a") as f:
-                    f.write(f"{last_frame}: {line}\n")
-                    f.flush()
+                async with open(_STREAM_STATUS, "a") as f:
+                    await f.write(f"{last_frame}: {line}\n")
+                    await f.flush()
+
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
@@ -1018,9 +1019,9 @@ async def event(ctx):
         return
 
     if _STREAM_STATUS:
-        with open(_STREAM_STATUS, "a") as f:
-            f.write(f"{event}: ")
-            f.flush()
+        async with open(_STREAM_STATUS, "a") as f:
+            await f.write(f"{event}: ")
+            await f.flush()
 
     did_write, did_error = False, False
     logging.debug((event, args, cats))
@@ -1073,16 +1074,16 @@ async def event(ctx):
                 score_diff = sel['score'] - _score
                 did_score = score_diff > 0
                 if did_score:
-                    with open(_STREAM_STATUS, "a") as f:
-                        f.write(f"{user} +{score_diff} ")
-                        f.flush()
+                    async with open(_STREAM_STATUS, "a") as f:
+                        await f.write(f"{user} +{score_diff} ")
+                        await f.flush()
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
     if did_write and _STREAM_STATUS:
-        with open(_STREAM_STATUS, "a") as f:
-            f.write("\n")
-            f.flush()
+        async with open(_STREAM_STATUS, "a") as f:
+            await f.write("\n")
+            await f.flush()
         # Let the message persist for a bit longer
         bot._last_state_drop = int(time.time())
 
