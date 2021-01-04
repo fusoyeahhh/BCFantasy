@@ -491,13 +491,15 @@ async def event_message(ctx):
         logging.debug("Serializing state...")
         serialize(pth=_CHKPT_DIR)
         bot._last_state_drop = curtime
+
+        # Send the current game status to a file for streaming
         if _STREAM_STATUS:
-            status = " | ".join([f"{cat}: {val}" for cat, val in _CONTEXT.items()])
+            status = " | ".join([f"{cat.capitalize()}: {val}" for cat, val in _CONTEXT.items()])
             # rename to last enc. boss
-            status = status.replace("boss: ", "last enc. boss: ")
+            status = status.replace("Boss: ", "Last enc. boss: ")
             map_id = bot._last_status.get("map_id", None)
             if map_id in _MAP_INFO.index:
-                status += f" | map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
+                status += f" | Map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                                       for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
             # truncate file
