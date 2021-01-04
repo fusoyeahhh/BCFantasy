@@ -1021,19 +1021,19 @@ async def event(ctx):
 
             lookup, info = LOOKUPS[cat]
             multi = 1
-            if cat in {"boss", "area"}:
-                has_item = sel.get(cat, "").lower() == (_CONTEXT[cat] or "").lower()
-                item = _check_term(_CONTEXT[cat], lookup, info, full=True)
-            elif cat == "char":
-                has_item = sel.get(cat, "").lower() == args[0].lower()
-                item = args[0]
-                if len(args) > 1:
-                    multi = int(args[1])
-                try:
-                    item = _check_term(item, lookup, info, full=True)
-                except Exception as e:
-                    logging.error(f"Failed lookup for {item}: " + str(e))
-                    continue
+            try:
+                if cat in {"boss", "area"}:
+                    has_item = sel.get(cat, "").lower() == (_CONTEXT[cat] or "").lower()
+                    item = _check_term(_CONTEXT[cat], lookup, info, full=True)
+                elif cat == "char":
+                    has_item = sel.get(cat, "").lower() == args[0].lower()
+                    item = args[0]
+                    if len(args) > 1:
+                        multi = int(args[1])
+                        item = _check_term(item, lookup, info, full=True)
+            except Exception as e:
+                logging.error(f"Failed lookup for {cat}: " + str(e))
+                continue
             #print(item, user)
 
             _score = sel["score"]
