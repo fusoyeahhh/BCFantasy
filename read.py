@@ -7,6 +7,23 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 _QUIET = False
 
+# Numbers from
+# https://github.com/subtractionsoup/beyondchaos/blob/master/tables/dialoguetext.txt
+# Upper case
+_CHARS = {128 + i: chr(j) for i, j in enumerate(range(65, 65 + 26))}
+# Lower case
+_CHARS.update({154 + i: chr(j) for i, j in enumerate(range(97, 97 + 26))})
+# Numbers
+_CHARS.update({180 + i: chr(j) for i, j in enumerate(range(48, 48 + 10))})
+# FIXME: Will probably need symbols at some point
+_CHARS[191] = "?"
+_CHARS[255] = ""
+
+def translate(word):
+    #return "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
+                              #for c in word if c != 255]))
+    return "".join([_CHARS[i] for i in word])
+
 def read_local_queue(path='local'):
     fifo = os.open(path, os.O_NONBLOCK)
     data = os.read(fifo, 1024)
