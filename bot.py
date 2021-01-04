@@ -301,6 +301,8 @@ def _sell_all(users):
 
         # Clear out the user selections
         _USERS[user] = {k: max(v, 1000) for k, v in inv.items() if k == "score"}
+        logging.info("Sold {user}'s items. Current score {_USERS[user]['score']}")
+    logging.info("Sold all users items.")
 
 def search(term, lookup, info):
     _term = term.replace("(", r"\(").replace(")", r"\)")
