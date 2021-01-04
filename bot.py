@@ -1269,17 +1269,5 @@ if _ENABLE_CC is not None:
 
 
 if __name__ == "__main__":
-
-    # for local stuff
-    try:
-        os.mkfifo("local")
-    except OSError as oe:
-        if oe.errno != errno.EEXIST:
-            raise
-    except AttributeError:
-        pass
-
     bot._last_state_drop = -1
     bot.run()
-
-    os.remove("local")
