@@ -1013,7 +1013,7 @@ async def event(ctx):
             f.write(f"{event}: ")
             f.flush()
 
-    did_write = False
+    did_write, did_error = False, False
     logging.debug((event, args, cats))
     for cat in cats:
         for user, sel in _USERS.items():
@@ -1032,7 +1032,9 @@ async def event(ctx):
                         multi = int(args[1])
                         item = _check_term(item, lookup, info, full=True)
             except Exception as e:
-                logging.error(f"Failed lookup for {cat}: " + str(e))
+                if not did_error:
+                    did_error = True
+                    logging.error(f"Failed lookup for {cat}: " + str(e))
                 continue
             #print(item, user)
 
