@@ -121,10 +121,7 @@ def convert_buffer_to_commands(logf, **kwargs):
                 for act in status["party"]:
                     if act.lower() in cparty:
                         in_cparty.append(act)
-                    status["party"][act] = \
-                        "".join(map(chr, [(c - 63) if c < 154 else (c - 57)
-                                                       for c in status["party"][act]
-                                                            if c != 255]))
+                    status["party"][act] = read.translate(status["party"][act])
                 for act in (in_cparty if status["in_battle"] else []):
                     status["party"][f"({act})"] = status["party"].pop(act)
 
