@@ -514,7 +514,7 @@ async def event_message(ctx):
             last_3 = "--- Last three events:\n" + "\n".join(map(str, list(HISTORY.values())[-3:]))
             # truncate file
             with open(_STREAM_STATUS, "w") as f:
-                print(status + "\n\n" + leaderboard + "\n" + last_3 + "\n", file=f, flush=True)
+                print(status + "\n\n" + leaderboard + "\n\n" + last_3 + "\n", file=f, flush=True)
 
 @bot.command(name='hi')
 async def hi(ctx):
@@ -1017,13 +1017,12 @@ async def event(ctx):
         await ctx.send(f"Invalid event command: {event}, {'.'.join(args)}")
         return
 
+    status_string = ""
     if _STREAM_STATUS:
-        logging.info("Attempting to write specifics to stream status.")
-        with open(_STREAM_STATUS, "a") as f:
-            f.write(f"{event}: ")
-            f.flush()
+        logging.debug("Attempting to write specifics to stream status.")
+        status_string += f"{event}: "
 
-    did_write, did_error = False, False
+    did_error = False
     logging.debug((event, args, cats))
     for cat in cats:
         for user, sel in _USERS.items():
@@ -1074,18 +1073,16 @@ async def event(ctx):
                 score_diff = sel['score'] - _score
                 did_score = score_diff > 0
                 if did_score:
-                    with open(_STREAM_STATUS, "a") as f:
-                        logging.info("Wrote an item to stream status.")
-                        f.write(f"{user} +{score_diff} ")
-                        f.flush()
+                    status_string += f"{user} +{score_diff} "
+                    logging.debug("Wrote an item to stream status.")
+                    did_write = True
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
-    if did_write and _STREAM_STATUS:
+    if _STREAM_STATUS:
         with open(_STREAM_STATUS, "a") as f:
-            logging.info("Wrote specifics to stream status.")
-            f.write("\n")
-            f.flush()
+            print(status_string, file=f, flush=True)
+            logging.debug("Wrote specifics to stream status.")
         # Let the message persist for a bit longer
         bot._last_state_drop = int(time.time())
 
