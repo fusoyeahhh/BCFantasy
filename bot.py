@@ -283,7 +283,7 @@ def _check_term(term, lookup, info, space_suppress=True, full=False):
         found = info.loc[found]
 
     if len(found) == 0:
-        raise KeyError(f"No matches found for {term}")
+        raise KeyError(f"No matches found for {term} in {lookup}")
     if len(found) != 1:
         raise KeyError(f"Too many matches found for {term}:\n" + str(found))
     if full:
