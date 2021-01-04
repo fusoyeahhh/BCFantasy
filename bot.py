@@ -688,17 +688,18 @@ async def sell(ctx):
     await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
 COMMANDS["sell"] = sell
 
-@bot.command(name='buy')
-async def buy(ctx):
-    """
-    !buy [area|boss|char]=[selection] purchase a selection from a given category. Must have enough Fantasy Points to pay the cost.
-    """
-    await select._callback(ctx)
-
 @bot.command(name='select')
 async def select(ctx):
     """
     !select (DEPRECATED, use !buy)
+    """
+    await ctx.send("Use !buy, please. This command will go away soon.")
+    await buy._callback(ctx)
+
+@bot.command(name='buy')
+async def buy(ctx):
+    """
+    !buy [area|boss|char]=[selection] purchase a selection from a given category. Must have enough Fantasy Points to pay the cost.
     """
     user = ctx.author.name
     if user not in _USERS:
