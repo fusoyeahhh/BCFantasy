@@ -301,7 +301,7 @@ def _sell_all(users):
 
         # Clear out the user selections
         _USERS[user] = {k: max(v, 1000) for k, v in inv.items() if k == "score"}
-        logging.info("Sold {user}'s items. Current score {_USERS[user]['score']}")
+        logging.info(f"Sold {user}'s items. Current score {_USERS[user]['score']}")
     logging.info("Sold all users items.")
 
 def search(term, lookup, info):
@@ -346,9 +346,10 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
             try:
                 this_seed = pandas.DataFrame(_USERS)[["score"]]
                 this_seed[_SEED + "." + _FLAGS] = this_seed["score"]
-            except KeyError:
+            except KeyError as e:
                 logging.error("Encountered error in serializing user scores to update season-long scores. "
-                              "Current user table:\n{_USERS}")
+                              f"Current user table:\n{_USERS}")
+                raise e
 
             this_seed.drop(columns=["score"], inplace=True)
             if os.file.exists(sfile):
