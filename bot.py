@@ -526,7 +526,7 @@ async def bcfflags(ctx):
     """
 
     if _FLAGS is not None:
-        await ctx.send(f"flags: {_FLAGS} | seed: {_SEED}")
+        await ctx.send(f"Flags: {_FLAGS} | Seed: {_SEED}")
         return
     await ctx.send("No flag information.")
 COMMANDS["bcfflags"] = bcfflags
@@ -785,7 +785,7 @@ async def mapinfo(ctx):
     """
     map_id = int(ctx.content.split()[1])
     if map_id in _MAP_INFO.index:
-        await ctx.send(f"{map_id}: {_MAP_INFO.loc[map_id]['name']} (area: {_MAP_INFO.loc[map_id]['scoring_area']})")
+        await ctx.send(f"{map_id}: {_MAP_INFO.loc[map_id]['name']} (Area: {_MAP_INFO.loc[map_id]['scoring_area']})")
         return
 
     idx = _MAP_INFO.index.searchsorted(map_id)
