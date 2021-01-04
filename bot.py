@@ -466,7 +466,7 @@ async def event_message(ctx):
             if _STREAM_STATUS and line.startswith("!event"):
                 last_frame = bot._last_status.get("frame", 'unknown')
                 with open(_STREAM_STATUS, "a") as f:
-                    f.write(f"{last_frame}: {line}")
+                    f.write(f"{last_frame}: {line}\n")
                     f.flush()
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
@@ -1063,7 +1063,7 @@ async def event(ctx):
                 did_score = score_diff > 0
                 if did_score:
                     with open(_STREAM_STATUS, "a") as f:
-                        f.write(f"{event}, {user} +{score_diff} ")
+                        f.write(f"{user} +{score_diff} ")
                         f.flush()
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
@@ -1074,6 +1074,10 @@ async def event(ctx):
             f.flush()
         # Let the message persist for a bit longer
         bot._last_state_drop = int(time.time())
+    elif _STREAM_STATUS:
+        with open(_STREAM_STATUS, "a") as f:
+            f.write("Last five events:\n" + "\n".join(map(str, list(HISTORY.values())[-5:])))
+            f.flush()
 
 
 _EVENT_TYPES = set().union(*_EVENTS.keys())
