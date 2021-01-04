@@ -508,7 +508,8 @@ async def event_message(ctx):
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                                       for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
 
-            last_3 = "--- Last three events:\n" + "\n".join(map(str, list(HISTORY.values())[-3:]))
+            events = [str(v) for v in HISTORY.values() if v.startswith("!event")][-3:]
+            last_3 = "--- Last three events:\n" + "\n".join(events)
             # truncate file
             with open(_STREAM_STATUS, "w") as f:
                 print(status + "\n\n" + leaderboard + "\n\n" + last_3 + "\n", file=f, flush=True)
