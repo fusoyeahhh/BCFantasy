@@ -1018,6 +1018,7 @@ async def event(ctx):
         return
 
     if _STREAM_STATUS:
+        logging.info("Attempting to write specifics to stream status.")
         with open(_STREAM_STATUS, "a") as f:
             f.write(f"{event}: ")
             f.flush()
@@ -1074,6 +1075,7 @@ async def event(ctx):
                 did_score = score_diff > 0
                 if did_score:
                     with open(_STREAM_STATUS, "a") as f:
+                        logging.info("Wrote an item to stream status.")
                         f.write(f"{user} +{score_diff} ")
                         f.flush()
             else:
@@ -1081,6 +1083,7 @@ async def event(ctx):
 
     if did_write and _STREAM_STATUS:
         with open(_STREAM_STATUS, "a") as f:
+            logging.info("Wrote specifics to stream status.")
             f.write("\n")
             f.flush()
         # Let the message persist for a bit longer
