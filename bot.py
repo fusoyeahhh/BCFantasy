@@ -466,7 +466,8 @@ async def event_message(ctx):
             if _STREAM_STATUS and line.startswith("!event"):
                 last_frame = bot._last_status.get("frame", 'unknown')
                 with open(_STREAM_STATUS, "a") as f:
-                    print(f"{last_frame}: {line}", file=f, flush=True)
+                    f.write(f"{last_frame}: {line}")
+                    f.flush()
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
