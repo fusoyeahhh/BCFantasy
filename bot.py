@@ -464,8 +464,9 @@ async def event_message(ctx):
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
             if _STREAM_STATUS and line.startswith("!event"):
+                last_frame = bot._last_status.get("frame", 'unknown')
                 with open(_STREAM_STATUS, "a") as f:
-                    print(f"{current_time}: {line}", file=f, flush=True)
+                    print(f"{last_frame}: {line}", file=f, flush=True)
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
@@ -996,14 +997,6 @@ async def event(ctx):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
 
-    """
-    print(">>>", _CONTEXT["area"])
-    print(">>>", set(_AREA_INFO["Area"]))
-    if _CONTEXT["area"] is None or
-       _CONTEXT["area"] not in set(_AREA_INFO["Area"]):
-        await ctx.send("Invalid area in context. Please reset.")
-    """
-
     try:
         event = ctx.content.lower().split(" ")[1:]
         event, args = event[0], event[1:]
@@ -1014,6 +1007,12 @@ async def event(ctx):
         await ctx.send(f"Invalid event command: {event}, {'.'.join(args)}")
         return
 
+    if _STREAM_STATUS:
+        with open(_STREAM_STATUS, "a") as f:
+            f.write(f"{event}: ")
+            f.flush()
+
+    did_write = False
     logging.debug((event, args, cats))
     for cat in cats:
         for user, sel in _USERS.items():
@@ -1059,13 +1058,22 @@ async def event(ctx):
             #elif event == "cantrun" and has_item:
                 #sel["score"] += 2
             if _STREAM_STATUS:
-                if sel['score'] - _score > 0:
+                score_diff = sel['score'] - _score
+                did_score = score_diff > 0
+                if did_score:
                     with open(_STREAM_STATUS, "a") as f:
-                        print(f"\t{event}, {user} {sel['score'] - _score}", file=f, flush=True)
-                    # Let the message persist for a bit longer
-                    bot._last_state_drop = int(time.time())
+                        f.write(f"{event}, {user} +{score_diff} ")
+                        f.flush()
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
+
+    if did_write and _STREAM_STATUS:
+        with open(_STREAM_STATUS, "a") as f:
+            f.write("\n")
+            f.flush()
+        # Let the message persist for a bit longer
+        bot._last_state_drop = int(time.time())
+
 
 _EVENT_TYPES = set().union(*_EVENTS.keys())
 event._callback.__doc__ = f"""
