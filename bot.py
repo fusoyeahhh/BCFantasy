@@ -1118,12 +1118,12 @@ async def stop(ctx):
 
     pth = os.path.join("./", _SEED or datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     if cmd[0] == "annihilated":
+        _sell_all(_USERS)
         # Possibly do a report?
         serialize(pth, archive=_SEASON_LABEL, season_update=True, reset=True)
-        _sell_all(_USERS)
     elif cmd[0] == "kefkadown":
-        serialize(pth, archive=_SEASON_LABEL, season_update=True, reset=True)
         _sell_all(_USERS)
+        serialize(pth, archive=_SEASON_LABEL, season_update=True, reset=True)
         await ctx.send("!cb darksl5GG darksl5Kitty ")
     elif len(cmd) > 0:
         await ctx.send(f"Urecognized stop reason {cmd[0]}")
