@@ -341,8 +341,13 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
 
         sfile = os.path.join("./", archive, "season.csv")
         if season_update:
-            this_seed = pandas.DataFrame(_USERS)[["score"]]
-            this_seed[_SEED + "." + _FLAGS] = this_seed["score"]
+            try:
+                this_seed = pandas.DataFrame(_USERS)[["score"]]
+                this_seed[_SEED + "." + _FLAGS] = this_seed["score"]
+            except KeyError:
+                logging.error("Encountered error in serializing user scores to update season-long scores. "
+                              "Current user table:\n{_USERS}")
+
             this_seed.drop(columns=["score"], inplace=True)
             if os.file.exists(sfile):
                 season = pandas.join((pandas.read_csv(sfile),
