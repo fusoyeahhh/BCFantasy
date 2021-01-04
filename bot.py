@@ -510,9 +510,11 @@ async def event_message(ctx):
                 status += f" | Map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                                       for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
+
+            last_3 = "--- Last three events:\n" + "\n".join(map(str, list(HISTORY.values())[-5:]))
             # truncate file
             with open(_STREAM_STATUS, "w") as f:
-                print(status + "\n\n" + leaderboard + "\n", file=f, flush=True)
+                print(status + "\n\n" + leaderboard + "\n" + last_3 + "\n", file=f, flush=True)
 
 @bot.command(name='hi')
 async def hi(ctx):
@@ -1083,10 +1085,6 @@ async def event(ctx):
             f.flush()
         # Let the message persist for a bit longer
         bot._last_state_drop = int(time.time())
-    elif _STREAM_STATUS:
-        with open(_STREAM_STATUS, "a") as f:
-            f.write("Last five events:\n" + "\n".join(map(str, list(HISTORY.values())[-5:])))
-            f.flush()
 
 
 _EVENT_TYPES = set().union(*_EVENTS.keys())
