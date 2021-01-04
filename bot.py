@@ -293,8 +293,11 @@ def _check_user(user):
 def _sell_all(users):
     for user, inv in _USERS.items():
         for cat, item in inv.items():
-            lookup, info = LOOKUPS[cat]
-            inv["score"] += int(info.set_index(lookup).loc[item]["Sell"])
+            try:
+                lookup, info = LOOKUPS[cat]
+                inv["score"] += int(info.set_index(lookup).loc[item]["Sell"])
+            except Exception as e:
+                logging.error("Problem in sell_all:\n" + str(e))
 
         # Clear out the user selections
         _USERS[user] = {k: max(v, 1000) for k, v in inv.items() if k == "score"}
