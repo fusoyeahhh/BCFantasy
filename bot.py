@@ -293,6 +293,8 @@ def _check_user(user):
 def _sell_all(users):
     for user, inv in _USERS.items():
         for cat, item in inv.items():
+            if cat not in LOOKUPS:
+                continue
             try:
                 lookup, info = LOOKUPS[cat]
                 inv["score"] += int(info.set_index(lookup).loc[item]["Sell"])
