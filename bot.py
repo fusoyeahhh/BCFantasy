@@ -297,7 +297,7 @@ def _sell_all(users):
                 lookup, info = LOOKUPS[cat]
                 inv["score"] += int(info.set_index(lookup).loc[item]["Sell"])
             except Exception as e:
-                logging.error("Problem in sell_all:\n" + str(e))
+                logging.error("Problem in sell_all:\n" + str(e) + "\nUser table:\n" + str(_USERS))
 
         # Clear out the user selections
         _USERS[user] = {k: max(v, 1000) for k, v in inv.items() if k == "score"}
