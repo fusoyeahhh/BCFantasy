@@ -1078,7 +1078,6 @@ async def event(ctx):
                 if did_score:
                     status_string += f"{user} +{score_diff} "
                     logging.debug("Wrote an item to stream status.")
-                    did_write = True
             else:
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
@@ -1266,7 +1265,8 @@ CC_CMDS = {
     #"fallen_one": fallen_one,
     #"change_name": change_name,
     #"swap_chars": swap_chars,
-    #"give_doggo": give_interceptor # enemy or player
+    #"give_doggo": give_interceptor, # enemy or player
+    #"ole_cape": ole_cape # only ever use cape animation to dodge
 }
 
 
