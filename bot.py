@@ -204,9 +204,14 @@ def _set_context(content):
         if cat == "area" and item.isdigit():
             _item = int(item)
             if _item in _MAP_INFO.index:
+                # FIXME: need to move this to a special handler function
                 # We don't change the context if on this map, since it can indicate a gameover
                 if _item == 5:
                     logging.info("Map id 5 detected, not changing area.")
+                    return True
+                # South Figaro basement split map
+                elif _item == 89:
+                    logging.info("Map id 89 (SF basement) detected, not changing area.")
                     return True
                 item = _MAP_INFO.loc[_item]["scoring_area"]
                 # This map id exists, but is not mapped to an area
