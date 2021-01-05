@@ -423,6 +423,10 @@ async def event_message(ctx):
         #"Type !arena to start" in ctx.content):
         #ctx.content = '!doarena' + " " + ctx.content
 
+    if bot._status == "paused":
+        logging.warning("Bot is paused; ignoring log.")
+        return
+
     if _CHAT_READBACK:
         # This throws weird errors with string decoding issues
         logging.info(ctx.content)
@@ -457,10 +461,6 @@ async def event_message(ctx):
     orig_author = ctx.author._name
     orig_content = ctx.content
     for line in filter(lambda l: l, buff):
-        if bot._status == "paused":
-            logging.warning("Bot is paused; ignoring log.")
-            break
-
         # Co-op ctx
         ctx.content = line
         # HACKZORS
