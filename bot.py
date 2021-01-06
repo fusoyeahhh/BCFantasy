@@ -343,7 +343,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
         spath = os.path.join("./", archive)
         if not os.path.exists(spath):
             os.makedirs(spath)
-        shutil.move(pth, spath)
+        shutil.move(pth, spath + "/")
 
         sfile = os.path.join("./", archive, "season.csv")
         if season_update:
