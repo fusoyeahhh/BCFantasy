@@ -1109,8 +1109,8 @@ async def stop(ctx):
     bot._last_status["frame"] = 0
 
     # Just stopping for the moment, checkpoint and move on.
+    serialize(pth=_CHKPT_DIR)
     if len(cmd) == 0:
-        serialize(pth=_CHKPT_DIR)
         await ctx.send("Checkpointing complete.")
         return
 
