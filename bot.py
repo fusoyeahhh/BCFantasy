@@ -423,9 +423,6 @@ async def event_message(ctx):
         #"Type !arena to start" in ctx.content):
         #ctx.content = '!doarena' + " " + ctx.content
 
-    if bot._status == "paused":
-        logging.warning("Bot is paused; ignoring log.")
-        return
 
     if _CHAT_READBACK:
         # This throws weird errors with string decoding issues
@@ -433,29 +430,21 @@ async def event_message(ctx):
 
     # Trigger a check of the local buffer
     buff = []
-    """
-    try:
-        buff = read.read_local_queue()
-    except AttributeError:
-        pass
-    """
-    logging.debug(f"Local buffer length: {len(buff)}")
 
-    # Read in emulator log
-    try:
-        #print("About reading logfile. Last status:")
-        #print(bot._last_status)
-        cmds = read.parse_log_file(last_frame=bot._last_status.get("frame", -1))
-        logging.debug(f"Logfile read with {len(cmds)} commands.")
-        cmds, last = convert_buffer_to_commands(cmds, last_status=bot._last_status)
-        #print("Conversion done. Last status:")
-        #print(bot._last_status)
-        bot._last_status = last
-        buff += cmds
-        logging.debug(f"emu buffer length: {len(cmds)}")
-    except Exception as e:
-        logging.error(e)
-        logging.error("Couldn't read logfile")
+    if bot._status == "paused":
+        logging.warning("Bot is paused; ignoring log.")
+    else:
+        try:
+            # Read in emulator log
+            cmds = read.parse_log_file(last_frame=bot._last_status.get("frame", -1))
+            logging.debug(f"Logfile read with {len(cmds)} commands.")
+            cmds, last = convert_buffer_to_commands(cmds, last_status=bot._last_status)
+            bot._last_status = last
+            buff += cmds
+            logging.debug(f"emu buffer length: {len(cmds)}")
+        except Exception as e:
+            logging.error(e)
+            logging.error("Couldn't read logfile")
 
     logging.debug(f"Processing command buffer... status: {bot._status}")
     orig_author = ctx.author._name
@@ -487,7 +476,7 @@ async def event_message(ctx):
     # We do this after the emulator updates to prevent area / boss sniping
     if ctx.content.startswith("!"):
         command = ctx.content.split(" ")[0][1:]
-        if command in bot.commands:
+        if command in bot.commands and (bot._status != "paused" or _authenticate(ctx)):
             logging.debug("Processing user command...")
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
