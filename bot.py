@@ -462,11 +462,13 @@ async def event_message(ctx):
         if command in bot.commands:
             current_time = int(time.time() * 1e3)
             HISTORY[current_time] = ctx.content
+            """
             if _STREAM_STATUS and line.startswith("!event"):
                 last_frame = bot._last_status.get("frame", 'unknown')
                 with open(_STREAM_STATUS, "a") as f:
                     f.write(f"{last_frame}: {line}\n")
                     f.flush()
+            """
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
@@ -1014,7 +1016,8 @@ async def event(ctx):
     status_string = ""
     if _STREAM_STATUS:
         logging.debug("Attempting to write specifics to stream status.")
-        status_string += f"{event}: "
+        last_frame = bot._last_status.get('frame', '')
+        status_string += f"({last_frame}) {event}: " + " ".join(args) + " "
 
     did_error = False
     logging.debug((event, args, cats))
