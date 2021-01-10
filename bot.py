@@ -327,54 +327,88 @@ def search(term, lookup, info):
 
 def serialize(pth="./", reset=False, archive=None, season_update=False):
 
+    # Create the serialization directory if it doesn't already exist
     if not os.path.exists(pth):
+        logging.info(f"Creating serialization path {pth}")
         os.makedirs(pth)
 
+    # Save the current history to a JSON file in the serialization path
+    logging.info(f"Serializing path {pth}/history.json")
     with open(os.path.join(pth, "history.json"), "w") as fout:
         json.dump(HISTORY, fout, indent=2)
 
+    # Save the current user data to a JSON file in the serialization path
+    logging.info(f"Serializing path {pth}/user_data.json")
     with open(os.path.join(pth, "user_data.json"), "w") as fout:
         json.dump(_USERS, fout, indent=2)
 
+    # Save the last know game status to a JSON file in the serialization path
+    logging.info(f"Serializing path {pth}/_last_status.json")
+    # If we're paused, we probably stopped the bot, so the frame counter should be zero
+    # This is more of a debug check than anything
+    if bot._status == "paused" and bot._last_status.get("frame") != 0:
+        logging.warn("Warning, the frame counter is not zero, but it *probably* should be.")
     with open(os.path.join(pth, "_last_status.json"), "w") as fout:
         json.dump(bot._last_status, fout, indent=2)
 
+    # The seed has likely ended one way or another, and the user has requested an archive
+    # operation, probably for a season.
     if archive is not None:
         spath = os.path.join("./", archive)
+        # Create the archive path if it doesn't already exist
         if not os.path.exists(spath):
+            logging.info(f"Creating archive path {spath}")
             os.makedirs(spath)
+
+        # Move the checkpoint path to the archive path
+        logging.info(f"Archiving {pth} to {spath}")
         shutil.move(pth, spath + "/")
 
+        # We also update the season tracker
         sfile = os.path.join("./", archive, "season.csv")
         if season_update:
+            logging.info(f"Adding season tracking information to {sfile}")
             try:
+                # Convert the user data into rows of a CSV table
                 this_seed = pandas.DataFrame(_USERS)
                 logging.info(f"Users: {_USERS},\nseed database: {this_seed}")
+                # Drop everything but the score (the other purchase information is extraneous)
                 this_seed = this_seed[["score"]]
+                # We alias the score to a unique identifier for each seed, there are now two
+                # identical columns named different things
                 this_seed[_SEED + "." + _FLAGS] = this_seed["score"]
+                # Drop the duplicate column
+                this_seed.drop(columns=["score"], inplace=True)
             except KeyError as e:
                 logging.error("Encountered error in serializing user scores to update season-long scores. "
                               f"Current user table:\n{_USERS}")
                 raise e
 
-            this_seed.drop(columns=["score"], inplace=True)
             if os.file.exists(sfile):
+                logging.info(f"Concatenating new table to {sfile}")
+                # If the season CSV already exists, we concatenate this seed data to it
                 season = pandas.join((pandas.read_csv(sfile),
                                       this_seed))
             else:
+                logging.info(f"Creating new table at {sfile}")
+                # Otherwise, we create a new table
                 season = this_seed
 
+            # FIXME: We should convert this to JSON instead
             season.to_csv(sfile, index=False)
 
     if reset:
         os.makedirs("TRASH")
         # FIXME: here?
         # Renames instead of deleting to make sure user data integrity is only minimally threatened
+        # Mark the checkpoint directory as trash by naming it as such
         if os.path.exists(_CHKPT_DIR):
             shutil.move(_CHKPT_DIR, "TRASH")
+        # Move the logfile into the trash too, just in case it needs to be restored
         if os.path.exists("TRASH/"):
             shutil.move("logfile.txt", "TRASH/")
 
+        # reset bot status
         bot._last_status = {}
         bot._last_state_drop = -1
 
