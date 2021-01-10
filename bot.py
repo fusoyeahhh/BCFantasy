@@ -1,6 +1,5 @@
 import sys
 import os
-import errno
 import time
 import datetime
 import shutil
@@ -10,7 +9,6 @@ import json
 import logging
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 from twitchio.ext import commands
-from twitchio.dataclasses import User
 import glob
 
 import read
