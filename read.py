@@ -5,8 +5,6 @@ import time
 import logging
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-_QUIET = False
-
 # Numbers from
 # https://github.com/subtractionsoup/beyondchaos/blob/master/tables/dialoguetext.txt
 # Upper case
@@ -53,9 +51,8 @@ def parse_log_file(path="logfile.txt", last_frame=-1):
                 else:
                     skipped += 1
             except Exception as e:
-                if not _QUIET:
-                    print("JSON reading failed:", e)
-                    print(line)
+                logging.error("JSON reading failed:\n" + str(e))
+                logging.debug(line)
                 nerrors += 1
 
     if len(logf) > 0:
