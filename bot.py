@@ -40,7 +40,7 @@ if _SPOILER_LOG and os.path.isdir(_SPOILER_LOG):
     try:
         _SPOILER_LOG = glob.glob(os.path.join(_SPOILER_LOG, "*.txt"))[0]
     except IndexError:
-        logging.warn(f"Directoy of spoiler log is not valid, no spoiler texts found: {_SPOILER_LOG}")
+        logging.warning(f"Directory of spoiler log is not valid, no spoiler texts found: {_SPOILER_LOG}")
 
 if _SPOILER_LOG and os.path.exists(_SPOILER_LOG):
     _FLAGS, _SEED, maps = read.read_spoiler(_SPOILER_LOG)
@@ -48,7 +48,7 @@ if _SPOILER_LOG and os.path.exists(_SPOILER_LOG):
     MUSIC_INFO = pandas.DataFrame(mmaps).dropna()
     CHAR_MAP = pandas.DataFrame(cmaps).dropna()
 else:
-    logging.warn(f"Path to spoiler log is not valid and was not read: {_SPOILER_LOG}")
+    logging.warning(f"Path to spoiler log is not valid and was not read: {_SPOILER_LOG}")
 
 # If the flags are listed in the configuration file, they override all else
 _FLAGS = opts.pop("flags", _FLAGS)
@@ -514,7 +514,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
     # If we're paused, we probably stopped the bot, so the frame counter should be zero
     # This is more of a debug check than anything
     if bot._status == "paused" and bot._last_status.get("frame") != 0:
-        logging.warn("Warning, the frame counter is not zero, but it *probably* should be.")
+        logging.warning("Warning, the frame counter is not zero, but it *probably* should be.")
     with open(os.path.join(pth, "_last_status.json"), "w") as fout:
         json.dump(bot._last_status, fout, indent=2)
 
