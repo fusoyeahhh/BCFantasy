@@ -550,9 +550,10 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
 
             if os.path.exists(sfile):
                 logging.info(f"Concatenating new table to {sfile}")
+                prev = pandas.read_csv(sfile).set_index("index")
+                logging.debug(f"Current season has {len(prev)} (possibly including totals) entries.")
                 # If the season CSV already exists, we concatenate this seed data to it
-                season = pandas.concat((pandas.read_csv(sfile).set_index("index"),
-                                        this_seed))
+                season = pandas.concat((prev, this_seed))
             else:
                 logging.info(f"Creating new table at {sfile}")
                 # Otherwise, we create a new table
