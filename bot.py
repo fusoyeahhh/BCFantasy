@@ -558,7 +558,9 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
                 # Otherwise, we create a new table
                 season = this_seed
 
-            season.loc["total"] = season.loc[season.index != "total"].fillna(0).sum()
+            if "total" in season.index:
+                season.drop("total", inplace=True)
+            season.loc["total"] = season.loc.fillna(0).sum()
             # FIXME: We should convert this to JSON instead
             season.reset_index().to_csv(sfile, index=False)
 
