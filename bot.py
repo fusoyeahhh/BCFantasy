@@ -540,12 +540,9 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
                 this_seed = pandas.DataFrame(_USERS)
                 logging.debug(f"Users: {_USERS},\nseed database: {this_seed.T}")
                 # Drop everything but the score (the other purchase information is extraneous)
-                this_seed = this_seed.T[["score"]]
-                # We alias the score to a unique identifier for each seed, there are now two
-                # identical columns named different things
-                this_seed[_SEED + "." + _FLAGS] = this_seed["score"]
-                # Drop the duplicate column
-                this_seed.drop(columns=["score"], inplace=True)
+                this_seed = this_seed.T[["score"]].T
+                # We alias the score to a unique identifier for each seed
+                this_seed.index = [_SEED + "." + _FLAGS]
             except KeyError as e:
                 logging.error("Encountered error in serializing user scores to update season-long scores. "
                               f"Current user table:\n{_USERS}")
@@ -561,6 +558,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
                 # Otherwise, we create a new table
                 season = this_seed
 
+            # FIXME: Append total
             # FIXME: We should convert this to JSON instead
             season.to_csv(sfile, index=False)
 
