@@ -551,7 +551,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
                               f"Current user table:\n{_USERS}")
                 raise e
 
-            if os.file.exists(sfile):
+            if os.path.exists(sfile):
                 logging.info(f"Concatenating new table to {sfile}")
                 # If the season CSV already exists, we concatenate this seed data to it
                 season = pandas.join((pandas.read_csv(sfile),
