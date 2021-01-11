@@ -176,7 +176,8 @@ def convert_buffer_to_commands(logf, **kwargs):
                     status["party"][act] = read.translate(status["party"][act])
 
                 # Add parens around names of characters in the current party for easy identification
-                for act in (in_cparty if status["in_battle"] else []):
+                #for act in (in_cparty if status["in_battle"] else []):
+                for act in in_cparty:
                     status["party"][f"({act})"] = status["party"].pop(act)
 
             except Exception as e:
