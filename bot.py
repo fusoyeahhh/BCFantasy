@@ -540,7 +540,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
                 this_seed = pandas.DataFrame(_USERS)
                 logging.info(f"Users: {_USERS},\nseed database: {this_seed}")
                 # Drop everything but the score (the other purchase information is extraneous)
-                this_seed = this_seed[["score"]]
+                this_seed = this_seed.T[["score"]]
                 # We alias the score to a unique identifier for each seed, there are now two
                 # identical columns named different things
                 this_seed[_SEED + "." + _FLAGS] = this_seed["score"]
@@ -965,16 +965,16 @@ async def listareas(ctx):
     """
     !listareas --> no arguments, link to all available areas
     """
+    if _authenticate(ctx):
+        info = [f"{i[0]} ({i[1]})"
+                    for _, i in _AREA_INFO[["Area", "Cost"]].iterrows()]
+        for outstr in _chunk_string(info):
+            await ctx.send(outstr)
+        return
+
+    # Users get a link to the list so as not to spam chat
     await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
     return
-
-    # FIXME: move to mod only command
-    """
-    info = [f"{i[0]} ({i[1]})"
-                for _, i in _AREA_INFO[["Area", "Cost"]].iterrows()]
-    for outstr in _chunk_string(info):
-        await ctx.send(outstr)
-    """
 COMMANDS["listareas"] = listareas
 
 @bot.command(name='areainfo')
@@ -1016,16 +1016,15 @@ async def listbosses(ctx):
     """
     !listbosses --> no arguments, link to all available bosses
     """
+    if _authenticate(ctx):
+        info = [f"{i[0]} ({i[1]})"
+                for _, i in _BOSS_INFO[["Boss", "Cost"]].iterrows()]
+        for outstr in _chunk_string(info):
+            await ctx.send(outstr)
+        return
+
     await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_bosses.csv")
     return
-
-    # TODO: Move to mod only command
-    """
-    info = [f"{i[0]} ({i[1]})"
-                for _, i in _BOSS_INFO[["Boss", "Cost"]].iterrows()]
-    for outstr in _chunk_string(info):
-        await ctx.send(outstr)
-    """
 COMMANDS["listbosses"] = listbosses
 
 @bot.command(name='bossinfo')
@@ -1044,16 +1043,15 @@ async def listchars(ctx):
     """
     !listchars --> no arguments, link to all available characters
     """
+    if _authenticate(ctx):
+        info = [f"{i[0]} ({i[1]}, kills: {i[2]})"
+                for _, i in _CHAR_INFO[["Character", "Cost", "Kills Enemy"]].iterrows()]
+        for outstr in _chunk_string(info):
+            await ctx.send(outstr)
+        return
+
     await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
     return
-
-    # FIXME: move to mod only command
-    """
-    info = [f"{i[0]} ({i[1]}, kills: {i[2]})"
-                for _, i in _CHAR_INFO[["Character", "Cost", "Kills Enemy"]].iterrows()]
-    for outstr in _chunk_string(info):
-        await ctx.send(outstr)
-    """
 COMMANDS["listchars"] = listchars
 
 @bot.command(name='charinfo')
