@@ -538,7 +538,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
             try:
                 # Convert the user data into rows of a CSV table
                 this_seed = pandas.DataFrame(_USERS)
-                logging.info(f"Users: {_USERS},\nseed database: {this_seed.T}")
+                logging.debug(f"Users: {_USERS},\nseed database: {this_seed.T}")
                 # Drop everything but the score (the other purchase information is extraneous)
                 this_seed = this_seed.T[["score"]]
                 # We alias the score to a unique identifier for each seed, there are now two
