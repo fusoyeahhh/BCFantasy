@@ -224,7 +224,7 @@ def convert_buffer_to_commands(logf, **kwargs):
             if status.get("map_id", None) == 0x19D:
                 logging.info("Colosseum detected, no character kills will be recorded.")
                 break
-            elif diff > 0 and not "EXTRA" not in char:
+            elif diff > 0 and "EXTRA" not in char:
                 # FIXME: should probably in_check battle status
                 # Is this a boss or an enemy kill?
                 etype = "boss" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else "enemy"
@@ -238,7 +238,7 @@ def convert_buffer_to_commands(logf, **kwargs):
             diff = k - ldeaths.get(char, 0)
             # Is this a boss or an enemy death?
             etype = "b" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else ""
-            if diff > 0 and not "EXTRA" not in char:
+            if diff > 0 and "EXTRA" not in char:
                 cmds.append(f"!event {etype}chardeath {char} {diff}")
                 logging.info("emu> " + cmds[-1])
 
