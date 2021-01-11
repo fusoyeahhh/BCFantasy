@@ -699,13 +699,13 @@ async def event_message(ctx):
             status = status.replace("Boss: ", "Last enc. boss: ")
             map_id = bot._last_status.get("map_id", None)
             # Append map info
-            if map_id in _MAP_INFO.index:
-                status += f" | Map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
+            #if map_id in _MAP_INFO.index:
+                #status += f" | Map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
             # Append party info
             party = [f"{name[1:-1]}: {alias}"
                      for name, alias in bot._last_status.get("party", {}).items() if name.startswith("(")]
             if party:
-                status += " " + ", ".join(party)
+                status += " | Party: " + ", ".join(party)
             # Append leaderboard
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                                       for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
