@@ -560,7 +560,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
 
             if "total" in season.index:
                 season.drop("total", inplace=True)
-            season.loc["total"] = season.loc.fillna(0).sum()
+            season.loc["total"] = season.fillna(0).sum()
             # FIXME: We should convert this to JSON instead
             season.reset_index().to_csv(sfile, index=False)
 
