@@ -551,17 +551,16 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
             if os.path.exists(sfile):
                 logging.info(f"Concatenating new table to {sfile}")
                 # If the season CSV already exists, we concatenate this seed data to it
-                season = pandas.concat((pandas.read_csv(sfile),
-                                      this_seed))
+                season = pandas.concat((pandas.read_csv(sfile).set_index("index"),
+                                        this_seed))
             else:
                 logging.info(f"Creating new table at {sfile}")
                 # Otherwise, we create a new table
                 season = this_seed
 
-            # FIXME: we have to not drop the index to make this work
-            #season.loc["total"] = season.sum()
+            season.loc["total"] = season.loc[season.index != "total"].fillna(0).sum()
             # FIXME: We should convert this to JSON instead
-            season.to_csv(sfile, index=False)
+            season.reset_index().to_csv(sfile, index=False)
 
     if reset:
         os.makedirs("TRASH")
