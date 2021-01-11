@@ -180,8 +180,7 @@ def convert_buffer_to_commands(logf, **kwargs):
                 for act in (in_cparty if status["in_battle"] else last_party):
                     status["party"][f"({act})"] = status["party"].pop(act)
                 # Save the party status
-                if status["in_battle"]:
-                    last_status["parsed_cparty"] = in_cparty
+                status["parsed_cparty"] = in_cparty if status["in_battle"] else last_party
 
             except Exception as e:
                 # This isn't a fatal problem, so we persevere
