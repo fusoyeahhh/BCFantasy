@@ -13,14 +13,25 @@ import glob
 
 import read
 
+#
+# Configuration
+#
 with open("config.json") as fin:
     opts = json.load(fin)
 
 # add additional admin names here
+# These users can execute admin commands
 _AUTHORIZED = opts.pop("admins", {})
+# If true-like, will enable Crowd Control
 _ENABLE_CC = opts.pop("crowd_control", None)
+# Base URL for data listings (such as area, characters, bosses...)
 _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/data/")
 
+#
+# Seed / Spoiler metadata
+#
+
+# Optional mappings derived from spoiler
 MUSIC_INFO, CHAR_MAP = {}, {}
 _FLAGS, _SEED = None, None
 _SPOILER_LOG = opts.pop("spoiler", None)
@@ -39,17 +50,25 @@ if _SPOILER_LOG and os.path.exists(_SPOILER_LOG):
 else:
     logging.warn(f"Path to spoiler log is not valid and was not read: {_SPOILER_LOG}")
 
+# If the flags are listed in the configuration file, they override all else
 _FLAGS = opts.pop("flags", _FLAGS)
+# Same for seed
 _SEED = opts.pop("seed", _SEED)
+# Season label is used for archival and tracking purposes
 _SEASON_LABEL = opts.pop("season", None)
+# Where we keep our checkpointed user and game data
 _CHKPT_DIR = opts.pop("checkpoint_directory", "./checkpoint/")
 
+# The bot, initialized from the configuration data
 bot = commands.Bot(**opts)
 
+# Channel chat will be emitted if True
 _CHAT_READBACK = False
-#_STREAM_STATUS = None
+
+# If this is a path-like, periodic updates will be written to this file. Ignored if None
 _STREAM_STATUS = "./stream_status.txt"
 
+# FIXME: Move to library
 _ACTOR_MAP = {
     0x0: "Terra",
     0x1: "Locke",
@@ -70,10 +89,19 @@ _ACTOR_MAP = {
 }
 
 def _authenticate(ctx):
-    #print(ctx.author.name, _AUTHORIZED)
-    logging.debug(ctx.author.name in _AUTHORIZED)
+    """
+    Checks if ctx.user is in the administrator list.
+
+    :param ctx: Twitch chat context
+    :return: (bool) whether or not user is authorized to use admin commands
+    """
+    logging.debug(f"Checking auth status for {ctx.author.name}: {ctx.author.name in _AUTHORIZED}")
     return ctx.author.name in _AUTHORIZED
 
+#
+# Game / Scoring data
+#
+# FIXME: do this in function for easier reloading
 _AREA_INFO = pandas.read_csv("data/bc_fantasy_data_areas.csv")
 _BOSS_INFO = pandas.read_csv("data/bc_fantasy_data_bosses.csv")
 _CHAR_INFO = pandas.read_csv("data/bc_fantasy_data_chars.csv")
@@ -81,19 +109,24 @@ _MAP_INFO = pandas.read_csv("data/map_ids.csv")
 _MAP_INFO["id"] = [int(n, 16) for n in _MAP_INFO["id"]]
 _MAP_INFO = _MAP_INFO.set_index("id")
 
+# Internal mapping for user and admin commands
 COMMANDS = {}
 ADMIN_COMMANDS = {}
 
+# event history
 HISTORY = {}
 
+# Given a category, what column should be used to look up a selection against which table
 LOOKUPS = {
     "area": ("Area", _AREA_INFO),
     "char": ("Character", _CHAR_INFO),
     "boss": ("Boss", _BOSS_INFO),
 }
 
+# User data
 _USERS = {}
 
+# Current game context
 _CONTEXT = {
     "area": None,
     "boss": None,
@@ -104,32 +137,58 @@ _CONTEXT = {
 # Parsing
 #
 def convert_buffer_to_commands(logf, **kwargs):
+    """
+    Translate an array of JSON-formatted status updates to equivalent BCF events and context updates.
+
+    :param logf: List of dictionaries containing status updates.
+    :param kwargs: Optional keyword arguments
+        :param last_status: dictionary corresponding to last status update processed by bot. Used to disregard updates which are already processed.
+    :return: tuple of list of twitch-style string commands and the last status processed
+    """
     cmds = []
     last_status = kwargs.get("last_status", {})
+
     for status in sorted(logf, key=lambda l: l["frame"]):
         # parse current party
         if "party" in status:
             try:
+                # Iterate over all the entries in the 'party'
+                # Since JSON only knows strings, the string is converted back into an integer value
+                # Then overwrite the entry with a new dictionary mapping actor id (also integer converted)
+                # to the sequence of int values to be translated into characters.
                 status["party"] = {_ACTOR_MAP[int(act)]: [max(int(c), 0) for c in name.strip().split()]
                                                      for act, name in status["party"].items()
                                                                         if int(act) in _ACTOR_MAP}
 
+                # This is the user-given names for the characters in the party
                 cparty = [s.lower() for s in status.get("cparty", [])]
+
+                # Since the current party entries are indicated by the canonical names, we check this here before
+                # the names are translated
                 in_cparty = []
                 for act in status["party"]:
+                    # The actor is in the current party
                     if act.lower() in cparty:
                         in_cparty.append(act)
+
+                    # Translate the integer sequence to an ASCII string
                     status["party"][act] = read.translate(status["party"][act])
+
+                # Add parens around names of characters in the current party for easy identification
                 for act in (in_cparty if status["in_battle"] else []):
                     status["party"][f"({act})"] = status["party"].pop(act)
 
             except Exception as e:
+                # This isn't a fatal problem, so we persevere
                 logging.error("Couldn't parse party: " + str(status["party"]))
 
         # music id lookup
         # FIXME: do this the same way as other contexts
+        # Get the current music id and the emulator identified id (if available)
         music_id, _music_id = status.get("music_id", None), _CONTEXT.get("music", None)
+        # If we have a music mapping, the current music id is known, and the music has changed
         if len(MUSIC_INFO) > 0 and music_id is not None and music_id != _music_id:
+            # If we don't know the music look up, it's probably a vanilla song that's not listed in the spoiler
             _CONTEXT["music"] = MUSIC_INFO.set_index("song_id")["new"].get(music_id, "Unknown (probably vanilla)")
             logging.info(f"Setting music context to {music_id} => {_CONTEXT['music']}")
 
@@ -143,6 +202,7 @@ def convert_buffer_to_commands(logf, **kwargs):
             logging.info("emu> " + cmds[-1])
 
         # check for boss encounter
+        # FIXME: go by enemy id, rather than formation id
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None):
             logging.info(f"New encounter: {status['eform_id']}, is miab? {status['is_miab']}")
             if int(status["eform_id"]) in _BOSS_INFO["Id"].values:
@@ -157,12 +217,15 @@ def convert_buffer_to_commands(logf, **kwargs):
         # check for kills
         lkills = last_status.get("kills", {})
         for char, k in status.get("kills", {}).items():
+            # Check for a *difference* from the last known kill count for this character
             diff = k - lkills.get(char, 0)
+            # Colosseum is exception, we don't count kills here
             if status.get("map_id", None) == 0x19D:
                 logging.info("Colosseum detected, no character kills will be recorded.")
                 break
-            elif diff > 0 and char != "NIL_lookup":
+            elif diff > 0 and not "EXTRA" not in char:
                 # FIXME: should probably in_check battle status
+                # Is this a boss or an enemy kill?
                 etype = "boss" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else "enemy"
                 cmds.append(f"!event {etype}kill {char} {diff}")
                 logging.info("emu> " + cmds[-1])
@@ -170,19 +233,24 @@ def convert_buffer_to_commands(logf, **kwargs):
         # check for deaths
         ldeaths = last_status.get("deaths", {})
         for char, k in status.get("deaths", {}).items():
+            # Check for a *difference* from the last known death count for this character
             diff = k - ldeaths.get(char, 0)
+            # Is this a boss or an enemy death?
             etype = "b" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else ""
-            if diff > 0 and char != "NIL_lookup":
+            if diff > 0 and not "EXTRA" not in char:
                 cmds.append(f"!event {etype}chardeath {char} {diff}")
                 logging.info("emu> " + cmds[-1])
 
         # check for gameover
+        # Detect only a "flip on" where we went from not gameover to gameover, and nothing after
         if status.get("is_gameover") and not last_status.get("is_gameover"):
             cmds.append(f"!event gameover")
             logging.info("emu> " + cmds[-1])
 
+        # Save the last status to return to the bot
         last_status = status
 
+    # If we did nontrivial processing, log the last status
     if len(logf) > 0:
         logging.debug("Last status: " + str(last_status))
 
@@ -193,12 +261,20 @@ def convert_buffer_to_commands(logf, **kwargs):
 #
 
 def _set_context(content):
+    """
+    Set a value in the current game context.
+
+    :param content: (string) twitch-style command, likely from the 'set' command.
+    :return: (bool) whether or not the attempted context set was completed.
+    """
+
     try:
         selection = " ".join(content.split(" ")[1:])
         cat, item = selection.split("=")
-        #print(cat, item)
+        logging.debug(f"Attempting to set {cat} to {item}.")
 
         # Preliminary mapid to area setting
+        # These almost always come from the emulator indicating a map change
         if cat == "area" and item.isdigit():
             _item = int(item)
             if _item in _MAP_INFO.index:
@@ -207,66 +283,109 @@ def _set_context(content):
                 if _item == 5:
                     logging.info("Map id 5 detected, not changing area.")
                     return True
+
                 # South Figaro basement split map
+                # FIXME: There is assuredly more of these, so they should be captured in a function
                 elif _item == 89:
                     logging.info("Map id 89 (SF basement) detected, not changing area.")
                     return True
+
+                # Translate integer map id to the area to set in the context
                 item = _MAP_INFO.loc[_item]["scoring_area"]
+
                 # This map id exists, but is not mapped to an area
+                # FIXME: This shouldn't be needed once we're set on the area mappings
                 if pandas.isna(item):
-                    # FIXME: probably gonna break something
-                    #_CONTEXT["area"] = None
                     return True
+
                 logging.info(f"Area: {_item} => {item}")
             else:
-                #raise ValueError(f"No valid area mapping for id {item}")
+                # Log that the map id didn't have an entry in the lookup tables
+                # FIXME: raise an exception when we're more confident about the map => area lookup
                 logging.error(f"No valid area mapping for id {item}")
                 return True
 
         if cat == "boss" and item.isdigit():
             _item = int(item)
             if _item in set(_BOSS_INFO["Id"]):
+                # Look up numeric id and get canonical boss name
                 item = _BOSS_INFO.set_index("Id").loc[_item]["Boss"]
                 logging.info(f"Boss: {_item} => {item}")
             else:
+                # We raise this, but it's possible it's intended, so the caller will just get False instead
                 raise ValueError(f"No valid boss mapping for id {_item} (this may be intended)")
 
         lookup, info = LOOKUPS[cat]
-        # FIXME: zozo vs. mt. zozo
         item = _check_term(item, lookup, info)
 
+        # Actually set the item in the context
         logging.debug((cat, item, _CONTEXT))
         if cat in _CONTEXT:
             _CONTEXT[cat] = item
 
+        # Serialize the change, note that this doesn't seem to get picked up in restarts
         with open("context.json", "w") as fout:
             json.dump(_CONTEXT, fout, indent=2)
 
     except Exception as e:
+        # There's lots of reasons why this may not work, and it's not necessarily fatal, so we just log it and
+        # let the caller know
         logging.error(e)
         return False
 
+    # Indicate success
     return True
 
 def _chunk_string(inlist, joiner=", "):
+    """
+    Given a list of strings to (ultimately) concatenate and send to twitch chat.
+
+    The list of strings is concatenated (via 'joiner') into strings of lengths that are allowed by twitch chat.
+
+    :param inlist: (list) list of strings to emit
+    :param joiner: (str) character to use a joiner
+    :return: None
+    """
+
+    # Nothing to do here
     if len(inlist) == 0:
         return
+
+    # There's a string in the list which is larger than the allowed count
+    # FIXME: we can break up this string too, if needed, possibly by calling this recursively
     assert max([*map(len, inlist)]) < 500, \
                                 "Can't fit all messages to buffer length"
 
     outstr = str(inlist.pop(0))
+    # While we have strings to send
     while len(inlist) >= 0:
+        # We've reached the end of the input list, drain the remaining buffer and end
         if len(inlist) == 0:
             yield outstr
             return
+        # If the next concat would put us over the limit, then we emit, reset, and continue
         elif len(outstr) + len(joiner) + len(inlist[0]) >= 500:
             yield outstr
             outstr = inlist.pop(0)
             continue
 
+        # continue concatenating
         outstr += joiner + str(inlist.pop(0))
 
 def _check_term(term, lookup, info, space_suppress=True, full=False):
+    """
+    Generic function to check and look up a term in a given lookup table. Assumes there is exactly one match for the term.
+
+    In general, the matching is lenient in so far as partial matches are allowed:
+        "Katana" and "KatanaSoul" will match "Katana Soul" when `space_supress` is True and `full` is False (default)
+
+    :param term: (str) term to match against lookup table
+    :param lookup: (str) column in lookup table to perform match on
+    :param info: (pandas.DataFrame) lookup table to match against
+    :param space_suppress: whether to check variations of the term which do not contain spaces
+    :param full: require a full match
+    :return: value in column `lookup` matching key `term` from table `info`
+    """
     _term = str(term).replace("(", r"\(").replace(")", r"\)")
     found = info[lookup].str.lower().str.contains(_term.lower())
     found = info.loc[found]
@@ -288,42 +407,88 @@ def _check_term(term, lookup, info, space_suppress=True, full=False):
     return str(found[lookup].iloc[0])
 
 def _check_user(user):
+    """
+    Check if a user is already registered in the user database.
+
+    :param user: (str) user
+    :return: (bool) whether or not the user is in `_USERS`
+    """
     return user in _USERS
 
 def _sell_all(users):
+    """
+    Iterate through the user database and sell all salable items. Generally invoked at the end of a seed.
+
+    :param users: (unused)
+    :return: None
+    """
     for user, inv in _USERS.items():
         for cat, item in inv.items():
+            # Omit categories that don't have salable items (e.g. score)
             if cat not in LOOKUPS:
                 continue
             try:
+                # We assume the user hasn't somehow managed to buy an item not in the lookup table
                 lookup, info = LOOKUPS[cat]
+                # Add the sale price back to the score
                 inv["score"] += int(info.set_index(lookup).loc[item]["Sell"])
             except Exception as e:
                 logging.error("Problem in sell_all:\n" + str(e) + "\nUser table:\n" + str(_USERS))
 
-        # Clear out the user selections
+        # Clear out the user selections, drop all categories which aren't the score
         _USERS[user] = {k: max(v, 1000) for k, v in inv.items() if k == "score"}
         logging.info(f"Sold {user}'s items. Current score {_USERS[user]['score']}")
     logging.info("Sold all users items.")
 
 def search(term, lookup, info):
+    """
+    Do a look up for a given term in the lookup column against a lookup table.
+
+    FIXME: Should we merge this with `check_term`?
+
+    :param term: (str) item to match
+    :param lookup: (str) column in lookup table to match against
+    :param info: (pandas.DataFrame) look up table to match against
+    :return: Result of search in English, or the exact match (in the case of one)
+    """
+
+    # escape parens
     _term = term.replace("(", r"\(").replace(")", r"\)")
+    # Lower case searched column and term, then get partial match against term
     found = info[lookup].str.lower().str.contains(_term.lower())
+    # retrieve partial matches
     found = info.loc[found]
-    #print(found)
+
+    # Narrow to exact matches, if there is one
     if len(found) > 1:
         found = info[lookup].str.lower() == _term.lower()
         found = info.loc[found]
 
+    # Still have more than one match, concatenate
     if len(found) > 1:
         found = ", ".join(found[lookup])
         return f"Found more than one entry ({found}) for {term}"
+    # No matches at all
     elif len(found) == 0:
         return f"Found nothing matching {term}"
+    # Exactly one match
     else:
         return str(found.to_dict(orient='records')[0])[1:-1]
 
 def serialize(pth="./", reset=False, archive=None, season_update=False):
+    """
+    Serialize (write to file) several of the vital bookkeeping structures attached to the bot.
+
+    Optionally archive the entire information set to a directory (usually the seed).
+    Optionally send checkpoint to trash and reset the bot state.
+    Optionally update a season-tracking file with user scores.
+
+    :param pth: path to checkpoint information to
+    :param reset: whether or not to reset bot state (default is False)
+    :param archive: path to archive the checkpoint (default is None)
+    :param season_update: whether or not to update the season scores (default is False)
+    :return: None
+    """
 
     # Create the serialization directory if it doesn't already exist
     if not os.path.exists(pth):
