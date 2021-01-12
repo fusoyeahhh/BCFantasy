@@ -204,7 +204,7 @@ while true do
 
 		_wound = bit.band(char_status_1, bit.lshift(1, 7)) == 128
 		_petrify = bit.band(char_status_1, bit.lshift(1, 6)) == 64
-		_zombie = bit.band(char_status_1, bit.lshift(1, 2)) == 2
+		_zombie = bit.band(char_status_1, bit.lshift(1, 1)) == 2
 		_wound = _wound or _petrify or _zombie
 		-- Check if
 		-- 1. We're in battle and we didn't *just* get here
