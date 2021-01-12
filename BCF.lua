@@ -203,6 +203,9 @@ while true do
 		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
 
 		_wound = bit.band(char_status_1, bit.lshift(1, 7)) == 128
+		_petrify = bit.band(char_status_1, bit.lshift(1, 6)) == 64
+		_zombie = bit.band(char_status_1, bit.lshift(1, 2)) == 2
+		_wound = _wound or _petrify or _zombie
 		-- Check if
 		-- 1. We're in battle and we didn't *just* get here
 		-- If we did, then only record the wound status (e.g. we were dead coming in)
