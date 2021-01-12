@@ -1457,9 +1457,19 @@ def modify_item(*args):
 
     return instr
 
+def set_status(status, slot=0):
+    if slot < 0 or slot >= 4:
+        raise IndexError(f"Invalid party slot {slot}.")
+
+    c = bcfcc.Character()
+    c._from_memory_range("memfile", int(slot))
+    c.set_status(status)
+    return write_arbitrary(*map(hex, c.flush()))
+
 CC_CMDS = {
     "arb_write": write_arbitrary,
-    "modify_item": modify_item,
+    "set_status": set_status,
+    #"modify_item": modify_item,
     #"cant_run": cant_run (0x00B1)
     #"activate_golem": activate_golem (0x3A36)
     #"nullify_element": nullify_element (0x3EC8)
@@ -1472,6 +1482,8 @@ CC_CMDS = {
 
 
 if _ENABLE_CC is not None:
+    import bcfcc
+
     @bot.command(name='cc')
     async def cc(ctx):
         """
