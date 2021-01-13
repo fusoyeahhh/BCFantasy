@@ -588,8 +588,8 @@ def export_to_gsheet(df, sht_num=0):
     import gspread
     from gspread_dataframe import set_with_dataframe
 
-    gc = gspread.oauth()
-    sh = gc.open_by_key('your_google_sheet_ID')
+    gc = gspread.service_account()
+    sh = gc.open("Season Leaderboard")
     worksheet = sh.get_worksheet(sht_num)
 
     set_with_dataframe(worksheet, df)
