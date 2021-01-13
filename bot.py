@@ -67,7 +67,6 @@ _CHAT_READBACK = False
 
 # If this is a path-like, periodic updates will be written to this file. Ignored if None
 _STREAM_STATUS = "./stream_status.txt"
-_STREAM_COOLDOWN = opts.pop("stream_status_cooldown", 20)
 _STREAM_COOLDOWN = int(opts.pop("stream_status_cooldown", 20))
 
 # FIXME: Move to library
@@ -250,7 +249,6 @@ def convert_buffer_to_commands(logf, **kwargs):
         # check for gameover
         # Detect only a "flip on" where we went from not gameover to gameover, and nothing after
         if status.get("is_gameover") and not last_status.get("is_gameover"):
-            cmds.append(f"!event gameover")
             # Is this a boss or enemy induced?
             etype = "b" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else ""
             cmds.append(f"!event {etype}gameover")
