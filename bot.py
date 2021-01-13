@@ -1204,7 +1204,6 @@ ADMIN_COMMANDS["give"] = give
 # FIXME: these are the columns of the individual files
 _EVENTS = {
     frozenset({"gameover", "chardeath", "miab", "backattack", "cantrun"}): "area",
-    frozenset({"gameover", "bchardeath"}): "boss",
     frozenset({"bgameover", "bchardeath"}): "boss",
     frozenset({"enemykill", "bosskill", "buff", "debuff"}): "char"
 }
@@ -1259,7 +1258,6 @@ async def event(ctx):
 
             _score = sel["score"]
             # FIXME, just map to appropriate column in row
-            if event == "gameover" and has_item:
             if event in {"gameover", "bgameover"} and has_item:
                 sel["score"] += int(item["Gameover"])
             elif event == "miab" and has_item:
