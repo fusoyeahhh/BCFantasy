@@ -251,6 +251,9 @@ def convert_buffer_to_commands(logf, **kwargs):
         # Detect only a "flip on" where we went from not gameover to gameover, and nothing after
         if status.get("is_gameover") and not last_status.get("is_gameover"):
             cmds.append(f"!event gameover")
+            # Is this a boss or enemy induced?
+            etype = "b" if int(status["eform_id"]) in _BOSS_INFO["Id"].values else ""
+            cmds.append(f"!event {etype}gameover")
             logging.info("emu> " + cmds[-1])
 
         # Save the last status to return to the bot
@@ -1202,6 +1205,7 @@ ADMIN_COMMANDS["give"] = give
 _EVENTS = {
     frozenset({"gameover", "chardeath", "miab", "backattack", "cantrun"}): "area",
     frozenset({"gameover", "bchardeath"}): "boss",
+    frozenset({"bgameover", "bchardeath"}): "boss",
     frozenset({"enemykill", "bosskill", "buff", "debuff"}): "char"
 }
 
@@ -1256,6 +1260,7 @@ async def event(ctx):
             _score = sel["score"]
             # FIXME, just map to appropriate column in row
             if event == "gameover" and has_item:
+            if event in {"gameover", "bgameover"} and has_item:
                 sel["score"] += int(item["Gameover"])
             elif event == "miab" and has_item:
                 sel["score"] += int(item["MIAB"])
