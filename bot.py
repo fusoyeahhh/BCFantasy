@@ -67,6 +67,7 @@ _CHAT_READBACK = False
 
 # If this is a path-like, periodic updates will be written to this file. Ignored if None
 _STREAM_STATUS = "./stream_status.txt"
+_STREAM_COOLDOWN = opts.pop("stream_status_cooldown", 20)
 
 # FIXME: Move to library
 _ACTOR_MAP = {
