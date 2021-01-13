@@ -583,6 +583,17 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
         bot._last_status = {}
         bot._last_state_drop = -1
 
+_GOOGLE_CRED_JSON = "gsheet.json"
+def export_to_gsheet(df, sht_num=0):
+    import gspread
+    from gspread_dataframe import set_with_dataframe
+
+    gc = gspread.oauth()
+    sh = gc.open_by_key('your_google_sheet_ID')
+    worksheet = sh.get_worksheet(sht_num)
+
+    set_with_dataframe(worksheet, df)
+
 #
 # Bot commands
 #
