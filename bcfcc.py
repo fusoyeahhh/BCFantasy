@@ -249,12 +249,17 @@ class Character(MemoryRegion):
         # Outgoing write instructions
         self._queue = []
 
-    def _from_memory_range(self, memfile, init_addr, mem_range=0x0):
+    _CSIZE = 1022
+    def _from_memory_range(self, memfile, slot=0):
         start_addr = super()._from_memory_range(memfile)
+
+        # FIXME: need to figure out how to distribute this amongst the actual arrayed values
+        off = 2 * slot
 
         # FIXME: this only sets them once, I'm not sure that's what we want
         # iterate through memmap and set attributes
         for addr, attr in self._memmap.items():
+            addr += off
             if isinstance(addr, int):
                 setattr(self, attr, self.mem[addr])
             elif isinstance(addr, complex):
