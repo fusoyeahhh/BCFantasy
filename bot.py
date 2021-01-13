@@ -692,7 +692,7 @@ async def event_message(ctx):
     curtime = int(time.time())
 
     # Only every minute
-    if curtime - bot._last_state_drop > 30:
+    if curtime - bot._last_state_drop > _STREAM_COOLDOWN:
         logging.debug("Serializing state...")
         serialize(pth=_CHKPT_DIR)
         bot._last_state_drop = curtime
