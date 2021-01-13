@@ -749,7 +749,7 @@ async def music(ctx):
     logging.debug(f"Querying music.")
 
     if len(cmds) == 1:
-        if _CONTEXT["music"] not in {None, "Unknown"}:
+        if _CONTEXT["music"] is not None and not _CONTEXT["music"].startswith("Unknown"):
             song = MUSIC_INFO.loc[MUSIC_INFO["new"] == _CONTEXT["music"]].iloc[0]
             await ctx.send(f"{song['orig']} -> {song['new']} | {song['descr']}")
         else:
