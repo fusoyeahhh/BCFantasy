@@ -1458,7 +1458,7 @@ def write_arbitrary(*args):
     """
     Write a sequence of one or more address / value pairs to memory.
 
-    Should be used sparingly by admins as it can write arbitrary data to any location.
+    While this is used internally to send data to the emulator, it should be used (directly) only sparingly by admins as it can write arbitrary data to any location.
     """
     args = list(args)
     # Need address value pairs
@@ -1468,7 +1468,6 @@ def write_arbitrary(*args):
     while len(args) > 0:
         # assume hex
         addr = int(args.pop(0), 16)
-        # FIXME: how to deal with 16 bit values
         value = int(args.pop(0), 16) & 0xFF
         # Break into high byte, low byte, and value to write
         instr.extend(bytes([addr >> 8, addr & 0xFF, value]))
