@@ -1495,11 +1495,24 @@ def set_status(status, slot=0):
     c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
 
+def cant_run(toggle=None):
+    mask = 1 << 2
+    mem = read.read_memory()
+    # FIXME: need actual memory chunk to read from
+    #mem[...]
+    val = mem[...]
+    if toggle is not None:
+        val ^= mask
+    else:
+        val |= mask
+
+    return write_arbitrary(["0x00B1", hex(val)])
+
 CC_CMDS = {
     "arb_write": write_arbitrary,
     "set_status": set_status,
+    "cant_run": cant_run,
     #"modify_item": modify_item,
-    #"cant_run": cant_run (0x00B1)
     #"activate_golem": activate_golem (0x3A36)
     #"nullify_element": nullify_element (0x3EC8)
     #"fallen_one": fallen_one,
