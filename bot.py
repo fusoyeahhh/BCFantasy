@@ -593,7 +593,6 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
 
     if reset:
         os.makedirs("TRASH")
-        # FIXME: here?
         # Renames instead of deleting to make sure user data integrity is only minimally threatened
         # Mark the checkpoint directory as trash by naming it as such
         if os.path.exists(_CHKPT_DIR):
@@ -1141,7 +1140,10 @@ async def nextarea(ctx):
         return
 
     area = _CONTEXT["area"] or "Narshe (WoB)"
-    # FIXME: catch OOB
+    # Last area
+    if area != _AREA_INFO["Area"].iloc[-1]:
+        return
+
     idx = numpy.roll(_AREA_INFO["Area"] == area, 1)
     new_area = str(_AREA_INFO["Area"][idx].iloc[0])
     if _set_context(f"!set area={new_area}"):
@@ -1162,7 +1164,10 @@ async def nextboss(ctx):
         return
 
     boss = _CONTEXT["boss"] or "Whelk"
-    # FIXME: catch OOB
+    # Last boss
+    if boss == _BOSS_INFO["Boss"].iloc[-1]:
+        return
+
     idx = numpy.roll(_BOSS_INFO["Boss"] == boss, 1)
     new_area = str(_BOSS_INFO["Boss"][idx].iloc[0])
     if _set_context(f"!set boss={new_area}"):
@@ -1324,8 +1329,6 @@ event._callback.__doc__ = f"""
 """
 ADMIN_COMMANDS["event"] = event
 
-# TODO: is map id 5 the gameover screen?
-# FIXME: 62 is the "Game over" music id
 @bot.command(name='stop')
 async def stop(ctx):
     """
