@@ -1487,6 +1487,7 @@ def modify_item(*args):
     return instr
 
 def set_status(status, slot=0):
+    slot = int(slot)
     if slot < 0 or slot >= 4:
         raise IndexError(f"Invalid party slot {slot}.")
 
