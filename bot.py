@@ -1525,12 +1525,19 @@ if _ENABLE_CC is not None:
             return
 
         args = ctx.content.split(" ")[1:]
+        if len(args) == 0:
+            await ctx.send(f"@{user}: !cc needs additional arguments.")
+            return
         if args[0].lower() not in CC_CMDS:
             await ctx.send(f"@{user}: the crowd control command {args[0]} is not recognized.")
             return
 
         cmd = args.pop(0)
-        read.write_instructions(CC_CMDS[cmd](*args))
+        try:
+            read.write_instructions(CC_CMDS[cmd](*args))
+        except Exception as e:
+            logging.error(f"Couldn't' execute crowd control command {cmd} with args {' '.join(args)}. Exception information follows.")
+            logging.error(str(e))
     COMMANDS["cc"] = cc
 
 
