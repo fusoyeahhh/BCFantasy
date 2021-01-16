@@ -249,17 +249,37 @@ class Character(MemoryRegion):
         # Outgoing write instructions
         self._queue = []
 
-    _CSIZE = 1022
-    def _from_memory_range(self, memfile, slot=0):
-        start_addr = super()._from_memory_range(memfile)
+    def _shift_memmap(self, shift=0):
+        addrs = sorted(self._memmap.keys(), key=lambda v: complex(v).real)
+        # add bookend
+        addrs.append(addrs[-1] + 1)
 
-        # FIXME: need to figure out how to distribute this amongst the actual arrayed values
-        off = 2 * slot
+        seg = []
+        for a1, a2 in zip(addrs[:-1], addrs[1:]):
+            val, width = complex(a1).real, max(1, complex(a1).imag)
+            v2, w2 = complex(a1).real, max(1, complex(a2).imag)
+
+            # Identify consecutive addresses in segment
+            seg.append(a1)
+            # We also end the segment if the byte width changes
+            if val + width == v2 and width == w2:
+                continue
+
+            # Compute overall segment shift value
+            _shift = int(shift * (complex(seg[-1] - seg[0]).real + width))
+            # Shift subsegment
+            for a in seg:
+                self._memmap[a + _shift] = self._memmap.pop(a)
+            seg = []
+
+    def _from_memory_range(self, memfile, slot=0):
+        # FIXME: this is permanent, and probably shouldn't be
+        self._shift_memmap(slot)
+        start_addr = super()._from_memory_range(memfile)
 
         # FIXME: this only sets them once, I'm not sure that's what we want
         # iterate through memmap and set attributes
         for addr, attr in self._memmap.items():
-            addr += off
             if isinstance(addr, int):
                 setattr(self, attr, self.mem[addr])
             elif isinstance(addr, complex):
