@@ -1495,6 +1495,15 @@ def set_status(status, slot=0):
     c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
 
+def fallen_one():
+    write = []
+    for slot in range(4):
+        c = bcfcc.Character()
+        c._from_memory_range("memfile", int(slot))
+        c.change_stat("cur_hp", 1)
+        write.extend(list(map(hex, c.flush())))
+    return write_arbitrary(*write)
+
 def cant_run(toggle=None):
     mask = 1 << 2
     mem = read.read_memory()
@@ -1512,10 +1521,10 @@ CC_CMDS = {
     "arb_write": write_arbitrary,
     "set_status": set_status,
     "cant_run": cant_run,
+    "fallen_one": fallen_one,
     #"modify_item": modify_item,
     #"activate_golem": activate_golem (0x3A36)
     #"nullify_element": nullify_element (0x3EC8)
-    #"fallen_one": fallen_one,
     #"change_name": change_name,
     #"swap_chars": swap_chars,
     #"give_doggo": give_interceptor, # enemy or player
