@@ -482,6 +482,23 @@ def search(term, lookup, info):
     else:
         return str(found.to_dict(orient='records')[0])[1:-1]
 
+def export_to_gsheet(season, ndoc=0):
+    """
+    Export a `pandas.DataFrame` to a google sheet. Used to synch the season leaderboard.
+
+    :param season: `pandas.DataFrame` to synch
+    :param ndoc: Identifier of the sheet to synch
+    :return: None
+    """
+    import gspread
+    from gspread_dataframe import set_with_dataframe
+
+    gc = gspread.service_account()
+    sh = gc.open('Season Leaderboard')
+    worksheet = sh.get_worksheet(ndoc)
+    set_with_dataframe(worksheet, season)
+
+_GOOGLE_CRED_JSON = "gsheet.json"
 def serialize(pth="./", reset=False, archive=None, season_update=False):
     """
     Serialize (write to file) several of the vital bookkeeping structures attached to the bot.
@@ -568,6 +585,12 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
             # FIXME: We should convert this to JSON instead
             season.reset_index().to_csv(sfile, index=False)
 
+            if os.path.exists(_GOOGLE_CRED_JSON):
+                logging.info("Synching season scores to Google sheet...")
+                export_to_gsheet(season)
+                logging.info("...done")
+
+
     if reset:
         os.makedirs("TRASH")
         # FIXME: here?
@@ -582,21 +605,10 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
         # reset bot status
         bot._last_status = {}
         bot._last_state_drop = -1
-
-_GOOGLE_CRED_JSON = "gsheet.json"
-def export_to_gsheet():
-    import gspread
-
-    gc = gspread.service_account()
-    sh = gc.open('Season Leaderboard')
-    worksheet = sh.get_worksheet(0)
-    worksheet.update('B42', "Is this working?")
  
 #
 # Bot commands
 #
-
-export_to_gsheet()
 
 @bot.event
 async def event_ready():
