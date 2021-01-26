@@ -496,9 +496,11 @@ def export_to_gsheet(season, ndoc=0):
     gc = gspread.service_account()
     sh = gc.open('Season Leaderboard')
     worksheet = sh.get_worksheet(ndoc)
-    set_with_dataframe(worksheet, season)
+    worksheet.format ('1', {'textFormat': {'bold': True}})
+    set_with_dataframe(worksheet, season)        
 
-_GOOGLE_CRED_JSON = "gsheet.json"
+
+
 def serialize(pth="./", reset=False, archive=None, season_update=False):
     """
     Serialize (write to file) several of the vital bookkeeping structures attached to the bot.
@@ -579,17 +581,15 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
                 # Otherwise, we create a new table
                 season = this_seed
 
-            if "total" in season.index:
-                season.drop("total", inplace=True)
-            season.loc["total"] = season.fillna(0).sum()
+            if "Total" in season.index:
+                season.drop("Total", inplace=True)
+            season.loc["Total"] = season.fillna(0).sum()
             # FIXME: We should convert this to JSON instead
             season.reset_index().to_csv(sfile, index=False)
-
-            if os.path.exists(_GOOGLE_CRED_JSON):
-                logging.info("Synching season scores to Google sheet...")
-                export_to_gsheet(season)
-                logging.info("...done")
-
+            season.index.name = "Seed Number"
+            logging.info("Synching season scores to Google sheet...")
+            export_to_gsheet(season.reset_index())
+            logging.info("...done")
 
     if reset:
         os.makedirs("TRASH")
