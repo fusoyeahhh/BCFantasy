@@ -387,17 +387,6 @@ def cant_run(toggle=None, **kwargs):
 
     return write_arbitrary(*["0x00B1", hex(val)])
 
-def modify_item(*args, **kwargs):
-    args = list(args)
-    # FIXME: This will overwrite any item in this position\
-    # FIXME: convert string to hex
-    item = int(args.pop(0), 16)
-    instr = [0x2686 >> 8, 0x2686 & 0xFF, item,
-             0x2689 >> 8, 0x2689 & 0xFF, 0x1]
-    # FIXME: increment
-
-    return instr
-
 def set_status(status, slot=0, **kwargs):
     slot = int(slot)
     if slot < 0 or slot >= 4:
