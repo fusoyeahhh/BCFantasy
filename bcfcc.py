@@ -462,3 +462,14 @@ if __name__ == "__main__":
     print("--- Set status (remove poison, slot 0)")
     print("!cc set_status -poison 0")
     print(set_status("-poison", 0, **gctx))
+
+    print("--- Set status (set poison, slot 3)")
+    print("!cc set_status poison 3")
+    print(set_status("poison", 3, **gctx))
+
+    #
+    # Fallen One
+    #
+    print("--- Fallen One")
+    print("!cc fallen_one")
+    print(fallen_one(**gctx))
