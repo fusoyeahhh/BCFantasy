@@ -228,15 +228,8 @@ class Character(MemoryRegion):
             # $3E11 Status to Clear 4
             0x3E11: "status_clear_4"
         }
-        # Reverse lookup
-        self._rmap = {v: k for k, v in self._memmap.items()}
 
-        # add groupings of flags like status and elements
-        self.status_set_addr = {f: self._rmap[f]
-                    for f in ["status_set_1", "status_set_2", "status_set_3", "status_set_4"]}
-
-        self.status_clr_addr = {f: self._rmap[f]
-                    for f in ["status_clear_1", "status_clear_2", "status_clear_3", "status_clear_4"]}
+        self._set_aliases()
 
         # Stats which need special encoding
         self._enc_stats = {
@@ -248,6 +241,17 @@ class Character(MemoryRegion):
 
         # Outgoing write instructions
         self._queue = []
+
+    def _set_aliases(self):
+        # Reverse lookup
+        self._rmap = {v: k for k, v in self._memmap.items()}
+
+        # add groupings of flags like status and elements
+        self.status_set_addr = {f: self._rmap[f]
+                    for f in ["status_set_1", "status_set_2", "status_set_3", "status_set_4"]}
+
+        self.status_clr_addr = {f: self._rmap[f]
+                    for f in ["status_clear_1", "status_clear_2", "status_clear_3", "status_clear_4"]}
 
     def _shift_memmap(self, shift=0):
         addrs = sorted(self._memmap.keys(), key=lambda v: complex(v).real)
@@ -271,6 +275,9 @@ class Character(MemoryRegion):
             for a in seg:
                 self._memmap[a + _shift] = self._memmap.pop(a)
             seg = []
+
+        # reset pointer aliases to new values
+        self._set_aliases()
 
     def _from_memory_range(self, memfile, slot=0):
         # FIXME: this is permanent, and probably shouldn't be
