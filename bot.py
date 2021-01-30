@@ -1541,9 +1541,7 @@ if _ENABLE_CC is not None:
         cc [subcmd] [args] Execute crowd control subcmd, with possibly optional arguments.
         """
         user = ctx.author.name
-        if not (bot._skip_auth or _authenticate(ctx)):
-            await ctx.send(f"I'm sorry, @{user}, I can't do that...")
-            return
+        auth_user = bot._skip_auth or _authenticate(ctx)
 
         args = ctx.content.split(" ")[1:]
         if len(args) == 0:
@@ -1552,7 +1550,10 @@ if _ENABLE_CC is not None:
         if args[0].lower() not in CC_CMDS:
             await ctx.send(f"@{user}: the crowd control command {args[0]} is not recognized.")
             return
-
+        # admin only command
+        if args[0].lower() == "arb_write" and not auth_user:
+            await ctx.send(f"I'm sorry, @{user}, I can't do that...")
+            return
         cmd = args.pop(0)
         try:
             read.write_instructions(CC_CMDS[cmd](*args))
