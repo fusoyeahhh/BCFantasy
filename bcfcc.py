@@ -399,6 +399,15 @@ def set_status(status, slot=0, **kwargs):
         c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
 
+def set_stat(stat, val, slot=0, **kwargs):
+    slot = int(slot)
+    if slot < 0 or slot >= 4:
+        raise IndexError(f"Invalid party slot {slot}.")
+
+    c = kwargs["party"][slot]
+    c.change_stat(stat, val)
+    return write_arbitrary(*map(hex, c.flush()))
+
 def fallen_one(**kwargs):
     write = []
     for c in kwargs["party"]:
@@ -455,6 +464,22 @@ if __name__ == "__main__":
     print("--- Set status (set poison, slot 3)")
     print("!cc set_status poison 3")
     print(set_status("poison", 3, **gctx))
+
+    #
+    # Set stats
+    #
+    print("--- Set stat (evade=0, slot 0)")
+    print("!cc set_stat evade 0 0")
+    print(set_stat("evade", 0, 0, **gctx))
+
+    print("--- Set stat (evade=0, slot 3)")
+    print("!cc set_stat evade 0 3")
+    print(set_stat("evade", 0, 3, **gctx))
+
+    print("--- Set stat (vigor=1, slot 1)")
+    print("!cc set_stat vigor 1 1")
+    # Should be multiplied by 2
+    print(set_stat("vigor", 1, 1, **gctx))
 
     #
     # Fallen One
