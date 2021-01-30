@@ -336,6 +336,102 @@ class Inventory(MemoryRegion):
     def __init__(self):
         super().__init__()
 
+def write_arbitrary(*args):
+    """
+    Write a sequence of one or more address / value pairs to memory.
+
+    While this is used internally to send data to the emulator, it should be used (directly) only sparingly by admins as it can write arbitrary data to any location.
+    """
+    args = list(args)
+    # Need address value pairs
+    assert(len(args) % 2 == 0)
+
+    instr = []
+    while len(args) > 0:
+        # assume hex
+        addr = int(args.pop(0), 16)
+        value = int(args.pop(0), 16) & 0xFF
+        # Break into high byte, low byte, and value to write
+        instr.extend(bytes([addr >> 8, addr & 0xFF, value]))
+
+    return instr
+
+def modify_item(*args):
+    args = list(args)
+    # FIXME: This will overwrite any item in this position\
+    # FIXME: convert string to hex
+    item = int(args.pop(0), 16)
+    instr = [0x2686 >> 8, 0x2686 & 0xFF, item,
+             0x2689 >> 8, 0x2689 & 0xFF, 0x1]
+    # FIXME: increment
+
+    return instr
+
+def set_status(status, slot=0):
+    slot = int(slot)
+    if slot < 0 or slot >= 4:
+        raise IndexError(f"Invalid party slot {slot}.")
+
+    c = bcfcc.Character()
+    c._from_memory_range("memfile", int(slot))
+    c.set_status(status)
+    return write_arbitrary(*map(hex, c.flush()))
+
+def cant_run(toggle=None):
+    mask = 1 << 2
+    mem = read.read_memory()
+    # FIXME: need actual memory chunk to read from
+    #mem[...]
+    val = mem[...]
+    if toggle is not None:
+        val ^= mask
+    else:
+        val |= mask
+
+    return write_arbitrary(["0x00B1", hex(val)])
+
+def modify_item(*args):
+    args = list(args)
+    # FIXME: This will overwrite any item in this position\
+    # FIXME: convert string to hex
+    item = int(args.pop(0), 16)
+    instr = [0x2686 >> 8, 0x2686 & 0xFF, item,
+             0x2689 >> 8, 0x2689 & 0xFF, 0x1]
+    # FIXME: increment
+
+    return instr
+
+def set_status(status, slot=0):
+    slot = int(slot)
+    if slot < 0 or slot >= 4:
+        raise IndexError(f"Invalid party slot {slot}.")
+
+    c = bcfcc.Character()
+    c._from_memory_range("memfile", int(slot))
+    c.set_status(status)
+    return write_arbitrary(*map(hex, c.flush()))
+
+def cant_run(toggle=None):
+    mask = 1 << 2
+    mem = read.read_memory()
+    # FIXME: need actual memory chunk to read from
+    #mem[...]
+    val = mem[...]
+    if toggle is not None:
+        val ^= mask
+    else:
+        val |= mask
+
+    return write_arbitrary(["0x00B1", hex(val)])
+
+def fallen_one(**kwargs):
+    write = []
+    for c in kwargs["party"]:
+        # FIXME: check to make sure the character actually exists
+        c.change_stat("cur_hp", 1)
+        write.extend(list(map(hex, c.flush())))
+    return write_arbitrary(*write)
+
 def status(targ, *stats):
     for status in stats:
         if status.startswith("-"):
@@ -344,7 +440,7 @@ def status(targ, *stats):
             targ.set_status(status)
     return targ.flush()
 
-def fallen_one(targ):
+def _fallen_one(targ):
     q = []
     for t in targ:
         t.change_stat("cur_hp", 1)

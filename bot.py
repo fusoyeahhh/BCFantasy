@@ -1454,86 +1454,22 @@ COMMANDS["bcf"] = explain
 # Crowd Control
 #
 
-def write_arbitrary(*args):
-    """
-    Write a sequence of one or more address / value pairs to memory.
-
-    While this is used internally to send data to the emulator, it should be used (directly) only sparingly by admins as it can write arbitrary data to any location.
-    """
-    args = list(args)
-    # Need address value pairs
-    assert(len(args) % 2 == 0)
-
-    instr = []
-    while len(args) > 0:
-        # assume hex
-        addr = int(args.pop(0), 16)
-        value = int(args.pop(0), 16) & 0xFF
-        # Break into high byte, low byte, and value to write
-        instr.extend(bytes([addr >> 8, addr & 0xFF, value]))
-
-    return instr
-
-def modify_item(*args):
-    args = list(args)
-    # FIXME: This will overwrite any item in this position\
-    # FIXME: convert string to hex
-    item = int(args.pop(0), 16)
-    instr = [0x2686 >> 8, 0x2686 & 0xFF, item,
-             0x2689 >> 8, 0x2689 & 0xFF, 0x1]
-    # FIXME: increment
-
-    return instr
-
-def set_status(status, slot=0):
-    slot = int(slot)
-    if slot < 0 or slot >= 4:
-        raise IndexError(f"Invalid party slot {slot}.")
-
-    c = bcfcc.Character()
-    c._from_memory_range("memfile", int(slot))
-    c.set_status(status)
-    return write_arbitrary(*map(hex, c.flush()))
-
-def fallen_one():
-    write = []
-    for slot in range(4):
-        c = bcfcc.Character()
-        c._from_memory_range("memfile", int(slot))
-        c.change_stat("cur_hp", 1)
-        write.extend(list(map(hex, c.flush())))
-    return write_arbitrary(*write)
-
-def cant_run(toggle=None):
-    mask = 1 << 2
-    mem = read.read_memory()
-    # FIXME: need actual memory chunk to read from
-    #mem[...]
-    val = mem[...]
-    if toggle is not None:
-        val ^= mask
-    else:
-        val |= mask
-
-    return write_arbitrary(["0x00B1", hex(val)])
-
-CC_CMDS = {
-    "arb_write": write_arbitrary,
-    "set_status": set_status,
-    "cant_run": cant_run,
-    "fallen_one": fallen_one,
-    #"modify_item": modify_item,
-    #"activate_golem": activate_golem (0x3A36)
-    #"nullify_element": nullify_element (0x3EC8)
-    #"change_name": change_name,
-    #"swap_chars": swap_chars,
-    #"give_doggo": give_interceptor, # enemy or player
-    #"ole_cape": ole_cape # only ever use cape animation to dodge
-}
-
-
 if _ENABLE_CC is not None:
     import bcfcc
+
+    CC_CMDS = {
+        "arb_write": bcfcc.write_arbitrary,
+        "set_status": bcfcc.set_status,
+        "cant_run": bcfcc.cant_run,
+        "fallen_one": bcfcc.fallen_one,
+        #"change_name": change_name,
+        #"modify_item": modify_item,
+        #"activate_golem": activate_golem (0x3A36)
+        #"nullify_element": nullify_element (0x3EC8)
+        #"swap_chars": swap_chars,
+        #"give_doggo": give_interceptor, # enemy or player
+        #"ole_cape": ole_cape # only ever use cape animation to dodge
+    }
 
     @bot.command(name='cc')
     async def cc(ctx):
@@ -1556,15 +1492,15 @@ if _ENABLE_CC is not None:
             return
         cmd = args.pop(0)
 
-        # Construct game context
-        party = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4)]
-        eparty = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4, 10)]
-        gctx = {"party": party, "eparty": eparty}
-
         try:
+            # Construct game context
+            party = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4)]
+            eparty = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4, 10)]
+            gctx = {"party": party, "eparty": eparty}
+
             read.write_instructions(CC_CMDS[cmd](*args, **gctx))
         except Exception as e:
-            logging.error(f"Couldn't' execute crowd control command {cmd} with args {' '.join(args)}. Exception information follows.")
+            logging.error(f"Couldn't execute crowd control command {cmd} with args {' '.join(args)}. Exception information follows.")
             logging.error(str(e))
     COMMANDS["cc"] = cc
 
