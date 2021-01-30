@@ -367,15 +367,6 @@ def modify_item(*args):
 
     return instr
 
-def set_status(status, slot=0, **kwargs):
-    slot = int(slot)
-    if slot < 0 or slot >= 4:
-        raise IndexError(f"Invalid party slot {slot}.")
-
-    c = kwargs["party"][slot]
-    c.set_status(status)
-    return write_arbitrary(*map(hex, c.flush()))
-
 def cant_run(toggle=None, **kwargs):
     mask = 1 << 2
     mem = read.read_memory()
@@ -387,7 +378,7 @@ def cant_run(toggle=None, **kwargs):
     else:
         val |= mask
 
-    return write_arbitrary(["0x00B1", hex(val)])
+    return write_arbitrary(*["0x00B1", hex(val)])
 
 def modify_item(*args, **kwargs):
     args = list(args)
@@ -406,7 +397,10 @@ def set_status(status, slot=0, **kwargs):
         raise IndexError(f"Invalid party slot {slot}.")
 
     c = kwargs["party"][slot]
-    c.set_status(status)
+    if status.startswith("-"):
+        c.set_status(status[1:], clear=True)
+    else:
+        c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
 
 def fallen_one(**kwargs):
