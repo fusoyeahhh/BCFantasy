@@ -418,3 +418,40 @@ def status(targ, *stats):
         else:
             targ.set_status(status)
     return targ.flush()
+
+if __name__ == "__main__":
+    import os
+
+    # Do testing
+    # Must have a memfile to work with
+    assert os.path.exists("memfile")
+
+    party = [Character() for i in range(4)]
+    for i in range(4):
+        # FIXME: make one-step initialization
+        party[i]._from_memory_range("memfile", slot=i)
+
+    eparty = [Character() for i in range(6)]
+    for i in range(6):
+        # FIXME: make one-step initialization
+        eparty[i]._from_memory_range("memfile", slot=i + 4)
+
+    gctx = {"party": party, "eparty": eparty}
+
+    #
+    # Can't run
+    #
+    print("--- Can't run (no toggle)")
+    print("!cc cant_run")
+    print(cant_run(**gctx))
+
+    #
+    # Set status
+    #
+    print("--- Set status (set poison, slot 0)")
+    print("!cc set_status poison 0")
+    print(set_status("poison", 0, **gctx))
+
+    print("--- Set status (remove poison, slot 0)")
+    print("!cc set_status -poison 0")
+    print(set_status("-poison", 0, **gctx))
