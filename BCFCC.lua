@@ -25,8 +25,6 @@ while true do
         end
     end
 
-    --memory.write_u8(0x3BF4, 255)
-
     -- TODO: look into hash_region
     -- Read battle memory $3AA0-$3F1F
     mem = memory.readbyterange(0x3AA0, 0x3F1F - 0x3AA0)
@@ -49,4 +47,10 @@ while true do
 
     io.flush(memfile)
     io.close(memfile)
+
+    -- Write current events to screen
+    i = 0
+    for line in io.lines("cc_status") do
+        gui.text(20, 10 * (i + 1), line)
+    end
 end
