@@ -367,22 +367,21 @@ def modify_item(*args):
 
     return instr
 
-def set_status(status, slot=0):
+def set_status(status, slot=0, **kwargs):
     slot = int(slot)
     if slot < 0 or slot >= 4:
         raise IndexError(f"Invalid party slot {slot}.")
 
-    c = bcfcc.Character()
-    c._from_memory_range("memfile", int(slot))
+    c = kwargs["party"][slot]
     c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
 
-def cant_run(toggle=None):
+def cant_run(toggle=None, **kwargs):
     mask = 1 << 2
     mem = read.read_memory()
     # FIXME: need actual memory chunk to read from
-    #mem[...]
-    val = mem[...]
+    #val = mem[0x00B1]
+    val = 0
     if toggle is not None:
         val ^= mask
     else:
@@ -390,7 +389,7 @@ def cant_run(toggle=None):
 
     return write_arbitrary(["0x00B1", hex(val)])
 
-def modify_item(*args):
+def modify_item(*args, **kwargs):
     args = list(args)
     # FIXME: This will overwrite any item in this position\
     # FIXME: convert string to hex
@@ -401,28 +400,14 @@ def modify_item(*args):
 
     return instr
 
-def set_status(status, slot=0):
+def set_status(status, slot=0, **kwargs):
     slot = int(slot)
     if slot < 0 or slot >= 4:
         raise IndexError(f"Invalid party slot {slot}.")
 
-    c = bcfcc.Character()
-    c._from_memory_range("memfile", int(slot))
+    c = kwargs["party"][slot]
     c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
-
-def cant_run(toggle=None):
-    mask = 1 << 2
-    mem = read.read_memory()
-    # FIXME: need actual memory chunk to read from
-    #mem[...]
-    val = mem[...]
-    if toggle is not None:
-        val ^= mask
-    else:
-        val |= mask
-
-    return write_arbitrary(["0x00B1", hex(val)])
 
 def fallen_one(**kwargs):
     write = []
@@ -439,10 +424,3 @@ def status(targ, *stats):
         else:
             targ.set_status(status)
     return targ.flush()
-
-def _fallen_one(targ):
-    q = []
-    for t in targ:
-        t.change_stat("cur_hp", 1)
-        q += t.flush()
-    return q
