@@ -257,7 +257,7 @@ class Character(MemoryRegion):
         seg = []
         for a1, a2 in zip(addrs[:-1], addrs[1:]):
             val, width = complex(a1).real, max(1, complex(a1).imag)
-            v2, w2 = complex(a1).real, max(1, complex(a2).imag)
+            v2, w2 = complex(a2).real, max(1, complex(a2).imag)
 
             # Identify consecutive addresses in segment
             seg.append(a1)
