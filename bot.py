@@ -1555,8 +1555,14 @@ if _ENABLE_CC is not None:
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
             return
         cmd = args.pop(0)
+
+        # Construct game context
+        party = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4)]
+        eparty = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4, 10)]
+        gctx = {"party": party, "eparty": eparty}
+
         try:
-            read.write_instructions(CC_CMDS[cmd](*args))
+            read.write_instructions(CC_CMDS[cmd](*args, **gctx))
         except Exception as e:
             logging.error(f"Couldn't' execute crowd control command {cmd} with args {' '.join(args)}. Exception information follows.")
             logging.error(str(e))
