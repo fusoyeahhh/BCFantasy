@@ -13,7 +13,7 @@ Serpent Trench,500,500,2000,80,40
 South Figaro Basement,500,500,2000,80,40
 Narshe Ice Fields,100,N/A,4000,50,25
 Zozo,300,300,7000,500,250
-Opera House,500,N/A,5000,300,150
+Opera House,500,N/A,10000,200,100
 Magitek Facility,200,200,7000,500,250
 Cave to the Sealed Gate,200,200,7500,600,300
 Burning House,300,300,7000,650,325
@@ -38,5 +38,5 @@ Phoenix Cave,200,10,17000,1900,950
 Fanatic's Tower,100,500,20000,2000,1000
 Kefka's Tower,100,100,30000,2500,1250
 Towns,500,250,6000,500,250
-Airship,300,N/A,8000,500,250
+Airship,300,N/A,8000,250,125
 Colosseum (no scoring),0,,0,0,0
