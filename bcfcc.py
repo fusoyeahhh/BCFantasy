@@ -391,7 +391,7 @@ def cant_run(toggle=None, **kwargs):
         val |= mask
 
     #return write_arbitrary(*["0x00B1", hex(val)])
-    return write_arbitrary(*["0x00B1", hex(4)])
+    return write_arbitrary(*["0x00B1", hex(mask)])
 
 def set_status(status, slot=0, **kwargs):
     logging.info(f"set_status | status {status}, slot ({slot}), kwargs {[*kwargs.keys()]}")
