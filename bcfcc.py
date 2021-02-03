@@ -60,7 +60,7 @@ class MemoryRegion(object):
         Read in a binary file with address => memory chunk and memory map.
         """
         mem = read.read_memory(memfile)
-        logging.info(f"_from_memory_range | chunk addrs: {','.join(mem.keys())}")
+        logging.info(f"_from_memory_range | chunk addrs: {','.join(map(str, mem.keys()))}")
         assert len(mem) == 1, "bad memory read"
 
         start_addr = [*mem.keys()][0]
