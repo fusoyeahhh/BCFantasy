@@ -413,7 +413,7 @@ def set_stat(stat, val, slot=0, **kwargs):
         raise IndexError(f"Invalid party slot {slot}.")
 
     c = kwargs["party"][slot]
-    c.change_stat(stat, val)
+    c.change_stat(stat, int(val))
     return write_arbitrary(*map(hex, c.flush()))
 
 def fallen_one(**kwargs):
