@@ -49,8 +49,8 @@ while true do
     io.close(memfile)
 
     -- Write current events to screen
-    i = 0
-    for line in io.lines("cc_status") do
-        gui.text(20, 10 * (i + 1), line)
-    end
+    --i = 0
+    --for line in io.lines("cc_status") do
+        --gui.text(20, 10 * (i + 1), line)
+    --end
 end
