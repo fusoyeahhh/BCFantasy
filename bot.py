@@ -1492,6 +1492,10 @@ if _ENABLE_CC is not None:
             return
         cmd = args.pop(0)
 
+        if cmd.lower().strip() == "help":
+            await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())}")
+            return
+
         try:
             # Construct game context
             party = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4)]
