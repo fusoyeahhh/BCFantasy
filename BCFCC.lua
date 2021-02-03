@@ -30,7 +30,7 @@ while true do
     mem = memory.readbyterange(0x3AA0, 0x3F1F - 0x3AA0)
 
     -- Write binary to disk
-    memfile = io.open("memfile", "wb")
+    memfile = io.open("_memfile", "wb")
 
     -- Write address and length of buffer
     memfile:write(string.char(bit.rshift(0x3AA0, 8)))
@@ -47,6 +47,9 @@ while true do
 
     io.flush(memfile)
     io.close(memfile)
+
+    -- rename to the filename expected by python
+    os.rename("_memfile", "memfile")
 
     -- Write current events to screen
    local f = io.open("cc_status", "r")
