@@ -6,7 +6,7 @@ import read
 import numpy
 
 
-from ff6_flags import STATUS_FLAGS
+from ff6_flags import STATUS_FLAGS, _validate_status
 
 def commit(fcn, addr):
     # decorator to commit changes to memory
@@ -310,7 +310,7 @@ class Character(MemoryRegion):
         # statuses and flags to set
         set_this, flags = set(status), self.status_clr_addr if clear else self.status_set_addr
 
-        assert ff6_flags._validate_status(set_this), f"Bad status flag, given {set_this}"
+        assert _validate_status(set_this), f"Bad status flag, given {set_this}"
 
         # Combine the flag with the statuses which that flag controls and set
         # value appropriately
