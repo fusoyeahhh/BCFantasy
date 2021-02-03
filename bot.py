@@ -1517,7 +1517,7 @@ if _ENABLE_CC is not None:
             logging.info(f"cc | Finished {cmd}")
         except Exception as e:
             logging.error(f"Couldn't execute crowd control command {cmd} with args {' '.join(args)}. Exception information follows.")
-            logging.error(type(e) + " " + str(e))
+            logging.error(str(type(e)) + " " + str(e))
     COMMANDS["cc"] = cc
 
 
