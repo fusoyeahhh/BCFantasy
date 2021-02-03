@@ -379,7 +379,7 @@ def modify_item(*args):
     return instr
 
 def cant_run(toggle=None, **kwargs):
-    logging.info(f"cant_run | toggle ({toggle}), kwargs {kwargs}")
+    logging.info(f"cant_run | toggle ({toggle}), kwargs {[*kwargs.keys()]}")
     mask = 1 << 2
     mem = read.read_memory()
     # FIXME: need actual memory chunk to read from
@@ -394,7 +394,7 @@ def cant_run(toggle=None, **kwargs):
     return write_arbitrary(*["0x00B1", hex(4)])
 
 def set_status(status, slot=0, **kwargs):
-    logging.info(f"set_status | status {status}, slot ({slot}), kwargs {kwargs}")
+    logging.info(f"set_status | status {status}, slot ({slot}), kwargs {[*kwargs.keys()]}")
     slot = int(slot)
     if slot < 0 or slot >= 4:
         raise IndexError(f"Invalid party slot {slot}.")
@@ -407,7 +407,7 @@ def set_status(status, slot=0, **kwargs):
     return write_arbitrary(*map(hex, c.flush()))
 
 def set_stat(stat, val, slot=0, **kwargs):
-    logging.info(f"set_stat | stat / val ({stat} / {val}), kwargs {kwargs}")
+    logging.info(f"set_stat | stat / val ({stat} / {val}), kwargs {[*kwargs.keys()]}")
     slot = int(slot)
     if slot < 0 or slot >= 4:
         raise IndexError(f"Invalid party slot {slot}.")
@@ -417,7 +417,7 @@ def set_stat(stat, val, slot=0, **kwargs):
     return write_arbitrary(*map(hex, c.flush()))
 
 def fallen_one(**kwargs):
-    logging.info(f"fallen_one | kwargs {kwargs}")
+    logging.info(f"fallen_one | kwargs {[*kwargs.keys()]}")
     write = []
     for c in kwargs["party"]:
         # FIXME: check to make sure the character actually exists
