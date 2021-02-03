@@ -347,7 +347,7 @@ class Inventory(MemoryRegion):
     def __init__(self):
         super().__init__()
 
-def write_arbitrary(*args):
+def write_arbitrary(*args, **kwargs):
     """
     Write a sequence of one or more address / value pairs to memory.
 
