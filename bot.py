@@ -1490,11 +1490,10 @@ if _ENABLE_CC is not None:
         if args[0].lower() == "arb_write" and not auth_user:
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
             return
-        cmd = args.pop(0)
-
-        if cmd.lower().strip() == "help":
+        if args[0].lower() == "help":
             await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())}")
             return
+        cmd = args.pop(0)
 
         try:
             # Construct game context
