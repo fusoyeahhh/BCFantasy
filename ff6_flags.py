@@ -49,4 +49,4 @@ STATUS_FLAGS[3] = {k: 1 << i for i, k in
                    enumerate(["rage", "freeze", "life3", "morph", "spell", "hide", "interceptor", "float"])}
 
 def _validate_status(statuses):
-    return statuses.issubset(set.union(*map(set, ff6_flags.STATUS_FLAGS)))
+    return set(statuses).issubset(set.union(*map(set, ff6_flags.STATUS_FLAGS)))
