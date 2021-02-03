@@ -1508,7 +1508,7 @@ if _ENABLE_CC is not None:
             for i in range(6):
                 # FIXME: make one-step initialization
                 eparty[i]._from_memory_range("memfile", slot=i + 4)
-            logging.info(f"cc | Read and init'd {len(party)} entities in enemy party")
+            logging.info(f"cc | Read and init'd {len(eparty)} entities in enemy party")
 
             gctx = {"party": party, "eparty": eparty}
 
