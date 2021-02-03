@@ -49,8 +49,12 @@ while true do
     io.close(memfile)
 
     -- Write current events to screen
-    --i = 0
-    --for line in io.lines("cc_status") do
-        --gui.text(20, 10 * (i + 1), line)
-    --end
+   local f = io.open("cc_status", "r")
+    if f ~= nil then
+        io.close(f)
+        i = 0
+        for line in io.lines("cc_status") do
+            gui.text(20, 10 * (i + 1), line)
+        end
+    end
 end
