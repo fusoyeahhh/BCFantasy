@@ -355,7 +355,7 @@ def write_arbitrary(*args, **kwargs):
     """
     args = list(args)
     # Need address value pairs
-    assert(len(args) % 2 == 0)
+    assert len(args) % 2 == 0, f"write_arbitrary | arg len should be a multiple of 2, got {args}"
 
     instr = []
     while len(args) > 0:
