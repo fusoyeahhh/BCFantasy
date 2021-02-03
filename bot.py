@@ -1512,7 +1512,7 @@ if _ENABLE_CC is not None:
 
             gctx = {"party": party, "eparty": eparty}
 
-            logging.info(f"cc | Calling into cc subcommand {CC_CMDS[cmd]}")
+            logging.info(f"cc | Calling into cc subcommand {CC_CMDS[cmd]} ({cmd})")
             read.write_instructions(CC_CMDS[cmd](*args, **gctx))
             logging.info(f"cc | Finished {cmd}")
         except Exception as e:
