@@ -1501,15 +1501,19 @@ if _ENABLE_CC is not None:
             for i in range(4):
                 # FIXME: make one-step initialization
                 party[i]._from_memory_range("memfile", slot=i)
+            logging.info(f"cc | Read and init'd {len(party)} characters in party")
 
             eparty = [bcfcc.Character() for i in range(6)]
             for i in range(6):
                 # FIXME: make one-step initialization
                 eparty[i]._from_memory_range("memfile", slot=i + 4)
+            logging.info(f"cc | Read and init'd {len(party)} entities in enemy party")
 
             gctx = {"party": party, "eparty": eparty}
 
+            logging.info(f"cc | Calling into cc subcommand {CC_CMDS[cmd]}")
             read.write_instructions(CC_CMDS[cmd](*args, **gctx))
+            logging.info(f"cc | Finished {cmd}")
         except Exception as e:
             logging.error(f"Couldn't execute crowd control command {cmd} with args {' '.join(args)}. Exception information follows.")
             logging.error(str(e))
