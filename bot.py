@@ -1460,6 +1460,7 @@ if _ENABLE_CC is not None:
     CC_CMDS = {
         "arb_write": bcfcc.write_arbitrary,
         "set_status": bcfcc.set_status,
+        "set_stat": bcfcc.set_stat,
         "cant_run": bcfcc.cant_run,
         "fallen_one": bcfcc.fallen_one,
         #"change_name": change_name,
