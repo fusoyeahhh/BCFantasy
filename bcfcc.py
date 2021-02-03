@@ -354,6 +354,7 @@ def write_arbitrary(*args, **kwargs):
     While this is used internally to send data to the emulator, it should be used (directly) only sparingly by admins as it can write arbitrary data to any location.
     """
     args = list(args)
+    logging.info(f"write_arbitrary | input: {args}")
     # Need address value pairs
     assert len(args) % 2 == 0, f"write_arbitrary | arg len should be a multiple of 2, got {args}"
 
@@ -365,6 +366,7 @@ def write_arbitrary(*args, **kwargs):
         # Break into high byte, low byte, and value to write
         instr.extend(bytes([addr >> 8, addr & 0xFF, value]))
 
+    logging.info(f"write_arbitrary | to write: {instr}")
     return instr
 
 def modify_item(*args):
