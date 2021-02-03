@@ -1497,8 +1497,16 @@ if _ENABLE_CC is not None:
 
         try:
             # Construct game context
-            party = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4)]
-            eparty = [bcfcc.Character()._from_memory_range("memfile", slot=i) for i in range(4, 10)]
+            party = [bcfcc.Character() for i in range(4)]
+            for i in range(4):
+                # FIXME: make one-step initialization
+                party[i]._from_memory_range("memfile", slot=i)
+
+            eparty = [bcfcc.Character() for i in range(6)]
+            for i in range(6):
+                # FIXME: make one-step initialization
+                eparty[i]._from_memory_range("memfile", slot=i + 4)
+
             gctx = {"party": party, "eparty": eparty}
 
             read.write_instructions(CC_CMDS[cmd](*args, **gctx))
