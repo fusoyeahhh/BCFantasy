@@ -60,7 +60,7 @@ class MemoryRegion(object):
         Read in a binary file with address => memory chunk and memory map.
         """
         mem = read.read_memory(memfile)
-        assert len(mem) == 1
+        assert len(mem) == 1, "bad memory read"
 
         start_addr = [*mem.keys()][0]
         # splay data into addresses
