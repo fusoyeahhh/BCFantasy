@@ -60,6 +60,7 @@ class MemoryRegion(object):
         Read in a binary file with address => memory chunk and memory map.
         """
         mem = read.read_memory(memfile)
+        logging.info(f"_from_memory_range | chunk addrs: {','.join(mem.keys())}")
         assert len(mem) == 1, "bad memory read"
 
         start_addr = [*mem.keys()][0]
@@ -75,7 +76,7 @@ class MemoryRegion(object):
         if isinstance(addr, complex):
             dep = int(addr.imag)
             val = [(val >> 8 * i) & 0xFF for i in range(dep)]
-            addr = [int(addr.real) + i for i in reversed(range(dep))]
+            addr = [int(addr.real) + i for i in range(dep)]
             return list(functools.reduce(tuple.__add__, zip(addr, val)))
         return [addr, val]
 
