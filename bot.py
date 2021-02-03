@@ -1483,15 +1483,15 @@ if _ENABLE_CC is not None:
         if len(args) == 0:
             await ctx.send(f"@{user}: !cc needs additional arguments.")
             return
+        if args[0].lower() == "help":
+            await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())}")
+            return
         if args[0].lower() not in CC_CMDS:
             await ctx.send(f"@{user}: the crowd control command {args[0]} is not recognized.")
             return
         # admin only command
         if args[0].lower() == "arb_write" and not auth_user:
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
-            return
-        if args[0].lower() == "help":
-            await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())}")
             return
         cmd = args.pop(0)
 
