@@ -22,7 +22,7 @@ STATUS_FLAGS[0] = {k: 1 << i for i, k in
 # bit 6: Seizure
 # bit 7: Sleep
 STATUS_FLAGS[1] = {k: 1 << i for i, k in
-                   enumerate(["condemned", "near fatal", "image", "mute", "berserk", "muddle", "seizure", "sleep"])}
+                   enumerate(["condemned", "nearfatal", "image", "mute", "berserk", "muddle", "seizure", "sleep"])}
 
 # Byte 3
 # bit 0: Dance
@@ -46,4 +46,4 @@ STATUS_FLAGS[2] = {k: 1 << i for i, k in
 # bit 6: Interceptor
 # bit 7: Float
 STATUS_FLAGS[3] = {k: 1 << i for i, k in
-                   enumerate(["rage", "freeze", "life 3", "morph", "spell", "hide", "interceptor", "float"])}
+                   enumerate(["rage", "freeze", "life3", "morph", "spell", "hide", "interceptor", "float"])}
