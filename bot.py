@@ -1129,6 +1129,47 @@ COMMANDS["context"] = context
 # Admin commands
 #
 
+@bot.command(name='remap')
+async def remap(ctx):
+    """
+    !remap -> area [description] Reset the map -> area link and optionally update the description
+    """
+    user = ctx.author.name
+    if not (bot._skip_auth or _authenticate(ctx)):
+        await ctx.send(f"I'm sorry, @{user}, I can't do that...")
+        return
+
+    map_id = bot._last_status.get("map_id", None)
+    if map_id is None:
+        await ctx.send(f"Current map ID is undefined.")
+        return
+
+    if map_id not in _MAP_INFO.index:
+        await ctx.send(f"Current map ID {map_id} (hex: {hex(map_id)}) is not in the listings.")
+        return
+
+    new_area = ctx.content.split("|")
+    if len(new_area) == 2:
+        new_area, new_descr = new_area
+    elif len(new_area) == 1:
+        new_area, new_descr = new_area[0], _MAP_INFO.loc[map_id]["name"]
+    elif len(new_area) > 2:
+        logging.error("remap: Could not parse command properly, aborting.")
+        return
+
+    # FIXME: does not check if area is valid
+    _MAP_INFO.loc[map_id]["scoring_area"] = new_area
+    new_area = " ".join(new_area.split(" ")[1:])
+    _MAP_INFO.loc[map_id]["name"] = new_descr.strip()
+
+    await ctx.send(f"Map ID {map_id} set to area {new_area}")
+
+    # write out new mappings
+    _tmp = _MAP_INFO.reset_index()
+    _tmp["id"] = map(hex, _tmp["id"])
+    _tmp.to_csv("new_map_ids.csv", index=False)
+ADMIN_COMMANDS["remap"] = remap
+
 @bot.command(name='nextarea')
 async def nextarea(ctx):
     """
