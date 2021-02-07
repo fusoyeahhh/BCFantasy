@@ -1148,7 +1148,7 @@ async def remap(ctx):
         await ctx.send(f"Current map ID {map_id} (hex: {hex(map_id)}) is not in the listings.")
         return
 
-    new_area = ctx.content.split("|")
+    new_area = " ".join(new_area.split(" ")[1:]).split("|")
     if len(new_area) == 3:
         map_id, new_area, new_descr = new_area
         map_id = int(map_id)
@@ -1161,7 +1161,6 @@ async def remap(ctx):
         return
 
     # FIXME: does not check if area is valid
-    new_area = " ".join(new_area.split(" ")[1:])
     _MAP_INFO.loc[map_id]["scoring_area"] = new_area.strip()
     _MAP_INFO.loc[map_id]["name"] = new_descr.strip()
 
