@@ -497,7 +497,7 @@ def export_to_gsheet(season, ndoc=0):
     sh = gc.open('Season Leaderboard')
     worksheet = sh.get_worksheet(ndoc)
     worksheet.format ('1', {'textFormat': {'bold': True}})
-    set_with_dataframe(worksheet, season)        
+    set_with_dataframe(worksheet, season)
 
 
 
@@ -589,6 +589,11 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
             season.index.name = "Seed Number"
             logging.info("Synching season scores to Google sheet...")
             export_to_gsheet(season.reset_index())
+            logging.info("...done")
+
+            logging.info("Synching overall leaderboard to Google sheet...")
+            overall = season.loc["Total"].sort_values()[::-1].T
+            export_to_gsheet(overall.reset_index(), ndoc=1)
             logging.info("...done")
 
     if reset:
