@@ -1221,7 +1221,7 @@ async def give(ctx):
             scr["score"] += val
     elif len(cmd) >= 1:
         # Give specified chatters points
-        for user in cmd:
+        for user in map(str.lower, cmd):
             if user in _USERS:
                 logging.debug(f"Adding {val} to {user} Fantasy Points")
                 _USERS[user]["score"] += val
