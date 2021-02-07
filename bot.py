@@ -1259,8 +1259,7 @@ async def event(ctx):
     status_string = ""
     if _STREAM_STATUS:
         logging.debug("Attempting to write specifics to stream status.")
-        last_frame = bot._last_status.get('frame', '')
-        status_string += f"({last_frame}) {event}: " + " ".join(args) + " "
+        status_string += f"{event}: " + " ".join(args) + " "
 
     did_error = False
     logging.debug((event, args, cats))
