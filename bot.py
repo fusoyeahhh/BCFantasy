@@ -1441,7 +1441,7 @@ async def explain(ctx):
     user = ctx.author.name
     for outstr in _chunk_string([f"@{user}: Use '!register' to get started.",
                      "You'll start with 1000 Fantasy Points to spend.",
-                     "You will !buy a character (!listchars), boss (!listbosses), and area (!listareas).",
+                     "You will !buy a character, boss, and area (see !bcfinfo for listings).",
                      "The chosen character will accrue Fantasy Points for killing enemies and bosses.",
                      "Bosses get Fantasy Points for kills and gameovers.",
                      "Areas get Fantasy Points for MIAB, character kills, and gameovers."],
