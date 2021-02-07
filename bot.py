@@ -1158,8 +1158,8 @@ async def remap(ctx):
         return
 
     # FIXME: does not check if area is valid
-    _MAP_INFO.loc[map_id]["scoring_area"] = new_area
     new_area = " ".join(new_area.split(" ")[1:])
+    _MAP_INFO.loc[map_id]["scoring_area"] = new_area.strip()
     _MAP_INFO.loc[map_id]["name"] = new_descr.strip()
 
     await ctx.send(f"Map ID {map_id} set to area {new_area}")
