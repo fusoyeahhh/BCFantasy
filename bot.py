@@ -996,6 +996,7 @@ async def listareas(ctx):
         return
 
     # Users get a link to the list so as not to spam chat
+    await ctx.send("Use !bcfinfo, please. This command will go away soon.")
     await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
     return
 COMMANDS["listareas"] = listareas
@@ -1046,6 +1047,7 @@ async def listbosses(ctx):
             await ctx.send(outstr)
         return
 
+    await ctx.send("Use !bcfinfo, please. This command will go away soon.")
     await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_bosses.csv")
     return
 COMMANDS["listbosses"] = listbosses
@@ -1073,6 +1075,7 @@ async def listchars(ctx):
             await ctx.send(outstr)
         return
 
+    await ctx.send("Use !bcfinfo, please. This command will go away soon.")
     await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
     return
 COMMANDS["listchars"] = listchars
