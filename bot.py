@@ -1149,7 +1149,10 @@ async def remap(ctx):
         return
 
     new_area = ctx.content.split("|")
-    if len(new_area) == 2:
+    if len(new_area) == 3:
+        map_id, new_area, new_descr = new_area
+        map_id = int(map_id)
+    elif len(new_area) == 2:
         new_area, new_descr = new_area
     elif len(new_area) == 1:
         new_area, new_descr = new_area[0], _MAP_INFO.loc[map_id]["name"]
