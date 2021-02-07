@@ -1169,7 +1169,7 @@ async def remap(ctx):
 
     # write out new mappings
     _tmp = _MAP_INFO.reset_index()
-    _tmp["id"] = map(hex, _tmp["id"])
+    _tmp["id"] = [*map(hex, _tmp["id"])]
     _tmp.to_csv("new_map_ids.csv", index=False)
 ADMIN_COMMANDS["remap"] = remap
 
