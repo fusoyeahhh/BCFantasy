@@ -198,7 +198,7 @@ def convert_buffer_to_commands(logf, **kwargs):
             logging.info(f"Setting music context to {music_id} => {_CONTEXT['music']}")
 
         # Special check for Veldt area
-        if status.get("music_id", None) == 0x19:
+        if status.get("music_id", None) == 0x19 and int(status["map_id"]) not in {0x15E}:
             cmds.append(f"!set area=Veldt")
             logging.info("emu> " + cmds[-1])
         # check for map change
