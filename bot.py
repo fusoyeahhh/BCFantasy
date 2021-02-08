@@ -1237,7 +1237,8 @@ async def _set(ctx):
     if ctx.content.startswith("!set area"):
         try:
             _map = int(ctx.content.split("=")[-1])
-            await ctx.send(f"Entered map {_map} ({hex(_map)}): {_MAP_INFO.loc[_map].to_dict()}")
+            if _map != 0:
+                await ctx.send(f"Entered map {_map} ({hex(_map)}): {_MAP_INFO.loc[_map].to_dict()}")
         except Exception as e:
             logging.error(str(e))
             pass
