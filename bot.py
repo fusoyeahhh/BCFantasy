@@ -704,14 +704,6 @@ async def event_message(ctx):
             bot._skip_auth = True
             logging.debug(f"Auth state: {bot._skip_auth} | Internally sending command as {ctx.author.name}: '{ctx.content}'")
             await bot.handle_commands(ctx)
-            # FIXME: Temporary
-            if ctx.content.startswith("!set area"):
-                try:
-                    _map = int(ctx.content.split("=")[-1])
-                    await ctx.send(f"Entered map {_map} ({hex(_map)}): {_MAP_INFO.loc[_map].to_dict()}")
-                except Exception as e:
-                    logging.error(str(e))
-                    pass
     bot._skip_auth = False
 
     # restore original message
@@ -1240,6 +1232,15 @@ async def _set(ctx):
     if not (bot._skip_auth or _authenticate(ctx)):
         await ctx.send(f"I'm sorry, @{user}, I can't do that...")
         return
+
+    # FIXME: Temporary
+    if ctx.content.startswith("!set area"):
+        try:
+            _map = int(ctx.content.split("=")[-1])
+            await ctx.send(f"Entered map {_map} ({hex(_map)}): {_MAP_INFO.loc[_map].to_dict()}")
+        except Exception as e:
+            logging.error(str(e))
+            pass
 
     #print(f"_set | attempting set: {bot._skip_auth}")
     if _set_context(ctx.content):
