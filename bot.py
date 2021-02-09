@@ -692,7 +692,7 @@ async def event_message(ctx):
 
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands:
-            current_time = int(time.time() * 1e3)
+            current_time = datetime.datetime.now().strftime("%H:%M:%S")
             HISTORY[current_time] = ctx.content
             """
             if _STREAM_STATUS and line.startswith("!event"):
@@ -714,7 +714,7 @@ async def event_message(ctx):
         command = ctx.content.split(" ")[0][1:]
         if command in bot.commands and (bot._status != "paused" or _authenticate(ctx)):
             logging.debug("Processing user command...")
-            current_time = int(time.time() * 1e3)
+            current_time = datetime.datetime.now().strftime("%H:%M:%S")
             HISTORY[current_time] = ctx.content
 
             await bot.handle_commands(ctx)
@@ -745,7 +745,7 @@ async def event_message(ctx):
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                                       for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
 
-            events = [str(v) for v in HISTORY.values() if v.startswith("!event")][-3:]
+            events = [f"({t}) {v}" for t, v in HISTORY.items() if v.startswith("!event")][-3:]
             last_3 = "--- Last three events:\n" + "\n".join(events)
 
             if os.path.exists("_scoring.txt"):
