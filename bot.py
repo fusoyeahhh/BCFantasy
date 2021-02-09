@@ -1330,10 +1330,9 @@ async def event(ctx):
                     item = _check_term(_CONTEXT[cat], lookup, info, full=True)
                 elif cat == "char":
                     has_item = sel.get(cat, "").lower() == args[0].lower()
-                    item = args[0]
-                    if len(args) > 1:
-                        multi = int(args[1])
-                        item = _check_term(item, lookup, info, full=True)
+                    item = _check_term(args[0], lookup, info, full=True)
+                if len(args) > 1:
+                    multi = int(args[1])
             except Exception as e:
                 if not did_error:
                     did_error = True
