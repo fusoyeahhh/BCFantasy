@@ -745,7 +745,7 @@ async def event_message(ctx):
             leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                                       for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
 
-            logging.info("Logging last 3 of {len(HISTORY)} events.")
+            logging.info(f"Logging last 3 of {len(HISTORY)} events.")
             events = [f"({t}) {v}" for t, v in HISTORY.items() if v.startswith("!event")][-3:]
             last_3 = "--- Last three events:\n" + "\n".join(events)
 
