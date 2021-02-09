@@ -1375,7 +1375,7 @@ async def event(ctx):
     if _STREAM_STATUS:
         if os.path.exists("_scoring.txt"):
             with open("_scoring.txt", "r") as f:
-                status_string = f.read() + "\n" + status_string
+                status_string = f.read().strip() + "\n" + status_string
         with open("_scoring.txt", "w") as f:
             print(status_string, file=f, flush=True)
             logging.debug("Wrote specifics to stream status.")
