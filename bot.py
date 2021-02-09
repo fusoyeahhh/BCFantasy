@@ -747,6 +747,12 @@ async def event_message(ctx):
 
             events = [str(v) for v in HISTORY.values() if v.startswith("!event")][-3:]
             last_3 = "--- Last three events:\n" + "\n".join(events)
+
+            if os.path.exists("_scoring.txt"):
+                with open("_scoring.txt", "r") as f:
+                    last_3 += "\n" + f.read()
+                os.unlink("_scoring.txt")
+
             # truncate file
             with open(_STREAM_STATUS, "w") as f:
                 print(status + "\n\n" + leaderboard + "\n\n" + last_3 + "\n", file=f, flush=True)
@@ -1367,7 +1373,10 @@ async def event(ctx):
                 logging.info(f"\t{event}, {user} {sel['score'] - _score}")
 
     if _STREAM_STATUS:
-        with open(_STREAM_STATUS, "a") as f:
+        if os.path.exists("_scoring.txt"):
+            with open("_scoring.txt", "r") as f:
+                status_string = f.read() + "\n" + status_string
+        with open("_scoring.txt", "w") as f:
             print(status_string, file=f, flush=True)
             logging.debug("Wrote specifics to stream status.")
         # Let the message persist for a bit longer
