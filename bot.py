@@ -868,8 +868,9 @@ async def exploder(ctx):
         return
 
     # Remove user
-    del _USERS[user]
-    await ctx.send(f"Bye bye, @{user}")
+    if user in _USERS:
+        del _USERS[user]
+        await ctx.send(f"Bye bye, @{user}")
 COMMANDS["exploder"] = exploder
 
 @bot.command(name='userinfo')
