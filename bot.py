@@ -1348,13 +1348,13 @@ async def event(ctx):
             elif event == "miab" and has_item:
                 sel["score"] += int(item["MIAB"])
             elif event == "chardeath" and has_item:
-                sel["score"] += int(item["Kills Character"])
+                sel["score"] += int(item["Kills Character"]) * multi
             elif event == "bchardeath" and has_item:
-                sel["score"] += int(item["Kills Character"])
+                sel["score"] += int(item["Kills Character"]) * multi
             elif event == "enemykill" and has_item:
                 sel["score"] += int(item["Kills Enemy"]) * multi
             elif event == "bosskill" and has_item:
-                sel["score"] += int(item["Kills Boss"])
+                sel["score"] += int(item["Kills Boss"]) * multi
             elif event == "buff" and has_item:
                 sel["score"] += int(item["Buff"])
             elif event == "debuff" and has_item:
