@@ -751,7 +751,7 @@ async def event_message(ctx):
 
             if os.path.exists("_scoring.txt"):
                 with open("_scoring.txt", "r") as f:
-                    last_3 += "\n" + f.read()
+                    last_3 += "\n\n" + f.read()
                 os.unlink("_scoring.txt")
 
             # truncate file
