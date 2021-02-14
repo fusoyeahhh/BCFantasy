@@ -1568,7 +1568,10 @@ if _ENABLE_CC is not None:
                 eparty[i]._from_memory_range("memfile", slot=i + 4)
             logging.info(f"cc | Read and init'd {len(eparty)} entities in enemy party")
 
-            gctx = {"party": party, "eparty": eparty}
+            cant_run = read.read_memory("memfile")[0xB1][0]
+            bf = {"cant_run": cant_run}
+
+            gctx = {"party": party, "eparty": eparty, "bf": bf}
 
             logging.info(f"cc | Calling into cc subcommand {CC_CMDS[cmd]} ({cmd})")
             read.write_instructions(CC_CMDS[cmd](*args, **gctx))
