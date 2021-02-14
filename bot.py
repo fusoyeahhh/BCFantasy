@@ -1024,7 +1024,13 @@ async def mapinfo(ctx):
     """
     !mapinfo [map ID] list description of map id
     """
-    map_id = int(ctx.content.split()[1])
+    try:
+        _, map_id = ctx.content.split()
+    except ValueError:
+        logging.info("mapinfo | no map id, using context")
+        map_id = bot._last_status.get("map_id", 0)
+
+    map_id = int(map_id)
     if map_id in _MAP_INFO.index:
         await ctx.send(f"{map_id}: {_MAP_INFO.loc[map_id]['name']} (Area: {_MAP_INFO.loc[map_id]['scoring_area']})")
         return
