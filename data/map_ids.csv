@@ -12,10 +12,10 @@ id,name,scoring_area
 0xe,"Chocobo Stable, Outside (WOB, forested)",Towns
 0xf,"Chocobo Stable, Inside",Towns
 0x10,"Chocobo Stable, Outside (WOR, forested)",Towns
-0x11,"Falcon, Upper Deck",Airship
+0x11,Upper Deck of Falcon,Airship
 0x12,"Narshe, Northern Cliff, Intro",Narshe Ice Fields
-0x13,"Narshe, Town, Beginning (WOB)",Narshe (WoB)
-0x14,"Narshe, Town (WOB)",Narshe (WoB)
+0x13,Narshe Outside,Narshe (WoB)
+0x14,Narshe Outside,Narshe (WoB)
 0x15,"Narshe, North of Town, Beginning (WOB)",Narshe (WoB)
 0x16,"Narshe, Snow Battlefield (WOB)",Narshe Ice Fields
 0x17,"Narshe, Northern Cliff (WOB)",Narshe Ice Fields
@@ -34,12 +34,12 @@ id,name,scoring_area
 0x24,"Narshe, Mines Cart Rail Rooms (WOR)",Narshe (WoR)
 0x25,"Narshe, Mines Battle Room (WOR)",Narshe (WoR)
 0x26,"Narshe, Mines 1 (WOR)",Narshe (WoR)
-0x27,"Narshe, Outside, North, Beginning",Narshe (WoB)
+0x27,Narshe Outside North of Town,Narshe (WoB)
 0x28,"Narshe, Mines 1, Beginning (WOB)",Narshe (WoB)
-0x29,"Narshe, Mines 1 (WOB)",Narshe (WoB)
+0x29,Narshe Mines Room 1,Narshe (WoB)
 0x2c,"Narshe, Moogle's Room (WOR)",Narshe (WoB)
 0x2f,DUMMIED,
-0x32,"Narshe, Mines 2 (WOB)",Narshe (WoB)
+0x32,Narshe Terra Escape Cave,Narshe (WoB)
 0x37,"Figaro Castle, Outside",Towns
 0x39,"Figaro Castle, King's Bedroom",Towns
 0x3b,"Figaro Castle, Inside",Towns
@@ -48,14 +48,14 @@ id,name,scoring_area
 0x44,Cave to South Figaro WoR,South Figaro Cave
 0x45,"Cave to South Figaro, Rooms",South Figaro Cave
 0x4a,South Figaro Outside WoR,Towns
-0x4b,"South Figaro, Outside (WOB)",Towns
+0x4b,South Figaro Outside WoB,Towns
 0x4e,South Figaro Cafe,Towns
 0x51,South Figaro Rich Man's House,Towns
 0x53,South Figaro Rich Man's House Basement 1,Towns
 0x54,South Figaro Rich Man's House Basement 1 Clock Room,Towns
 0x56,Cider Guy/Duncan's Houses,Towns
 0x58,South Figaro Rich Man's House Basement 1 Save Point,Towns
-0x5e,"Sabin's House, Inside",Towns
+0x5e,Sabin's House Inside,Towns
 0x60,"Mt.Kolts, Outside",Mt. Koltz
 0x61,"Mt.Kolts, Outside Bridge",Mt. Koltz
 0x62,"Mt.Kolts, Outside Vargas Area",Mt. Koltz
@@ -93,7 +93,7 @@ id,name,scoring_area
 0x98,"Mobliz, Basement 2Waterfall Cave",Baren Falls
 0x99,Final Save Point Car,Phantom Train
 0x9b,"Mobliz, Outside (WOR)",Baren Falls
-0x9c,Veldt Shore,Baren Falls
+0x9c,Final Cutscene 11,
 0x9d,"Mobliz, Inn",Towns
 0x9e,Mobliz WoR Outside,Towns
 0x9f,"Mobliz, Relics",Baren Falls
@@ -132,7 +132,7 @@ id,name,scoring_area
 0xcf,Owzer's Mansion Basement,Owzer's Mansion
 0xd0,Chadarnook's Room,Owzer's Mansion
 0xd1,Owzer's Mansion Main Floor,Towns
-0xd7,"Esper World, Gate",Towns
+0xd7,Final Cutscene 19,
 0xd8,"Esper World, House",Towns
 0xd9,DUMMIED - boat dock,
 0xda,"Zozo, Outside",Zozo
@@ -270,13 +270,13 @@ id,name,scoring_area
 0x4,Shadow's Dream 1,
 0x5,Mog's Explanation,
 0x8,"Blackjack, Back Room",Airship
-0x2a,"Narshe, Mines Esper Room, Beginning (WOB)",Narshe (WoB)
+0x2a,Narshe Mines Esper Room,Narshe (WoB)
 0x2b,"Narshe, Mines Esper Room, Empty (WOB)",Narshe (WoB)
 0x2d,DUMMIED,
 0x2e,DUMMIED,
 0x30,"Narshe, Mines 2, From Secret (WOB)",Narshe (WoB)
 0x31,"Narshe, Mines Checkpoint (WOB)",Narshe (WoB)
-0x33,"Narshe, Mines Battle Room (WOB)",Narshe (WoB)
+0x33,Narshe Moogle Battle Cave,Narshe (WoB)
 0x34,"Narshe, Moogle's Room (WOB)",Narshe (WoB)
 0x35,Cave to Figaro Castle Room 2,South Figaro Cave
 0x36,"Figaro Castle, Submerging",Towns
@@ -289,10 +289,10 @@ id,name,scoring_area
 0x42,Figaro Castle Basement Regal Crown Room,Castle Figaro Basement
 0x43,"Figaro Castle, Outside, Nighttime",Towns
 0x46,Cave to South Figaro (WOB),South Figaro Cave
-0x47,"Cave to South Figaro, Entrance",South Figaro Cave
-0x48,"Cave to South Figaro, Room 2",South Figaro Cave
-0x49,"Cave to South Figaro, Room 1",South Figaro Cave
-0x4c,"South Figaro, Inn/Relics",Towns
+0x47,South Figaro Cave Entrance,South Figaro Cave
+0x48,South Figaro Cave Room 2,South Figaro Cave
+0x49,South Figaro Cave Turtle Room,South Figaro Cave
+0x4c,South Figaro Relic and Inn Shops,Towns
 0x4d,South Figaro Armory,Towns
 0x4f,DUMMIED,
 0x50,South Figaro Chocobo Stable,Towns
@@ -301,9 +301,9 @@ id,name,scoring_area
 0x57,South Figaro Rich Man's House Basement 1 Monster Room,South Figaro Basement
 0x59,South Figaro Rich Man's House Basement 2,Towns
 0x5a,Cave to South Figaro Entrance Room/Chest Room,South Figaro Cave
-0x5b,"South Figaro, Dock (WOR)",Towns
+0x5b,South Figaro Dock,Towns
 0x5c,Cave to Figaro Castle Room 1,South Figaro Cave
-0x5d,"Sabin's House, Outside",Towns
+0x5d,Sabin's House Outside,Towns
 0x5f,"Mt.Kolts, Entrance",Mt. Koltz
 0x63,DUMMIED,
 0x65,"Mt.Kolts, Exit",Mt. Koltz
@@ -317,9 +317,9 @@ id,name,scoring_area
 0x77,"Doma Castle, Outside (WOB)",Imperial Camp
 0x7a,Fanatic's Tower Floor 2 Treasure Room,Fanatic's Tower
 0x7c,Doma Castle Cyan's Room,Doma Castle
-0x81,"Ending, Phantom Forest",Phantom Forest
-0x82,"Gau's Father's House, Outside (WOR)",Towns
-0x88,"Phantom Train, Docking Station 4",Phantom Train
+0x81,Final Cutscene 15,
+0x82,Final Cutscene 18,
+0x88,Final Cutscene 16,
 0x8a,"Phantom Train, Docking Station 3",Phantom Train
 0x8b,"Phantom Train, Docking Station 1",Phantom Train
 0x8c,"Phantom Train, Outside 2",Phantom Train
@@ -333,11 +333,11 @@ id,name,scoring_area
 0xad,"Mt.Zozo, Outside Bridge",Mt. Zozo
 0xae,"Mt.Zozo, Outside 1",Mt. Zozo
 0xb4,Mt. Zozo Cyan's Cave,Mt. Zozo
-0xb6,"Crazy Man's House, Outside",Towns
-0xb7,"Crazy Man's House, Inside",Towns
-0xb8,"Nikeah, Ferry (WOB)",Towns
+0xb6,Final Cutscene 9,
+0xb7,Final Cutscene 13,
+0xb8,Final Cutscene 12,
 0xba,Inside House at Dragon's Neck,Towns
-0xbe,"DUMMIED - Kohlingen, Arsenal",Towns
+0xbe,Final Cutscene 17,
 0xc3,Kohlingen Phoenix House,Towns
 0xc4,Maranda Lola's House,Towns
 0xc5,Rachel's House,Towns
@@ -363,17 +363,17 @@ id,name,scoring_area
 0xf1,"Imperial Castle, Outside Roof",Towns
 0xfb,Vector Imperial Castle Banquet Room,Towns
 0xfc,Vector Imperial Castle Left Barracks,Towns
-0xfe,DUMMIED - Magitek Factory,Magitek Facility
-0xff,"Ending, Edgar and Sabin",
-0x100,"Ending, Falcon taking flight from Kefka's Tower",
+0xfe,Final Cutscene 4,
+0xff,Final Cutscene 2,
+0x100,Final Cutscene 5,
 0x101,"Ending, Locke and Celes 1",
-0x102,"Ending, Shadow, Strago, Gau 2",
-0x103,"Magitek Factory, Room 1",Magitek Facility
-0x104,"Magitek Factory, Room 2",Magitek Facility
-0x105,"Magitek Factory, Room 3 (Espers)",Magitek Facility
+0x102,Final Cutscene 3,
+0x103,Final Cutscene 10,
+0x104,Final Cutscene 7,
+0x105,Final Cutscene 6,
 0x109,Kefka's Tower Randomized Area 18,Kefka's Tower
 0x10b,Kefka's Tower Leafer Staircase Room,Kefka's Tower
-0x10c,"Magitek Res. Facility, Room 1",Magitek Facility
+0x10c,Final Cutscene 8,
 0x10d,Magitek Staircase Room,Magitek Facility
 0x10e,"Magitek Res. Facility, Room 2 (Number 042)",Magitek Facility
 0x10f,Magitek Research Facility Capsule Room,Magitek Facility
@@ -388,7 +388,7 @@ id,name,scoring_area
 0x11e,Kefka's Tower Randomized Area 16,Kefka's Tower
 0x123,Kefka's Tower Guardian Room,Kefka's Tower
 0x124,Kefka's Tower Switch Platform Room,Kefka's Tower
-0x12e,"Tzen, Outside (WOR)",Towns
+0x12e,Final Cutscene 14,
 0x130,Kefka's Tower Fixed Dice Room,Kefka's Tower
 0x137,Collapsing House,Collapsing House
 0x13c,"Cyan's Dream, Magitek Caves, Outside",Cyan's Dream
