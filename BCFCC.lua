@@ -1,4 +1,9 @@
 
+memreads = {
+    [0x3AA0] = 0x3F1F - 0x3AA0,
+    [0x00B1] = 1,
+}
+
 -- Main loop
 while true do
 	emu.frameadvance()
@@ -32,23 +37,34 @@ while true do
     -- Write binary to disk
     memfile = io.open("_memfile", "wb")
 
-    -- Write address and length of buffer
-    memfile:write(string.char(bit.rshift(0x3AA0, 8)))
-    memfile:write(string.char(bit.band(0x3AA0, 0xFF)))
-    bufsize = #mem
-    memfile:write(string.char(bit.rshift(bufsize, 8)))
-    memfile:write(string.char(bit.band(bufsize, 0xFF)))
+    -- TODO: Perhaps have it read this from a file
+    for addr,mlen in pairs(memreads) do
+        --print(addr .. " " .. mlen)
+        mem = memory.readbyterange(addr, mlen)
 
-    -- Write the memory values
-    for addr,val in pairs(mem) do
-        --print(addr .. " " .. val)
-        memfile:write(string.char(val))
+        -- Write address and length of buffer
+        memfile:write(string.char(bit.rshift(addr, 8)))
+        memfile:write(string.char(bit.band(addr, 0xFF)))
+        bufsize = #mem
+        memfile:write(string.char(bit.rshift(bufsize, 8)))
+        memfile:write(string.char(bit.band(bufsize, 0xFF)))
+
+        -- Write the memory values
+        for _addr,val in pairs(mem) do
+            --print(addr .. " " .. val)
+            memfile:write(string.char(val))
+        end
     end
 
     io.flush(memfile)
     io.close(memfile)
 
     -- rename to the filename expected by python
+    -- Note that because we can't find an atomic file rename
+    -- that the python code is stuck waiting for polling from
+    -- the lua doing this since it can catch it in between writes
+    -- PLEASE NOTE HOW STUPID THIS IS. LUA: YOU ARE THE WORST.
+    os.remove("memfile")
     os.rename("_memfile", "memfile")
 
     -- Write current events to screen
