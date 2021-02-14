@@ -387,10 +387,9 @@ def modify_item(*args):
 def cant_run(toggle=None, **kwargs):
     logging.info(f"cant_run | toggle ({toggle}), kwargs {[*kwargs.keys()]}")
     mask = 1 << 2
-    mem = read.read_memory()
-    # FIXME: need actual memory chunk to read from
-    #val = mem[0x00B1]
-    val = 0
+    # FIXME: do raw read here instead?
+    #mem = read.read_memory()
+    val = kwargs["bf"]["cant_run"]
     if toggle is not None:
         val ^= mask
     else:
