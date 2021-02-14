@@ -61,11 +61,12 @@ class MemoryRegion(object):
         """
         mem = read.read_memory(memfile)
         logging.debug(f"_from_memory_range | chunk addrs: {','.join(map(str, mem.keys()))}")
-        assert len(mem) == 1, f"bad memory read, found {len(mem)} pointers"
+        #assert len(mem) == 1, f"bad memory read, found {len(mem)} pointers"
 
-        start_addr = [*mem.keys()][0]
-        # splay data into addresses
-        self.mem = {start_addr + i: m for i, m in enumerate(mem[start_addr])}
+        self.mem = {}
+        for start_addr in mem:
+            # splay data into addresses
+            self.mem.update({start_addr + i: m for i, m in enumerate(mem[start_addr])})
 
         return
 
