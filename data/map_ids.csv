@@ -1,17 +1,17 @@
 id,name,scoring_area
-0x0,"World of Balance, World Map",WoB Overworld
-0x1,"World of Ruin, World Map",WoR Overworld
-0x2,"Serpent Trench, World Map",Serpent Trench
-0x6,"Blackjack, Upper Deck (general use)",Airship
-0x7,"Blackjack, Inside",Airship
-0x9,“Choose A Scenario”,
+0x0,World of Balance World Map,WoB Overworld
+0x1,World of Ruin World Map,WoR Overworld
+0x2,Serpent Trench World Map,Serpent Trench
+0x6,Blackjack Upper Deck,Airship
+0x7,Blackjack Inside,Airship
+0x9,Choose a Scenario Screen,
 0xa,"Blackjack, Upper Deck (IAF sequence)",Airship
 0xb,"Falcon, Upper Deck",Airship
 0xc,"Falcon, Inside",Airship
 0xd,"Falcon, Roof, Landing on Kefka's Tower",Airship
-0xe,"Chocobo Stable, Outside (WOB, forested)",Towns
-0xf,"Chocobo Stable, Inside",Towns
-0x10,"Chocobo Stable, Outside (WOR, forested)",Towns
+0xe,Chocobo Stable Outside WoB,Towns
+0xf,Chocobo Stable Inside,Towns
+0x10,Chocobo Stable Outside WoR,Towns
 0x11,Upper Deck of Falcon,Airship
 0x12,"Narshe, Northern Cliff, Intro",Narshe Ice Fields
 0x13,Narshe Outside,Narshe (WoB)
@@ -56,59 +56,59 @@ id,name,scoring_area
 0x56,Cider Guy/Duncan's Houses,Towns
 0x58,South Figaro Rich Man's House Basement 1 Save Point,Towns
 0x5e,Sabin's House Inside,Towns
-0x60,"Mt.Kolts, Outside",Mt. Koltz
-0x61,"Mt.Kolts, Outside Bridge",Mt. Koltz
-0x62,"Mt.Kolts, Outside Vargas Area",Mt. Koltz
-0x64,"Mt.Kolts, Cave",Mt. Koltz
+0x60,Mt. Kolts Cliffs Outside Areas,Mt. Kolts
+0x61,Mt. Kolts Cliffs Rope Bridge,Mt. Kolts
+0x62,Mt. Kolts Vargas Spiral Cliffs,Mt. Kolts
+0x64,Mt. Kolts Cave Interiors,Mt. Kolts
 0x69,"Narshe, School, Adv. Battle Tactics",Narshe (WoB)
 0x6a,"Narshe, School, Battle TacticsNarshe, School, Environmental Science",Narshe (WoB)
 0x6b,"Returner's Hideout, Entrance",Towns
-0x6d,"Returner's Hideout, Rooms",Towns
-0x6f,Tunnel to Lete River,Towns
-0x71,Lete River Cave,Lete River
-0x72,"Gau's Father's House, Outside",Towns
-0x73,"Gau's Father's House, Inside",Towns
+0x6d,Returners' Hideout Room 1,Towns
+0x6f,Returners' Hideout Inn,Towns
+0x71,Lete River,Lete River
+0x72,Lete River Save Point Caves,Lete River
+0x73,Gau's Dad's House Outside WoB,Towns
 0x74,Gau's Dad's House Inside,Towns
-0x75,DUMMIED,
-0x78,"Doma Castle, Outside Poisoning (WOB)",Doma Castle
-0x79,DUMMIED,
+0x75,Imperial Camp,Imperial Camp
+0x78,Doma Castle Outside WoB,Doma Castle
+0x79,Doma Castle Poisoned Outside,Doma Castle
 0x7b,Doma Castle Interiors,Doma Castle
 0x7d,Cyan's Dream Doma Castle Outside,Cyan's Dream
 0x7e,Cyan's Dream Doma Castle Inside,Cyan's Dream
 0x7f,Duncan's House Outside WoR,Towns
 0x80,Duncan's House Inside,Towns
 0x83,Gau's Dad's House Outside WoR,Towns
-0x84,Phantom Forest 2,Phantom Forest
-0x85,Phantom Forest 3,Phantom Forest
-0x86,Phantom Forest 4,Phantom Forest
-0x87,"Ending, mountain bridge",
-0x89,"Phantom Train, Docking Station 2",Phantom Train
-0x8e,"Cyan's Dream, Phantom Train, Outside",Phantom Train
+0x84,Phantom Forest 1,Phantom Forest
+0x85,Phantom Forest 2,Phantom Forest
+0x86,Phantom Forest 3,Phantom Forest
+0x87,Phantom Forest 4,Phantom Forest
+0x89,Phantom Train Station 2,Phantom Train
+0x8e,Phantom Train Outside,Phantom Train
 0x90,Cyan's Dream Phantom Train Lump of Coal Car,Cyan's Dream
-0x91,"Phantom Train, Restaurant",Phantom Train
+0x91,Phantom Train Car 1 & 2 & 3,Phantom Train
 0x92,Phantom Train Engine Room,Phantom Train
-0x93,"Phantom Train, Inside 2",Phantom Train
-0x95,"Phantom Train, Inside 3",Phantom Train
-0x97,"Phantom Train, Inside Rooms",Phantom Train
-0x98,"Mobliz, Basement 2Waterfall Cave",Baren Falls
-0x99,Final Save Point Car,Phantom Train
-0x9b,"Mobliz, Outside (WOR)",Baren Falls
-0x9c,Final Cutscene 11,
-0x9d,"Mobliz, Inn",Towns
+0x93,Phantom Train Dining Car,Phantom Train
+0x95,Phantom Train Middle Car with Switch and Save Point,Phantom Train
+0x97,Phantom Train Cars with 2 Rooms Inside,Phantom Train
+0x98,Phantom Train Caboose with Ghost,Phantom Train
+0x99,Phantom Train Final Save Point Car / Inside Small Rooms,Phantom Train
+0x9b,Baren Falls Cave Inside,Baren Falls
+0x9c,Baren Falls Jump Ledge,Baren Falls
+0x9d,Mobliz Outside,Towns
 0x9e,Mobliz WoR Outside,Towns
-0x9f,"Mobliz, Relics",Baren Falls
+0x9f,Gau's Ledge after Baren Falls,Baren Falls
 0xa0,"Mobliz, Mail House",Towns
-0xa1,"Mobliz, Item Shop",Towns
-0xa2,Mobliz Relic Shop WoR,Towns
+0xa1,Mobliz Armory,Towns
+0xa2,Mobliz Relic Shop,Towns
 0xa3,Mobliz Courier's House,Towns
-0xa4,Veldt Cave to Waterfall,Towns
+0xa4,Mobliz Item Shop,Towns
 0xa5,Mobliz Courier's House Basement,Towns
-0xa6,"Nikeah, Outside",Baren Falls
-0xa7,Veldt Shore,Towns
+0xa6,Baren Falls Cave Outside,Baren Falls
+0xa7,Serpent Trench Entrance Cave,Serpent Trench
 0xa8,"Nikeah, Inn",Towns
 0xa9,Nikeah Outside,Towns
 0xaa,"Nikeah, Chocobo Stable",Towns
-0xaf,"Mt.Zozo, Outside 2",Serpent Trench
+0xaf,Serpent Trench Caves,Serpent Trench
 0xb0,Mt. Zozo Rope Bridge,Mt. Zozo
 0xb1,Mt. Zozo Cliff Chest,Mt. Zozo
 0xb2,Mt. Zozo Cliff,Mt. Zozo
@@ -274,10 +274,10 @@ id,name,scoring_area
 0x2b,"Narshe, Mines Esper Room, Empty (WOB)",Narshe (WoB)
 0x2d,DUMMIED,
 0x2e,DUMMIED,
-0x30,"Narshe, Mines 2, From Secret (WOB)",Narshe (WoB)
-0x31,"Narshe, Mines Checkpoint (WOB)",Narshe (WoB)
+0x30,Narshe Cave Banon Escape Bridge Room,Narshe (WoB)
+0x31,Narshe Cave Banon Escape Checkpoint Room,Narshe (WoB)
 0x33,Narshe Moogle Battle Cave,Narshe (WoB)
-0x34,"Narshe, Moogle's Room (WOB)",Narshe (WoB)
+0x34,Narshe Cave Moogle Room,Narshe (WoB)
 0x35,Cave to Figaro Castle Room 2,South Figaro Cave
 0x36,"Figaro Castle, Submerging",Towns
 0x38,"Figaro Desert, Kefka & Troops",Towns
@@ -304,17 +304,17 @@ id,name,scoring_area
 0x5b,South Figaro Dock,Towns
 0x5c,Cave to Figaro Castle Room 1,South Figaro Cave
 0x5d,Sabin's House Outside,Towns
-0x5f,"Mt.Kolts, Entrance",Mt. Koltz
+0x5f,Mt. Kolts Entrance,Mt. Kolts
 0x63,DUMMIED,
-0x65,"Mt.Kolts, Exit",Mt. Koltz
-0x66,"Mt.Kolts, Cliffs",Mt. Koltz
-0x67,"Mt.Kolts, Cave Save Point",Towns
+0x65,Mt. Kolts Exit Area,Mt. Kolts
+0x66,Mt. Kolts Cliffs Outside Areas 2,Mt. Kolts
+0x67,Mt. Kolts Save Point Cave,Mt. Kolts
 0x68,Narshe Beginner's House,Towns
-0x6c,"Returner's Hideout, Inside",Towns
-0x6e,"Returner's Hideout, Inn",Towns
-0x70,Lete River,Lete River
+0x6c,Returners' Hideout Entrance,Towns
+0x6e,Returners' Hideout Room 2,Towns
+0x70,Returners' Hideout Hallway to Lete River,Towns
 0x76,Military Base Camp 2,Imperial Camp
-0x77,"Doma Castle, Outside (WOB)",Imperial Camp
+0x77,Imperial Camp Cyan Escape,Imperial Camp
 0x7a,Fanatic's Tower Floor 2 Treasure Room,Fanatic's Tower
 0x7c,Doma Castle Cyan's Room,Doma Castle
 0x81,Final Cutscene 15,
@@ -322,7 +322,7 @@ id,name,scoring_area
 0x88,Final Cutscene 16,
 0x8a,"Phantom Train, Docking Station 3",Phantom Train
 0x8b,"Phantom Train, Docking Station 1",Phantom Train
-0x8c,"Phantom Train, Outside 2",Phantom Train
+0x8c,Phantom Train Station,Phantom Train
 0x8d,"Phantom Train, Outside 1",Phantom Train
 0x8f,Cyan's Dream Phantom Train Outside,Cyan's Dream
 0x94,Mobliz Cut Scene,Towns
