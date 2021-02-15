@@ -5,8 +5,8 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 import read
 import numpy
 
-
 from ff6_flags import STATUS_FLAGS, _validate_status
+from ff6_flags import ELEM_FLAGS, _validate_elems
 
 def commit(fcn, addr):
     # decorator to commit changes to memory
@@ -441,6 +441,12 @@ def set_stat(stat, val, slot=0, **kwargs):
     c.change_stat(stat, int(val))
     return write_arbitrary(*map(hex, c.flush()))
 
+def nullify_element(elem, **kwargs):
+    logging.info(f"set_stat | elem ({elem})")
+    if not _validate_elems(elem):
+        raise ValueError(f"Invalid element {elem}")
+    return write_arbitrary(*["0x3EC8", hex(ELEM_FLAGS[elem])])
+
 def fallen_one(**kwargs):
     logging.info(f"fallen_one | kwargs {[*kwargs.keys()]}")
     write = []
@@ -546,3 +552,14 @@ if __name__ == "__main__":
     print("--- Ole Cape")
     print("!cc ole_cape")
     print(ole_cape(**gctx))
+
+    #
+    # Nullify element
+    #
+    print("--- Nullify Element (fire)")
+    print("!cc null_elem")
+    print(nullify_element("fire", **gctx))
+
+    print("--- Nullify Element (poison)")
+    print("!cc null_elem")
+    print(nullify_element("poison", **gctx))
