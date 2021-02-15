@@ -398,6 +398,7 @@ def cant_run(toggle=None, **kwargs):
     return write_arbitrary(*["0x00B1", hex(val)])
 
 def activate_golem(hp_val=1000, **kwargs):
+    logging.info(f"activate_golem | hp_val {hp_val}")
     # Other flags to set?
     # $3A81 - (used when $3A82 is loaded in 16-bit mode)
     # $3A82 Golem block targets (disabled if negative)
@@ -407,10 +408,12 @@ def activate_golem(hp_val=1000, **kwargs):
     # $AD Character 4 Block Type (-> $2C7B)
 
     # FIXME: don't do this manually
+    hp_val = int(hp_val)
     lowbyte, highbyte = hp_val & 0xFF, (hp_val >> 8)
     return write_arbitrary(*["0x3A36", hex(lowbyte), "0x3A37", hex(highbyte)])
 
 def ole_cape(**kwargs):
+    logging.info(f"ole_cape |")
     # by default, we do all?
     out, mask = [], 1 << 6
     for byt in range(0xAA, 0xAE):
@@ -442,7 +445,8 @@ def set_stat(stat, val, slot=0, **kwargs):
     return write_arbitrary(*map(hex, c.flush()))
 
 def set_name(name, actor=0, **kwargs):
-    # $1602 -$1607
+    logging.info(f"set_name | name {name}, actor ({actor})")
+
     actor = int(actor)
     if actor < 0 or actor >= 16:
         raise IndexError(f"Invalid party index {actor}.")
@@ -459,7 +463,7 @@ def set_name(name, actor=0, **kwargs):
     return write_arbitrary(*write)
 
 def nullify_element(elem, **kwargs):
-    logging.info(f"set_stat | elem ({elem})")
+    logging.info(f"nullify_element | elem ({elem})")
     if not _validate_elems(elem):
         raise ValueError(f"Invalid element {elem}")
     return write_arbitrary(*["0x3EC8", hex(ELEM_FLAGS[elem])])
