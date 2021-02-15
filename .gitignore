@@ -11,3 +11,4 @@ __pycache__
 *.json
 memfile
 instr
+stream_status.txt
