@@ -50,3 +50,19 @@ STATUS_FLAGS[3] = {k: 1 << i for i, k in
 
 def _validate_status(statuses):
     return set(statuses).issubset(set.union(*map(set, STATUS_FLAGS)))
+
+# Elemental Flags
+# From https://www.tales-cless.org/ff6hack/#elem
+# 1: Fire
+# 2: Ice
+# 3: Lightning
+# 4: Poison
+# 5: Wind
+# 6: Pearl
+# 7: Earth
+# 8: Water
+ELEM_FLAGS = {e: 1 << (i + 1) for i, e in
+                    enumerate(["fire", "ice", "lighting", "poison", "wind", "pearl", "earth", "water"])}
+
+def _validate_elems(*elems):
+    return set(elems).issubset(set(ELEM_FLAGS))
