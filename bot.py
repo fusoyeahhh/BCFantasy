@@ -3,6 +3,7 @@ import os
 import time
 import datetime
 import shutil
+import asyncio
 import numpy
 import pandas
 import json
@@ -133,6 +134,16 @@ _CONTEXT = {
     "boss": None,
     "music": None
 }
+
+#
+# Asynchronous operations
+#
+
+async def _poll():
+    while True:
+        current_time = datetime.datetime.now().strftime("%H:%M:%S")
+        print(f"{current_time}: Last state update {bot._last_state_drop}")
+        await asyncio.sleep(10)
 
 #
 # Parsing
@@ -650,6 +661,9 @@ async def event_ready():
     ws = bot._ws
 
     logging.debug(f"Init'd: {bot._last_state_drop}, {bot._last_status}\nUsers: {len(_USERS)}")
+
+    # Event poller
+    asyncio.create_task(_poll())
 
 @bot.event
 async def event_message(ctx):
