@@ -405,7 +405,10 @@ def activate_golem(hp_val=1000, **kwargs):
     # $AB Character 2 Block Type (-> $2C79)
     # $AC Character 3 Block Type (-> $2C7A)
     # $AD Character 4 Block Type (-> $2C7B)
-    return write_arbitrary(*["0x3A36", hex(hp_val)])
+
+    # FIXME: don't do this manually
+    lowbyte, highbyte = hp_val & 0xFF, (hp_val >> 8)
+    return write_arbitrary(*["0x3A36", hex(lowbyte), "0x3A37", hex(highbyte)])
 
 def set_status(status, slot=0, **kwargs):
     logging.info(f"set_status | status {status}, slot ({slot}), kwargs {[*kwargs.keys()]}")
@@ -516,3 +519,15 @@ if __name__ == "__main__":
     print("--- Fallen One")
     print("!cc fallen_one")
     print(fallen_one(**gctx))
+
+    #
+    # Activate Golem
+    #
+    print("--- Activate Golem (default HP)")
+    print("!cc activate_golem")
+    print(activate_golem(**gctx))
+
+    # FIXME: no user setting for this yet
+    print("--- Activate Golem (custom HP)")
+    print("!cc activate_golem")
+    print(activate_golem(1234, **gctx))
