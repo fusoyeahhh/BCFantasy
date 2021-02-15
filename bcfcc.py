@@ -441,6 +441,23 @@ def set_stat(stat, val, slot=0, **kwargs):
     c.change_stat(stat, int(val))
     return write_arbitrary(*map(hex, c.flush()))
 
+def set_name(name, actor=0, **kwargs):
+    # $1602 -$1607
+    actor = int(actor)
+    if actor < 0 or actor >= 16:
+        raise IndexError(f"Invalid party index {actor}.")
+
+    # FIXME: Automatically truncates
+    _name = read.transcode(name)[:6]
+    name = [255] * 6
+    name[:len(_name)] = _name
+
+    write = []
+    off = actor * 37
+    for byt, chr in zip(range(0x1602, 0x1608), name):
+        write.extend([hex(byt + off), hex(chr)])
+    return write_arbitrary(*write)
+
 def nullify_element(elem, **kwargs):
     logging.info(f"set_stat | elem ({elem})")
     if not _validate_elems(elem):
@@ -563,3 +580,14 @@ if __name__ == "__main__":
     print("--- Nullify Element (poison)")
     print("!cc null_elem")
     print(nullify_element("poison", **gctx))
+
+    #
+    # Change name
+    #
+    print("--- Change name (normal)")
+    print("!cc change_name Test 0")
+    print(set_name("Test", slot=0, **gctx))
+
+    print("--- Change name (too long, bad chars, slot 3)")
+    print("!cc change_name T#esting 3")
+    print(set_name("T#esting", actor=3, **gctx))
