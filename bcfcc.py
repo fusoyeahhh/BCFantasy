@@ -410,6 +410,14 @@ def activate_golem(hp_val=1000, **kwargs):
     lowbyte, highbyte = hp_val & 0xFF, (hp_val >> 8)
     return write_arbitrary(*["0x3A36", hex(lowbyte), "0x3A37", hex(highbyte)])
 
+def ole_cape(**kwargs):
+    # by default, we do all?
+    out, mask = [], 1 << 6
+    for byt in range(0xAA, 0xAE):
+        out.extend([byt, 1 << 6])
+
+    return write_arbitrary(*map(hex, out))
+
 def set_status(status, slot=0, **kwargs):
     logging.info(f"set_status | status {status}, slot ({slot}), kwargs {[*kwargs.keys()]}")
     slot = int(slot)
@@ -531,3 +539,10 @@ if __name__ == "__main__":
     print("--- Activate Golem (custom HP)")
     print("!cc activate_golem")
     print(activate_golem(1234, **gctx))
+
+    #
+    # OLE!
+    #
+    print("--- Ole Cape")
+    print("!cc ole_cape")
+    print(ole_cape(**gctx))
