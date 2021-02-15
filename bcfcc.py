@@ -385,18 +385,17 @@ def modify_item(*args):
     return instr
 
 def cant_run(toggle=None, **kwargs):
-    logging.info(f"cant_run | toggle ({toggle}), kwargs {[*kwargs.keys()]}")
     mask = 1 << 2
+    logging.info(f"cant_run | toggle ({toggle}), kwargs {[*kwargs.keys()]}")
+
     # FIXME: do raw read here instead?
-    #mem = read.read_memory()
     val = kwargs["bf"]["cant_run"]
     if toggle is not None:
         val ^= mask
     else:
         val |= mask
 
-    #return write_arbitrary(*["0x00B1", hex(val)])
-    return write_arbitrary(*["0x00B1", hex(mask)])
+    return write_arbitrary(*["0x00B1", hex(val)])
 
 def set_status(status, slot=0, **kwargs):
     logging.info(f"set_status | status {status}, slot ({slot}), kwargs {[*kwargs.keys()]}")
@@ -456,6 +455,7 @@ if __name__ == "__main__":
         eparty[i]._from_memory_range("memfile", slot=i + 4)
 
     gctx = {"party": party, "eparty": eparty}
+    gctx["bf"] = {"cant_run": read.read_memory("memfile")[0xB1][0]}
 
     #
     # Can't run
