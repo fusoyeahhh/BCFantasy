@@ -397,6 +397,16 @@ def cant_run(toggle=None, **kwargs):
 
     return write_arbitrary(*["0x00B1", hex(val)])
 
+def activate_golem(hp_val=1000, **kwargs):
+    # Other flags to set?
+    # $3A81 - (used when $3A82 is loaded in 16-bit mode)
+    # $3A82 Golem block targets (disabled if negative)
+    # $AA Character 1 Block Type (-> $2C78) (0 = none, 1 = knife, 2 = sword, 3 = shield, 4 = zephyr cape, 5 = hand up, 6 = golem, 7 = dog)
+    # $AB Character 2 Block Type (-> $2C79)
+    # $AC Character 3 Block Type (-> $2C7A)
+    # $AD Character 4 Block Type (-> $2C7B)
+    return write_arbitrary(*["0x3A36", hex(hp_val)])
+
 def set_status(status, slot=0, **kwargs):
     logging.info(f"set_status | status {status}, slot ({slot}), kwargs {[*kwargs.keys()]}")
     slot = int(slot)
