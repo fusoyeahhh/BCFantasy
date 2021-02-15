@@ -1560,12 +1560,12 @@ if _ENABLE_CC is not None:
         "cant_run": bcfcc.cant_run,
         "fallen_one": bcfcc.fallen_one,
         "activate_golem": bcfcc.activate_golem,
+        "ole_cape": bcfcc.ole_cape,
         #"change_name": change_name,
         #"modify_item": modify_item,
         #"nullify_element": nullify_element (0x3EC8)
         #"swap_chars": swap_chars,
         #"give_doggo": give_interceptor, # enemy or player
-        #"ole_cape": ole_cape # only ever use cape animation to dodge
     }
 
     @bot.command(name='cc')
