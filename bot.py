@@ -1562,7 +1562,7 @@ if _ENABLE_CC is not None:
         "activate_golem": bcfcc.activate_golem,
         "ole_cape": bcfcc.ole_cape,
         "null_elem": bcfcc.nullify_element,
-        #"change_name": change_name,
+        "change_name": bcfcc.set_name,
         #"modify_item": modify_item,
         #"swap_chars": swap_chars,
         #"give_doggo": give_interceptor, # enemy or player
