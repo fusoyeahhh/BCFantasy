@@ -1255,6 +1255,30 @@ async def _set(ctx):
         await ctx.send(f"Sorry @{user}, that didn't work.")
 ADMIN_COMMANDS["set"] = _set
 
+@bot.command(name='whohas')
+async def whohas(ctx):
+    """
+    !whohas [item to search for]
+    """
+    user = ctx.author.name
+    #print(f"_set | checking auth: {bot._skip_auth}")
+    if not (bot._skip_auth or _authenticate(ctx)):
+        await ctx.send(f"I'm sorry, @{user}, I can't do that...")
+        return
+
+    item = " ".join(ctx.content.split(" ")[1:]).strip()
+    _users = pandas.DataFrame(_USERS).T
+
+    # Initial scan
+    # FIXME: implement a fuzzy match as well
+    found = _users.loc[(_users == item).any(axis=1)]
+    if len(found) == 0:
+        await ctx.send("No matches found.")
+        return
+
+    ctx.send(f"{item} | {', '.join(_users.index)}")
+ADMIN_COMMANDS["whohas"] = whohas
+
 @bot.command(name='give')
 async def give(ctx):
     """
