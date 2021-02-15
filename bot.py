@@ -1559,9 +1559,9 @@ if _ENABLE_CC is not None:
         "set_stat": bcfcc.set_stat,
         "cant_run": bcfcc.cant_run,
         "fallen_one": bcfcc.fallen_one,
+        "activate_golem": bcfcc.activate_golem,
         #"change_name": change_name,
         #"modify_item": modify_item,
-        #"activate_golem": activate_golem (0x3A36)
         #"nullify_element": nullify_element (0x3EC8)
         #"swap_chars": swap_chars,
         #"give_doggo": give_interceptor, # enemy or player
