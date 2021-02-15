@@ -26,6 +26,18 @@ def translate(word):
     """
     return "".join([_CHARS[i] for i in word])
 
+def transcode(word):
+    """
+    Transcode ASCII characters to the FF6 integer code equivalents. Drops any value which does not have a character mapping.
+
+    This is, roughly, the inverse of `translate`.
+
+    :param word: (str) characters to convert
+    :return: list of integers corresponding to characters
+    """
+    rmap = {v: k for k, v in _CHARS.items()}
+    return [rmap[c] for c in word if c in rmap]
+
 def parse_log_file(path="logfile.txt", last_frame=-1):
     """
     Parse the emulator / lua create log file. This file is assumed to have one JSON-type string on each line.
