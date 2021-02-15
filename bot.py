@@ -602,11 +602,6 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
             export_to_gsheet(season.reset_index())
             logging.info("...done")
 
-            logging.info("Synching overall leaderboard to Google sheet...")
-            overall = season.loc["Total"].sort_values()[::-1].T
-            export_to_gsheet(overall.reset_index(), ndoc=1)
-            logging.info("...done")
-
     if reset:
         os.makedirs("TRASH")
         # Renames instead of deleting to make sure user data integrity is only minimally threatened
