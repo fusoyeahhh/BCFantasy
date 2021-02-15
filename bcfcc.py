@@ -464,6 +464,11 @@ if __name__ == "__main__":
     print("!cc cant_run")
     print(cant_run(**gctx))
 
+    print("--- Can't run (with toggle)")
+    # FIXME: no user argument for this yet
+    print("!cc cant_run")
+    print(cant_run(True, **gctx))
+
     #
     # Set status
     #
