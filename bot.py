@@ -1285,7 +1285,7 @@ async def whohas(ctx):
         await ctx.send("No matches found.")
         return
 
-    ctx.send(f"{item} | {', '.join(_users.index)}")
+    await ctx.send(f"{item} | {', '.join(_users.index)}")
 ADMIN_COMMANDS["whohas"] = whohas
 
 @bot.command(name='give')
