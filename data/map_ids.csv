@@ -14,7 +14,7 @@ id,name,scoring_area
 0x10,Chocobo Stable Outside WoR,Towns
 0x11,Upper Deck of Falcon,Airship
 0x12,"Narshe, Northern Cliff, Intro",Narshe Ice Fields
-0x13,Narshe Outside,Narshe (WoB)
+0x13,Narshe Outside Magitek Sequence,Narshe (WoB)
 0x14,Narshe Outside,Narshe (WoB)
 0x15,"Narshe, North of Town, Beginning (WOB)",Narshe (WoB)
 0x16,"Narshe, Snow Battlefield (WOB)",Narshe Ice Fields
@@ -40,7 +40,7 @@ id,name,scoring_area
 0x2c,"Narshe, Moogle's Room (WOR)",Narshe (WoB)
 0x2f,DUMMIED,
 0x32,Narshe Terra Escape Cave,Narshe (WoB)
-0x37,"Figaro Castle, Outside",Towns
+0x37,Castle Figaro Submersion Cut Scene,Towns
 0x39,"Figaro Castle, King's Bedroom",Towns
 0x3b,"Figaro Castle, Inside",Towns
 0x3c,"Figaro Castle, Library",Towns
