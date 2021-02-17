@@ -385,7 +385,7 @@ def modify_item(*args):
     return instr
 
 def cant_run(toggle=None, **kwargs):
-    mask = 1 << 1
+    mask = 1 << 2
     logging.info(f"cant_run | toggle ({toggle}), kwargs {[*kwargs.keys()]}")
 
     # FIXME: do raw read here instead?
