@@ -390,6 +390,7 @@ def cant_run(toggle=None, **kwargs):
 
     # FIXME: do raw read here instead?
     val = kwargs["bf"]["cant_run"]
+    logging.info(f"cant_run | toggle ({toggle}), pre toggle value {val}")
     if toggle is not None:
         val ^= mask
     else:
