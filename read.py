@@ -165,15 +165,23 @@ def read_spoiler(spoilerf):
     return flags, seed, (music_map, char_map)
 
 
-def read_memory(fname="memfile"):
+def read_memory(fname="memfile", ntries=3):
     """
     Read a binary memory file generated from copying a section of the SNES emulator RAM. Assumed to be composed of an address, length, and array corresponding to that length.
 
     :param fname: Path to the memory file. Default is 'memfile'
     :return: A dictionary of address / memory chunk pairs
     """
-    with open(fname, "rb") as fin:
-        bytes = fin.read()
+    for _ in range(ntries):
+        # This is here because Lua is garbage.
+        try:
+            with open(fname, "rb") as fin:
+                bytes = fin.read()
+        except:
+            time.sleep(0.1)
+            pass
+    else:
+        raise ValueError("Could not read file {fname} after {ntries} tries.")
 
     mem = {}
     while len(bytes) > 0:
