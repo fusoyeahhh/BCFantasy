@@ -177,11 +177,11 @@ def read_memory(fname="memfile", ntries=3):
         try:
             with open(fname, "rb") as fin:
                 bytes = fin.read()
+            break
         except:
             time.sleep(0.1)
-            pass
     else:
-        raise ValueError("Could not read file {fname} after {ntries} tries.")
+        raise ValueError(f"Could not read file {fname} after {ntries} tries.")
 
     mem = {}
     while len(bytes) > 0:
