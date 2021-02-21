@@ -171,8 +171,11 @@ def write_status():
 
 async def _poll():
     while True:
-        if _STREAM_STATUS and os.path.exists("_scoring.txt"):
-            # FIXME: does this need an await?
+        mtime = os.path.getmtime("logfile.txt")
+        if _STREAM_STATUS and mtime > bot._last_state_drop:
+            bot._last_state_drop = mtime
+            mtime = datetime.datetime.fromtimestamp(mtime).strftime('%H:%M:%S')
+            print(f"{current_time}: New logfile update {mtime}")
             write_status()
             current_time = datetime.datetime.now().strftime("%H:%M:%S")
             print(f"{current_time}: Last state update {bot._last_state_drop}")
