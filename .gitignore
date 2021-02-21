@@ -12,3 +12,5 @@ __pycache__
 memfile
 instr
 stream_status.txt
+*.smc
+*/*.smc
