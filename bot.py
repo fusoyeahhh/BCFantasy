@@ -139,11 +139,43 @@ _CONTEXT = {
 # Asynchronous operations
 #
 
+def write_status():
+    status = " | ".join([f"{cat.capitalize()}: {val}" for cat, val in _CONTEXT.items()])
+    status = status.replace("Boss: ", "Last enc. boss: ")
+    map_id = bot._last_status.get("map_id", None)
+    # Append map info
+    if map_id in _MAP_INFO.index:
+        status += f" | Map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
+    # Append party info
+    party = [f"{name[1:-1]}: {alias}"
+             for name, alias in bot._last_status.get("party", {}).items() if name.startswith("(")]
+    if party:
+        status += " | Party: " + ", ".join(party)
+    # Append leaderboard
+    leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
+                              for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
+
+    logging.debug(f"Logging last 3 of {len(HISTORY)} events.")
+    events = [f"({t}) {v}" for t, v in sorted(HISTORY.items(), key=lambda kv: kv[0]) if v.startswith("!event")][-3:]
+    last_3 = "--- Last three events:\n" + "\n".join(events)
+
+    if os.path.exists("_scoring.txt"):
+        with open("_scoring.txt", "r") as f:
+            last_3 += "\n\n" + f.read()
+        os.unlink("_scoring.txt")
+
+    # truncate file
+    with open(_STREAM_STATUS, "w") as f:
+        print(status + "\n\n" + leaderboard + "\n\n" + last_3 + "\n", file=f, flush=True)
+
 async def _poll():
     while True:
-        current_time = datetime.datetime.now().strftime("%H:%M:%S")
-        print(f"{current_time}: Last state update {bot._last_state_drop}")
-        await asyncio.sleep(10)
+        if _STREAM_STATUS and os.path.exists("_scoring.txt"):
+            # FIXME: does this need an await?
+            write_status()
+            current_time = datetime.datetime.now().strftime("%H:%M:%S")
+            print(f"{current_time}: Last state update {bot._last_state_drop}")
+        await asyncio.sleep(1)
 
 #
 # Parsing
@@ -738,34 +770,7 @@ async def event_message(ctx):
 
         # Send the current game status to a file for streaming
         if _STREAM_STATUS:
-            status = " | ".join([f"{cat.capitalize()}: {val}" for cat, val in _CONTEXT.items()])
-            # rename to last enc. boss
-            status = status.replace("Boss: ", "Last enc. boss: ")
-            map_id = bot._last_status.get("map_id", None)
-            # Append map info
-            if map_id in _MAP_INFO.index:
-                status += f" | Map: ({map_id}), {_MAP_INFO.loc[map_id]['name']}"
-            # Append party info
-            party = [f"{name[1:-1]}: {alias}"
-                     for name, alias in bot._last_status.get("party", {}).items() if name.startswith("(")]
-            if party:
-                status += " | Party: " + ", ".join(party)
-            # Append leaderboard
-            leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
-                                      for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
-
-            logging.info(f"Logging last 3 of {len(HISTORY)} events.")
-            events = [f"({t}) {v}" for t, v in sorted(HISTORY.items(), key=lambda kv: kv[0]) if v.startswith("!event")][-3:]
-            last_3 = "--- Last three events:\n" + "\n".join(events)
-
-            if os.path.exists("_scoring.txt"):
-                with open("_scoring.txt", "r") as f:
-                    last_3 += "\n\n" + f.read()
-                os.unlink("_scoring.txt")
-
-            # truncate file
-            with open(_STREAM_STATUS, "w") as f:
-                print(status + "\n\n" + leaderboard + "\n\n" + last_3 + "\n", file=f, flush=True)
+            write_status()
 
 @bot.command(name='hi')
 async def hi(ctx):
