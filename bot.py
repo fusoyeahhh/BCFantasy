@@ -174,10 +174,10 @@ async def _poll():
         mtime = os.path.getmtime("logfile.txt")
         if _STREAM_STATUS and mtime > bot._last_state_drop:
             bot._last_state_drop = mtime
+            current_time = datetime.datetime.now().strftime("%H:%M:%S")
             mtime = datetime.datetime.fromtimestamp(mtime).strftime('%H:%M:%S')
             print(f"{current_time}: New logfile update {mtime}")
             write_status()
-            current_time = datetime.datetime.now().strftime("%H:%M:%S")
             print(f"{current_time}: Last state update {bot._last_state_drop}")
         await asyncio.sleep(1)
 
