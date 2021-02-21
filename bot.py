@@ -156,8 +156,9 @@ def write_status():
                               for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
 
     logging.debug(f"Logging last 3 of {len(HISTORY)} events.")
+    current_time = datetime.datetime.now().strftime("%H:%M:%S")
     events = [f"({t}) {v}" for t, v in sorted(HISTORY.items(), key=lambda kv: kv[0]) if v.startswith("!event")][-3:]
-    last_3 = "--- Last three events:\n" + "\n".join(events)
+    last_3 = f"--- [{current_time}] Last three events:\n" + "\n".join(events)
 
     if os.path.exists("_scoring.txt"):
         with open("_scoring.txt", "r") as f:
@@ -794,7 +795,7 @@ COMMANDS["bcfflags"] = bcfflags
 @bot.command(name='music')
 async def music(ctx):
     """
-    !music -> with no arguments, lists curent music. With 'list' lists all conversions, with an argument looks up info on mapping.
+    !music -> with no arguments, lists current music. With 'list' lists all conversions, with an argument looks up info on mapping.
     """
     cmds = ctx.content.split(" ")
     logging.debug(f"Querying music.")
