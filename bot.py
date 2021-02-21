@@ -255,6 +255,9 @@ def convert_buffer_to_commands(logf, **kwargs):
 
         # check for boss encounter
         # FIXME: go by enemy id, rather than formation id
+        logging.info(f"Checking formation, this: {status.get('eform_id', None)} "
+                     f"last: {last_status.get('eform_id', None)} "
+                     f"(in battle: {status.get('in_battle', None)})")
         if status["in_battle"] and status["eform_id"] != last_status.get("eform_id", None):
             logging.info(f"New encounter: {status['eform_id']}, is miab? {status['is_miab']}")
             if int(status["eform_id"]) in _BOSS_INFO["Id"].values:
