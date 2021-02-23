@@ -458,6 +458,7 @@ def _check_term(term, lookup, info, space_suppress=True, full=False, allow_multi
         found = info[lookup].str.lower() == _term.lower()
         found = info.loc[found]
 
+    logging.info(f"check_term | Found {len(found)} matches for {term} in {lookup}")
     if len(found) == 0:
         raise KeyError(f"No matches found for {term} in {lookup}")
     if len(found) != 1:
