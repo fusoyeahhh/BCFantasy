@@ -429,7 +429,7 @@ def _chunk_string(inlist, joiner=", "):
         # continue concatenating
         outstr += joiner + str(inlist.pop(0))
 
-def _check_term(term, lookup, info, space_suppress=True, full=False):
+def _check_term(term, lookup, info, space_suppress=True, full=False, allow_multiple=False):
     """
     Generic function to check and look up a term in a given lookup table. Assumes there is exactly one match for the term.
 
@@ -441,6 +441,7 @@ def _check_term(term, lookup, info, space_suppress=True, full=False):
     :param info: (pandas.DataFrame) lookup table to match against
     :param space_suppress: whether to check variations of the term which do not contain spaces
     :param full: require a full match
+    :param allow_multiple: allow (and return) multiple matches
     :return: value in column `lookup` matching key `term` from table `info`
     """
     _term = str(term).replace("(", r"\(").replace(")", r"\)")
@@ -458,7 +459,10 @@ def _check_term(term, lookup, info, space_suppress=True, full=False):
     if len(found) == 0:
         raise KeyError(f"No matches found for {term} in {lookup}")
     if len(found) != 1:
-        raise KeyError(f"Too many matches found for {term}:\n" + str(found))
+        if allow_multiple:
+            return [*map(str, found[lookup])]
+        else:
+            raise KeyError(f"Too many matches found for {term}:\n" + str(found))
     if full:
         return found
     return str(found[lookup].iloc[0])
@@ -972,7 +976,11 @@ async def buy(ctx):
         if cat in LOOKUPS:
             lookup, info = LOOKUPS[cat]
             try:
-                item = _check_term(item, lookup, info)
+                item = _check_term(item, lookup, info, allow_multiple=True)
+                if not isinstance(item, str):
+                    matches = ', '.join(item)
+                    await ctx.send(f"@{user}: that {cat} selection is invalid. Possible matches: {matches}")
+                    return
             except KeyError:
                 await ctx.send(f"@{user}: that {cat} selection is invalid.")
                 return
