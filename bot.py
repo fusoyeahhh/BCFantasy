@@ -458,7 +458,7 @@ def _check_term(term, lookup, info, space_suppress=True, full=False, allow_multi
         found = info[lookup].str.lower() == _term.lower()
         found = info.loc[found]
 
-    logging.info(f"check_term | Found {len(found)} matches for {term} in {lookup}")
+    logging.debug(f"check_term | Found {len(found)} matches for {term} in {lookup}")
     if len(found) == 0:
         raise KeyError(f"No matches found for {term} in {lookup}")
     if len(found) != 1:
@@ -982,11 +982,11 @@ async def buy(ctx):
                 item = _check_term(item, lookup, info, allow_multiple=True)
                 if not isinstance(item, str):
                     matches = ', '.join(item)
-                    logging.info(f"Multiple items found for {item}")
+                    logging.debug(f"Multiple items found for {item}")
                     await ctx.send(f"@{user}: that {cat} selection is invalid. Possible matches: {matches}")
                     return
             except KeyError:
-                logging.error(f"Tried to buy {item}, but encountered a lookup error.")
+                logging.debug(f"Tried to buy {item}, but encountered a lookup error.")
                 await ctx.send(f"@{user}: that {cat} selection is invalid.")
                 return
             cost = info.set_index(lookup).loc[item]["Cost"]
