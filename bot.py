@@ -979,9 +979,11 @@ async def buy(ctx):
                 item = _check_term(item, lookup, info, allow_multiple=True)
                 if not isinstance(item, str):
                     matches = ', '.join(item)
+                    logging.info(f"Multiple items found for {item}")
                     await ctx.send(f"@{user}: that {cat} selection is invalid. Possible matches: {matches}")
                     return
             except KeyError:
+                logging.error(f"Tried to buy {item}, but encountered a lookup error.")
                 await ctx.send(f"@{user}: that {cat} selection is invalid.")
                 return
             cost = info.set_index(lookup).loc[item]["Cost"]
