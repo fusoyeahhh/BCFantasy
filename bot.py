@@ -179,6 +179,8 @@ async def _poll():
             print(f"{current_time}: New logfile update {mtime}")
             write_status()
             print(f"{current_time}: Last state update {bot._last_state_drop}")
+            logging.debug("Serializing state...")
+            serialize(pth=_CHKPT_DIR)
         await asyncio.sleep(1)
 
 #
