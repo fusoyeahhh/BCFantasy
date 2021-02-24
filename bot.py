@@ -1468,7 +1468,7 @@ async def stop(ctx):
     # Just stopping for the moment, checkpoint and move on.
     serialize(pth=_CHKPT_DIR)
     if len(cmd) == 0:
-        await ctx.send("Checkpointing complete.")
+        await ctx.send("HAMMER TIME. (Checkpointing complete.)")
         return
 
     pth = os.path.join("./", _SEED or datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
