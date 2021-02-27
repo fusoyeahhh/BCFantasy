@@ -70,25 +70,7 @@ _CHAT_READBACK = False
 _STREAM_STATUS = "./stream_status.txt"
 _STREAM_COOLDOWN = int(opts.pop("stream_status_cooldown", 20))
 
-# FIXME: Move to library
-_ACTOR_MAP = {
-    0x0: "Terra",
-    0x1: "Locke",
-    0x2: "Cyan",
-    0x3: "Shadow",
-    0x4: "Edgar",
-    0x5: "Sabin",
-    0x6: "Celes",
-    0x7: "Strago",
-    0x8: "Relm",
-    0x9: "Setzer",
-    0xA: "Mog",
-    0xB: "Gau",
-    0xC: "Gogo",
-    0xD: "Umaro",
-    #0xE: "Guest actor 1",
-    #0xF: "Guest actor 2"
-}
+from bcf import _ACTOR_MAP
 
 def _authenticate(ctx):
     """
