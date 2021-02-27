@@ -315,6 +315,85 @@ def convert_buffer_to_commands(logf, **kwargs):
 
     return cmds, last_status
 
+def _validate_event(event_cmd):
+    event = event_cmd.lower().split(" ")[1:]
+    event, args = event[0], event[1:]
+    cats = {v for k, v in _EVENTS.items() if event in k}
+    if len(cats) == 0:
+        raise IndexError("Could not find corresponding item category for this lookup.")
+    return event, args
+
+def handle_event(event, *args):
+    status_string = ""
+    if _STREAM_STATUS:
+        logging.debug("Attempting to write specifics to stream status.")
+        status_string += f"{event}: " + " ".join(args) + " "
+
+    cats = {v for k, v in _EVENTS.items() if event in k}
+    did_error = False
+    logging.debug((event, args, cats))
+    for cat in cats:
+        for user, sel in _USERS.items():
+
+            lookup, info = LOOKUPS[cat]
+            multi = 1
+            try:
+                if cat in {"boss", "area"}:
+                    has_item = sel.get(cat, "").lower() == (_CONTEXT[cat] or "").lower()
+                    item = _check_term(_CONTEXT[cat], lookup, info, full=True)
+                elif cat == "char":
+                    has_item = sel.get(cat, "").lower() == args[0].lower()
+                    item = _check_term(args[0], lookup, info, full=True)
+                if len(args) > 1:
+                    multi = int(args[1])
+            except Exception as e:
+                if not did_error:
+                    did_error = True
+                    logging.error(f"Failed lookup for {cat}: " + str(e))
+                continue
+
+            _score = sel["score"]
+            # FIXME, just map to appropriate column in row
+            if event in {"gameover", "bgameover"} and has_item:
+                sel["score"] += int(item["Gameover"])
+            elif event == "miab" and has_item:
+                sel["score"] += int(item["MIAB"])
+            elif event == "chardeath" and has_item:
+                sel["score"] += int(item["Kills Character"]) * multi
+            elif event == "bchardeath" and has_item:
+                sel["score"] += int(item["Kills Character"]) * multi
+            elif event == "enemykill" and has_item:
+                sel["score"] += int(item["Kills Enemy"]) * multi
+            elif event == "bosskill" and has_item:
+                sel["score"] += int(item["Kills Boss"]) * multi
+            elif event == "buff" and has_item:
+                sel["score"] += int(item["Buff"])
+            elif event == "debuff" and has_item:
+                sel["score"] += int(item["Debuff"])
+            #elif event == "backattack" and has_item:
+                #sel["score"] += 1
+            #elif event == "cantrun" and has_item:
+                #sel["score"] += 2
+            if _STREAM_STATUS:
+                score_diff = sel['score'] - _score
+                did_score = score_diff > 0
+                if did_score:
+                    status_string += f"{user} +{score_diff} "
+                    logging.debug("Wrote an item to stream status.")
+            else:
+                logging.info(f"\t{event}, {user} {sel['score'] - _score}")
+
+    if _STREAM_STATUS:
+        if os.path.exists("_scoring.txt"):
+            with open("_scoring.txt", "r") as f:
+                status_string = f.read().strip() + "\n" + status_string
+        with open("_scoring.txt", "w") as f:
+            print(status_string, file=f, flush=True)
+            logging.debug("Wrote specifics to stream status.")
+        # Let the message persist for a bit longer
+        bot._last_state_drop = int(time.time())
+
+
 #
 # Utils
 #
@@ -1383,84 +1462,16 @@ async def event(ctx):
         return
 
     try:
-        event = ctx.content.lower().split(" ")[1:]
-        event, args = event[0], event[1:]
-        cats = {v for k, v in _EVENTS.items() if event in k}
-        if len(cats) == 0:
-            raise IndexError()
+        event, args = _validate_event(ctx.content)
     except IndexError:
         await ctx.send(f"Invalid event command: {event}, {'.'.join(args)}")
         return
 
-    status_string = ""
-    if _STREAM_STATUS:
-        logging.debug("Attempting to write specifics to stream status.")
-        status_string += f"{event}: " + " ".join(args) + " "
-
-    did_error = False
-    logging.debug((event, args, cats))
-    for cat in cats:
-        for user, sel in _USERS.items():
-            #logging.info(user, sel.get("area", "").lower(), _CONTEXT["area"].lower())
-
-            lookup, info = LOOKUPS[cat]
-            multi = 1
-            try:
-                if cat in {"boss", "area"}:
-                    has_item = sel.get(cat, "").lower() == (_CONTEXT[cat] or "").lower()
-                    item = _check_term(_CONTEXT[cat], lookup, info, full=True)
-                elif cat == "char":
-                    has_item = sel.get(cat, "").lower() == args[0].lower()
-                    item = _check_term(args[0], lookup, info, full=True)
-                if len(args) > 1:
-                    multi = int(args[1])
-            except Exception as e:
-                if not did_error:
-                    did_error = True
-                    logging.error(f"Failed lookup for {cat}: " + str(e))
-                continue
-            #print(item, user)
-
-            _score = sel["score"]
-            # FIXME, just map to appropriate column in row
-            if event in {"gameover", "bgameover"} and has_item:
-                sel["score"] += int(item["Gameover"])
-            elif event == "miab" and has_item:
-                sel["score"] += int(item["MIAB"])
-            elif event == "chardeath" and has_item:
-                sel["score"] += int(item["Kills Character"]) * multi
-            elif event == "bchardeath" and has_item:
-                sel["score"] += int(item["Kills Character"]) * multi
-            elif event == "enemykill" and has_item:
-                sel["score"] += int(item["Kills Enemy"]) * multi
-            elif event == "bosskill" and has_item:
-                sel["score"] += int(item["Kills Boss"]) * multi
-            elif event == "buff" and has_item:
-                sel["score"] += int(item["Buff"])
-            elif event == "debuff" and has_item:
-                sel["score"] += int(item["Debuff"])
-            #elif event == "backattack" and has_item:
-                #sel["score"] += 1
-            #elif event == "cantrun" and has_item:
-                #sel["score"] += 2
-            if _STREAM_STATUS:
-                score_diff = sel['score'] - _score
-                did_score = score_diff > 0
-                if did_score:
-                    status_string += f"{user} +{score_diff} "
-                    logging.debug("Wrote an item to stream status.")
-            else:
-                logging.info(f"\t{event}, {user} {sel['score'] - _score}")
-
-    if _STREAM_STATUS:
-        if os.path.exists("_scoring.txt"):
-            with open("_scoring.txt", "r") as f:
-                status_string = f.read().strip() + "\n" + status_string
-        with open("_scoring.txt", "w") as f:
-            print(status_string, file=f, flush=True)
-            logging.debug("Wrote specifics to stream status.")
-        # Let the message persist for a bit longer
-        bot._last_state_drop = int(time.time())
+    try:
+        handle_event(event, *args)
+    except Exception as e:
+        logging.error(str(e))
+        logging.error(f"event | Unable to process event command: {event}, {'.'.join(args)}")
 
 
 _EVENT_TYPES = set().union(*_EVENTS.keys())
