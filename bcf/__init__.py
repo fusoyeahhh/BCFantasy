@@ -149,3 +149,42 @@ def convert_buffer_to_commands(logf, gamestate, **kwargs):
         logging.debug("Last status: " + str(last_status))
 
     return cmds, last_status
+
+def _check_term(term, lookup, info, space_suppress=True, full=False, allow_multiple=False):
+    """
+    Generic function to check and look up a term in a given lookup table. Assumes there is exactly one match for the term.
+
+    In general, the matching is lenient in so far as partial matches are allowed:
+        "Katana" and "KatanaSoul" will match "Katana Soul" when `space_supress` is True and `full` is False (default)
+
+    :param term: (str) term to match against lookup table
+    :param lookup: (str) column in lookup table to perform match on
+    :param info: (pandas.DataFrame) lookup table to match against
+    :param space_suppress: whether to check variations of the term which do not contain spaces
+    :param full: require a full match
+    :param allow_multiple: allow (and return) multiple matches
+    :return: value in column `lookup` matching key `term` from table `info`
+    """
+    _term = str(term).replace("(", r"\(").replace(")", r"\)")
+    found = info[lookup].str.lower().str.contains(_term.lower())
+    found = info.loc[found]
+
+    if space_suppress and len(found) == 0:
+        found = info[lookup].str.lower().str.replace(" ", "") == _term.lower().replace(" ", "")
+        found = info.loc[found]
+
+    if len(found) > 1:
+        found = info[lookup].str.lower() == _term.lower()
+        found = info.loc[found]
+
+    logging.debug(f"check_term | Found {len(found)} matches for {term} in {lookup}")
+    if len(found) == 0:
+        raise KeyError(f"No matches found for {term} in {lookup}")
+    if len(found) != 1:
+        if allow_multiple:
+            return [*map(str, found[lookup])]
+        else:
+            raise KeyError(f"Too many matches found for {term}:\n" + str(found))
+    if full:
+        return found
+    return str(found[lookup].iloc[0])
