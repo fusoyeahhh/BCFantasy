@@ -959,6 +959,19 @@ async def sell(ctx):
     _USERS[user]["score"] += value
 
     await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
+
+    status_string = f"{user} sold {item} ({cat}, {value})"
+    if _STREAM_STATUS:
+        # FIXME: May want to have a separate file tracker for this
+        if os.path.exists("_scoring.txt"):
+            with open("_scoring.txt", "r") as f:
+                status_string = f.read().strip() + "\n" + status_string
+        with open("_scoring.txt", "w") as f:
+            print(status_string, file=f, flush=True)
+            logging.debug("Wrote specifics to stream status.")
+        # Let the message persist for a bit longer
+        bot._last_state_drop = int(time.time())
+
 COMMANDS["sell"] = sell
 
 @bot.command(name='buy')
@@ -1012,6 +1025,19 @@ async def buy(ctx):
 
         _USERS[user][cat] = item
         await ctx.send(f"@{user}: got it. Your selection for {cat} is {item}")
+
+        status_string = f"{user} bought {item} ({cat}, {cost})"
+        if _STREAM_STATUS:
+            # FIXME: May want to have a separate file tracker for this
+            if os.path.exists("_scoring.txt"):
+                with open("_scoring.txt", "r") as f:
+                    status_string = f.read().strip() + "\n" + status_string
+            with open("_scoring.txt", "w") as f:
+                print(status_string, file=f, flush=True)
+                logging.debug("Wrote specifics to stream status.")
+            # Let the message persist for a bit longer
+            bot._last_state_drop = int(time.time())
+
         return
 
     except Exception as e:
