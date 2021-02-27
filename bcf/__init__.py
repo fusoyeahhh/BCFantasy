@@ -188,3 +188,38 @@ def _check_term(term, lookup, info, space_suppress=True, full=False, allow_multi
     if full:
         return found
     return str(found[lookup].iloc[0])
+
+def search(term, lookup, info):
+    """
+    Do a look up for a given term in the lookup column against a lookup table.
+
+    FIXME: Should we merge this with `check_term`?
+
+    :param term: (str) item to match
+    :param lookup: (str) column in lookup table to match against
+    :param info: (pandas.DataFrame) look up table to match against
+    :return: Result of search in English, or the exact match (in the case of one)
+    """
+
+    # escape parens
+    _term = term.replace("(", r"\(").replace(")", r"\)")
+    # Lower case searched column and term, then get partial match against term
+    found = info[lookup].str.lower().str.contains(_term.lower())
+    # retrieve partial matches
+    found = info.loc[found]
+
+    # Narrow to exact matches, if there is one
+    if len(found) > 1:
+        found = info[lookup].str.lower() == _term.lower()
+        found = info.loc[found]
+
+    # Still have more than one match, concatenate
+    if len(found) > 1:
+        found = ", ".join(found[lookup])
+        return f"Found more than one entry ({found}) for {term}"
+    # No matches at all
+    elif len(found) == 0:
+        return f"Found nothing matching {term}"
+    # Exactly one match
+    else:
+        return str(found.to_dict(orient='records')[0])[1:-1]
