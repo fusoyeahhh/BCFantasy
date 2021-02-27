@@ -1,3 +1,5 @@
+import os
+import time
 import logging
 from bcf import read
 
@@ -149,6 +151,84 @@ def convert_buffer_to_commands(logf, gamestate, **kwargs):
         logging.debug("Last status: " + str(last_status))
 
     return cmds, last_status
+
+def _validate_event(gamestate, event_cmd):
+    event = event_cmd.lower().split(" ")[1:]
+    event, args = event[0], event[1:]
+    cats = {v for k, v in gamestate._EVENTS.items() if event in k}
+    if len(cats) == 0:
+        raise IndexError("Could not find corresponding item category for this lookup.")
+    return event, args
+
+def handle_event(gamestate, event, *args):
+    status_string = ""
+    if gamestate._stream_status:
+        logging.debug("Attempting to write specifics to stream status.")
+        status_string += f"{event}: " + " ".join(args) + " "
+
+    cats = {v for k, v in gamestate._EVENTS.items() if event in k}
+    did_error = False
+    logging.debug((event, args, cats))
+    for cat in cats:
+        for user, sel in gamestate._user_data.items():
+
+            lookup, info = gamestate._lookups[cat]
+            multi = 1
+            try:
+                if cat in {"boss", "area"}:
+                    has_item = sel.get(cat, "").lower() == (gamestate._context[cat] or "").lower()
+                    item = _check_term(gamestate[cat], lookup, info, full=True)
+                elif cat == "char":
+                    has_item = sel.get(cat, "").lower() == args[0].lower()
+                    item = _check_term(args[0], lookup, info, full=True)
+                if len(args) > 1:
+                    multi = int(args[1])
+            except Exception as e:
+                if not did_error:
+                    did_error = True
+                    logging.error(f"Failed lookup for {cat}: " + str(e))
+                continue
+
+            _score = sel["score"]
+            # FIXME, just map to appropriate column in row
+            if event in {"gameover", "bgameover"} and has_item:
+                sel["score"] += int(item["Gameover"])
+            elif event == "miab" and has_item:
+                sel["score"] += int(item["MIAB"])
+            elif event == "chardeath" and has_item:
+                sel["score"] += int(item["Kills Character"]) * multi
+            elif event == "bchardeath" and has_item:
+                sel["score"] += int(item["Kills Character"]) * multi
+            elif event == "enemykill" and has_item:
+                sel["score"] += int(item["Kills Enemy"]) * multi
+            elif event == "bosskill" and has_item:
+                sel["score"] += int(item["Kills Boss"]) * multi
+            elif event == "buff" and has_item:
+                sel["score"] += int(item["Buff"])
+            elif event == "debuff" and has_item:
+                sel["score"] += int(item["Debuff"])
+            #elif event == "backattack" and has_item:
+                #sel["score"] += 1
+            #elif event == "cantrun" and has_item:
+                #sel["score"] += 2
+            if gamestate:
+                score_diff = sel['score'] - _score
+                did_score = score_diff > 0
+                if did_score:
+                    status_string += f"{user} +{score_diff} "
+                    logging.debug("Wrote an item to stream status.")
+            else:
+                logging.info(f"\t{event}, {user} {sel['score'] - _score}")
+
+    if gamestate:
+        if os.path.exists("_scoring.txt"):
+            with open("_scoring.txt", "r") as f:
+                status_string = f.read().strip() + "\n" + status_string
+        with open("_scoring.txt", "w") as f:
+            print(status_string, file=f, flush=True)
+            logging.debug("Wrote specifics to stream status.")
+        # Let the message persist for a bit longer
+        gamestate._last_state_drop = int(time.time())
 
 def _check_term(term, lookup, info, space_suppress=True, full=False, allow_multiple=False):
     """
