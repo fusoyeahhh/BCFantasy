@@ -14,3 +14,4 @@ instr
 stream_status.txt
 *.smc
 */*.smc
+*.png
