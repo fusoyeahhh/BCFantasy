@@ -13,6 +13,7 @@ from twitchio.ext import commands
 import glob
 
 import read
+from bcf.utils import export_to_gsheet
 
 #
 # Configuration
@@ -599,25 +600,6 @@ def search(term, lookup, info):
     # Exactly one match
     else:
         return str(found.to_dict(orient='records')[0])[1:-1]
-
-def export_to_gsheet(season, ndoc=0):
-    """
-    Export a `pandas.DataFrame` to a google sheet. Used to synch the season leaderboard.
-
-    :param season: `pandas.DataFrame` to synch
-    :param ndoc: Identifier of the sheet to synch
-    :return: None
-    """
-    import gspread
-    from gspread_dataframe import set_with_dataframe
-
-    gc = gspread.service_account()
-    sh = gc.open('Season Leaderboard')
-    worksheet = sh.get_worksheet(ndoc)
-    worksheet.format ('1', {'textFormat': {'bold': True}})
-    set_with_dataframe(worksheet, season)
-
-
 
 def serialize(pth="./", reset=False, archive=None, season_update=False):
     """
