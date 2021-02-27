@@ -12,7 +12,8 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 from twitchio.ext import commands
 import glob
 
-import read
+from bcf import _ACTOR_MAP
+from bcf import read
 from bcf.utils import export_to_gsheet
 
 #
@@ -70,8 +71,6 @@ _CHAT_READBACK = False
 # If this is a path-like, periodic updates will be written to this file. Ignored if None
 _STREAM_STATUS = "./stream_status.txt"
 _STREAM_COOLDOWN = int(opts.pop("stream_status_cooldown", 20))
-
-from bcf import _ACTOR_MAP
 
 def _authenticate(ctx):
     """

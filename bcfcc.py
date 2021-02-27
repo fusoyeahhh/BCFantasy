@@ -2,8 +2,7 @@ import functools
 import sys
 import logging
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-import read
-import numpy
+from bcf import read
 
 from ff6_flags import STATUS_FLAGS, _validate_status
 from ff6_flags import ELEM_FLAGS, _validate_elems
