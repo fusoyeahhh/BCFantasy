@@ -152,7 +152,7 @@ def write_status():
 
     trans = [f"({t}) {v}" for t, v in sorted(HISTORY.items(), key=lambda kv: kv[0])
                                                     if (v.startswith("!buy") or v.startswith("!sell"))
-                                                        and cmp_times(current_time, t) < 20][-3:]
+                                                        and cmp_times(t, current_time) < 20][-3:]
 
     logging.info(f"History has {len(HISTORY)} total items --- kept {len(events)} events and {len(trans)} transactions")
     if len(trans) > 0:
