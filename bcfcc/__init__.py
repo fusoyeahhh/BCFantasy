@@ -582,11 +582,19 @@ def set_name(name, actor=0, **kwargs):
         write.extend([hex(byt + off), hex(chr)])
     return write_arbitrary(*write)
 
-def nullify_element(elem, **kwargs):
-    logging.info(f"nullify_element | elem ({elem})")
+def nullify_element(elem, toggle=True, **kwargs):
+    null_elems = kwargs["bf"]["null_elems"]
+    logging.info(f"nullify_element | elem ({elem}), toggle: {toggle}, current value {hex(null_elems)}")
     if not _validate_elems(elem):
         raise ValueError(f"Invalid element {elem}")
-    return write_arbitrary(*["0x3EC8", hex(ELEM_FLAGS[elem])])
+
+    mask = ELEM_FLAGS[elem]
+    if toggle is not None:
+        null_elems ^= mask
+    else:
+        null_elems |= mask
+
+    return write_arbitrary(*["0x3EC8", hex(null_elems)])
 
 def fallen_one(**kwargs):
     logging.info(f"fallen_one | kwargs {[*kwargs.keys()]}")

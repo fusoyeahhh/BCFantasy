@@ -1537,10 +1537,9 @@ if _ENABLE_CC is not None:
             logging.info(f"cc | Read and init'd {len(eparty)} entities in enemy party")
 
             mem = read.read_memory("memfile")
-            cant_run = mem[0xB1][0]
-            field_relics = mem[0x11DF][0]
-            bf = {"cant_run": cant_run,
-                  "field_relics": field_relics}
+            bf = {"cant_run": mem[0xB1][0],
+                  "field_relics": mem[0x11DF][0],
+                  "null_elems": mem[0x3EC8][0]}
 
             inv = bcfcc.Inventory()
             inv._from_memory_range("memfile")
