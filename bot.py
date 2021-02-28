@@ -1524,6 +1524,7 @@ if _ENABLE_CC is not None:
 
             inv = bcfcc.Inventory()
             inv._from_memory_range("memfile")
+            logging.info(f"cc | Read and init'd {len(inv._inv)} inventory items")
 
             gctx = {"party": party, "eparty": eparty, "bf": bf, "inv": inv}
 
