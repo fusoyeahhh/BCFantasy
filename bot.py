@@ -1491,6 +1491,8 @@ if _ENABLE_CC is not None:
         "ole_cape": bcfcc.ole_cape,
         "null_elem": bcfcc.nullify_element,
         "change_name": bcfcc.set_name,
+        "pick_fight": bcfcc.trigger_battle,
+        "moogle_charm": bcfcc.moogle_charm,
         #"modify_item": modify_item,
         #"swap_chars": swap_chars,
         #"give_doggo": give_interceptor, # enemy or player
@@ -1536,7 +1538,9 @@ if _ENABLE_CC is not None:
 
             mem = read.read_memory("memfile")
             cant_run = mem[0xB1][0]
-            bf = {"cant_run": cant_run}
+            field_relics = mem[0x11DF][0]
+            bf = {"cant_run": cant_run,
+                  "field_relics": field_relics}
 
             inv = bcfcc.Inventory()
             inv._from_memory_range("memfile")
