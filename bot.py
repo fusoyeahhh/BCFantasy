@@ -908,9 +908,9 @@ async def sell(ctx):
     value = int(info.set_index(lookup).loc[item]["Sell"])
     _USERS[user]["score"] += value
 
-    await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
+    #await ctx.send(f"@{user}: sold {cat} / {item} for {value}")
 
-    status_string = f"{user} sold {item} ({cat}, {value})"
+    status_string = f"{user} sold {item} ({cat}, {int(value)})"
     if _STREAM_STATUS:
         # FIXME: May want to have a separate file tracker for this
         if os.path.exists("_scoring.txt"):
@@ -974,9 +974,9 @@ async def buy(ctx):
             return
 
         _USERS[user][cat] = item
-        await ctx.send(f"@{user}: got it. Your selection for {cat} is {item}")
+        #await ctx.send(f"@{user}: got it. Your selection for {cat} is {item}")
 
-        status_string = f"{user} bought {item} ({cat}, {cost})"
+        status_string = f"{user} bought {item} ({cat}, {int(cost)})"
         if _STREAM_STATUS:
             # FIXME: May want to have a separate file tracker for this
             if os.path.exists("_scoring.txt"):
