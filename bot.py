@@ -720,7 +720,7 @@ async def event_message(ctx):
         if command in bot.commands and (bot._status != "paused" or _authenticate(ctx)):
             logging.debug("Processing user command...")
             current_time = datetime.datetime.now().strftime("%H:%M:%S")
-            HISTORY[current_time] = ctx.content
+            HISTORY[current_time] = ctx.content + f" ({ctx.author._name})"
 
             await bot.handle_commands(ctx)
 
