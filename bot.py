@@ -122,6 +122,11 @@ _CONTEXT = {
 #
 # Asynchronous operations
 #
+def cmp_times(t1, t2):
+    t1, t2 = datetime.datetime.strptime(t1, "%H:%M:%S"), \
+             datetime.datetime.strptime(t2, "%H:%M:%S")
+
+    return (t2 - t1).total_seconds()
 
 def write_status():
     status = " | ".join([f"{cat.capitalize()}: {val}" for cat, val in _CONTEXT.items()])
@@ -141,8 +146,19 @@ def write_status():
 
     logging.debug(f"Logging last 3 of {len(HISTORY)} events.")
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # FIXME: This is a total mess...
+    # FIXME: the real solution to this is to not hold the history in strings
     events = [f"({t}) {v}" for t, v in sorted(HISTORY.items(), key=lambda kv: kv[0]) if v.startswith("!event")][-3:]
-    last_3 = f"--- [{current_time}] Last three events:\n" + "\n".join(events)
+
+    trans = [f"({t}) {v}" for t, v in sorted(HISTORY.items(), key=lambda kv: kv[0])
+                                                    if (v.startswith("!buy") or v.startswith("!sell"))
+                                                        and cmp_times(current_time, t) < 20][-3:]
+
+    if len(trans) > 0:
+        last_3 = f"--- [{current_time}] Last three transactions:\n" + "\n".join(trans)
+    else:
+        last_3 = f"--- [{current_time}] Last three events:\n" + "\n".join(events)
 
     if os.path.exists("_scoring.txt"):
         with open("_scoring.txt", "r") as f:
