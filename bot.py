@@ -1518,10 +1518,14 @@ if _ENABLE_CC is not None:
                 eparty[i]._from_memory_range("memfile", slot=i + 4)
             logging.info(f"cc | Read and init'd {len(eparty)} entities in enemy party")
 
-            cant_run = read.read_memory("memfile")[0xB1][0]
+            mem = read.read_memory("memfile")
+            cant_run = mem[0xB1][0]
             bf = {"cant_run": cant_run}
 
-            gctx = {"party": party, "eparty": eparty, "bf": bf}
+            inv = bcfcc.Inventory()
+            inv._from_memory_range("memfile")
+
+            gctx = {"party": party, "eparty": eparty, "bf": bf, "inv": inv}
 
             logging.info(f"cc | Calling into cc subcommand {CC_CMDS[cmd]} ({cmd}) with args {args}")
             read.write_instructions(CC_CMDS[cmd](*args, **gctx))
