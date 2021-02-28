@@ -325,4 +325,4 @@ FD Warp Stone
 FE Dried Meat
 FF -Blank-"""
 ITEMS = [i.split(" ") for i in ITEMS.split('\n')]
-ITEMS = dict([(int(i[0], 16), i[1]) for i in ITEMS])
+ITEMS = dict([(int(i[0], 16), ' '.join(i[1:])) for i in ITEMS])
