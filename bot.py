@@ -154,7 +154,7 @@ def write_status():
                                                     if (v.startswith("!buy") or v.startswith("!sell"))
                                                         and cmp_times(t, current_time) < 20][-3:]
 
-    logging.info(f"History has {len(HISTORY)} total items --- kept {len(events)} events and {len(trans)} transactions")
+    logging.debug(f"History has {len(HISTORY)} total items --- kept {len(events)} events and {len(trans)} transactions")
     if len(trans) > 0:
         last_3 = f"--- [{current_time}] Last three transactions:\n" + "\n".join(trans)
     else:
