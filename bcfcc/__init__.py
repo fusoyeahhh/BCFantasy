@@ -712,6 +712,7 @@ if __name__ == "__main__":
     #
     print("--- Nullify Element (fire)")
     print("!cc null_elem")
+    gctx["bf"]["null_elems"] = 0x0
     print(nullify_element("fire", **gctx))
 
     print("--- Nullify Element (poison)")
