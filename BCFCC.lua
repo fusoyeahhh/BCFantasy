@@ -6,6 +6,10 @@ memreads = {
     [0x3AA0] = 0x3F1F - 0x3AA0,
     -- Can't run flags
     [0x00B1] = 1,
+    -- battle relic effects (moogle charm, sprint shoes)
+    [0x11DF] = 1,
+    -- ForceField nulled elements
+    [0x3EC8] = 1,
     -- $2686-$2B85 Battle Inventory (256 + 8 items, 5 bytes each)
     [0x2686] = 0x2B85 - 0x2686,
 }
