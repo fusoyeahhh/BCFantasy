@@ -144,7 +144,6 @@ def write_status():
     leaderboard = " | ".join([f"{user}: {inv.get('score', None)}"
                               for user, inv in sorted(_USERS.items(), key=lambda kv: -kv[1].get("score", 0))])
 
-    logging.debug(f"Logging last 3 of {len(HISTORY)} events.")
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
 
     # FIXME: This is a total mess...
@@ -155,6 +154,7 @@ def write_status():
                                                     if (v.startswith("!buy") or v.startswith("!sell"))
                                                         and cmp_times(current_time, t) < 20][-3:]
 
+    logging.info(f"History has {len(HISTORY)} total items --- kept {len(events)} events and {len(trans)} transactions")
     if len(trans) > 0:
         last_3 = f"--- [{current_time}] Last three transactions:\n" + "\n".join(trans)
     else:
