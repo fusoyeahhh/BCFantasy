@@ -171,7 +171,7 @@ def write_status():
 
 async def _poll():
     while True:
-        mtime = os.path.getmtime("logfile.txt")
+        mtime = os.path.getmtime("logfile.txt") if os.path.exists("logfile.txt") else 0
         if _STREAM_STATUS and mtime > bot._last_state_drop:
             bot._last_state_drop = mtime
             current_time = datetime.datetime.now().strftime("%H:%M:%S")
