@@ -498,6 +498,25 @@ def cant_run(toggle=None, **kwargs):
 
     return write_arbitrary(*["0x00B1", hex(val)])
 
+def moogle_charm(toggle=True, **kwargs):
+    # $11DF t-s---mc Field Equipment Effects
+    #       t: tintinabar effect (doesn't work)
+    #       s: sprint shoes effect (1.5x walk speed)
+    #       m: moogle charm effect (no random battles)
+    #       c: charm bangle effect (50% less random battles)
+    mask = 1 << 1
+    logging.info(f"moogle_charm | toggle ({toggle}), kwargs {[*kwargs.keys()]}")
+
+    # FIXME: do raw read here instead?
+    val = kwargs["bf"]["field_relics"]
+    logging.info(f"moogle_charm | toggle ({toggle}), pre toggle value {val}")
+    if toggle is not None:
+        val ^= mask
+    else:
+        val |= mask
+
+    return write_arbitrary(*["0x11DF", hex(val)])
+
 def activate_golem(hp_val=1000, **kwargs):
     logging.info(f"activate_golem | hp_val {hp_val}")
     # Other flags to set?
@@ -585,6 +604,11 @@ def status(targ, *stats):
         else:
             targ.set_status(status)
     return targ.flush()
+
+def trigger_battle(**kwargs):
+    # set 16-bit value at 0x1F6E to max
+    to_write = ["0x1F6E", "0xFF", "0x1F6F", "0xFF"]
+    return write_arbitrary(*to_write)
 
 if __name__ == "__main__":
     import os
@@ -696,3 +720,23 @@ if __name__ == "__main__":
     print("--- Change name (too long, bad chars, slot 3)")
     print("!cc change_name T#esting 3")
     print(set_name("T#esting", actor=3, **gctx))
+
+    #
+    # Trigger battle
+    #
+    print("--- Trigger battle")
+    print("!cc pick_fight")
+    print(trigger_battle(**gctx))
+
+    #
+    # Moogle charm
+    #
+    print("--- Moogle charm (toggle on)")
+    print("!cc moogle_charm")
+    gctx["bf"]["field_relics"] = 0x0
+    print(moogle_charm(**gctx))
+
+    print("--- Moogle charm (toggle off)")
+    print("!cc moogle_charm")
+    gctx["bf"]["field_relics"] = 0x2
+    print(moogle_charm(**gctx))
