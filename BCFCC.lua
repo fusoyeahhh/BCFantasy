@@ -1,7 +1,13 @@
 
 memreads = {
+    -- SRAM mirroring / out of battle party stats / status
+    [0x1600] = 0x2000 - 0x1600,
+    -- In battle arty and enemy stats / status
     [0x3AA0] = 0x3F1F - 0x3AA0,
+    -- Can't run flags
     [0x00B1] = 1,
+    -- $2686-$2B85 Battle Inventory (256 + 8 items, 5 bytes each)
+    [0x2686] = 0x2B85 - 0x2686,
 }
 
 -- Main loop
