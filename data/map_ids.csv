@@ -16,9 +16,9 @@ id,name,scoring_area
 0x12,"Narshe, Northern Cliff, Intro",Narshe Ice Fields
 0x13,Narshe Outside Magitek Sequence,Narshe (WoB)
 0x14,Narshe Outside,Narshe (WoB)
-0x15,"Narshe, North of Town, Beginning (WOB)",Narshe (WoB)
-0x16,"Narshe, Snow Battlefield (WOB)",Narshe Ice Fields
-0x17,"Narshe, Northern Cliff (WOB)",Narshe Ice Fields
+0x15,Narshe Outside North Map,Towns
+0x16,Narshe Kefka Snow Battlefield,Narshe Ice Fields
+0x17,Narshe Ice Fields Esper Cliff,Narshe Ice Fields
 0x18,"Narshe, Weapons Shop",Towns
 0x19,"Narshe, Armor Shop",Towns
 0x1a,"Narshe, Item Shop",Towns
@@ -40,8 +40,8 @@ id,name,scoring_area
 0x2c,"Narshe, Moogle's Room (WOR)",Narshe (WoB)
 0x2f,DUMMIED,
 0x32,Narshe Terra Escape Cave,Narshe (WoB)
-0x37,Castle Figaro Submersion Cut Scene,Towns
-0x39,"Figaro Castle, King's Bedroom",Towns
+0x37,Castle Figaro Outside,Towns
+0x39,Figaro Castle King's Bedroom,Towns
 0x3b,"Figaro Castle, Inside",Towns
 0x3c,"Figaro Castle, Library",Towns
 0x3d,Figaro Castle Basement 1,Towns
@@ -91,7 +91,7 @@ id,name,scoring_area
 0x95,Phantom Train Middle Car with Switch and Save Point,Phantom Train
 0x97,Phantom Train Cars with 2 Rooms Inside,Phantom Train
 0x98,Phantom Train Caboose with Ghost,Phantom Train
-0x99,Phantom Train Final Save Point Car / Inside Small Rooms,Phantom Train
+0x99,Phantom Train Docking Station Cut Scene,Phantom Train
 0x9b,Baren Falls Cave Inside,Baren Falls
 0x9c,Baren Falls Jump Ledge,Baren Falls
 0x9d,Mobliz Outside,Towns
@@ -107,7 +107,7 @@ id,name,scoring_area
 0xa7,Serpent Trench Entrance Cave,Serpent Trench
 0xa8,"Nikeah, Inn",Towns
 0xa9,Nikeah Outside,Towns
-0xaa,"Nikeah, Chocobo Stable",Towns
+0xaa,Shadow's Dream 3,Towns
 0xaf,Serpent Trench Caves,Serpent Trench
 0xb0,Mt. Zozo Rope Bridge,Mt. Zozo
 0xb1,Mt. Zozo Cliff Chest,Mt. Zozo
@@ -134,7 +134,7 @@ id,name,scoring_area
 0xd1,Owzer's Mansion Main Floor,Towns
 0xd7,Final Cutscene 19,
 0xd8,"Esper World, House",Towns
-0xd9,DUMMIED - boat dock,
+0xd9,Esper World Outside,nan
 0xda,"Zozo, Outside",Zozo
 0xdb,FREE TO USE,Zozo
 0xdd,Zozo Outside,Zozo
@@ -267,11 +267,11 @@ id,name,scoring_area
 0x199,Kefka's Tower 3 Tube Room,Kefka's Tower
 0x19a,Kefka's Tower Inferno Room,Kefka's Tower
 0x3,Save Menu,Towns
-0x4,Shadow's Dream 1,
+0x4,Shadow's Dream 1,Towns
 0x5,Mog's Explanation,
 0x8,"Blackjack, Back Room",Airship
 0x2a,Narshe Mines Esper Room,Narshe (WoB)
-0x2b,"Narshe, Mines Esper Room, Empty (WOB)",Narshe (WoB)
+0x2b,Narshe Mine Esper Cave Empty,Narshe (WoB)
 0x2d,DUMMIED,
 0x2e,DUMMIED,
 0x30,Narshe Cave Banon Escape Bridge Room,Narshe (WoB)
@@ -279,8 +279,8 @@ id,name,scoring_area
 0x33,Narshe Moogle Battle Cave,Narshe (WoB)
 0x34,Narshe Cave Moogle Room,Narshe (WoB)
 0x35,Cave to Figaro Castle Room 2,South Figaro Cave
-0x36,"Figaro Castle, Submerging",Towns
-0x38,"Figaro Desert, Kefka & Troops",Towns
+0x36,Castle Figaro Submerging Cut Scene,Towns
+0x38,Desert Chocobo & Kefka Troops Cut Scene,Towns
 0x3a,"Figaro Castle, Throne Room",Towns
 0x3e,Figaro Castle Basement 2,Castle Figaro Basement
 0x3f,Figaro Castle Basement 3,Castle Figaro Basement
@@ -320,8 +320,8 @@ id,name,scoring_area
 0x81,Final Cutscene 15,
 0x82,Final Cutscene 18,
 0x88,Final Cutscene 16,
-0x8a,"Phantom Train, Docking Station 3",Phantom Train
-0x8b,"Phantom Train, Docking Station 1",Phantom Train
+0x8a,Phantom Train Docking Station Cut Scene 1,Phantom Train
+0x8b,Phantom Train Docking Station Cut Scene 2,Phantom Train
 0x8c,Phantom Train Station,Phantom Train
 0x8d,"Phantom Train, Outside 1",Phantom Train
 0x8f,Cyan's Dream Phantom Train Outside,Cyan's Dream
@@ -331,9 +331,9 @@ id,name,scoring_area
 0xab,Nikeah Inn,Towns
 0xac,Nikeah Cafe,Towns
 0xad,"Mt.Zozo, Outside Bridge",Mt. Zozo
-0xae,"Mt.Zozo, Outside 1",Mt. Zozo
+0xae,Shadow's Dream 2,Towns
 0xb4,Mt. Zozo Cyan's Cave,Mt. Zozo
-0xb6,Final Cutscene 9,
+0xb6,Shadow's Dream 4 / Final Cut Scene 9,nan
 0xb7,Final Cutscene 13,
 0xb8,Final Cutscene 12,
 0xba,Inside House at Dragon's Neck,Towns
