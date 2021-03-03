@@ -363,7 +363,7 @@ class Inventory(MemoryRegion):
     def _from_memory_range(self, memfile):
         super()._from_memory_range(memfile)
 
-        for i in range(256):
+        for i in range(255):
             qty = self.mem[0x2689 + 5 * i]
             if qty == 0:
                 self.empty_slots.append(i)
