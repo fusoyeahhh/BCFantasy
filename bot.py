@@ -254,6 +254,9 @@ def convert_buffer_to_commands(logf, **kwargs):
         elif status["map_id"] != last_status.get("map_id", None):
             cmds.append(f"!set area={status['map_id']}")
             logging.info("emu> " + cmds[-1])
+            # Temporary
+            descr = _MAP_INFO.loc[status['map_id']]["name"]
+            logging.info(f"Map ID {status['map_id']} -> {descr}")
 
         # check for boss encounter
         # FIXME: go by enemy id, rather than formation id
