@@ -1496,15 +1496,26 @@ if _ENABLE_CC is not None:
         "change_name": bcfcc.set_name,
         "pick_fight": bcfcc.trigger_battle,
         "moogle_charm": bcfcc.moogle_charm,
+        #"add_gp": ...
         #"modify_item": modify_item,
         #"swap_chars": swap_chars,
         #"give_doggo": give_interceptor, # enemy or player
     }
 
+    from bcfcc.queue import CCQueue
+    _CC_QUEUE = CCQueue()
+    async def _check_queue():
+        while True:
+            _CC_QUEUE.check()
+            await asyncio.sleep(1)
+
+    # Crowd control queue
+    asyncio.create_task(_check_queue())
+
     @bot.command(name='cc')
     async def cc(ctx):
         """
-        cc [subcmd] [args] Execute crowd control subcmd, with possibly optional arguments.
+        cc [subcmd] [args] Enqueue crowd control subcmd, with possibly optional arguments.
         """
         user = ctx.author.name
         auth_user = bot._skip_auth or _authenticate(ctx)
@@ -1525,37 +1536,9 @@ if _ENABLE_CC is not None:
             return
         cmd = args.pop(0)
 
-        try:
-            # Construct game context
-            party = [bcfcc.Character() for i in range(4)]
-            for i in range(4):
-                # FIXME: make one-step initialization
-                party[i]._from_memory_range("memfile", slot=i)
-            logging.info(f"cc | Read and init'd {len(party)} characters in party")
-
-            eparty = [bcfcc.Character() for i in range(6)]
-            for i in range(6):
-                # FIXME: make one-step initialization
-                eparty[i]._from_memory_range("memfile", slot=i + 4)
-            logging.info(f"cc | Read and init'd {len(eparty)} entities in enemy party")
-
-            mem = read.read_memory("memfile")
-            bf = {"cant_run": mem[0xB1][0],
-                  "field_relics": mem[0x11DF][0],
-                  "null_elems": mem[0x3EC8][0]}
-
-            inv = bcfcc.Inventory()
-            inv._from_memory_range("memfile")
-            logging.info(f"cc | Read and init'd {len(inv._inv)} inventory items")
-
-            gctx = {"party": party, "eparty": eparty, "bf": bf, "inv": inv}
-
-            logging.info(f"cc | Calling into cc subcommand {CC_CMDS[cmd]} ({cmd}) with args {args}")
-            read.write_instructions(CC_CMDS[cmd](*args, **gctx))
-            logging.info(f"cc | Finished {cmd}")
-        except Exception as e:
-            logging.error(f"Couldn't execute crowd control command {cmd} with args {' '.join(args)}. Exception information follows.")
-            logging.error(str(type(e)) + " " + str(e))
+        from functools import partial
+        # FIXME: needs delay, callback, and status logic
+        _CC_QUEUE.make_task(partial(CC_CMDS[cmd], *args), name=cmd, user=ctx.author._name)
     COMMANDS["cc"] = cc
 
 
