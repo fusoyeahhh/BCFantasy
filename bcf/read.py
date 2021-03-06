@@ -209,7 +209,7 @@ def write_instructions(byte_arr, fname="instr", check_compl=3):
         fout.write(bytearray(byte_arr))
 
     for _ in range(int(3)):
-        time.sleep(1)
+        time.sleep(0.1)
         if os.path.getsize(fname) == 0:
             break
     else:
