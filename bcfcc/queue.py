@@ -3,7 +3,6 @@ import logging
 import sys
 from bcf import read
 from bcfcc import Character, Inventory
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 class _Queue(object):
     def __init__(self):
