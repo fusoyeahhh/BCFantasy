@@ -1515,7 +1515,7 @@ if _ENABLE_CC is not None:
         #"restore_char": ...
         #"power_overwhelming": ...
         #"add_rare_item": ...
-        #"add_gp": ...
+        "add_gp": bcfcc.add_gp,
         #"give_doggo": give_interceptor, # enemy or player
     }
 
@@ -1553,6 +1553,8 @@ if _ENABLE_CC is not None:
         elif cmd not in CC_CMDS:
             await ctx.send(f"@{user}: the crowd control command {cmd} is not recognized.")
             return
+
+        # FIXME: check command preconditions here
 
         from functools import partial
         # FIXME: needs delay, callback, and status logic

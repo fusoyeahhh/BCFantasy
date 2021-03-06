@@ -486,6 +486,25 @@ def modify_item(*args):
 
     return instr
 
+_add_gp = {
+    # No constraints
+}
+# Three byte value
+_MAX_GP = 2**24 - 1
+def add_gp(amnt=1000, **kwargs):
+    """
+    !cc add_gp
+    Add 1000 GP to total.
+
+    Precondition: None
+    """
+    logging.info(f"add_gp | amount {amnt}, kwargs {[*kwargs.keys()]}")
+    total_gp = sum([v << (8 * i) for i, v in enumerate(kwargs["field_ram"][0x1860:0x1863])])
+    new_total = max(0, min(total_gp + amnt, _MAX_GP))
+    logging.info(f"add_gp | GP change {total_gp} -> {new_total}")
+    # FIXME: Do we need to reverse this?
+    return write_arbitrary(*map(hex, [(new_total >> 8 * i) & 0xFF for i in range(3)]))
+
 def cant_run(toggle=None, **kwargs):
     mask = 1 << 2
     logging.info(f"cant_run | toggle ({toggle}), kwargs {[*kwargs.keys()]}")
@@ -820,3 +839,17 @@ if __name__ == "__main__":
     print(life_2(0, **gctx))
     print("!cc life3 0")
     print(life_3(0, **gctx))
+
+    #
+    # Add GP
+    #
+    print("--- add_gp (default)")
+    print("!cc add_gp")
+    print(add_gp(**gctx))
+
+    print("--- add_gp (with value, not enabled for CC)")
+    print("!cc add_gp 10")
+    print(add_gp(10, **gctx))
+    print("!cc add_gp -10")
+    print(add_gp(-10, **gctx))
+
