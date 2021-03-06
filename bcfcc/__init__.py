@@ -883,4 +883,4 @@ if __name__ == "__main__":
     #
     print("--- Remedy")
     print("!cc remedy 0")
-    bcfcc.remedy(0, **gctx)
+    remedy(0, **gctx)
