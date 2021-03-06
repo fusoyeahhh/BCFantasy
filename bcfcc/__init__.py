@@ -564,6 +564,57 @@ def random_status(*args, **kwargs):
     logging.info(f"random_status | selected {status} status, inflicting on {targ}")
     return set_status(status, slot=targ, **kwargs)
 
+_life_1 = {
+    #"precondition": (targ_valid, bool.__and__, has_status("wounded")),
+    "status": "battle"
+}
+def life_1(*args, **kwargs):
+    """
+    !cc life_1 [slot #]
+    Life-like effect, remove wounded status and restore some HP.
+
+    Precondition: must be in battle, target must be valid and dead
+    """
+    logging.info(f"life_1 | args {args}, kwargs {[*kwargs.keys()]}")
+    targ = args[0]
+    pmem = kwargs["party"][targ]
+    # FIXME: move to Character class
+    return set_status("-wounded", slot=targ, **kwargs) \
+           + set_stat("cur_hp", val=pmem.max_hp / 16, slot=targ, **kwargs)
+
+_life_2 = {
+    # "precondition": (targ_valid, bool.__and__, has_status("wounded")),
+    "status": "battle"
+}
+def life_2(*args, **kwargs):
+    """
+    !cc life_2 [slot #]
+    Life2-like effect, remove wounded status and restore all HP.
+
+    Precondition: must be in battle, target must be valid and dead
+    """
+    logging.info(f"life_2 | args {args}, kwargs {[*kwargs.keys()]}")
+    targ = args[0]
+    pmem = kwargs["party"][targ]
+    # FIXME: move to Character class
+    return set_status("-wounded", slot=targ, **kwargs) \
+           + set_stat("cur_hp", val=pmem.max_hp, slot=targ, **kwargs)
+
+_life_3 = {
+    #"precondition": (targ_valid,),
+    "status": "battle"
+}
+def life_3(*args, **kwargs):
+    """
+    !cc life_3 [slot #]
+    Life3-like effect, adds life3 status to target.
+
+    Precondition: must be in battle, target must be valid
+    """
+    logging.info(f"life_3 | args {args}, kwargs {[*kwargs.keys()]}")
+    targ = args[0] if len(args) > 0 else random.randint(0, 3)
+    return set_status("life3", slot=targ, **kwargs)
+
 def set_stat(stat, val, slot=0, **kwargs):
     logging.info(f"set_stat | stat / val ({stat} / {val}), kwargs {[*kwargs.keys()]}")
     slot = int(slot)
@@ -758,3 +809,14 @@ if __name__ == "__main__":
     print("--- Random status")
     print("!cc random_status")
     print(random_status(0, **gctx))
+
+    #
+    # Life / revive spells
+    #
+    print("--- Life spells")
+    print("!cc life1 0")
+    print(life_1(0, **gctx))
+    print("!cc life2 0")
+    print(life_2(0, **gctx))
+    print("!cc life3 0")
+    print(life_3(0, **gctx))
