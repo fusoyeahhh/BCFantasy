@@ -1484,14 +1484,20 @@ COMMANDS["bcf"] = explain
 if _ENABLE_CC is not None:
     import bcfcc
 
-    CC_CMDS = {
+    CC_ADMIN_CMDS = {
+        # Too much power / complexity for users
         "arb_write": bcfcc.write_arbitrary,
         "set_status": bcfcc.set_status,
         "set_stat": bcfcc.set_stat,
+
+        # These are here because they don't function (partially or at all)
         "cant_run": bcfcc.cant_run,
+        "ole_cape": bcfcc.ole_cape,
+    }
+
+    CC_CMDS = {
         "fallen_one": bcfcc.fallen_one,
         "activate_golem": bcfcc.activate_golem,
-        "ole_cape": bcfcc.ole_cape,
         "null_elem": bcfcc.nullify_element,
         "change_name": bcfcc.set_name,
         "pick_fight": bcfcc.trigger_battle,
@@ -1524,17 +1530,18 @@ if _ENABLE_CC is not None:
         if len(args) == 0:
             await ctx.send(f"@{user}: !cc needs additional arguments.")
             return
-        if args[0].lower() == "help":
+        cmd = args.pop(0).lower()
+
+        if cmd == "help":
             await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())}")
             return
-        if args[0].lower() not in CC_CMDS:
-            await ctx.send(f"@{user}: the crowd control command {args[0]} is not recognized.")
-            return
         # admin only command
-        if args[0].lower() == "arb_write" and not auth_user:
+        if cmd in CC_ADMIN_CMDS and not auth_user:
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
             return
-        cmd = args.pop(0)
+        elif cmd not in CC_CMDS:
+            await ctx.send(f"@{user}: the crowd control command {cmd} is not recognized.")
+            return
 
         from functools import partial
         # FIXME: needs delay, callback, and status logic
