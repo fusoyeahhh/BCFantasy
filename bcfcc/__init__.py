@@ -1,10 +1,12 @@
 import functools
 import sys
 import logging
+import random
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 from bcf import read
 
 from ff6_flags import STATUS_FLAGS, _validate_status
+from ff6_flags import ALL_STATUSES, NEGATIVE_STATUSES, POSITIVE_STATUSES, UNUSABLE_STATUSES
 from ff6_flags import ELEM_FLAGS, _validate_elems
 from ff6_flags import ITEMS
 
@@ -554,6 +556,14 @@ def set_status(status, slot=0, **kwargs):
         c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
 
+def random_status(*args, **kwargs):
+    logging.info(f"random_status | args {args}, kwargs {[*kwargs.keys()]}")
+    # FIXME: ensure slot is filled
+    targ = args[0] if len(args) > 0 else random.randint(0, 3)
+    status = random.choice(list(ALL_STATUSES - UNUSABLE_STATUSES))
+    logging.info(f"random_status | selected {status} status, inflicting on {targ}")
+    return set_status(status, slot=targ, **kwargs)
+
 def set_stat(stat, val, slot=0, **kwargs):
     logging.info(f"set_stat | stat / val ({stat} / {val}), kwargs {[*kwargs.keys()]}")
     slot = int(slot)
@@ -604,14 +614,6 @@ def fallen_one(**kwargs):
         c.change_stat("cur_hp", 1)
         write.extend(list(map(hex, c.flush())))
     return write_arbitrary(*write)
-
-def status(targ, *stats):
-    for status in stats:
-        if status.startswith("-"):
-            targ.set_status(status[1:], clear=True)
-        else:
-            targ.set_status(status)
-    return targ.flush()
 
 def trigger_battle(**kwargs):
     # set 16-bit value at 0x1F6E to max
@@ -749,3 +751,10 @@ if __name__ == "__main__":
     print("!cc moogle_charm")
     gctx["bf"]["field_relics"] = 0x2
     print(moogle_charm(**gctx))
+
+    #
+    # Random status
+    #
+    print("--- Random status")
+    print("!cc random_status")
+    print(random_status(0, **gctx))
