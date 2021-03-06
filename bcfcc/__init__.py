@@ -575,6 +575,31 @@ def set_status(status, slot=0, **kwargs):
         c.set_status(status)
     return write_arbitrary(*map(hex, c.flush()))
 
+_remedy = {
+    #"precondition": (targ_valid, bool.__and__, not has_status("wounded")),
+    "status": "battle"
+}
+_REMEDY_CLEAR = NEGATIVE_STATUSES - {"wounded"}
+def remedy(*args, **kwargs):
+    """
+    !cc remedy [slot #]
+    Remedy-like effect, remove all "negative" statuses (except wounded).
+
+    Precondition: must be in battle, target must be valid and not dead
+    """
+    logging.info(f"remedy | args {args}, kwargs {[*kwargs.keys()]}")
+    # FIXME: ensure slot is filled
+    slot = args[0] if len(args) > 0 else random.randint(0, 3)
+    logging.info(f"remedy | clearing statuses for slot {slot}")
+
+    # FIXME: need to not affect other statuses
+    if slot < 0 or slot >= 4:
+        raise IndexError(f"Invalid party slot {slot}.")
+
+    c = kwargs["party"][slot]
+    c.set_status(*list(_REMEDY_CLEAR), clear=True)
+    return write_arbitrary(*map(hex, c.flush()))
+
 def random_status(*args, **kwargs):
     logging.info(f"random_status | args {args}, kwargs {[*kwargs.keys()]}")
     # FIXME: ensure slot is filled
@@ -853,3 +878,9 @@ if __name__ == "__main__":
     print("!cc add_gp -10")
     print(add_gp(-10, **gctx))
 
+    #
+    # Remedy
+    #
+    print("--- Remedy")
+    print("!cc remedy 0")
+    bcfcc.remedy(0, **gctx)
