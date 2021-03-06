@@ -48,8 +48,14 @@ STATUS_FLAGS[2] = {k: 1 << i for i, k in
 STATUS_FLAGS[3] = {k: 1 << i for i, k in
                    enumerate(["rage", "freeze", "life3", "morph", "spell", "hide", "interceptor", "float"])}
 
+NEGATIVE_STATUSES = {"blind", "zombie", "poison", "vanish", "imp", "petrify", "wounded",
+                     "condemned", "mute", "berserk", "muddle", "seizure", "sleep", "slow", "stop"}
+POSITIVE_STATUSES = {"image", "regen", "haste", "shell", "safe", "wall", "life3", "morph", "float"}
+UNUSABLE_STATUSES = {"magitek", "nearfatal", "dance", "rage", "freeze",  "spell", "hide", "interceptor"}
+ALL_STATUSES = NEGATIVE_STATUSES | POSITIVE_STATUSES | UNUSABLE_STATUSES
+
 def _validate_status(statuses):
-    return set(statuses).issubset(set.union(*map(set, STATUS_FLAGS)))
+    return set(statuses).issubset(ALL_STATUSES)
 
 # Elemental Flags
 # From https://www.tales-cless.org/ff6hack/#elem
