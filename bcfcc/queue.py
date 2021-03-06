@@ -87,6 +87,7 @@ class CCQueue(_Queue):
         super().__init__()
         self.memfile = memfile
 
+    # FIXME: we might need this to be its own state at some point
     def construct_game_context(self):
         # Construct game context
         party = [Character() for i in range(4)]
@@ -110,7 +111,7 @@ class CCQueue(_Queue):
         inv._from_memory_range(self.memfile)
         logging.info(f"cc | Read and init'd {len(inv._inv)} inventory items")
 
-        return {"party": party, "eparty": eparty, "bf": bf, "inv": inv}
+        return {"party": party, "eparty": eparty, "bf": bf, "inv": inv, "field_ram": mem[0x1600]}
 
     def check(self, game_status=None):
         # Avoid doing a check if we don't need to

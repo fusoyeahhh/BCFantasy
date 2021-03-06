@@ -2,11 +2,13 @@
 memreads = {
     -- SRAM mirroring / out of battle party stats / status
     [0x1600] = 0x2000 - 0x1600,
-    -- In battle arty and enemy stats / status
+    -- In battle party and enemy stats / status
     [0x3AA0] = 0x3F1F - 0x3AA0,
     -- Can't run flags
     [0x00B1] = 1,
-    -- battle relic effects (moogle charm, sprint shoes)
+    -- battle relic effects
+    [0x11D5] = 5,
+    -- field relic effects (moogle charm, sprint shoes)
     [0x11DF] = 1,
     -- ForceField nulled elements
     [0x3EC8] = 1,
