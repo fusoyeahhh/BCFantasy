@@ -20,8 +20,15 @@ if __name__ == "__main__":
         # FIXME: make one-step initialization
         eparty[i]._from_memory_range(memfile, slot=i + 4)
 
-    gctx = {"party": party, "eparty": eparty}
-    gctx["bf"] = {"cant_run": read.read_memory(memfile)[0xB1][0]}
+    mem = read.read_memory(memfile)
+    bf = {"cant_run": mem[0xB1][0],
+          "field_relics": mem[0x11DF][0],
+          "null_elems": mem[0x3EC8][0]}
+
+    inv = bcfcc.Inventory()
+    inv._from_memory_range(memfile)
+
+    gctx = {"party": party, "eparty": eparty, "bf": bf, "inv": inv, "field_ram": mem[0x1600]}
 
     #
     # Can't run
