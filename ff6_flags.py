@@ -332,3 +332,95 @@ FE Dried Meat
 FF -Blank-"""
 ITEMS = [i.split(" ") for i in ITEMS.split('\n')]
 ITEMS = dict([(int(i[0], 16), ' '.join(i[1:])) for i in ITEMS])
+
+# Relic effects
+RELIC_EFFECTS = {}
+
+#       $11D5 76543210 relic effects 1
+RELIC_EFFECTS[0x11D5] = {}
+#             7: MP +12.5% (bard's hat)
+RELIC_EFFECTS[0x11D5][1 << 7] = "MP +12.5% (bard's hat)"
+#             6: MP +50% (crystal orb)
+RELIC_EFFECTS[0x11D5][1 << 6] = "MP +50% (crystal orb)"
+#             5: MP +25% (minerva)
+RELIC_EFFECTS[0x11D5][1 << 5] = "MP +25% (minerva)"
+#             4: HP +12.5% (green beret)
+RELIC_EFFECTS[0x11D5][1 << 4] = "HP +12.5% (green beret)"
+#             3: HP +50% (muscle belt)
+RELIC_EFFECTS[0x11D5][1 << 3] = "HP +50% (muscle belt)"
+#             2: HP +25% (red cap)
+RELIC_EFFECTS[0x11D5][1 << 2] = "HP +25% (red cap)"
+#             1: raise magic damage (double earrings or hero ring)
+RELIC_EFFECTS[0x11D5][1 << 1] = "raise magic damage (earrings / hero ring)"
+#             0: raise fight damage (atlas armlet, hero ring)
+RELIC_EFFECTS[0x11D5][1 << 0] = "raise fight damage (atlas armlet / hero ring)"
+
+#       $11D6 76543210 relic effects 2
+RELIC_EFFECTS[0x11D6] = {}
+#             7: jump continuously (dragon horn)
+RELIC_EFFECTS[0x11D6][1 << 7] = "jump continuously (dragon horn)"
+#             6: steal -> capture (thief glove)
+RELIC_EFFECTS[0x11D6][1 << 6] = "steal -> capture (thief glove)"
+#             5: slot -> gp rain (coin toss)
+RELIC_EFFECTS[0x11D6][1 << 5] = "slot -> gp rain (coin toss)"
+#             4: sketch -> control (fakemustache)
+RELIC_EFFECTS[0x11D6][1 << 4] = "sketch -> control (fakemustache)"
+#             3: magic -> x-magic (gem box)
+RELIC_EFFECTS[0x11D6][1 << 3] = "magic -> x-magic (gem box)"
+#             2: fight -> jump (dragoonboots)
+RELIC_EFFECTS[0x11D6][1 << 2] = "fight -> jump (dragoonboots)"
+#             1: prevent back/pincer attacks (back guard)
+RELIC_EFFECTS[0x11D6][1 << 1] = "prevent back/pincer attacks (back guard)"
+#             0: increase pre-emptive attack rate (gale hairpin)
+RELIC_EFFECTS[0x11D6][1 << 0] = "increase pre-emptive attack rate (gale hairpin)"
+
+#       $11D7 76543210 relic effects 3
+RELIC_EFFECTS[0x11D7] = {}
+#             7: raise vigor +50% (hyper wrist)
+RELIC_EFFECTS[0x11D7][1 << 7] = "raise vigor +50% (hyper wrist)"
+#             6: MP cost = 1 (economizer)
+RELIC_EFFECTS[0x11D7][1 << 6] = "MP cost = 1 (economizer)"
+#             5: MP cost = 50% (gold hairpin)
+RELIC_EFFECTS[0x11D7][1 << 5] = "MP cost = 50% (gold hairpin)"
+#             4: 100% Hit Rate, ignore target's MBlock (sniper sight)
+RELIC_EFFECTS[0x11D7][1 << 4] = "100% Hit Rate (sniper sight)"
+#             3: Increase Control Rate (coronet)
+RELIC_EFFECTS[0x11D7][1 << 3] = "Increase Control Rate (coronet)"
+#             2: Increase Sketch Rate (beret)
+RELIC_EFFECTS[0x11D7][1 << 2] = "Increase Sketch Rate (beret)"
+#             1: raise magic damage (single earring or hero ring)
+RELIC_EFFECTS[0x11D7][1 << 1] = "raise magic damage (earring / hero ring)"
+#             0: Increase Steal Rate (sneak ring)
+RELIC_EFFECTS[0x11D7][1 << 0] = "Increase Steal Rate (sneak ring)"
+
+#       $11D8 -thgaebo relic effects 4
+RELIC_EFFECTS[0x11D8] = {}
+#             t: protects weak allies (true knight)
+RELIC_EFFECTS[0x11D8][1 << 6] = "protects weak allies (true knight)"
+#             h: can equip heavy items (merit award)
+RELIC_EFFECTS[0x11D8][1 << 5] = "can equip heavy items (merit award)"
+#             g: can equip 2 weapons (genji glove)
+RELIC_EFFECTS[0x11D8][1 << 4] = "can equip 2 weapons (genji glove)"
+#             a: uses weapon 2-handed (gauntlet)
+RELIC_EFFECTS[0x11D8][1 << 3] = "uses weapon 2-handed (gauntlet)"
+#             e: randomly evade (beads)
+RELIC_EFFECTS[0x11D8][1 << 2] = "randomly evade (beads)"
+#             b: randomly counter (black belt)
+RELIC_EFFECTS[0x11D8][1 << 1] = "randomly counter (black belt)"
+#             o: fight -> x-fight (offering)
+RELIC_EFFECTS[0x11D8][1 << 0] = "fight -> x-fight (offering)"
+
+#       $11D9 7--43210 relic effects 5
+RELIC_EFFECTS[0x11D9] = {}
+#             7: make character undead (relic ring)
+RELIC_EFFECTS[0x11D9][1 << 7] = "make character undead (relic ring)"
+#             4: double GP (cat hood)
+RELIC_EFFECTS[0x11D9][1 << 4] = "double GP (cat hood)"
+#             3: double experience (exp. egg)
+RELIC_EFFECTS[0x11D9][1 << 3] = "double experience (exp. egg)"
+#             2: casts wall when HP is low
+RELIC_EFFECTS[0x11D9][1 << 2] = "critical wall"
+#             1: casts safe when HP is low (mithril glove, czarina ring)
+RELIC_EFFECTS[0x11D9][1 << 1] = "critical safe (mithril glove / czarina ring)"
+#             0: casts shell when HP is low (barrier ring, czarina ring)
+RELIC_EFFECTS[0x11D9][1 << 0] = "critical shell (barrier ring / czarina ring)"
