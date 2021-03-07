@@ -723,3 +723,26 @@ def trigger_battle(**kwargs):
     # set 16-bit value at 0x1F6E to max
     to_write = ["0x1F6E", "0xFF", "0x1F6F", "0xFF"]
     return write_arbitrary(*to_write)
+
+class SetBS1A(CCCommand):
+    _ADDR = 0x1D4D
+    #       $1D4D cmmmwbbb
+    #             c: command set (window/short)
+    #             m: message speed
+    #             w: battle mode (active/wait)
+    #             b: battle speed
+    # FIXME: implicitly sets message speed too
+    _MASK = 0b11001
+
+    def __init__(self, requestor):
+        super().__init__(label="bs1a", cost=None, requestor=requestor)
+
+    def __call__(self, elem, **kwargs):
+        """
+        !cc bs1a
+        Sets battle speed to maximum and turns on active ATB.
+
+        Precondition: None
+        """
+        logging.info(f"bs1a | G O F A S T")
+        return self.write(*[hex(self._ADDR), hex(self._MASK)])
