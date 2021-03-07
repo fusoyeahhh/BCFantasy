@@ -395,7 +395,9 @@ class RandomStatus(SetStatus):
     ALLOWED_STATUSES = list(ALL_STATUSES - UNUSABLE_STATUSES)
 
     def __init__(self, requestor):
-        super().__init__(label="random_status", cost=None, requestor=requestor)
+        super().__init__(requestor=requestor)
+        self.label = "random_status"
+        self.cost = None
 
     def precondition(self, slot, **kwargs):
         pmem = kwargs["party"][slot]
