@@ -220,7 +220,7 @@ class MoogleCharm(CCCommand):
         logging.info(f"moogle_charm | kwargs {[*kwargs.keys()]}")
 
         # FIXME: do raw read here instead?
-        val = kwargs["bf"]["field_relics"] ^ self.MASK
+        val = kwargs["bf"]["field_relics"] ^ self._MASK
         logging.info(f"moogle_charm | post toggle value {val}")
 
         return self.write(hex(self._ADDR), hex(val))
