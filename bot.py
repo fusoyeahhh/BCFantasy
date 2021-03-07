@@ -1481,7 +1481,7 @@ COMMANDS["bcf"] = explain
 # Crowd Control
 #
 
-if _ENABLE_CC is not None:
+if _ENABLE_CC:
     import bcfcc
 
     CC_ADMIN_CMDS = {
