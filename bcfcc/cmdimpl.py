@@ -750,6 +750,55 @@ class SetBS1A(CCCommand):
         logging.info(f"bs1a | G O F A S T")
         return self.write(*[hex(self._ADDR), hex(self._MASK)])
 
+class MirrorButtons(CCCommand):
+    _BYTE_RANGE = list(range(0x1D50, 0x1D54))
+    #       $1D50 aaaabbbb
+    #             a: A button mapping (0 = start, 1 = A, 2 = B, 3 = X, 4 = Y, 5 = top L, 6 = top R, 7 = select)
+    #             b: B button mapping
+    #       $1D51 xxxxyyyy
+    #             x: X button mapping
+    #             y: Y button mapping
+    #       $1D52 llllrrrr
+    #             l: top L button mapping
+    #             r: top R button mapping
+    #       $1D53 tttteeee
+    #             t: Start button mapping
+    #             e: Select button mapping
+    #       $1D54 mbcccsss
+    #             m: controller 2 enabled
+    #             b: custom button config
+    #             c: font/window palette color selection
+    #             s: spell order index
+
+    def __init__(self, requestor, duration=10):
+        super().__init__(label="mirror_buttons", cost=None, requestor=requestor)
+        self._toggle = True
+        self.duration = duration
+
+    def _add_to_queue(self, queue):
+        # inelegant hack: find previous task by name in the queue and remove it
+        t_off = [t for t in queue._q if t["name"] == self.label + "_off"]
+        if len(t_off) > 0:
+            t_off[0]["delay"] += self.duration
+            return t_off[0]
+
+        t_off = queue.make_task(self, name=self.label + "_off", user=self._req, enqueue=False)
+        t = queue.make_task(self, name=self.label + "_on", user=self._req, duration=self.duration, callback=t_off)
+        return t
+
+    def __call__(self, **kwargs):
+        """
+        !cc mirror_buttons
+        "Inverts" all button pairs for an amount of time, default 10 seconds.
+
+        Precondition: None
+        """
+        logging.info(f"mirror_buttons | Why is everything upside down?")
+        to_write = []
+        for addr, btn in zip(self._BYTE_RANGE, kwargs["button_config"]):
+            to_write.extend([addr, ((btn >> 4) & 0xFF) | ((btn << 4) & 0xFF)])
+        return self.write(*map(hex, to_write))
+
 class SetRelicEffect(CCCommand):
     _BYTE_RANGE = list(range(0x11D5, 0x11DA))
 
