@@ -1,5 +1,6 @@
 import logging
 import random
+import functools
 
 from bcf import read
 from ff6_flags import NEGATIVE_STATUSES, ALL_STATUSES, UNUSABLE_STATUSES, STATUS_FLAGS, \
@@ -22,8 +23,10 @@ class CCCommand(object):
         if self.cost is not None:
             pass
 
-    def _add_to_queue(self, queue, **kwargs):
-        t = queue.make_task(self, name=self.label, user=self._req, **kwargs)
+    def _add_to_queue(self, queue, *args, **kwargs):
+        # FIXME: can do checks here?
+        fcn = functools.partial(self, *args)
+        t = queue.make_task(fcn, name=self.label, user=self._req, **kwargs)
         return t
 
     def write_seq(self, *args, **kwargs):
@@ -151,7 +154,7 @@ class CantRun(CCCommand):
         self._toggle = True
 
     def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+        super()._add_to_queue(queue, state="battle")
 
     def __call__(self, *args, **kwargs):
         """
@@ -258,7 +261,7 @@ class ActivateGolem(CCCommand):
         super().__init__(label="activate_golem", cost=None, requestor=requestor)
 
     def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+        super()._add_to_queue(queue, state="battle")
 
     def __call__(self, hp_val=None, *args, **kwargs):
         """
@@ -305,8 +308,8 @@ class SetStatus(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="random_status", cost=None, requestor=requestor, admin_only=True)
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+    def _add_to_queue(self, *args, queue):
+        super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, status, slot, **kwargs):
         """
@@ -350,8 +353,8 @@ class Remedy(CCCommand):
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+    def _add_to_queue(self, *args, queue):
+        super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -400,8 +403,8 @@ class RandomStatus(SetStatus):
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue)
+    def _add_to_queue(self, *args, queue):
+        super()._add_to_queue(queue, *args)
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -433,8 +436,8 @@ class Life1(CCCommand):
         #return pmem.is_valid() & pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+    def _add_to_queue(self, *args, queue):
+        super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -473,8 +476,8 @@ class Life1(CCCommand):
         #return pmem.is_valid() & pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+    def _add_to_queue(self, *args, queue):
+        super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -513,8 +516,8 @@ class Life3(SetStatus):
         #return pmem.is_valid()
         return True
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue)
+    def _add_to_queue(self, *args, queue):
+        super()._add_to_queue(queue, *args)
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -541,8 +544,8 @@ class SetStat(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="set_stat", cost=None, requestor=requestor, admin_only=True)
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+    def _add_to_queue(self, queue, *args):
+        super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, stat, val, slot, **kwargs):
         """
@@ -628,7 +631,7 @@ class NullifyElement(CCCommand):
         self._toggle = True
 
     def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+        super()._add_to_queue(queue, state="battle")
 
     def __call__(self, elem, **kwargs):
         """
@@ -676,7 +679,7 @@ class FallenOne(CCCommand):
         return not is_dead
 
     def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="battle")
+        super()._add_to_queue(queue, state="battle")
 
     def __call__(self, *args, **kwargs):
         """
@@ -709,7 +712,7 @@ class TriggerBattle(CCCommand):
         super().__init__(label="pick_fight", cost=None, requestor=requestor)
 
     def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, status="field")
+        super()._add_to_queue(queue, state="field")
 
     def __call__(self, *args, **kwargs):
         # set 16-bit value at 0x1F6E to max --- this is faster than the extend strategy elsewhere
