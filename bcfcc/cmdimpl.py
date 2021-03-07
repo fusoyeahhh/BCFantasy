@@ -308,7 +308,7 @@ class SetStatus(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="random_status", cost=None, requestor=requestor, admin_only=True)
 
-    def _add_to_queue(self, *args, queue):
+    def _add_to_queue(self, queue, *args):
         super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, status, slot, **kwargs):
@@ -353,7 +353,7 @@ class Remedy(CCCommand):
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, *args, queue):
+    def _add_to_queue(self, queue, *args):
         super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, slot, *args, **kwargs):
