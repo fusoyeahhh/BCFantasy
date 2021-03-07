@@ -4,7 +4,8 @@ import functools
 
 from bcf import read
 from ff6_flags import NEGATIVE_STATUSES, ALL_STATUSES, UNUSABLE_STATUSES, STATUS_FLAGS, \
-                      _validate_elems, ELEM_FLAGS
+                      _validate_elems, ELEM_FLAGS, \
+                      RELIC_EFFECTS
 
 class CCCommand(object):
     def __init__(self, label, cost=None, requestor=None, admin_only=False):
@@ -746,3 +747,74 @@ class SetBS1A(CCCommand):
         """
         logging.info(f"bs1a | G O F A S T")
         return self.write(*[hex(self._ADDR), hex(self._MASK)])
+
+class SetRelicEffect(CCCommand):
+    _BYTE_RANGE = list(range(0x11D5, 0x11DA))
+
+    def __init__(self, requestor):
+        super().__init__(label="set_relic_effect", cost=None, requestor=requestor, admin_only=True)
+        self._toggle = True
+
+    def _add_to_queue(self, queue, *args):
+        return queue.make_task(self, name=self.label, user=self._req, state="field")
+
+    def __call__(self, effect, *args, **kwargs):
+        """
+        !cc set_relic_effect
+        Toggle the selected relic effect.
+
+        Precondition: must not be in battle
+        """
+        logging.info(f"set_relic_effect | toggle {self._toggle}, effect {effect}, kwargs {[*kwargs.keys()]}")
+        relic_effects = kwargs["bf"]["battle_relics"]
+        to_write = []
+        for addr, val, byte in zip(self._BYTE_RANGE, relic_effects, int(effect).to_bytes(5, "little")):
+            if byte == 0:
+                continue
+            # FIXME: this will overwrite actual relic effects on turn off (perhaps only temporarily?)
+            if self._toggle is not None:
+                val ^= byte
+            else:
+                val |= byte
+            to_write.extend([addr, val])
+
+            effect = RELIC_EFFECTS[addr][byte]
+            logging.info(f"set_relic_effect | setting relic effect {effect}")
+        return self.write(*map(hex, to_write))
+
+class RandomRelicEffect(SetRelicEffect):
+    DISALLOWED_EFFECTS = set(1 << i for i in
+                             # less common command changers
+                             [10, 11, 12, 13, 14, 15])
+
+    ALLOWED_EFFECTS = list(set.union(*[{b << 8 * i for b in bits}
+                                  for i, bits in enumerate(RELIC_EFFECTS.values())])
+                           - DISALLOWED_EFFECTS)
+
+    _BYTE_RANGE = list(range(0x11D5, 0x11DA))
+
+    def __init__(self, requestor, duration=30):
+        # FIXME:
+        #super().__init__(label="random_relic_effect", cost=None, requestor=requestor)
+        super().__init__(requestor=requestor)
+        self.label = "random_relic_effect"
+        self.cost = None
+        self.duration = duration
+        self._toggle = False
+
+    def _add_to_queue(self, queue):
+        t_off = queue.make_task(self, name=self.label + "_off", user=self._req, enqueue=False)
+        t = queue.make_task(self, name=self.label + "_on", user=self._req, duration=self.duration, callback=t_off)
+        return t
+
+    def __call__(self, *args, **kwargs):
+        """
+        !cc random_relic_effect
+        Apply a random relic effect from a preselected list for a given duration, default is 30 seconds.
+
+        Precondition: must not be in battle
+        """
+        logging.info(f"random_relic_effect | args {args}, kwargs {[*kwargs.keys()]}")
+        effect = random.choice(self.ALLOWED_EFFECTS)
+        logging.info(f"random_relic_effect | selected relic effect {effect}")
+        return super().__call__(effect, **kwargs)
