@@ -113,13 +113,12 @@ class CCQueue(_Queue):
 
         return {"party": party, "eparty": eparty, "bf": bf, "inv": inv, "field_ram": mem[0x1600]}
 
-    def check(self, game_status=None):
+    def check(self, game_status=None, ignore_completion=False):
         # Avoid doing a check if we don't need to
         if len(self._q) == 0:
             return
         try:
-            #gctx = self.construct_game_context() if game_status else {}
-            gctx = {}
+            gctx = self.construct_game_context() if game_status else {}
         except Exception as e:
             logging.error(
                 f"check | Couldn't construct game context. Exception information follows.")
@@ -140,8 +139,12 @@ class CCQueue(_Queue):
 
             # Execute command
             try:
-                logging.info(f"check | Calling into cc subcommand {cmd} ({name})")
-                read.write_instructions(cmd(**gctx))
+                logging.info(f"check | Calling into cc subcommand {cmd} ({name}) "
+                             f"| ignoring_completion: {ignore_completion}")
+                if ignore_completion:
+                    read.write_instructions(cmd(**gctx), check_compl=False)
+                else:
+                    read.write_instructions(cmd(**gctx))
                 logging.info(f"check | Finished {name}")
                 cmdctx["_exe_state"] = True
             except Exception as e:
