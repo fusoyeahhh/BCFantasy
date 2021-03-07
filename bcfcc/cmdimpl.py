@@ -203,8 +203,8 @@ class MoogleCharm(CCCommand):
         # inelegant hack: find previous task by name in the queue and remove it
         t_off = [t for t in queue._q if t["name"] == self.label + "_off"]
         if len(t_off) > 0:
-            t_off["delay"] += self.duration
-            return t_off
+            t_off[0]["delay"] += self.duration
+            return t_off[0]
 
         t_off = queue.make_task(self, name=self.label + "_off", user=self._req, enqueue=False)
         t = queue.make_task(self, name=self.label + "_on", user=self._req, duration=self.duration, callback=t_off)
