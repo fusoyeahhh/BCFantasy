@@ -1,5 +1,7 @@
 
 memreads = {
+    -- Button configuration
+    [0x1D50] = 0x1D56 - 0x1D50,
     -- SRAM mirroring / out of battle party stats / status
     [0x1600] = 0x2000 - 0x1600,
     -- In battle party and enemy stats / status
