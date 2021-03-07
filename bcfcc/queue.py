@@ -131,9 +131,10 @@ class CCQueue(_Queue):
             cmd, name, user = cmdctx["cmd"], cmdctx.get("name", None), cmdctx.get("user", None)
 
             # State check
-            if cmdctx["state"] == "battle" and not game_status.get("in_battle", None):
+            in_battle = game_status.get("in_battle", None)
+            if (cmdctx["state"] == "battle" and not in_battle) or (cmdctx["state"] == "field" and in_battle):
                 logging.debug(f"check | {user} {name} | Task unready | "
-                              f"status: {cmdctx['state']} != {game_status.get('in_battle')}")
+                              f"status: {cmdctx['state']} != {in_battle}")
                 cmdctx["_exe_state"] = False
                 continue
 
