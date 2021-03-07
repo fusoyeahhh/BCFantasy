@@ -110,6 +110,7 @@ class CCQueue(_Queue):
 
         mem = read.read_memory(self.memfile)
         bf = {"cant_run": mem[0xB1][0],
+              "battle_relics": mem[0x11D5],
               "field_relics": mem[0x11DF][0],
               "null_elems": mem[0x3EC8][0]}
 
