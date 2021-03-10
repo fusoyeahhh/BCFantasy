@@ -51,6 +51,13 @@ while true do
     -- Write binary to disk
     memfile = io.open("_memfile", "wb")
 
+    -- FIXME: temporary work around to check battle state
+    in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
+        memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
+    memfile:write(string.char(0))
+    memfile:write(string.char(1))
+    memfile:write(string.char(in_battle and 1 or 0))
+
     -- TODO: Perhaps have it read this from a file
     for addr,mlen in pairs(memreads) do
         --print(addr .. " " .. mlen)
