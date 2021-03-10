@@ -123,7 +123,8 @@ class CCQueue(_Queue):
         inv._from_memory_range(self.memfile)
         logging.info(f"cc | Read and init'd {len(inv._inv)} inventory items")
 
-        return {"party": party, "eparty": eparty, "bf": bf, "inv": inv, "field_ram": mem[0x1600]}
+        return {"party": party, "eparty": eparty, "bf": bf, "inv": inv, "button_config": mem[0x1D50],
+                "field_ram": mem[0x1600]}
 
     def check(self, game_status=None, ignore_completion=False):
         # Avoid doing a check if we don't need to
