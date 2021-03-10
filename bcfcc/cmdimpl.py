@@ -634,8 +634,8 @@ class NullifyElement(CCCommand):
         super().__init__(label="nullify_element", cost=None, requestor=requestor)
         self._toggle = True
 
-    def _add_to_queue(self, queue):
-        super()._add_to_queue(queue, state="battle")
+    def _add_to_queue(self, *args, queue):
+        super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, elem, **kwargs):
         """
