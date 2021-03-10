@@ -133,10 +133,10 @@ id,name,scoring_area
 0xd0,Chadarnook's Room,Owzer's Mansion
 0xd1,Owzer's Mansion Main Floor,Towns
 0xd7,Final Cutscene 19,
-0xd8,"Esper World, House",Towns
+0xd8,Esper World Gestahl & Madonna Cutscene,Towns
 0xd9,Esper World Outside,
-0xda,"Zozo, Outside",Zozo
-0xdb,FREE TO USE,Zozo
+0xda,Esper World Exit Cave,Towns
+0xdb,Esper World Inside Houses,Towns
 0xdd,Zozo Outside,Zozo
 0xe1,Zozo's Interiors,Zozo
 0xe2,Ramuh's Room,Zozo
@@ -375,7 +375,7 @@ id,name,scoring_area
 0x10b,Kefka's Tower Leafer Staircase Room,Kefka's Tower
 0x10c,Final Cutscene 8,
 0x10d,Magitek Staircase Room,Magitek Facility
-0x10e,"Magitek Res. Facility, Room 2 (Number 042)",Magitek Facility
+0x10e,Ifrit & Shiva Save Point Room,Magitek Facility
 0x10f,Magitek Research Facility Capsule Room,Magitek Facility
 0x110,Magitek Research Facility Cid Minecart Room,Magitek Facility
 0x111,Magitek Research Facility Number 024 Room,Magitek Facility
