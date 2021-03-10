@@ -1519,6 +1519,7 @@ if _ENABLE_CC:
         #"power_overwhelming": ...
         #"add_rare_item": ...
         "add_gp": bcfcc.add_gp,
+        "_add_gp": bcfcc.AddGP,
         #"give_doggo": give_interceptor, # enemy or player
     }
 
