@@ -1563,7 +1563,14 @@ if _ENABLE_CC:
 
         from functools import partial
         # FIXME: needs delay, callback, and status logic
-        _CC_QUEUE.make_task(partial(CC_CMDS[cmd], *args), name=cmd, user=ctx.author._name)
+        # Temporary
+        if cmd.starts_with("_"):
+            task = CC_CMDS[cmd](ctx.author._name)
+            logging.info(f"cc | Adding command {cmd} [{task}] to queue with args {args}")
+            task._add_to_queue(_CC_QUEUE, *args)
+            logging.info(f"cc | {cmd} enqueue successful")
+        else:
+            _CC_QUEUE.make_task(partial(CC_CMDS[cmd], *args), name=cmd, user=ctx.author._name)
     COMMANDS["cc"] = cc
 
 
