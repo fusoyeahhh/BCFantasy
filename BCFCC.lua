@@ -57,7 +57,7 @@ while true do
     memfile:write(string.char(0))
     memfile:write(string.char(0))
     memfile:write(string.char(0))
-    memfile:write(string.char(1))
+    memfile:write(string.char(0))
     memfile:write(string.char(in_battle and 1 or 0))
 
     -- TODO: Perhaps have it read this from a file
