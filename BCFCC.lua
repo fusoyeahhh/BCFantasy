@@ -55,6 +55,8 @@ while true do
     in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
         memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
     memfile:write(string.char(0))
+    memfile:write(string.char(0))
+    memfile:write(string.char(0))
     memfile:write(string.char(1))
     memfile:write(string.char(in_battle and 1 or 0))
 
