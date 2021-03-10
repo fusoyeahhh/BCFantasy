@@ -658,6 +658,9 @@ async def event_ready():
 
     # Event poller
     asyncio.create_task(_poll())
+    # Crowd control queue
+    if _ENABLE_CC:
+        asyncio.create_task(_check_queue())
 
 @bot.event
 async def event_message(ctx):
@@ -1525,9 +1528,6 @@ if _ENABLE_CC:
         while True:
             _CC_QUEUE.check()
             await asyncio.sleep(1)
-
-    # Crowd control queue
-    asyncio.create_task(_check_queue())
 
     @bot.command(name='cc')
     async def cc(ctx):
