@@ -380,7 +380,7 @@ def remedy(*args, **kwargs):
     """
     logging.info(f"remedy | args {args}, kwargs {[*kwargs.keys()]}")
     # FIXME: ensure slot is filled
-    slot = args[0] if len(args) > 0 else random.randint(0, 3)
+    slot = int(args[0]) if len(args) > 0 else random.randint(0, 3)
     logging.info(f"remedy | clearing statuses for slot {slot}")
 
     # FIXME: need to not affect other statuses
