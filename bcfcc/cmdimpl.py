@@ -451,7 +451,7 @@ class Life1(CCCommand):
         Precondition: must be in battle, target must be valid and dead
         """
         logging.info(f"life_1 | args {args}, kwargs {[*kwargs.keys()]}")
-        pmem = kwargs["party"][slot]
+        pmem = kwargs["party"][int(slot)]
         # FIXME: move to Character class
         return set_status("-wounded", slot=slot, **kwargs) \
                + set_stat("cur_hp", val=pmem.max_hp / 16, slot=slot, **kwargs)
@@ -491,7 +491,7 @@ class Life2(CCCommand):
         Precondition: must be in battle, target must be valid and dead
         """
         logging.info(f"life_1 | args {args}, kwargs {[*kwargs.keys()]}")
-        pmem = kwargs["party"][slot]
+        pmem = kwargs["party"][int(slot)]
         # FIXME: move to Character class
         return set_status("-wounded", slot=slot, **kwargs) \
                + set_stat("cur_hp", val=pmem.max_hp, slot=slot, **kwargs)
