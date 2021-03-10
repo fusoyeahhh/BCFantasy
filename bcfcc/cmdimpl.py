@@ -420,7 +420,7 @@ class RandomStatus(SetStatus):
         logging.info(f"random_status | args {args}, kwargs {[*kwargs.keys()]}")
         status = random.choice(self.ALLOWED_STATUSES)
         logging.info(f"random_status | selected {status} status, inflicting on {slot}")
-        return super()(status, slot=slot, **kwargs)
+        return super().__call__(status, slot=slot, **kwargs)
 
 def random_status(*args, **kwargs):
     logging.info(f"random_status | args {args}, kwargs {[*kwargs.keys()]}")
@@ -531,7 +531,7 @@ class Life3(SetStatus):
         Precondition: must be in battle, target must be valid
         """
         logging.info(f"life3 | slot {slot}")
-        return super()("life3", slot=slot, **kwargs)
+        return super().__call__("life3", slot=slot, **kwargs)
 
 def life_3(*args, **kwargs):
     """
