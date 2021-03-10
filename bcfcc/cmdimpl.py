@@ -742,7 +742,7 @@ class SetBS1A(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="bs1a", cost=None, requestor=requestor)
 
-    def __call__(self, elem, **kwargs):
+    def __call__(self, **kwargs):
         """
         !cc bs1a
         Sets battle speed to maximum and turns on active ATB.
