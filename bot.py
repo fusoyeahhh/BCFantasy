@@ -1554,6 +1554,10 @@ if _ENABLE_CC:
             await ctx.send(f"@{user}: the crowd control command {cmd} is not recognized.")
             return
 
+        if cmd in CC_ADMIN_CMDS:
+            # run directly for now
+            CC_ADMIN_CMDS[cmd](*args)
+
         # FIXME: check command preconditions here
 
         from functools import partial

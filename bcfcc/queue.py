@@ -146,7 +146,7 @@ class CCQueue(_Queue):
 
             # Execute command
             try:
-                logging.info(f"check | Calling into cc subcommand {cmd} ({name}) "
+                logging.info(f"check | Calling into cc subcommand {cmd} [{[*gctx.keys()]}] ({name})"
                              f"| ignoring_completion: {ignore_completion}")
                 if ignore_completion:
                     read.write_instructions(cmd(**gctx), check_compl=False)
