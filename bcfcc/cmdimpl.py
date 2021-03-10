@@ -440,7 +440,7 @@ class Life1(CCCommand):
         #return pmem.is_valid() & pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, *args, queue):
+    def _add_to_queue(self, queue, *args):
         super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, slot, *args, **kwargs):
@@ -521,7 +521,7 @@ class Life3(SetStatus):
         #return pmem.is_valid()
         return True
 
-    def _add_to_queue(self, *args, queue):
+    def _add_to_queue(self, queue, *args):
         super()._add_to_queue(queue, *args)
 
     def __call__(self, slot, *args, **kwargs):
