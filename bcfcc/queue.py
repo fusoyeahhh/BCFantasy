@@ -50,11 +50,13 @@ class _Queue(object):
                 continue
 
             # pop task
-            logging.info(f"check | {task['user']} {task['name']} | Task ready, firing...")
+            logging.info(f"check | {task['user']} {task['name']} | Checking task readiness...")
             yield task
+            logging.info(f"check | {task['user']} {task['name']} | _exec_state: {task['_exe_state']}")
             # FIXME: make exec state system
             if task["_exe_state"] == False:
                 # Task was determined to be unready by caller
+                logging.info(f"check | {task['user']} {task['name']} | Task unready, deferring...")
                 self._q.append(task)
                 continue
             elif task["_exe_state"] != True:
