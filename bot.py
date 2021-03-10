@@ -1550,7 +1550,7 @@ if _ENABLE_CC:
         if cmd in CC_ADMIN_CMDS and not auth_user:
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
             return
-        elif cmd not in CC_CMDS:
+        elif cmd not in CC_CMDS and cmd not in CC_ADMIN_CMDS:
             await ctx.send(f"@{user}: the crowd control command {cmd} is not recognized.")
             return
 
