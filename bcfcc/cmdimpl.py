@@ -265,7 +265,7 @@ class ActivateGolem(CCCommand):
     def _add_to_queue(self, queue):
         super()._add_to_queue(queue, state="battle")
 
-    def __call__(self, hp_val=None, *args, **kwargs):
+    def __call__(self, hp_val=1000, *args, **kwargs):
         """
         !cc activate_golem
         Activates the "Earth Wall" effect for the duration of the battle. Default HP reservoir is 1000.
