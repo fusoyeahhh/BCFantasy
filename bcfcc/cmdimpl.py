@@ -470,7 +470,7 @@ def life_1(*args, **kwargs):
     return set_status("-wounded", slot=targ, **kwargs) \
            + set_stat("cur_hp", val=pmem.max_hp / 16, slot=targ, **kwargs)
 
-class Life1(CCCommand):
+class Life2(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="life_1", cost=None, requestor=requestor)
 
