@@ -1502,39 +1502,26 @@ if _ENABLE_CC:
     }
 
     CC_CMDS = {
-        "fallen_one": bcfcc.fallen_one,
-        "_fallen_one": bcfcc.FallenOne,
-        "activate_golem": bcfcc.activate_golem,
-        "_activate_golem": bcfcc.ActivateGolem,
-        "null_elem": bcfcc.nullify_element,
-        "_null_elem": bcfcc.NullifyElement,
-        "change_name": bcfcc.set_name,
-        "_change_name": bcfcc.SetName,
-        "pick_fight": bcfcc.trigger_battle,
-        "_pick_fight": bcfcc.TriggerBattle,
-        "moogle_charm": bcfcc.moogle_charm,
-        "_moogle_charm": bcfcc.MoogleCharm,
+        "fallen_one": bcfcc.FallenOne,
+        "activate_golem": bcfcc.ActivateGolem,
+        "null_elem": bcfcc.NullifyElement,
+        "change_name": bcfcc.SetName,
+        "pick_fight": bcfcc.TriggerBattle,
+        "moogle_charm": bcfcc.MoogleCharm,
         #"give_restorative": ...
-        #"revive_char": ...
-        #"change_bs": ...
-        "random_status": bcfcc.random_status,
-        "_random_status": bcfcc.RandomStatus,
-        #"random_relic": ...
+        "random_status": bcfcc.RandomStatus,
         #"max_stat": ...
-        #"mirror_buttons": ...
-        "remedy": bcfcc.remedy,
-        "_remedy": bcfcc.Remedy,
+        "remedy": bcfcc.Remedy,
         #"power_overwhelming": ...
         #"add_rare_item": ...
-        "add_gp": bcfcc.add_gp,
-        "_add_gp": bcfcc.AddGP,
+        "add_gp": bcfcc.AddGP,
         #"give_doggo": give_interceptor, # enemy or player
-        "_life1": bcfcc.Life1,
-        "_life2": bcfcc.Life2,
-        "_life3": bcfcc.Life3,
-        "_bs1a": bcfcc.SetBS1A,
-        "_mirror_buttons": bcfcc.MirrorButtons,
-        "_random_relic_effect": bcfcc.RandomRelicEffect
+        "life1": bcfcc.Life1,
+        "life2": bcfcc.Life2,
+        "life3": bcfcc.Life3,
+        "bs1a": bcfcc.SetBS1A,
+        "mirror_buttons": bcfcc.MirrorButtons,
+        "random_relic_effect": bcfcc.RandomRelicEffect
     }
 
     from bcfcc.queue import CCQueue
