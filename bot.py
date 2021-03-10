@@ -1503,19 +1503,27 @@ if _ENABLE_CC:
 
     CC_CMDS = {
         "fallen_one": bcfcc.fallen_one,
+        "_fallen_one": bcfcc.FallenOne,
         "activate_golem": bcfcc.activate_golem,
+        "_activate_golem": bcfcc.ActivateGolem,
         "null_elem": bcfcc.nullify_element,
+        "_null_elem": bcfcc.NullifyElement,
         "change_name": bcfcc.set_name,
+        "_change_name": bcfcc.SetName,
         "pick_fight": bcfcc.trigger_battle,
+        "_pick_fight": bcfcc.TriggerBattle,
         "moogle_charm": bcfcc.moogle_charm,
+        "_moogle_charm": bcfcc.MoogleCharm,
         #"give_restorative": ...
         #"revive_char": ...
         #"change_bs": ...
         "random_status": bcfcc.random_status,
+        "_random_status": bcfcc.RandomStatus,
         #"random_relic": ...
         #"max_stat": ...
         #"mirror_buttons": ...
         "remedy": bcfcc.remedy,
+        "_remedy": bcfcc.Remedy,
         #"power_overwhelming": ...
         #"add_rare_item": ...
         "add_gp": bcfcc.add_gp,
