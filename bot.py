@@ -1529,6 +1529,12 @@ if _ENABLE_CC:
         "add_gp": bcfcc.add_gp,
         "_add_gp": bcfcc.AddGP,
         #"give_doggo": give_interceptor, # enemy or player
+        "_life1": bcfcc.Life1,
+        "_life2": bcfcc.Life2,
+        "_life3": bcfcc.Life3,
+        "_bs1a": bcfcc.SetBS1A,
+        "_mirror_buttons": bcfcc.MirrorButtons,
+        "_random_relic_effect": bcfcc.RandomRelicEffect
     }
 
     from bcfcc.queue import CCQueue
