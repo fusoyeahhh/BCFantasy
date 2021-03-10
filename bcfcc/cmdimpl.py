@@ -112,7 +112,8 @@ class AddGP(CCCommand):
         Precondition: None
         """
         logging.info(f"add_gp | amount {amnt}, kwargs {[*kwargs.keys()]}")
-        total_gp = [v << (8 * i) for i, v in enumerate(kwargs["field_ram"][0x1860:0x1863])]
+        # FIXME: gotta account for the memory read off set in a more elegant way
+        total_gp = [v << (8 * i) for i, v in enumerate(kwargs["field_ram"][0x1860 - 0x1600:0x1863 - 0x1600])]
         new_total = max(0, min(sum(total_gp) + amnt, self._MAX_GP))
         logging.info(f"add_gp | GP change [{total_gp}] {sum(total_gp)} -> {new_total}")
 
@@ -131,9 +132,9 @@ def add_gp(amnt=1000, **kwargs):
     Precondition: None
     """
     logging.info(f"add_gp | amount {amnt}, kwargs {[*kwargs.keys()]}")
-    total_gp = sum([v << (8 * i) for i, v in enumerate(kwargs["field_ram"][0x1860:0x1863])])
-    new_total = max(0, min(total_gp + amnt, AddGP._MAX_GP))
-    logging.info(f"add_gp | GP change {total_gp} -> {new_total}")
+    total_gp = [v << (8 * i) for i, v in enumerate(kwargs["field_ram"][0x1860 - 0x1600:0x1863 - 0x1600])]
+    new_total = max(0, min(sum(total_gp) + amnt, AddGP._MAX_GP))
+    logging.info(f"add_gp | GP change [{total_gp}] {sum(total_gp)} -> {new_total}")
 
     to_write = []
     for addr, byt in zip(AddGP._BYTE_RANGE, new_total.to_bytes(3, 'little')):
