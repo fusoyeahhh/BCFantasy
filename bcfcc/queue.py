@@ -116,6 +116,9 @@ class CCQueue(_Queue):
               "field_relics": mem[0x11DF][0],
               "null_elems": mem[0x3EC8][0]}
 
+        if 0x0 in mem:
+            bf["in_battle"] = bool(mem[0x0][0])
+
         inv = Inventory()
         inv._from_memory_range(self.memfile)
         logging.info(f"cc | Read and init'd {len(inv._inv)} inventory items")
@@ -134,6 +137,10 @@ class CCQueue(_Queue):
             logging.error(str(type(e)) + " " + str(e))
 
         game_status = game_status or {}
+        # FIXME: temporary workaround
+        if "in_battle" in gctx["bf"]:
+            logging.info(f"check | Overriding in_battle status directly from memory read, value {gctx['bf']['in_battle']}")
+            game_status["in_battle"] = gctx["bf"]["in_battle"]
 
         for cmdctx in super().check():
             cmd, name, user = cmdctx["cmd"], cmdctx.get("name", None), cmdctx.get("user", None)
