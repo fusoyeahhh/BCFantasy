@@ -42,7 +42,7 @@ id,name,scoring_area
 0x32,Narshe Terra Escape Cave,Narshe (WoB)
 0x37,Castle Figaro Outside,Towns
 0x39,Figaro Castle King's Bedroom,Towns
-0x3b,"Figaro Castle, Inside",Towns
+0x3b,Figaro Castle Inside,Towns
 0x3c,"Figaro Castle, Library",Towns
 0x3d,Figaro Castle Basement 1,Towns
 0x44,Cave to South Figaro WoR,South Figaro Cave
@@ -134,7 +134,7 @@ id,name,scoring_area
 0xd1,Owzer's Mansion Main Floor,Towns
 0xd7,Final Cutscene 19,
 0xd8,"Esper World, House",Towns
-0xd9,Esper World Outside,nan
+0xd9,Esper World Outside,
 0xda,"Zozo, Outside",Zozo
 0xdb,FREE TO USE,Zozo
 0xdd,Zozo Outside,Zozo
@@ -247,7 +247,7 @@ id,name,scoring_area
 0x181,Cave to the Sealed Gate Lava Bridge Room,Cave to the Sealed Gate
 0x182,Cave to the Sealed Gate Save Point Room,Cave to the Sealed Gate
 0x183,Kefka's Tower Randomized Area 6,Kefka's Tower
-0x186,"Floating Continent, Breaking Apart",Floating Continent
+0x186,Floating Continent World Breaking Cut Scene 2,Floating Continent
 0x187,Cave to the Sealed Gate Bridge Cutscene,Cave to the Sealed Gate
 0x188,Floating Continent Breakaway 1,Floating Continent
 0x189,"Cid's Island, Outside",Towns
@@ -256,7 +256,7 @@ id,name,scoring_area
 0x18c,Solitary Island Outside,Towns
 0x18e,Solitary Island Beach,Towns
 0x18f,Ancient Cave 2,
-0x190,"DUMMIED - Cid's Island, Beach",Towns
+0x190,Solitary Island Beach,Towns
 0x191,Underground Strata Room 1,Underground Strata
 0x192,Underground Strata Save Point Room,Underground Strata
 0x194,Ebot's Rock Room 2,Ebot's Rock
@@ -333,7 +333,7 @@ id,name,scoring_area
 0xad,"Mt.Zozo, Outside Bridge",Mt. Zozo
 0xae,Shadow's Dream 2,Towns
 0xb4,Mt. Zozo Cyan's Cave,Mt. Zozo
-0xb6,Shadow's Dream 4 / Final Cut Scene 9,nan
+0xb6,Shadow's Dream 4 / Final Cut Scene 9,
 0xb7,Final Cutscene 13,
 0xb8,Final Cutscene 12,
 0xba,Inside House at Dragon's Neck,Towns
@@ -404,10 +404,10 @@ id,name,scoring_area
 0x15e,Thamasa Relic Shop,Towns
 0x163,Kefka's Tower 3 Switch Room / Doom's Room,Kefka's Tower
 0x174,Esper Mountain Exterior Rooms,Esper Mountain
-0x178,DUMMIED - Imperial Base,Towns
+0x178,Floating Continent World Breaking Cut Scene 1,Floating Continent
 0x17d,"Cave to the Sealed Gate, Basement 3",Cave to the Sealed Gate
 0x184,Kefka's Tower Randomized Area 8,Kefka's Tower
-0x185,Floating Continent shadow cast above Jidoor,Floating Continent
+0x185,Floating Continent World Breaking Cut Scene 3,Floating Continent
 0x18d,Solitary Island Cid's House Inside,Towns
 0x193,Kefka's Tower Randomized Area 4,Kefka's Tower
 0x19b,Kefka's Tower Final 3 Switch Room,Kefka's Tower
