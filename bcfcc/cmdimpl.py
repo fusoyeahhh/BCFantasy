@@ -407,7 +407,7 @@ class RandomStatus(SetStatus):
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, *args, queue):
+    def _add_to_queue(self, queue, *args):
         super()._add_to_queue(queue, *args)
 
     def __call__(self, slot, *args, **kwargs):
