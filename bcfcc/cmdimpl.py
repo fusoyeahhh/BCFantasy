@@ -367,7 +367,7 @@ class Remedy(CCCommand):
         logging.info(f"remedy | args {args}, kwargs {[*kwargs.keys()]}")
         logging.info(f"remedy | clearing statuses for slot {slot}")
 
-        c = kwargs["party"][slot]
+        c = kwargs["party"][int(slot)]
         c.set_status(*list(self._REMEDY_CLEAR), clear=True)
         return self.write(*map(hex, c.flush()))
 
