@@ -472,7 +472,7 @@ def life_1(*args, **kwargs):
 
 class Life2(CCCommand):
     def __init__(self, requestor):
-        super().__init__(label="life_1", cost=None, requestor=requestor)
+        super().__init__(label="life_2", cost=None, requestor=requestor)
 
     def precondition(self, slot, **kwargs):
         pmem = kwargs["party"][slot]
@@ -480,7 +480,7 @@ class Life2(CCCommand):
         #return pmem.is_valid() & pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, *args, queue):
+    def _add_to_queue(self, queue, *args):
         super()._add_to_queue(queue, *args, state="battle")
 
     def __call__(self, slot, *args, **kwargs):
@@ -512,7 +512,8 @@ def life_2(*args, **kwargs):
 
 class Life3(SetStatus):
     def __init__(self, requestor):
-        super().__init__(label="life3", cost=None, requestor=requestor)
+        super().__init__(requestor=requestor)
+        self.label = "life3"
 
     def precondition(self, slot, **kwargs):
         pmem = kwargs["party"][slot]
