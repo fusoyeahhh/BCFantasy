@@ -1557,6 +1557,7 @@ if _ENABLE_CC:
         if cmd in CC_ADMIN_CMDS:
             # run directly for now
             CC_ADMIN_CMDS[cmd](*args)
+            return
 
         # FIXME: check command preconditions here
 
