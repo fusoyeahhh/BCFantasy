@@ -611,6 +611,53 @@ class SetName(CCCommand):
 
         return self.write(*write)
 
+class PowerOverwhelming(SetStat):
+
+    _MAX_STATS = {
+        "level": 99,
+        "vigor": 128,
+        "stamina": 255,
+        "defense": 255,
+        "evade": 255,
+        "mblk": 255,
+        "magpwr": 255,
+        # speed stat always has 20 added to it
+        "speed": 235,
+        "cur_hp": 9999,
+        "max_hp": 9999,
+        "cur_mp": 9999,
+        "max_mp": 9999,
+    }
+
+    def __init__(self, requestor):
+        super().__init__(requestor=requestor)
+        self.label = "power_overwhelming"
+        self.cost = None
+
+    def precondition(self, *args):
+        return 0 <= int(args[0]) < 4
+
+    def _add_to_queue(self, queue, *args):
+        super()._add_to_queue(queue, *args, state="battle")
+
+    def __call__(self, slot, **kwargs):
+        """
+        !cc power_overwhelming [slot #]
+        Make the specified slot very strong for this battle
+
+        Precondition: must be in battle and target valid slot
+        """
+        logging.info(f"power_overwhelming | slot {slot}, kwargs {[*kwargs.keys()]}")
+        slot = int(slot)
+        if slot < 0 or slot >= 4:
+            raise IndexError(f"Invalid party slot {slot}.")
+
+        c = kwargs["party"][slot]
+        for stat, val in self._MAX_STATS.items():
+            c.change_stat(stat, int(val))
+
+        return self.write(*map(hex, c.flush()))
+
 def set_name(name, actor=0, **kwargs):
     logging.info(f"set_name | name {name}, actor ({actor})")
 
@@ -935,3 +982,58 @@ class GiveRestorative(GiveItem):
 
         return super().__call__(item, 1, **kwargs)
 
+class GiveRareEquip(GiveItem):
+    ALLOWED_ITEMS = {
+    }
+
+    def __init__(self, requestor):
+        super().__init__(requestor=requestor)
+        self.label = "give_rare_equip"
+        self.cost = None
+
+    def _add_to_queue(self, queue):
+        super()._add_to_queue(queue)
+
+    def precondition(self, *args):
+        return True
+
+    def __call__(self, **kwargs):
+        """
+        !cc give_restorative [name]
+        [Admin Only] Add one of specified restorative item.
+
+        Precondition: None
+        """
+        name = random.choice(self.ALLOWED_ITEMS)
+        item = ITEMS[name]
+        logging.info(f"give_rare_equip | id {item} ({name}), kwargs {[*kwargs.keys()]}")
+
+        return super().__call__(item, 1, **kwargs)
+
+class GiveRareRelic(GiveItem):
+    ALLOWED_RELICS = {
+    }
+
+    def __init__(self, requestor):
+        super().__init__(requestor=requestor)
+        self.label = "give_rare_relic"
+        self.cost = None
+
+    def _add_to_queue(self, queue):
+        super()._add_to_queue(queue)
+
+    def precondition(self, *args):
+        return True
+
+    def __call__(self, **kwargs):
+        """
+        !cc give_restorative [name]
+        [Admin Only] Add one of specified restorative item.
+
+        Precondition: None
+        """
+        name = random.choice(self.ALLOWED_RELICS)
+        item = ITEMS[name]
+        logging.info(f"give_rare_relic | id {item} ({name}), kwargs {[*kwargs.keys()]}")
+
+        return super().__call__(item, 1, **kwargs)
