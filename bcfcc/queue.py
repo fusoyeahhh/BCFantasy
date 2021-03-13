@@ -140,6 +140,7 @@ class CCQueue(_Queue):
             logging.error(
                 f"check | Couldn't construct game context. Exception information follows.")
             logging.error(str(type(e)) + " " + str(e))
+        # FIXME: add a finally clause and construct a "default" game context
 
         game_status = game_status or {}
         # FIXME: temporary workaround
