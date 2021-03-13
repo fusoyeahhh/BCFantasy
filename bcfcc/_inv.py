@@ -109,7 +109,7 @@ class Inventory(MemoryRegion):
             "index": item,
             # FIXME: other flags, we don't really know them unless they're already present
             # Not usable in battle, nor a piece of equipment
-            "battle_flags": 0x0,
+            "battle_flags": 0x20,
             # Default: ???
             "targ_flags": 0x0,
             # Default: equippable by all
