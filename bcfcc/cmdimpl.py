@@ -981,6 +981,14 @@ class GiveRestorative(GiveItem):
 
 class GiveRareEquip(GiveItem):
     ALLOWED_ITEMS = {
+        'genjiarmor', 'behemothsuit', 'dragonhorn', 'assassin', 'punisher', 'risingsun', 'drainer',
+        'hardened', 'soulsabre', 'rainbowbrsh', 'tabbysuit', 'chocobosuit', 'mooglesuit', 'aura', 'redjacket',
+        'ogrenix', 'doomdarts', 'thiefknife', 'dragonclaw', 'striker', 'pearllance', 'wingedge', 'strato',
+        'healrod', 'graedus', 'scimitar', 'tigerfangs', 'stunner', 'auralance', 'genjishld',
+        'atmaweapon', 'cathood', 'skyrender', 'excalibur', 'flameshld', 'iceshld',
+        'snowmuffler', 'tortoiseshld', 'magusrod', 'thundershld', 'forcearmor', 'fixeddice',
+        'aegisshld', 'minerva', 'cursedshld', 'ragnarok', 'forceshld',
+        'valiantknife', 'illumina', 'paladinshld'
     }
 
     def __init__(self, requestor):
@@ -1009,6 +1017,8 @@ class GiveRareEquip(GiveItem):
 
 class GiveRareRelic(GiveItem):
     ALLOWED_RELICS = {
+        'offering', 'meritaward', 'economizer', 'gembox', 'marvelshoes', 'exp.egg',
+        'mooglecharm', 'podbracelet', 'genjiglove',
     }
 
     def __init__(self, requestor):
