@@ -8,16 +8,15 @@ if __name__ == '__main__':
 
     # With actual CC commands
     # This one is convenient because it has no arguments to preserve
-    ccq.make_task(activate_golem, name='activate_golem', user="test", state="battle")
-    print("[activate_golem] Checking state logic")
-    ccq.check(None, ignore_completion=True)
-    ccq.check({"in_battle": True}, ignore_completion=True)
-
-    ccq.make_task(add_gp, name="add_gp", user="test")
-    print("[add_gp] Checking queue execution logic")
-    ccq.check(None, ignore_completion=True)
-
-    ccq.reset()
+    # ccq.make_task(activate_golem, name='activate_golem', user="test", state="battle")
+    # print("[activate_golem] Checking state logic")
+    # ccq.check(game_state, ignore_completion=True)
+    # ccq.check({"in_battle": True}, ignore_completion=True)
+    #
+    # ccq.make_task(add_gp, name="add_gp", user="test")
+    # print("[add_gp] Checking queue execution logic")
+    # ccq.check(game_state, ignore_completion=True)
+    # ccq.reset()
 
     # Generate game context
     gctx = ccq.construct_game_context()
