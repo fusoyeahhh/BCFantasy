@@ -1562,7 +1562,10 @@ if _ENABLE_CC:
             return
 
         task = CC_CMDS[cmd](ctx.author._name)
-        if task.precondition(*args):
+        try:
+            if not task.precondition(*args):
+                raise ValueError("Precondition failed")
+        except:
             logging.warning("cc | Precondition for task {task.label} not met, in the future this will be an error.")
 
         logging.info(f"cc | Adding command {cmd} [{task}] to queue with args {args}")
