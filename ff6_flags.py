@@ -331,7 +331,14 @@ FD Warp Stone
 FE Dried Meat
 FF -Blank-"""
 ITEMS = [i.split(" ") for i in ITEMS.split('\n')]
-ITEMS = dict([(int(i[0], 16), ' '.join(i[1:])) for i in ITEMS])
+ITEMS = dict([(int(i[0], 16), ''.join(i[1:]).lower()) for i in ITEMS])
+
+_VALID_ITEMS = set(ITEMS.values())
+def _validate_item(item_name):
+    return item_name.replace(" ", "").lower() in _VALID_ITEMS
+
+# Apply reverse lookup as well
+ITEMS.update({v: k for k, v in ITEMS.items()})
 
 # Relic effects
 RELIC_EFFECTS = {}
