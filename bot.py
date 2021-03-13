@@ -1508,7 +1508,7 @@ if _ENABLE_CC:
         "change_name": bcfcc.SetName,
         "pick_fight": bcfcc.TriggerBattle,
         "moogle_charm": bcfcc.MoogleCharm,
-        #"give_restorative": ...
+        "give_restorative": bcfcc.GiveRestorative,
         "random_status": bcfcc.RandomStatus,
         #"max_stat": ...
         "remedy": bcfcc.Remedy,
