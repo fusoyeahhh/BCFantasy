@@ -1,10 +1,12 @@
 import time
 from bcfcc import activate_golem, add_gp
-from bcfcc.cmdimpl import AddGP, MoogleCharm, Remedy, RandomRelicEffect, MirrorButtons
+from bcfcc.cmdimpl import AddGP, MoogleCharm, Remedy, RandomRelicEffect, MirrorButtons, GiveItem
 from bcfcc.queue import CCQueue
 
 if __name__ == '__main__':
     ccq = CCQueue(memfile="memfile")
+
+    game_state = {"in_battle": True}
 
     # With actual CC commands
     # This one is convenient because it has no arguments to preserve
@@ -20,12 +22,19 @@ if __name__ == '__main__':
 
     # Generate game context
     gctx = ccq.construct_game_context()
-    game_state = {"in_battle": True}
 
     # Generate a new instance of CC command
     print("[AddGP] Checking queue execution logic")
     req = AddGP("test")
     req._add_to_queue(ccq)
+    print(ccq.write())
+    ccq.check(game_state, ignore_completion=True)
+    print(ccq.write())
+    ccq.reset()
+
+    print("[GiveItem] Checking inventory logic")
+    req = GiveItem("test")
+    req._add_to_queue(ccq, 1, 1)
     print(ccq.write())
     ccq.check(game_state, ignore_completion=True)
     print(ccq.write())
