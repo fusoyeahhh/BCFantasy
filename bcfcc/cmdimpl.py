@@ -637,9 +637,6 @@ class PowerOverwhelming(SetStat):
     def precondition(self, *args):
         return 0 <= int(args[0]) < 4
 
-    def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args, state="battle")
-
     def __call__(self, slot, **kwargs):
         """
         !cc power_overwhelming [slot #]
