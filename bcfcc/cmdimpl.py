@@ -931,7 +931,7 @@ class GiveRestorative(GiveItem):
         Precondition: Item name must be valid and in the permitted list
         """
         item = ITEMS[name]
-        logging.info(f"give_restorative | id {item} ({name}) +{qty}, kwargs {[*kwargs.keys()]}")
+        logging.info(f"give_restorative | id {item} ({name}), kwargs {[*kwargs.keys()]}")
 
         return super().__call__(item, 1, **kwargs)
 
