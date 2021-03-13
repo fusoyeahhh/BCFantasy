@@ -116,8 +116,7 @@ class CCQueue(_Queue):
               "field_relics": mem[0x11DF][0],
               "null_elems": mem[0x3EC8][0]}
 
-        if 0x0 in mem:
-            bf["in_battle"] = bool(mem[0x0][0])
+        bf["in_battle"] = bool(mem[0x0][0]) if 0x0 in mem else None
 
         inv = Inventory()
         inv._from_memory_range(self.memfile)
