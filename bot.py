@@ -1561,10 +1561,10 @@ if _ENABLE_CC:
             read.write_instructions(CC_ADMIN_CMDS[cmd](*args))
             return
 
-        # FIXME: check command preconditions here
-
-        # FIXME: needs delay, callback, and status logic
         task = CC_CMDS[cmd](ctx.author._name)
+        if task.precondition(*args):
+            logging.warning("cc | Precondition for task {task.label} not met, in the future this will be an error.")
+
         logging.info(f"cc | Adding command {cmd} [{task}] to queue with args {args}")
         task._add_to_queue(_CC_QUEUE, *args)
         logging.info(f"cc | {cmd} enqueue successful")
