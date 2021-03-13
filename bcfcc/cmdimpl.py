@@ -980,7 +980,7 @@ class GiveRestorative(GiveItem):
         return super().__call__(item, 1, **kwargs)
 
 class GiveRareEquip(GiveItem):
-    ALLOWED_ITEMS = {
+    ALLOWED_ITEMS = [
         'genjiarmor', 'behemothsuit', 'dragonhorn', 'assassin', 'punisher', 'risingsun', 'drainer',
         'hardened', 'soulsabre', 'rainbowbrsh', 'tabbysuit', 'chocobosuit', 'mooglesuit', 'aura', 'redjacket',
         'ogrenix', 'doomdarts', 'thiefknife', 'dragonclaw', 'striker', 'pearllance', 'wingedge', 'strato',
@@ -989,7 +989,7 @@ class GiveRareEquip(GiveItem):
         'snowmuffler', 'tortoiseshld', 'magusrod', 'thundershld', 'forcearmor', 'fixeddice',
         'aegisshld', 'minerva', 'cursedshld', 'ragnarok', 'forceshld',
         'valiantknife', 'illumina', 'paladinshld'
-    }
+    ]
 
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
@@ -1016,10 +1016,10 @@ class GiveRareEquip(GiveItem):
         return super().__call__(item, 1, **kwargs)
 
 class GiveRareRelic(GiveItem):
-    ALLOWED_RELICS = {
+    ALLOWED_RELICS = [
         'offering', 'meritaward', 'economizer', 'gembox', 'marvelshoes', 'exp.egg',
         'mooglecharm', 'podbracelet', 'genjiglove',
-    }
+    ]
 
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
