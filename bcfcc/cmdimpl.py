@@ -5,6 +5,7 @@ import functools
 from bcf import read
 from ff6_flags import NEGATIVE_STATUSES, ALL_STATUSES, UNUSABLE_STATUSES, STATUS_FLAGS, \
                       _validate_elems, ELEM_FLAGS, \
+                      _validate_item, ITEMS, \
                       RELIC_EFFECTS
 
 class CCCommand(object):
@@ -871,3 +872,66 @@ class RandomRelicEffect(SetRelicEffect):
         effect = random.choice(self.ALLOWED_EFFECTS)
         logging.info(f"random_relic_effect | selected relic effect {effect}")
         return super().__call__(effect, **kwargs)
+
+class GiveItem(CCCommand):
+    def __init__(self, requestor):
+        super().__init__(label="give_item", cost=None, requestor=requestor, admin_only=True)
+
+    def _add_to_queue(self, queue, *args):
+        super()._add_to_queue(queue, *args)
+
+    def precondition(self, *args):
+        return (0 < int(args[0]) < 255) and (0 < int(args[1]) < 255)
+
+    def __call__(self, item, qty, **kwargs):
+        """
+        !cc give_item [id] [qty]
+        [Admin Only] Give qty of an inventory item specified by id.
+
+        Precondition: Item id and qty must be valid
+        """
+        item = int(item)
+        name = ITEMS[item]
+        logging.info(f"give_item | id {item} ({name}) +{qty}, kwargs {[*kwargs.keys()]}")
+
+        inv = kwargs["inv"]
+        bstatus = kwargs["bf"].get("in_battle", False)
+        # FIXME: It may be possible that the battle inventory can get out of sync with the field inventory
+        old_qty = inv._finv[item] if item in inv._finv else 0
+        logging.info(f"give_item | id {item} ({name}) {old_qty} + {qty}")
+        inv.change_qty(item, old_qty + int(qty), skip_binv=not bstatus)
+
+        return self.write(*map(hex, inv.flush()))
+
+class GiveRestorative(GiveItem):
+    ALLOWED_ITEMS = {
+        "tonic": None,
+        "potion": None,
+        "tincture": None,
+        "ether": None,
+        "x-potion": None,
+        "elixir": None,
+        "megalixir": None
+    }
+
+    def __init__(self, requestor):
+        super().__init__(requestor=requestor)
+        self.label = "give_restorative"
+        self.cost = None
+
+    def precondition(self, *args):
+        return _validate_item(args[0]) \
+               and args[0].replace(" ", "").lower() in self.ALLOWED_ITEMS
+
+    def __call__(self, name, **kwargs):
+        """
+        !cc give_restorative [name]
+        [Admin Only] Add one of specified restorative item.
+
+        Precondition: Item name must be valid and in the permitted list
+        """
+        item = ITEMS[name]
+        logging.info(f"give_restorative | id {item} ({name}) +{qty}, kwargs {[*kwargs.keys()]}")
+
+        return super().__call__(item, 1, **kwargs)
+
