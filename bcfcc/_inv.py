@@ -54,6 +54,8 @@ class Inventory(MemoryRegion):
             self.item_slots[item["index"]] = i
 
     def change_qty(self, item, new_qty):
+        # respect byte values
+        new_qty = max(0, min(new_qty, 255))
         # get item index
         _item = self._rev_lookup[item]
 
