@@ -131,6 +131,11 @@ class CCQueue(_Queue):
             return
         try:
             gctx = self.construct_game_context() if game_status else {}
+        except KeyError as e:
+            logging.error(
+                f"check | Couldn't construct game context. "
+                f"Most likely a missing / bad memory read at {hex(e.args[0])}. Full exception follows.")
+            logging.error(str(type(e)) + " " + str(e))
         except Exception as e:
             logging.error(
                 f"check | Couldn't construct game context. Exception information follows.")
