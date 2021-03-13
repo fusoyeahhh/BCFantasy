@@ -8,7 +8,10 @@ class Inventory(MemoryRegion):
 
     def __init__(self):
         super().__init__()
+        # Battle inventory
         self._inv = {}
+        # Field inventory
+        self._finv = {}
         self.empty_slots = []
         self.item_slots = {}
 
@@ -52,6 +55,14 @@ class Inventory(MemoryRegion):
             # For faster cross-referencing later
             # NOTE that the last item iterated over will be the one recorded if there are duplicates
             self.item_slots[item["index"]] = i
+
+        # Check if field inventory is also listed
+        if 0x1869 not in self.mem:
+            return
+
+        for iaddr in range(0x1869, 0x1968):
+            # map index to quantity
+            self._finv[self.mem[iaddr]] = self.mem[iaddr + 256]
 
     def change_qty(self, item, new_qty):
         # respect byte values
