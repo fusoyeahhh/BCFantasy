@@ -21,11 +21,22 @@ class Inventory(MemoryRegion):
     def _from_memory_range(self, memfile):
         super()._from_memory_range(memfile)
 
-        for i in range(255):
-            qty = self.mem[0x2689 + 5 * i]
-            if qty == 0:
+        # Field inventory
+        for i, iaddr in enumerate(range(0x1869, 0x1968)):
+            if self.mem[iaddr] == 0xFF:
                 self.empty_slots.append(i)
+                # NOTE: The assumption here is that the empty slots in field and battle are equivalent
                 continue
+
+            # map index to quantity
+            self._finv[i] = self.mem[iaddr + 256]
+
+            # For faster cross-referencing later
+            # NOTE that the last item iterated over will be the one recorded if there are duplicates
+            self.item_slots[self.mem[iaddr]] = i
+
+            # Battle inventory
+            qty = self.mem[0x2689 + 5 * i]
 
             # $2686 Item Index
             self._inv[i] = item = {}
@@ -52,46 +63,46 @@ class Inventory(MemoryRegion):
             # $268A ----4321 Item Equippability (set if character can't equip the item)
             item["equip_flags"] = self.mem[0x268A + 5 * i]
 
-            # For faster cross-referencing later
-            # NOTE that the last item iterated over will be the one recorded if there are duplicates
-            self.item_slots[item["index"]] = i
-
-        # Check if field inventory is also listed
-        if 0x1869 not in self.mem:
-            return
-
-        for iaddr in range(0x1869, 0x1968):
-            # map index to quantity
-            self._finv[self.mem[iaddr]] = self.mem[iaddr + 256]
-
-    def change_qty(self, item, new_qty):
+    def change_qty(self, item, new_qty, skip_binv=False):
         # respect byte values
         new_qty = max(0, min(new_qty, 255))
         # get item index
-        _item = self._rev_lookup[item]
+        _item = self._rev_lookup[item] if isinstance(item, str) else int(item)
 
         # find if the item is already in the inventory
         if _item in self.item_slots:
             idx = self.item_slots[_item]
             # change quantity --- internal bookkeeping
-            self._inv[idx]["qty"] = new_qty
-            # write to queue
-            _item = 5 * idx + 0x2689
+            self._finv[idx] = new_qty
             # Change qty of indexed item slot
-            self._queue += [_item, new_qty]
+            self._queue += [idx + 0x1869, new_qty]
+
+            if not skip_binv:
+                # change quantity --- internal bookkeeping
+                self._inv[idx]["qty"] = new_qty
+                # write to queue
+                _item = 5 * idx + 0x2689
+                # Change qty of indexed item slot
+                self._queue += [_item, new_qty]
             return
 
         # Not in inventory, find open spot and add
         # FIXME: account for completely full inventory
         idx = self.empty_slots.pop(0)
-        _item = self._inv[idx] = self._create_item(_item, qty=new_qty)
-        # Write full item to new slot
-        idx = 5 * idx + 0x2686
-        self._queue += [idx, _item["index"],
-                        idx + 1, _item["battle_flags"],
-                        idx + 2, _item["targ_flags"],
-                        idx + 3, _item["qty"],
-                        idx + 4, _item["equip_flags"]]
+
+        self.item_slots[_item] = idx
+        self._finv[idx] = new_qty
+        self._queue += [idx + 0x1869, new_qty]
+        
+        if not skip_binv:
+            _item = self._inv[idx] = self._create_item(_item, qty=new_qty)
+            # Write full item to new slot
+            idx = 5 * idx + 0x2686
+            self._queue += [idx, _item["index"],
+                            idx + 1, _item["battle_flags"],
+                            idx + 2, _item["targ_flags"],
+                            idx + 3, _item["qty"],
+                            idx + 4, _item["equip_flags"]]
 
     def _create_item(self, item, **kwargs):
         _item = {
