@@ -46,14 +46,14 @@ while true do
 
     -- TODO: look into hash_region
     -- Read battle memory $3AA0-$3F1F
-    mem = memory.readbyterange(0x3AA0, 0x3F1F - 0x3AA0)
+    mem = mainmemory.readbyterange(0x3AA0, 0x3F1F - 0x3AA0)
 
     -- Write binary to disk
     memfile = io.open("_memfile", "wb")
 
     -- FIXME: temporary work around to check battle state
-    in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
-        memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
+    in_battle = mainmemory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
+        mainmemory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
     memfile:write(string.char(0))
     memfile:write(string.char(0))
     memfile:write(string.char(0))
@@ -62,19 +62,21 @@ while true do
 
     -- TODO: Perhaps have it read this from a file
     for addr,mlen in pairs(memreads) do
-        --print(addr .. " " .. mlen)
-        mem = memory.readbyterange(addr, mlen)
+        mem = mainmemory.readbyterange(addr, mlen)
 
         -- Write address and length of buffer
         memfile:write(string.char(bit.rshift(addr, 8)))
         memfile:write(string.char(bit.band(addr, 0xFF)))
+        -- This always returns a value which is one smaller than reality
+        -- Lua... what... is wrong with you?
         bufsize = #mem
+        --print(bizstring.hex(addr) .. " " .. mlen .. " " .. bufsize)
         memfile:write(string.char(bit.rshift(bufsize, 8)))
         memfile:write(string.char(bit.band(bufsize, 0xFF)))
 
         -- Write the memory values
         for _addr,val in pairs(mem) do
-            --print(addr .. " " .. val)
+            --print(_addr .. " " .. val .. " " .. (addr + _addr) .. " " .. memory.readbyte(addr + _addr))
             memfile:write(string.char(val))
         end
     end
