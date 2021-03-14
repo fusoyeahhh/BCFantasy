@@ -35,7 +35,7 @@ while true do
             addr = b1 * 0x100 + b2
             -- 1 byte write value
             print("Writing " .. b3 .. " to address " .. addr)
-            memory.write_u8(addr, b3)
+            mainmemory.write_u8(addr, b3)
         else
             io.close(inp)
             -- truncate file to let bot know it's done
