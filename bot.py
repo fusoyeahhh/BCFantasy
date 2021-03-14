@@ -1567,7 +1567,7 @@ if _ENABLE_CC:
             if not task.precondition(*args):
                 raise ValueError("Precondition failed")
         except:
-            logging.warning("cc | Precondition for task {task.label} not met, in the future this will be an error.")
+            logging.warning(f"cc | Precondition for task {task.label} not met, in the future this will be an error.")
 
         logging.info(f"cc | Adding command {cmd} [{task}] to queue with args {args}")
         task._add_to_queue(_CC_QUEUE, *args)
