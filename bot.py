@@ -1529,6 +1529,7 @@ if _ENABLE_CC:
     async def _check_queue():
         while True:
             _CC_QUEUE.check(bot._last_status)
+            _CC_QUEUE.write("cc_status")
             await asyncio.sleep(1)
 
     @bot.command(name='cc')
