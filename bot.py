@@ -1562,12 +1562,24 @@ if _ENABLE_CC:
             read.write_instructions(CC_ADMIN_CMDS[cmd](*args))
             return
 
-        task = CC_CMDS[cmd](ctx.author._name)
+        user = ctx.author._name.lower()
+        task = CC_CMDS[cmd](user)
+
         try:
             if not task.precondition(*args):
                 raise ValueError("Precondition failed")
         except:
             logging.warning(f"cc | Precondition for task {task.label} not met, in the future this will be an error.")
+
+        logging.info(f"cc | Deducting cost for command {cmd} ({task.cost}) from {user}")
+        if user not in _USERS:
+            await ctx.send(f"@{user}: you are not registered, use !register first.")
+            return
+        elif (task.cost or 0) <= _USERS[user]["score"]:
+            _USERS[user]["score"] -= (task.cost or 0)
+        else:
+            await ctx.send(f"@{user}: insufficient funds.")
+            return
 
         logging.info(f"cc | Adding command {cmd} [{task}] to queue with args {args}")
         task._add_to_queue(_CC_QUEUE, *args)
