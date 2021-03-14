@@ -194,6 +194,12 @@ def read_memory(fname="memfile", ntries=3):
         bytes = bytes[4 + size:]
         #print(bytes)
 
+        # FIXME: This is to work around the fact that Lua doesn't understand zero index arrays
+        # It iterates from 1, then gets to the end of the region, and *then* processes the zero
+        # index
+        mem[addr] = mem[addr][-1:] + mem[addr][:-1]
+
+
     return mem
 
 def write_instructions(byte_arr, fname="instr", check_compl=3):
