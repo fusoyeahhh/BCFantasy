@@ -21,10 +21,6 @@ class CCCommand(object):
     def __call__(self, *args, **kwargs):
         return self.write(*args, **kwargs)
 
-    def __del__(self):
-        if self.cost is not None:
-            pass
-
     def _add_to_queue(self, queue, *args, **kwargs):
         # FIXME: can do checks here?
         fcn = functools.partial(self, *args)
