@@ -6,8 +6,8 @@ id,name,scoring_area
 0x7,Blackjack Inside,Airship
 0x9,Choose a Scenario Screen,
 0xa,"Blackjack, Upper Deck (IAF sequence)",Airship
-0xb,"Falcon, Upper Deck",Airship
-0xc,"Falcon, Inside",Airship
+0xb,Falcon Upper Deck,Airship
+0xc,Falcon Inside,Airship
 0xd,"Falcon, Roof, Landing on Kefka's Tower",Airship
 0xe,Chocobo Stable Outside WoB,Towns
 0xf,Chocobo Stable Inside,Towns
