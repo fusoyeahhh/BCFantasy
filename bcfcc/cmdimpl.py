@@ -761,6 +761,12 @@ class TriggerBattle(CCCommand):
         super()._add_to_queue(queue, state="field")
 
     def __call__(self, *args, **kwargs):
+        """
+        !cc pick_fight
+        Max out threat counter to trigger battle.
+
+        Precondition: must not be in battle
+        """
         # set 16-bit value at 0x1F6E to max --- this is faster than the extend strategy elsewhere
         to_write = ["0x1F6E", "0xFF", "0x1F6F", "0xFF"]
         return write_arbitrary(*to_write)
