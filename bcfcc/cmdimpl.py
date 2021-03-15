@@ -1066,6 +1066,7 @@ if __name__ == "__main__":
             c = cmd(None)
             print(f"### {c.label}", file=fout)
             doc = c.__call__.__doc__ or ""
+            doc = doc.replace("[Admin Only]", "__Admin Only__")
             doc = [l.strip() for l in doc.split("\n")]
             if len(doc) > 1 and doc[1].startswith("!"):
                 doc[1] = f"`{doc[1].rstrip()}`\n"
