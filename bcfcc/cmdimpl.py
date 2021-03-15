@@ -1046,3 +1046,27 @@ class GiveRareRelic(GiveItem):
         logging.info(f"give_rare_relic | id {item} ({name}), kwargs {[*kwargs.keys()]}")
 
         return super().__call__(item, 1, **kwargs)
+
+if __name__ == "__main__":
+    import sys
+    import inspect
+
+    # Make docs
+    with open("bcfcc.md", "w") as fout:
+        print("# Beyond Chaos Fantasy / Crowd Control\n[image]\n\n", file=fout)
+        print("Use `!cc help` to get the current list of available commands. "
+              "Some commands can only be acted on once in/out of battle. "
+              "If the required state isn't available, but may be soon, the command will be "
+              "queued until such time as it is ready to fire."
+              "Available commands and usage is below.", file=fout)
+        print("## Command List", file=fout)
+        for name, cmd in [(name, cls) for name, cls
+                                in inspect.getmembers(sys.modules[__name__], inspect.isclass)
+                                if issubclass(cls, CCCommand)]:
+            c = cmd(None)
+            print(f"### {c.label}", file=fout)
+            doc = c.__call__.__doc__ or ""
+            doc = [l.strip() for l in doc.split("\n")]
+            if len(doc) > 1 and doc[1].startswith("!"):
+                doc[1] = f"`{doc[1].rstrip()}`\n"
+            print("\n".join(doc), file=fout)
