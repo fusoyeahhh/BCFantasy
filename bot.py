@@ -30,7 +30,7 @@ _AUTHORIZED = opts.pop("admins", {})
 # If true-like, will enable Crowd Control
 _ENABLE_CC = opts.pop("crowd_control", None)
 # Base URL for data listings (such as area, characters, bosses...)
-_GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/data/")
+_GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/blob/main/")
 
 #
 # Seed / Spoiler metadata
@@ -1028,7 +1028,7 @@ async def listareas(ctx):
 
     # Users get a link to the list so as not to spam chat
     await ctx.send("Use !bcfinfo, please. This command will go away soon.")
-    await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
+    await ctx.send(f"{_GITHUB_DOC_BASE}data/bc_fantasy_data_areas.csv")
     return
 COMMANDS["listareas"] = listareas
 
@@ -1085,7 +1085,7 @@ async def listbosses(ctx):
         return
 
     await ctx.send("Use !bcfinfo, please. This command will go away soon.")
-    await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_bosses.csv")
+    await ctx.send(f"{_GITHUB_DOC_BASE}data/bc_fantasy_data_bosses.csv")
     return
 COMMANDS["listbosses"] = listbosses
 
@@ -1113,7 +1113,7 @@ async def listchars(ctx):
         return
 
     await ctx.send("Use !bcfinfo, please. This command will go away soon.")
-    await ctx.send(f"{_GITHUB_DOC_BASE}bc_fantasy_data_areas.csv")
+    await ctx.send(f"{_GITHUB_DOC_BASE}data/bc_fantasy_data_areas.csv")
     return
 COMMANDS["listchars"] = listchars
 
@@ -1554,7 +1554,8 @@ if _ENABLE_CC:
         cmd = args.pop(0).lower()
 
         if cmd == "help":
-            await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())}")
+            await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())} "
+                           f"see {_GITHUB_DOC_BASE}bcfcc/bcfcc.md")
             return
         # admin only command
         if cmd in CC_ADMIN_CMDS and not auth_user:
