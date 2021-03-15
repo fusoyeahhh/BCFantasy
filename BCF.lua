@@ -330,8 +330,18 @@ while true do
 	out_json = out_json .. "\"map_id\": " .. map_id .. ","
 	out_json = out_json .. "\"music_id\": " .. music_id .. ","
 
+	-- secondary state check
+	out_json = out_json .. "  \"state\": [" .. ""
+	for i,b in pairs(mainmemory.readbyterange(0x3000, 16)) do
+		out_json = out_json .. "\"" .. b .. "\""
+		if i ~= 0 then
+			out_json = out_json .. ", "
+		end
+    end
+	out_json = out_json .. "]"
+
 	-- Kill information
-	out_json = out_json .. "  \"kills\": {" .. ""
+	out_json = out_json .. ",  \"kills\": {" .. ""
 	i = 0
 	for char,kcount in pairs(kills) do
 		app =  ", "
