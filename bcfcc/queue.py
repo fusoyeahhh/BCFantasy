@@ -75,7 +75,7 @@ class _Queue(object):
 
         logging.debug(f"check | Done checking queue, tasks remaining: {len(self._q)}")
 
-    def write(self, fname=None):
+    def write(self, fname=None, title=""):
         ctime = time.time()
         status = []
         for t in self._q:
@@ -86,6 +86,7 @@ class _Queue(object):
         status = "\n".join(status)
         if fname is not None:
             with open(fname, "w") as fout:
+                print(title)
                 print(status, file=fout)
 
         return status
