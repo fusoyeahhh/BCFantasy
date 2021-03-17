@@ -539,17 +539,17 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
         os.makedirs(pth)
 
     # Save the current history to a JSON file in the serialization path
-    logging.info(f"Serializing path {pth}/history.json")
+    logging.debug(f"Serializing path {pth}/history.json")
     with open(os.path.join(pth, "history.json"), "w") as fout:
         json.dump(HISTORY, fout, indent=2)
 
     # Save the current user data to a JSON file in the serialization path
-    logging.info(f"Serializing path {pth}/user_data.json")
+    logging.debug(f"Serializing path {pth}/user_data.json")
     with open(os.path.join(pth, "user_data.json"), "w") as fout:
         json.dump(_USERS, fout, indent=2)
 
     # Save the last know game status to a JSON file in the serialization path
-    logging.info(f"Serializing path {pth}/_last_status.json")
+    logging.debug(f"Serializing path {pth}/_last_status.json")
     # If we're paused, we probably stopped the bot, so the frame counter should be zero
     # This is more of a debug check than anything
     if bot._status == "paused" and bot._last_status.get("frame") != 0:
