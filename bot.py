@@ -1537,7 +1537,7 @@ if _ENABLE_CC:
         while True:
             _CC_QUEUE.check(bot._last_status)
             current_time = datetime.datetime.now().strftime("%H:%M:%S")
-            _CC_QUEUE.write("cc_status", title=f"[{current_time}] Crowd Control Queue ---")
+            _CC_QUEUE.write("cc_status.txt", title=f"[{current_time}] Crowd Control Queue ---")
             await asyncio.sleep(1)
 
     @bot.command(name='cc')
