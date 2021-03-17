@@ -1528,7 +1528,9 @@ if _ENABLE_CC:
         "life3": bcfcc.Life3,
         "bs1a": bcfcc.SetBS1A,
         "mirror_buttons": bcfcc.MirrorButtons,
-        "random_relic_effect": bcfcc.RandomRelicEffect
+        "random_relic_effect": bcfcc.RandomRelicEffect,
+        "give_rare_relic": bcfcc.GiveRareRelic,
+        "give_rare_equip": bcfcc.GiveRareEquip,
     }
 
     from bcfcc.queue import CCQueue
