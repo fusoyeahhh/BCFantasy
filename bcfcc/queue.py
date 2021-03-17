@@ -86,7 +86,7 @@ class _Queue(object):
         status = "\n".join(status)
         if fname is not None:
             with open(fname, "w") as fout:
-                print(title)
+                print(title, file=fout)
                 print(status, file=fout)
 
         return status
