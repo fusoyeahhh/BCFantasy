@@ -147,7 +147,7 @@ class CCQueue(_Queue):
         game_status = game_status or {}
         # FIXME: temporary workaround
         if "in_battle" in gctx["bf"]:
-            logging.info(f"check | Overriding in_battle status directly from memory read, value {gctx['bf']['in_battle']}")
+            logging.debug(f"check | Overriding in_battle status directly from memory read, value {gctx['bf']['in_battle']}")
             game_status["in_battle"] = gctx["bf"]["in_battle"]
 
         for cmdctx in super().check():
