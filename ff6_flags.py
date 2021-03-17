@@ -312,7 +312,7 @@ EA X-Potion
 EB Tincture
 EC Ether
 ED X-Ether
-EE Elixer
+EE Elixir
 EF Megalixir
 F0 Fenix Down
 F1 Revivify
