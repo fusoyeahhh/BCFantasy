@@ -784,7 +784,7 @@ class SetBS1A(CCCommand):
     #             w: battle mode (active/wait)
     #             b: battle speed
     # FIXME: implicitly sets message speed too
-    _MASK = 0b11001
+    _MASK = 0b0
 
     def __init__(self, requestor):
         super().__init__(label="bs1a", cost=None, requestor=requestor)
