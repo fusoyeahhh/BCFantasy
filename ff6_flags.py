@@ -313,7 +313,7 @@ EB Tincture
 EC Ether
 ED X-Ether
 EE Elixer
-EF Megalixer
+EF Megalixir
 F0 Fenix Down
 F1 Revivify
 F2 Antidote
