@@ -23,7 +23,7 @@ class MemoryRegion(object):
         else:
             addr, dep = addr
             # SNES is natively little endian
-            return sum(self.mem[addr + i] * 0x100 ** (dep - 1 - i) for i in range(dep))
+            return sum(self.mem[addr + i] * 0x100 ** i for i in range(dep))
 
     def __setitem__(self, addr, val):
         """
