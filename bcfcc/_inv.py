@@ -75,7 +75,7 @@ class Inventory(MemoryRegion):
             # change quantity --- internal bookkeeping
             self._finv[idx] = new_qty
             # Change qty of indexed item slot
-            self._queue += [idx + 0x1869, new_qty]
+            self._queue += [idx + 0x1969, new_qty]
 
             if not skip_binv:
                 # change quantity --- internal bookkeeping
@@ -92,7 +92,7 @@ class Inventory(MemoryRegion):
 
         self.item_slots[_item] = idx
         self._finv[idx] = new_qty
-        self._queue += [idx + 0x1869, new_qty]
+        self._queue += [idx + 0x1869, _item, idx + 0x1969, new_qty]
         
         if not skip_binv:
             _item = self._inv[idx] = self._create_item(_item, qty=new_qty)
