@@ -206,8 +206,8 @@ id,name,scoring_area
 0x14e,Kefka's Tower First Area,Kefka's Tower
 0x150,Kefka's Tower Cut Scene with Final Kefka,Kefka's Tower
 0x151,Kefka's Tower 4T Weights Room,Kefka's Tower
-0x154,"Thamasa, Outside (WOB)",Towns
-0x155,"Thamasa, Outside (WOR)",Towns
+0x154,Thamasa Leo's Grave Cut Scene,Towns
+0x155,Thamasa Esper Cut Scene,Towns
 0x157,Thamasa WoB Outside,Towns
 0x158,Thamasa WoR Outside,Towns
 0x159,Thamasa Armory,Towns
@@ -366,7 +366,7 @@ id,name,scoring_area
 0xfe,Final Cutscene 4,
 0xff,Final Cutscene 2,
 0x100,Final Cutscene 5,
-0x101,"Ending, Locke and Celes 1",
+0x101,Kefka's Tower Randomized Area 18,Kefka's Tower
 0x102,Final Cutscene 3,
 0x103,Final Cutscene 10,
 0x104,Final Cutscene 7,
