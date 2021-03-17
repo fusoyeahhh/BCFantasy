@@ -1531,6 +1531,7 @@ if _ENABLE_CC:
         "random_relic_effect": bcfcc.RandomRelicEffect,
         "give_rare_relic": bcfcc.GiveRareRelic,
         "give_rare_equip": bcfcc.GiveRareEquip,
+        "power_overwhelming": bcfcc.PowerOverwhelming
     }
 
     from bcfcc.queue import CCQueue
