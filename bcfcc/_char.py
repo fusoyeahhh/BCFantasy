@@ -183,7 +183,7 @@ class Character(MemoryRegion):
     def _shift_memmap(self, shift=0):
         addrs = sorted(self._memmap.keys(), key=lambda v: complex(v).real)
         # add bookend
-        addrs.append(addrs[-1] + 1)
+        addrs.append(addrs[-1] + 0x100000)
 
         seg = []
         for a1, a2 in zip(addrs[:-1], addrs[1:]):
