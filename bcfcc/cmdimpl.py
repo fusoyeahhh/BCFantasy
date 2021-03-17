@@ -613,7 +613,8 @@ class PowerOverwhelming(SetStat):
         "level": 99,
         "vigor": 128,
         "stamina": 255,
-        "defense": 255,
+        # Where is this stored?
+        #"defense": 255,
         "evade": 255,
         "mblk": 255,
         "magpwr": 255,
