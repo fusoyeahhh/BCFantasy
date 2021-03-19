@@ -1517,10 +1517,7 @@ if _ENABLE_CC:
         "moogle_charm": bcfcc.MoogleCharm,
         "give_restorative": bcfcc.GiveRestorative,
         "random_status": bcfcc.RandomStatus,
-        #"max_stat": ...
         "remedy": bcfcc.Remedy,
-        #"power_overwhelming": ...
-        #"add_rare_item": ...
         "add_gp": bcfcc.AddGP,
         #"give_doggo": give_interceptor, # enemy or player
         "life1": bcfcc.Life1,
