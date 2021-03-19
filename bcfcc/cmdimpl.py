@@ -611,7 +611,7 @@ class PowerOverwhelming(SetStat):
 
     _MAX_STATS = {
         "level": 99,
-        "vigor": 128,
+        "vigor": 127,
         "stamina": 255,
         # Where is this stored?
         #"defense": 255,
