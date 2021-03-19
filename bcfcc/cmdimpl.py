@@ -977,6 +977,7 @@ class GiveRestorative(GiveItem):
 
         Precondition: Item name must be valid and in the permitted list
         """
+        name = name.replace(" ", "").lower()
         item = ITEMS[name]
         logging.info(f"give_restorative | id {item} ({name}), kwargs {[*kwargs.keys()]}")
 
