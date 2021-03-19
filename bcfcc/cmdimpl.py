@@ -3,7 +3,7 @@ import random
 import functools
 
 from bcf import read
-from ff6_flags import NEGATIVE_STATUSES, ALL_STATUSES, UNUSABLE_STATUSES, STATUS_FLAGS, \
+from common.ff6_flags import NEGATIVE_STATUSES, ALL_STATUSES, UNUSABLE_STATUSES, STATUS_FLAGS, \
                       _validate_elems, ELEM_FLAGS, \
                       _validate_item, ITEMS, \
                       RELIC_EFFECTS

@@ -1,5 +1,5 @@
 from bcfcc import MemoryRegion
-from ff6_flags import _validate_status, STATUS_FLAGS
+from common.ff6_flags import _validate_status, STATUS_FLAGS
 
 
 class Character(MemoryRegion):

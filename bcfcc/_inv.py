@@ -1,5 +1,5 @@
 from bcfcc import MemoryRegion
-from ff6_flags import ITEMS
+from common.ff6_flags import ITEMS
 
 
 class Inventory(MemoryRegion):
