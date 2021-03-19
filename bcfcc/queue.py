@@ -97,7 +97,10 @@ class _Queue(object):
             if t['delay'] is not None and t.get('completed', False):
                 rem = int(t['submitted'] + t['delay'] - ctime)
                 status[-1] += f" {rem} sec. remain"
+            elif t.get('completed', False):
+                status[-1] += " [Done]"
         status = "\n".join(status)
+
         if fname is not None:
             with open(fname, "w") as fout:
                 print(title, file=fout)
