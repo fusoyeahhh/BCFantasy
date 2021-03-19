@@ -71,7 +71,7 @@ class _Queue(object):
                 continue
             logging.info(f"check | {task['user']} {task['name']} | Task completed successfully")
             # Reset these to allow for linger mechanics
-            task["start"] = ctime
+            task["submitted"] = ctime
             task["delay"] = self.linger
 
             # Check if there's an associated callback to enqueue
