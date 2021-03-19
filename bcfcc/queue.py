@@ -5,8 +5,10 @@ from bcf import read
 from bcfcc import Character, Inventory
 
 class _Queue(object):
-    def __init__(self):
+    def __init__(self, linger=5):
         self.reset()
+        # How long to allow completed items to stay in the queue
+        self.linger = linger
 
     def reset(self):
         self._q = []
@@ -33,17 +35,22 @@ class _Queue(object):
         logging.info(f"enqueue | {task['user']} {task['name']} | Enqueued task at {task['submitted']}")
         self._q.append(task)
 
-    def check(self, status=None):
-        status = status or {}
+    def check(self):
         logging.debug(f"check | Checking queue with number of tasks {len(self._q)}")
         for _ in range(len(self._q)):
             task = self._q.pop(0)
             ctime = time.time()
             logging.debug(f"check | {task['user']} {task['name']} | Checking task at {ctime}")
 
-            # Is this a delayed task?
             delay = task.get("delay", None)
             start = task.get("submitted", ctime)
+            # Is this a completed task waiting to be cleared?
+            # FIXME: Could be handled by a sub method
+            if task.get('_exe_state', None) == True and ctime - start > delay:
+                # clear task from queue
+                continue
+
+            # Is this a delayed task?
             if delay is not None and ctime - start < delay:
                 self._q.append(task)
                 logging.debug(f"check | {task['user']} {task['name']} | Task unready | delay: {ctime} < {start + delay}")
@@ -57,13 +64,15 @@ class _Queue(object):
             if task["_exe_state"] == False:
                 # Task was determined to be unready by caller
                 logging.info(f"check | {task['user']} {task['name']} | Task unready, deferring...")
-                self._q.append(task)
                 continue
             elif task["_exe_state"] != True:
                 # Task failed, provide reasoning
                 logging.info(f"check | {task['user']} {task['name']} | Task failed, reason {task['_exe_state']}")
                 continue
             logging.info(f"check | {task['user']} {task['name']} | Task completed successfully")
+            # Reset these to allow for linger mechanics
+            task["start"] = ctime
+            task["delay"] = self.linger
 
             # Check if there's an associated callback to enqueue
             if task["callback"] is not None:
@@ -72,6 +81,11 @@ class _Queue(object):
                 cback = task["callback"]
                 cback["delay"] = task["duration"] or 0
                 self.enqueue(cback)
+                # We won't preserve the parent task since they already have a different kind of indicator
+                continue
+
+            # We put it back in the queue for it to get cleared on the next check
+            self._q.append(task)
 
         logging.debug(f"check | Done checking queue, tasks remaining: {len(self._q)}")
 
