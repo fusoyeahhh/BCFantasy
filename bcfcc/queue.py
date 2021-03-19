@@ -46,7 +46,7 @@ class _Queue(object):
             start = task.get("submitted", ctime)
             # Is this a completed task waiting to be cleared?
             # FIXME: Could be handled by a sub method
-            if task.get('_exe_state', None) == True and ctime - start > delay:
+            if task.get('_exe_state', None) == True and ctime - task["completed"] > delay:
                 # clear task from queue
                 continue
 
@@ -71,7 +71,7 @@ class _Queue(object):
                 continue
             logging.info(f"check | {task['user']} {task['name']} | Task completed successfully")
             # Reset these to allow for linger mechanics
-            task["submitted"] = ctime
+            task["completed"] = ctime
             task["delay"] = self.linger
 
             # Check if there's an associated callback to enqueue
@@ -94,7 +94,7 @@ class _Queue(object):
         status = []
         for t in self._q:
             status.append(f"{t['name']} ({t['user']})")
-            if t['delay'] is not None:
+            if t['delay'] is not None and t.get('completed', False):
                 rem = int(t['submitted'] + t['delay'] - ctime)
                 status[-1] += f" {rem} sec. remain"
         status = "\n".join(status)
