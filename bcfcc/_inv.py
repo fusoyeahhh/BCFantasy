@@ -22,32 +22,32 @@ class Inventory(MemoryRegion):
         super()._from_memory_range(memfile)
 
         # Field inventory
-        for i, iaddr in enumerate(range(0x1869, 0x1968)):
+        for menu_slot, iaddr in enumerate(range(0x1869, 0x1968)):
             if self.mem[iaddr] == 0xFF:
-                self.empty_slots.append(i)
+                self.empty_slots.append(menu_slot)
                 # NOTE: The assumption here is that the empty slots in field and battle are equivalent
                 continue
 
             # map index to quantity
-            self._finv[i] = self.mem[iaddr + 256]
+            self._finv[menu_slot] = self.mem[iaddr + 256]
 
             # For faster cross-referencing later
             # NOTE that the last item iterated over will be the one recorded if there are duplicates
-            self.item_slots[self.mem[iaddr]] = i
+            self.item_slots[self.mem[iaddr]] = menu_slot
 
             # Battle inventory
-            qty = self.mem[0x2689 + 5 * i]
+            qty = self.mem[0x2689 + 5 * menu_slot]
 
             # $2686 Item Index
-            self._inv[i] = item = {}
-            item["index"] = self.mem[0x2686 + 5 * i]
+            self._inv[menu_slot] = item = {}
+            item["index"] = self.mem[0x2686 + 5 * menu_slot]
             # $2687 u?tjws??
             #       u: not usable in battle
             #       t: can be thrown
             #       j: can be used with jump
             #       w: is a weapon
             #       s: is a shield
-            item["battle_flags"] = self.mem[0x2687 + 5 * i]
+            item["battle_flags"] = self.mem[0x2687 + 5 * menu_slot]
             # $2688 abcdefgh Item Targetting Flags
             #       a: random target
             #       b: enemy target by default
@@ -57,47 +57,47 @@ class Inventory(MemoryRegion):
             #       f: target all enemies and all allies
             #       g: target can't switch between enemies and allies
             #       h: target single ally or enemy
-            item["targ_flags"] = self.mem[0x2688 + 5 * i]
+            item["targ_flags"] = self.mem[0x2688 + 5 * menu_slot]
             # $2689 Item Quantity
             item["qty"] = qty
             # $268A ----4321 Item Equippability (set if character can't equip the item)
-            item["equip_flags"] = self.mem[0x268A + 5 * i]
+            item["equip_flags"] = self.mem[0x268A + 5 * menu_slot]
 
     def change_qty(self, item, new_qty, skip_binv=False):
         # respect byte values
         new_qty = max(0, min(new_qty, 255))
         # get item index
-        _item = self._rev_lookup[item] if isinstance(item, str) else int(item)
+        item_id = self._rev_lookup[item] if isinstance(item, str) else int(item)
 
         # find if the item is already in the inventory
-        if _item in self.item_slots:
-            idx = self.item_slots[_item]
+        if item_id in self.item_slots:
+            menu_slot = self.item_slots[item_id]
             # change quantity --- internal bookkeeping
-            self._finv[idx] = new_qty
+            self._finv[menu_slot] = new_qty
             # Change qty of indexed item slot
-            self._queue += [idx + 0x1969, new_qty]
+            self._queue += [menu_slot + 0x1969, new_qty]
 
             if not skip_binv:
                 # change quantity --- internal bookkeeping
-                self._inv[idx]["qty"] = new_qty
+                self._inv[menu_slot]["qty"] = new_qty
                 # write to queue
-                _item = 5 * idx + 0x2689
+                _item = 5 * menu_slot + 0x2689
                 # Change qty of indexed item slot
                 self._queue += [_item, new_qty]
             return
 
         # Not in inventory, find open spot and add
         # FIXME: account for completely full inventory
-        idx = self.empty_slots.pop(0)
+        empty_slot = self.empty_slots.pop(0)
 
-        self.item_slots[_item] = idx
-        self._finv[idx] = new_qty
-        self._queue += [idx + 0x1869, _item, idx + 0x1969, new_qty]
+        self.item_slots[item_id] = empty_slot
+        self._finv[empty_slot] = new_qty
+        self._queue += [empty_slot + 0x1869, item_id, empty_slot + 0x1969, new_qty]
         
         if not skip_binv:
-            _item = self._inv[idx] = self._create_item(_item, qty=new_qty)
+            _item = self._inv[empty_slot] = self._create_item(item_id, qty=new_qty)
             # Write full item to new slot
-            idx = 5 * idx + 0x2686
+            idx = 5 * empty_slot + 0x2686
             self._queue += [idx, _item["index"],
                             idx + 1, _item["battle_flags"],
                             idx + 2, _item["targ_flags"],
@@ -117,6 +117,11 @@ class Inventory(MemoryRegion):
         }
         _item.update(kwargs)
         return _item
+
+    def print(self):
+        for itm, slot in self.item_slots.items():
+            qty = self._finv[slot]
+            print(slot, itm, ITEMS[itm], qty, "|", str(self._inv[slot]))
 
     def commit(self):
         for i in range(len(self._queue) // 2):

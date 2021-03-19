@@ -35,7 +35,8 @@ if __name__ == '__main__':
 
     print("[GiveItem] Checking inventory logic")
     req = GiveItem("test")
-    req._add_to_queue(ccq, 1, 1)
+    inv = ccq.construct_game_context()["inv"]
+    req._add_to_queue(ccq, [*inv.item_slots.keys()][0], 1)
     print(ccq.write())
     ccq.check(game_state, ignore_completion=True)
     print(ccq.write())

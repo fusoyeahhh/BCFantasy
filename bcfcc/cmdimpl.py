@@ -928,7 +928,7 @@ class GiveItem(CCCommand):
         super()._add_to_queue(queue, *args)
 
     def precondition(self, *args):
-        return (0 < int(args[0]) < 255) and (0 < int(args[1]) < 255)
+        return (0 < int(args[0]) < 256) and (0 < int(args[1]) < 256)
 
     def __call__(self, item, qty, **kwargs):
         """
@@ -944,7 +944,7 @@ class GiveItem(CCCommand):
         inv = kwargs["inv"]
         bstatus = kwargs["bf"].get("in_battle", False)
         # FIXME: It may be possible that the battle inventory can get out of sync with the field inventory
-        old_qty = inv._finv[item] if item in inv._finv else 0
+        old_qty = inv._finv[inv.item_slots[item]] if item in inv.item_slots else 0
         logging.info(f"give_item | id {item} ({name}) {old_qty} + {qty}")
         inv.change_qty(item, old_qty + int(qty), skip_binv=not bstatus)
 
