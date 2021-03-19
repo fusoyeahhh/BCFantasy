@@ -1571,7 +1571,7 @@ if _ENABLE_CC:
 
         if cmd in CC_ADMIN_CMDS:
             # run directly for now
-            read.write_instructions(CC_ADMIN_CMDS[cmd](*args))
+            read.write_instructions(CC_ADMIN_CMDS[cmd](*args, **_CC_QUEUE.construct_game_context()))
             return
 
         user = ctx.author._name.lower()
