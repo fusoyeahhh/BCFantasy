@@ -30,7 +30,7 @@ BCFCC_COSTS = {
  'life2': 250,
  'life3': 500,
  'moogle_charm': 500,
- 'null_elem': 100,
+ 'nullify_element': 100,
  'pick_fight': 100,
  'power_overwhelming': 500,
  'random_relic_effect': 100,
