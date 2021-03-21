@@ -5,10 +5,10 @@ id,name,scoring_area
 0x6,Blackjack Upper Deck,Airship
 0x7,Blackjack Inside,Airship
 0x9,Choose a Scenario Screen,
-0xa,"Blackjack, Upper Deck (IAF sequence)",Airship
+0xa,Blackjack Upper Deck IAF Cut Scene,Airship
 0xb,Falcon Upper Deck,Airship
 0xc,Falcon Inside,Airship
-0xd,"Falcon, Roof, Landing on Kefka's Tower",Airship
+0xd,Blackjack Breaking Cut Scene,Airship
 0xe,Chocobo Stable Outside WoB,Towns
 0xf,Chocobo Stable Inside,Towns
 0x10,Chocobo Stable Outside WoR,Towns
@@ -43,7 +43,7 @@ id,name,scoring_area
 0x37,Castle Figaro Outside,Towns
 0x39,Figaro Castle King's Bedroom,Towns
 0x3b,Figaro Castle Inside,Towns
-0x3c,"Figaro Castle, Library",Towns
+0x3c,Figaro Castle Library,Towns
 0x3d,Figaro Castle Basement 1,Towns
 0x44,Cave to South Figaro WoR,South Figaro Cave
 0x45,"Cave to South Figaro, Rooms",South Figaro Cave
@@ -249,13 +249,13 @@ id,name,scoring_area
 0x183,Kefka's Tower Randomized Area 6,Kefka's Tower
 0x186,Floating Continent World Breaking Cut Scene 2,Floating Continent
 0x187,Cave to the Sealed Gate Bridge Cutscene,Cave to the Sealed Gate
-0x188,Floating Continent Breakaway 1,Floating Continent
-0x189,"Cid's Island, Outside",Towns
-0x18a,"Cid's Island, Inside House",Floating Continent
-0x18b,"Cid's Island, Beach",Towns
+0x188,Floating Continent Break Away Cut Scene,Towns
+0x189,Floating Continent Escape,Floating Continent
+0x18a,??????????,Towns
+0x18b,Floating Continent Rising Cut Scene,Towns
 0x18c,Solitary Island Outside,Towns
 0x18e,Solitary Island Beach,Towns
-0x18f,Ancient Cave 2,
+0x18f,Solitary Island Celes Jump,Towns
 0x190,Solitary Island Beach,Towns
 0x191,Underground Strata Room 1,Underground Strata
 0x192,Underground Strata Save Point Room,Underground Strata
@@ -281,13 +281,13 @@ id,name,scoring_area
 0x35,Cave to Figaro Castle Room 2,South Figaro Cave
 0x36,Castle Figaro Submerging Cut Scene,Towns
 0x38,Desert Chocobo & Kefka Troops Cut Scene,Towns
-0x3a,"Figaro Castle, Throne Room",Towns
+0x3a,Castle Figaro Throne Room,Towns
 0x3e,Figaro Castle Basement 2,Castle Figaro Basement
 0x3f,Figaro Castle Basement 3,Castle Figaro Basement
 0x40,Figaro Castle Basement Engine Room,Castle Figaro Basement
 0x41,Figaro Castle Basement Treasure Room,Castle Figaro Basement
 0x42,Figaro Castle Basement Regal Crown Room,Castle Figaro Basement
-0x43,"Figaro Castle, Outside, Nighttime",Towns
+0x43,Figaro Castle Top Tower Night Coin Flip Cut Scene,Towns
 0x46,Cave to South Figaro (WOB),South Figaro Cave
 0x47,South Figaro Cave Entrance,South Figaro Cave
 0x48,South Figaro Cave Room 2,South Figaro Cave
@@ -405,7 +405,7 @@ id,name,scoring_area
 0x163,Kefka's Tower 3 Switch Room / Doom's Room,Kefka's Tower
 0x174,Esper Mountain Exterior Rooms,Esper Mountain
 0x178,Floating Continent World Breaking Cut Scene 1,Floating Continent
-0x17d,"Cave to the Sealed Gate, Basement 3",Cave to the Sealed Gate
+0x17d,Floating Continent World Breaking Cut Scene 4,Floating Continent
 0x184,Kefka's Tower Randomized Area 8,Kefka's Tower
 0x185,Floating Continent World Breaking Cut Scene 3,Floating Continent
 0x18d,Solitary Island Cid's House Inside,Towns
