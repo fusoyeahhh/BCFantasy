@@ -1533,12 +1533,21 @@ if _ENABLE_CC:
 
     from bcfcc.queue import CCQueue
     _CC_QUEUE = CCQueue()
+    _CC_SLEEP_INTRV = 1.0
+    _CC_TIME_INC = 60 * 10
     async def _check_queue():
+        counter = _CC_TIME_INC
         while True:
+            counter -= _CC_SLEEP_INTRV
+            if counter < 0:
+                for user, data in _USERS.items():
+                    data["score"] += 10
+                counter = _CC_TIME_INC
+
             _CC_QUEUE.check(bot._last_status)
             current_time = datetime.datetime.now().strftime("%H:%M:%S")
             _CC_QUEUE.write("cc_status.txt", title=f"[{current_time}] Crowd Control Queue ---")
-            await asyncio.sleep(1)
+            await asyncio.sleep(_CC_SLEEP_INTRV)
 
     @bot.command(name='cc')
     async def cc(ctx):
