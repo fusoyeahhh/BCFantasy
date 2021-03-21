@@ -8,10 +8,41 @@ from common.ff6_flags import NEGATIVE_STATUSES, ALL_STATUSES, UNUSABLE_STATUSES,
                       _validate_item, ITEMS, \
                       RELIC_EFFECTS
 
+BCFCC_COSTS = {
+ 'activate_golem': 250,
+ 'add_gp': 100,
+ 'bs1a': 200,
+ 'fallen_one': 1000,
+ 'give_restorative': {
+     'elixir': 150,
+     'ether': 50,
+     'fenix_down': 100,
+     'megalixir': 200,
+     'potion': 50,
+     'tincture': 25,
+     'tonic': 25,
+     'x-ether': 100,
+     'x-potion': 100,
+ },
+ 'give_rare_equip': 300,
+ 'give_rare_relic': 200,
+ 'life1': 100,
+ 'life2': 250,
+ 'life3': 500,
+ 'moogle_charm': 500,
+ 'null_elem': 100,
+ 'pick_fight': 100,
+ 'power_overwhelming': 500,
+ 'random_relic_effect': 100,
+ 'random_status': 200,
+ 'remedy': 100,
+ 'set_name': 50
+}
+
 class CCCommand(object):
     def __init__(self, label, cost=None, requestor=None, admin_only=False):
         self.label = label
-        self.cost = cost
+        self.cost = BCFCC_COSTS.get(label, cost)
         self._admin = admin_only
         self._req = requestor
 
@@ -395,7 +426,7 @@ class RandomStatus(SetStatus):
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
         self.label = "random_status"
-        self.cost = None
+        self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, slot, **kwargs):
         pmem = kwargs["party"][slot]
@@ -511,6 +542,7 @@ class Life3(SetStatus):
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
         self.label = "life3"
+        self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, slot, **kwargs):
         pmem = kwargs["party"][slot]
@@ -629,7 +661,7 @@ class PowerOverwhelming(SetStat):
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
         self.label = "power_overwhelming"
-        self.cost = None
+        self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, *args):
         return 0 <= int(args[0]) < 4
@@ -899,7 +931,7 @@ class RandomRelicEffect(SetRelicEffect):
         #super().__init__(label="random_relic_effect", cost=None, requestor=requestor)
         super().__init__(requestor=requestor)
         self.label = "random_relic_effect"
-        self.cost = None
+        self.cost = BCFCC_COSTS.get(self.label, None)
         self.duration = duration
         self._toggle = False
 
@@ -967,6 +999,8 @@ class GiveRestorative(GiveItem):
         self.cost = None
 
     def precondition(self, *args):
+        # FIXME: this hack may come back to bite you later...
+        self.cost = BCFCC_COSTS.get(self.label, None)[args[0]]
         return _validate_item(args[0]) \
                and args[0].replace(" ", "").lower() in self.ALLOWED_ITEMS
 
@@ -998,7 +1032,7 @@ class GiveRareEquip(GiveItem):
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
         self.label = "give_rare_equip"
-        self.cost = None
+        self.cost = BCFCC_COSTS.get(self.label, None)
 
     def _add_to_queue(self, queue):
         super()._add_to_queue(queue)
@@ -1028,7 +1062,7 @@ class GiveRareRelic(GiveItem):
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
         self.label = "give_rare_relic"
-        self.cost = None
+        self.cost = BCFCC_COSTS.get(self.label, None)
 
     def _add_to_queue(self, queue):
         super()._add_to_queue(queue)
@@ -1066,8 +1100,11 @@ if __name__ == "__main__":
                                 in inspect.getmembers(sys.modules[__name__], inspect.isclass)
                                 if issubclass(cls, CCCommand)]:
             c = cmd(None)
+            if c.label is None:
+                continue
             print(f"### {c.label}", file=fout)
             doc = c.__call__.__doc__ or ""
+            doc += f"\nCosts: {BCFCC_COSTS.get(c.label, 'N/A')}"
             doc = doc.replace("[Admin Only]", "__Admin Only__")
             doc = [l.strip() for l in doc.split("\n")]
             if len(doc) > 1 and doc[1].startswith("!"):
