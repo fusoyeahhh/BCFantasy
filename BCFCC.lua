@@ -94,11 +94,10 @@ while true do
 
     -- Write current events to screen
     local f = io.open("cc_status.txt", "r")
-    print(f)
     if f ~= nil then
         io.close(f)
         i = 0
-        for line in io.lines("cc_status") do
+        for line in io.lines("cc_status.txt") do
             gui.text(20, 10 * (i + 1), line)
             i = i + 1
         end
