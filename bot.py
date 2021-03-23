@@ -1588,12 +1588,12 @@ if _ENABLE_CC:
 
         try:
             if not task.precondition(*args):
-                raise ValueError("Precondition failed")
+                raise ValueError(f"Precondition with failed, args: {args}")
         except Exception as e:
             logging.warning(f"cc | Precondition for task {task.label} not met.")
             logging.warning(str(e))
-            await ctx.send(f"@{user}: check your command, you may need additional arguments.")
-            return
+            #await ctx.send(f"@{user}: check your command, you may need additional arguments.")
+            #return
 
         logging.info(f"cc | Deducting cost for command {cmd} ({task.cost}) from {user}")
         if user not in _USERS:
