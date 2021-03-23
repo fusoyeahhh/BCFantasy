@@ -1587,13 +1587,13 @@ if _ENABLE_CC:
         task = CC_CMDS[cmd](user)
 
         try:
-            if not task.precondition(*args):
+            if not task.precondition(*args, **_CC_QUEUE.construct_game_context()):
                 raise ValueError(f"Precondition with failed, args: {args}")
         except Exception as e:
             logging.warning(f"cc | Precondition for task {task.label} not met.")
             logging.warning(str(e))
-            #await ctx.send(f"@{user}: check your command, you may need additional arguments.")
-            #return
+            await ctx.send(f"@{user}: check your command, you may need additional arguments.")
+            return
 
         logging.info(f"cc | Deducting cost for command {cmd} ({task.cost}) from {user}")
         if user not in _USERS:
