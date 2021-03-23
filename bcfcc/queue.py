@@ -73,7 +73,8 @@ class _Queue(object):
             elif task["_exe_state"] != True:
                 # Task failed, provide reasoning
                 logging.info(f"check | {task['user']} {task['name']} | Task failed, reason {task['_exe_state']}")
-                self._q.append(task)
+                if task.get("retries", 0) > 0:
+                    self._q.append(task)
                 continue
 
             logging.info(f"check | {task['user']} {task['name']} | Task completed successfully")
