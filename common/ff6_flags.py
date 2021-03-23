@@ -68,7 +68,7 @@ def _validate_status(statuses):
 # 7: Earth
 # 8: Water
 ELEM_FLAGS = {e: 1 << i for i, e in
-                    enumerate(["fire", "ice", "lighting", "poison", "wind", "pearl", "earth", "water"])}
+                    enumerate(["fire", "ice", "lightning", "poison", "wind", "pearl", "earth", "water"])}
 
 def _validate_elems(*elems):
     return set(elems).issubset(set(ELEM_FLAGS))
