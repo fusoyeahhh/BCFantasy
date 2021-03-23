@@ -756,13 +756,6 @@ class FallenOne(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="fallen_one", cost=None, requestor=requestor)
 
-    def precondition(self, slot, **kwargs):
-        pmem = kwargs["party"][slot]
-        is_dead = pmem.get_status_flags()["status_set_1"] & STATUS_FLAGS[0]["wounded"]
-        #pmem.is_valid()
-        #return pmem.is_valid() & not pmem.is_dead()
-        return not is_dead
-
     def _add_to_queue(self, queue):
         super()._add_to_queue(queue, state="battle")
 
@@ -777,8 +770,10 @@ class FallenOne(CCCommand):
         write = []
         for c in kwargs["party"]:
             # FIXME: check to make sure the character actually exists
-            c.change_stat("cur_hp", 1)
-            write.extend(list(map(hex, c.flush())))
+            is_dead = c.get_status_flags()["status_set_1"] & STATUS_FLAGS[0]["wounded"]
+            if not is_dead:
+                c.change_stat("cur_hp", 1)
+                write.extend(list(map(hex, c.flush())))
         return self.write(*write)
 
 def fallen_one(**kwargs):
