@@ -5,7 +5,7 @@ id,name,scoring_area
 0x6,Blackjack Upper Deck,Airship
 0x7,Blackjack Inside,Airship
 0x9,Choose a Scenario Screen,
-0xa,Blackjack Upper Deck IAF Cut Scene,Airship
+0xa,Blackjack Upper Deck Cut Scenes,Airship
 0xb,Falcon Upper Deck,Airship
 0xc,Falcon Inside,Airship
 0xd,Blackjack Breaking Cut Scene,Airship
@@ -178,7 +178,7 @@ id,name,scoring_area
 0x12a,Daryl's Tomb Basement 1,Daryl's Tomb
 0x12b,Daryl's Tomb Basement 2,Daryl's Tomb
 0x12c,Daryl's Tomb Basement 3/ Switch Room,Daryl's Tomb
-0x12d,"Kefka's Tower, Assassin Room",Kefka's Tower
+0x12d,Daryl's Tomb Stairway to Airship Cut Scene,Daryl's Tomb
 0x12f,Kefka's Tower 2 Conveyor Belt Room,Kefka's Tower
 0x131,Tzen Outside WoR,Towns
 0x132,Tzen Outside,Towns
@@ -269,7 +269,7 @@ id,name,scoring_area
 0x3,Save Menu,Towns
 0x4,Shadow's Dream 1,Towns
 0x5,Mog's Explanation,
-0x8,"Blackjack, Back Room",Airship
+0x8,Blackjack Back Room,Airship
 0x2a,Narshe Mines Esper Room,Narshe (WoB)
 0x2b,Narshe Mine Esper Cave Empty,Narshe (WoB)
 0x2d,DUMMIED,
@@ -347,7 +347,7 @@ id,name,scoring_area
 0xd3,"Cliff, Setzer waits for Darill",
 0xd4,"Ending, Falcon flying through sky",
 0xd5,"Esper World, Lake",Towns
-0xd6,"Esper World, Outside",Towns
+0xd6,Setzer and Daryl's Hill Cut Scene,Towns
 0xdc,Kefka's Tower Randomized Area 13,Kefka's Tower
 0xde,Kefka's Tower Randomized Area 14,Kefka's Tower
 0xdf,Kefka's Tower Randomized Area 14,Kefka's Tower
