@@ -93,7 +93,7 @@ while true do
     os.rename("_memfile", "memfile")
 
     -- Write current events to screen
-    local f = io.open("cc_status", "r")
+    local f = io.open("cc_status.txt", "r")
     if f ~= nil then
         io.close(f)
         i = 0
