@@ -46,9 +46,12 @@ class _Queue(object):
             start = task.get("submitted", ctime)
             # Is this a completed task waiting to be cleared?
             # FIXME: Could be handled by a sub method
-            if task.get('_exe_state', None) == True and ctime - task["completed"] > delay:
-                # clear task from queue
-                logging.info(f"check | Clearing task {task['name']}")
+            if task.get('_exe_state', None) == True:
+                if ctime - task["completed"] > delay:
+                    # clear task from queue
+                    logging.info(f"check | Clearing task {task['name']}")
+                    continue
+                self._q.append(task)
                 continue
 
             # Is this a delayed task?
