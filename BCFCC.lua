@@ -99,6 +99,7 @@ while true do
         i = 0
         for line in io.lines("cc_status") do
             gui.text(20, 10 * (i + 1), line)
+            i = i + 1
         end
     end
 end
