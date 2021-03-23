@@ -180,9 +180,13 @@ class CCQueue(_Queue):
         for cmdctx in super().check():
             cmd, name, user = cmdctx["cmd"], cmdctx.get("name", None), cmdctx.get("user", None)
 
+            moogle_charm_active = any({t["name"] == "moogle_charm_off" for t in self._q})
+
             # State check
             in_battle = game_status.get("in_battle", None)
-            if (cmdctx["state"] == "battle" and not in_battle) or (cmdctx["state"] == "field" and in_battle):
+            if (cmdctx["state"] == "battle" and not in_battle) or \
+                    (cmdctx["state"] == "field" and in_battle) or \
+                    (moogle_charm_active and name == "pick_fight"):
                 logging.debug(f"check | {user} {name} | Task unready | "
                               f"status: {cmdctx['state']} != {in_battle}")
                 cmdctx["_exe_state"] = False
