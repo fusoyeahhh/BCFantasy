@@ -46,7 +46,7 @@ class CCCommand(object):
         self._admin = admin_only
         self._req = requestor
 
-    def precondition(self):
+    def precondition(self, *args, **kwargs):
         return True
 
     def __call__(self, *args, **kwargs):
@@ -663,7 +663,7 @@ class PowerOverwhelming(SetStat):
         self.label = "power_overwhelming"
         self.cost = BCFCC_COSTS.get(self.label, None)
 
-    def precondition(self, *args):
+    def precondition(self, *args, **kwargs):
         return 0 <= int(args[0]) < 4
 
     def __call__(self, slot, **kwargs):
@@ -959,7 +959,7 @@ class GiveItem(CCCommand):
     def _add_to_queue(self, queue, *args):
         super()._add_to_queue(queue, *args)
 
-    def precondition(self, *args):
+    def precondition(self, *args, **kwargs):
         return (0 < int(args[0]) < 256) and (0 < int(args[1]) < 256)
 
     def __call__(self, item, qty, **kwargs):
@@ -998,7 +998,7 @@ class GiveRestorative(GiveItem):
         self.label = "give_restorative"
         self.cost = None
 
-    def precondition(self, *args):
+    def precondition(self, *args, **kwargs):
         # FIXME: this hack may come back to bite you later...
         self.cost = BCFCC_COSTS.get(self.label, None)[args[0]]
         return _validate_item(args[0]) \
@@ -1037,7 +1037,7 @@ class GiveRareEquip(GiveItem):
     def _add_to_queue(self, queue):
         super()._add_to_queue(queue)
 
-    def precondition(self, *args):
+    def precondition(self, *args, **kwargs):
         return True
 
     def __call__(self, **kwargs):
@@ -1067,7 +1067,7 @@ class GiveRareRelic(GiveItem):
     def _add_to_queue(self, queue):
         super()._add_to_queue(queue)
 
-    def precondition(self, *args):
+    def precondition(self, *args, **kwargs):
         return True
 
     def __call__(self, **kwargs):
