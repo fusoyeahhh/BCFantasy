@@ -377,8 +377,9 @@ class Remedy(CCCommand):
         super().__init__(label="remedy", cost=None, requestor=requestor)
 
     def precondition(self, slot, **kwargs):
+        slot = int(slot)
         pmem = kwargs["party"][slot]
-        is_dead = pmem.get_status_flags() & STATUS_FLAGS[0]["wounded"]
+        is_dead = pmem.get_status_flags()["status_set_1"] & STATUS_FLAGS[0]["wounded"]
         #pmem.is_valid()
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
@@ -431,7 +432,7 @@ class RandomStatus(SetStatus):
     def precondition(self, slot, **kwargs):
         slot = int(slot)
         pmem = kwargs["party"][slot]
-        is_dead = pmem.get_status_flags() & STATUS_FLAGS[0]["wounded"]
+        is_dead = pmem.get_status_flags()["status_set_1"] & STATUS_FLAGS[0]["wounded"]
         #pmem.is_valid()
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
@@ -465,8 +466,9 @@ class Life1(CCCommand):
         super().__init__(label="life_1", cost=None, requestor=requestor)
 
     def precondition(self, slot, **kwargs):
+        slot = int(slot)
         pmem = kwargs["party"][slot]
-        is_dead = pmem.get_status_flags() & STATUS_FLAGS[0]["wounded"]
+        is_dead = pmem.get_status_flags()["status_set_1"] & STATUS_FLAGS[0]["wounded"]
         #return pmem.is_valid() & pmem.is_dead()
         return not is_dead
 
@@ -505,8 +507,9 @@ class Life2(CCCommand):
         super().__init__(label="life_2", cost=None, requestor=requestor)
 
     def precondition(self, slot, **kwargs):
+        slot = int(slot)
         pmem = kwargs["party"][slot]
-        is_dead = pmem.get_status_flags() & STATUS_FLAGS[0]["wounded"]
+        is_dead = pmem.get_status_flags()["status_set_1"] & STATUS_FLAGS[0]["wounded"]
         #return pmem.is_valid() & pmem.is_dead()
         return not is_dead
 
@@ -547,6 +550,7 @@ class Life3(SetStatus):
         self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, slot, **kwargs):
+        slot = int(slot)
         pmem = kwargs["party"][slot]
         #pmem.is_valid()
         #return pmem.is_valid()
@@ -754,7 +758,7 @@ class FallenOne(CCCommand):
 
     def precondition(self, slot, **kwargs):
         pmem = kwargs["party"][slot]
-        is_dead = pmem.get_status_flags() & STATUS_FLAGS[0]["wounded"]
+        is_dead = pmem.get_status_flags()["status_set_1"] & STATUS_FLAGS[0]["wounded"]
         #pmem.is_valid()
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
