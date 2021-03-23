@@ -1568,6 +1568,9 @@ if _ENABLE_CC:
                            f"see {_GITHUB_DOC_BASE}bcfcc/bcfcc.md")
             return
         # admin only command
+        if cmd == "clear" and auth_user:
+            _CC_QUEUE.reset()
+            return
         if cmd in CC_ADMIN_CMDS and not auth_user:
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
             return
@@ -1575,9 +1578,6 @@ if _ENABLE_CC:
             await ctx.send(f"@{user}: the crowd control command {cmd} is not recognized.")
             return
 
-        if cmd == "clear":
-            _CC_QUEUE.reset()
-            return
         if cmd in CC_ADMIN_CMDS:
             # run directly for now
             read.write_instructions(CC_ADMIN_CMDS[cmd](*args, **_CC_QUEUE.construct_game_context()))
