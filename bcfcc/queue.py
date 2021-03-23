@@ -92,6 +92,7 @@ class _Queue(object):
     def write(self, fname=None, title=""):
         ctime = time.time()
         status = []
+        status.append(f"{len(self._q)} items in the queue")
         for t in self._q:
             status.append(f"{t['name']} ({t['user']})")
             if t['delay'] is not None and not t.get('completed', False):
