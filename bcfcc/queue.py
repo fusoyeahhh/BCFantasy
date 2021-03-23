@@ -61,13 +61,13 @@ class _Queue(object):
                 continue
 
             # pop task
-            logging.info(f"check | {task['user']} {task['name']} | Checking task readiness...")
+            logging.debug(f"check | {task['user']} {task['name']} | Checking task readiness...")
             yield task
-            logging.info(f"check | {task['user']} {task['name']} | _exec_state: {task['_exe_state']}")
+            logging.debug(f"check | {task['user']} {task['name']} | _exec_state: {task['_exe_state']}")
             # FIXME: make exec state system
             if task["_exe_state"] == False:
                 # Task was determined to be unready by caller
-                logging.info(f"check | {task['user']} {task['name']} | Task unready, deferring...")
+                logging.debug(f"check | {task['user']} {task['name']} | Task unready, deferring...")
                 self._q.append(task)
                 continue
             elif task["_exe_state"] != True:
@@ -130,13 +130,13 @@ class CCQueue(_Queue):
         for i in range(4):
             # FIXME: make one-step initialization
             party[i]._from_memory_range(self.memfile, slot=i)
-        logging.info(f"cc | Read and init'd {len(party)} characters in party")
+        logging.debug(f"cc | Read and init'd {len(party)} characters in party")
 
         eparty = [Character() for i in range(6)]
         for i in range(6):
             # FIXME: make one-step initialization
             eparty[i]._from_memory_range(self.memfile, slot=i + 4)
-        logging.info(f"cc | Read and init'd {len(eparty)} entities in enemy party")
+        logging.debug(f"cc | Read and init'd {len(eparty)} entities in enemy party")
 
         mem = read.read_memory(self.memfile)
         bf = {"cant_run": mem[0xB1][0],
@@ -148,7 +148,7 @@ class CCQueue(_Queue):
 
         inv = Inventory()
         inv._from_memory_range(self.memfile)
-        logging.info(f"cc | Read and init'd {len(inv._inv)} inventory items")
+        logging.debug(f"cc | Read and init'd {len(inv._inv)} inventory items")
 
         return {"party": party, "eparty": eparty, "bf": bf, "inv": inv,
                 "button_config": mem.get(0x1D50, None),
