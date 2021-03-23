@@ -429,6 +429,7 @@ class RandomStatus(SetStatus):
         self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, slot, **kwargs):
+        slot = int(slot)
         pmem = kwargs["party"][slot]
         is_dead = pmem.get_status_flags() & STATUS_FLAGS[0]["wounded"]
         #pmem.is_valid()
@@ -445,6 +446,7 @@ class RandomStatus(SetStatus):
 
         Precondition: must be in battle, target must be valid and not dead
         """
+        slot = int(slot)
         logging.info(f"random_status | args {args}, kwargs {[*kwargs.keys()]}")
         status = random.choice(self.ALLOWED_STATUSES)
         logging.info(f"random_status | selected {status} status, inflicting on {slot}")
