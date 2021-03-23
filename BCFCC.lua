@@ -94,6 +94,7 @@ while true do
 
     -- Write current events to screen
     local f = io.open("cc_status.txt", "r")
+    print(f)
     if f ~= nil then
         io.close(f)
         i = 0
