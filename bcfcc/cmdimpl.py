@@ -151,6 +151,20 @@ class AddGP(CCCommand):
 
         return self.write(*map(hex, to_write))
 
+class RemoveGP(AddGP):
+    def __init__(self, requestor):
+        super().__init__(requestor=requestor)
+        self.label = "remove_gp"
+        self.cost = super().cost * 2
+
+    def __call__(self, *args, **kwargs):
+        """
+        !cc remove_gp
+        Take 1000 GP from total.
+
+        Precondition: None
+        """
+        return super().__call__(-1000)
 
 def add_gp(amnt=1000, **kwargs):
     """

@@ -1519,6 +1519,7 @@ if _ENABLE_CC:
         "random_status": bcfcc.RandomStatus,
         "remedy": bcfcc.Remedy,
         "add_gp": bcfcc.AddGP,
+        "remove_gp": bcfcc.RemoveGP,
         #"give_doggo": give_interceptor, # enemy or player
         "life1": bcfcc.Life1,
         "life2": bcfcc.Life2,
