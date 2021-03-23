@@ -68,11 +68,14 @@ class _Queue(object):
             if task["_exe_state"] == False:
                 # Task was determined to be unready by caller
                 logging.info(f"check | {task['user']} {task['name']} | Task unready, deferring...")
+                self._q.append(task)
                 continue
             elif task["_exe_state"] != True:
                 # Task failed, provide reasoning
                 logging.info(f"check | {task['user']} {task['name']} | Task failed, reason {task['_exe_state']}")
+                self._q.append(task)
                 continue
+
             logging.info(f"check | {task['user']} {task['name']} | Task completed successfully")
             # Reset these to allow for linger mechanics
             task["completed"] = ctime
