@@ -48,6 +48,7 @@ class _Queue(object):
             # FIXME: Could be handled by a sub method
             if task.get('_exe_state', None) == True and ctime - task["completed"] > delay:
                 # clear task from queue
+                logging.info(f"check | Clearing task {task['name']}")
                 continue
 
             # Is this a delayed task?
@@ -73,6 +74,7 @@ class _Queue(object):
             # Reset these to allow for linger mechanics
             task["completed"] = ctime
             task["delay"] = self.linger
+            logging.info(str(task))
 
             # Check if there's an associated callback to enqueue
             if task["callback"] is not None:
