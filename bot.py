@@ -1575,6 +1575,9 @@ if _ENABLE_CC:
             await ctx.send(f"@{user}: the crowd control command {cmd} is not recognized.")
             return
 
+        if cmd == "clear":
+            _CC_QUEUE.reset()
+            return
         if cmd in CC_ADMIN_CMDS:
             # run directly for now
             read.write_instructions(CC_ADMIN_CMDS[cmd](*args, **_CC_QUEUE.construct_game_context()))
