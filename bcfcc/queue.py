@@ -103,7 +103,8 @@ class _Queue(object):
         status = []
         status.append(f"{len(self._q)} items in the queue")
         for t in self._q:
-            status.append(f"{t['name']} ({t['user']})")
+            addtl_info = t.get('descr', '')
+            status.append(f"{t['name']} ({t['user']}) {addtl_info}")
             if t['delay'] is not None and not t.get('completed', False):
                 rem = int(t['submitted'] + t['delay'] - ctime)
                 status[-1] += f" {rem} sec. remain"
