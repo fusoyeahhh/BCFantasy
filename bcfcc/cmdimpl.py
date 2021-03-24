@@ -54,8 +54,14 @@ class CCCommand(object):
 
     def _add_to_queue(self, queue, *args, **kwargs):
         # FIXME: can do checks here?
+        descr = kwargs.pop("descr", None)
+
         fcn = functools.partial(self, *args)
         t = queue.make_task(fcn, name=self.label, user=self._req, **kwargs)
+
+        # Annotate
+        if descr is not None:
+            t["descr"] = descr
         return t
 
     def write_seq(self, *args, **kwargs):
