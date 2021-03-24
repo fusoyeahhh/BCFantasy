@@ -1535,7 +1535,7 @@ if _ENABLE_CC:
     from bcfcc.queue import CCQueue
     _CC_QUEUE = CCQueue()
     _CC_SLEEP_INTRV = 1.0
-    _CC_TIME_INC = 60 * 10
+    _CC_TIME_INC = 60
     async def _check_queue():
         counter = _CC_TIME_INC
         while True:
