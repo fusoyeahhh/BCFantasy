@@ -16,13 +16,15 @@ BCFCC_COSTS = {
  'give_restorative': {
      'elixir': 150,
      'ether': 50,
-     'fenix_down': 100,
+     'fenixdown': 100,
      'megalixir': 200,
      'potion': 50,
      'tincture': 25,
      'tonic': 25,
      'x-ether': 100,
      'x-potion': 100,
+     'revivify': 50,
+     'remedy': 50
  },
  'give_rare_equip': 300,
  'give_rare_relic': 200,
@@ -1019,15 +1021,7 @@ class GiveItem(CCCommand):
         return self.write(*map(hex, inv.flush()))
 
 class GiveRestorative(GiveItem):
-    ALLOWED_ITEMS = {
-        "tonic": None,
-        "potion": None,
-        "tincture": None,
-        "ether": None,
-        "x-potion": None,
-        "elixir": None,
-        "megalixir": None
-    }
+    ALLOWED_ITEMS = set(BCFCC_COSTS['give_restorative'])
 
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
@@ -1044,7 +1038,8 @@ class GiveRestorative(GiveItem):
         """
         !cc give_restorative [name]
         Add one of specified restorative item.
-        Allowed items: `tonic`, `potion`, `tincture`, `ether`, `x-potion`, `elixir`, `megalixir`
+        Allowed items: `tonic`, `potion`, `tincture`, `ether`, `x-potion`,
+        `elixir`, `megalixir`, `x-ether` , `remedy`, `revivify`, `fenixdown`
 
         Precondition: Item name must be valid and in the permitted list
         """

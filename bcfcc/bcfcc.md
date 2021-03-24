@@ -63,11 +63,12 @@ Costs: 200
 `!cc give_restorative [name]`
 
 Add one of specified restorative item.
-Allowed items: `tonic`, `potion`, `tincture`, `ether`, `x-potion`, `elixir`, `megalixir`
+Allowed items: `tonic`, `potion`, `tincture`, `ether`, `x-potion`,
+`elixir`, `megalixir`, `x-ether` , `remedy`, `revivify`, `fenixdown
 
 Precondition: Item name must be valid and in the permitted list
 
-Costs: {'elixir': 150, 'ether': 50, 'fenix_down': 100, 'megalixir': 200, 'potion': 50, 'tincture': 25, 'tonic': 25, 'x-ether': 100, 'x-potion': 100}
+Costs: {'elixir': 150, 'ether': 50, 'fenixdown': 100, 'megalixir': 200, 'potion': 50, 'tincture': 25, 'tonic': 25, 'x-ether': 100, 'x-potion': 100, 'revivify': 50, 'remedy': 50}
 ### life_1
 
 `!cc life_1 [slot #: 1-4]`
