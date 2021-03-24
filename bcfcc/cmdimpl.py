@@ -1145,7 +1145,9 @@ if __name__ == "__main__":
     # Make docs
     with open("bcfcc.md", "w") as fout:
         print("# Beyond Chaos Fantasy / Crowd Control\n[image]\n\n", file=fout)
-        print("Some commands can only be acted on once in/out of battle. "
+        print("Use !register to get started with 1000 points. You will "
+              "also get 10 points for every one minute that you are registered. "
+              "Some commands can only be acted on once in/out of battle. "
               "If the required state isn't available, but may be soon, the command will be "
               "queued until such time as it is ready to fire."
               "Available commands and usage is below.", file=fout)
