@@ -163,14 +163,14 @@ class RemoveGP(AddGP):
         self.label = "remove_gp"
         self.cost = BCFCC_COSTS["add_gp"] * 2
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, **kwargs):
         """
         !cc remove_gp
         Take 1000 GP from total.
 
         Precondition: None
         """
-        return super().__call__(-1000)
+        return super().__call__(-1000, **kwargs)
 
 def add_gp(amnt=1000, **kwargs):
     """
