@@ -155,7 +155,7 @@ class RemoveGP(AddGP):
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
         self.label = "remove_gp"
-        self.cost = super().cost * 2
+        self.cost = BCFCC_COSTS["add_gp"] * 2
 
     def __call__(self, *args, **kwargs):
         """
