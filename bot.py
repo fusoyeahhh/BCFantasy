@@ -1512,7 +1512,7 @@ if _ENABLE_CC:
         "fallen_one": bcfcc.FallenOne,
         "activate_golem": bcfcc.ActivateGolem,
         "null_elem": bcfcc.NullifyElement,
-        "change_name": bcfcc.SetName,
+        "set_name": bcfcc.SetName,
         "pick_fight": bcfcc.TriggerBattle,
         "moogle_charm": bcfcc.MoogleCharm,
         "give_restorative": bcfcc.GiveRestorative,
