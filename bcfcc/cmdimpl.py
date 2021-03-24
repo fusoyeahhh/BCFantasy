@@ -26,9 +26,9 @@ BCFCC_COSTS = {
  },
  'give_rare_equip': 300,
  'give_rare_relic': 200,
- 'life1': 100,
- 'life2': 250,
- 'life3': 500,
+ 'life_1': 100,
+ 'life_2': 250,
+ 'life_3': 500,
  'moogle_charm': 500,
  'nullify_element': 100,
  'pick_fight': 100,
@@ -208,10 +208,10 @@ class CantRun(CCCommand):
 
     def __call__(self, *args, **kwargs):
         """
-        !cc moogle_charm
-        Prevent encounters for a certain amount of time (default 30 seconds)
+        !cc cant_run
+        Prevent player from running from current battle.
 
-        Precondition: None
+        Precondition: must be in battle
         """
         logging.info(f"cant_run | toggle ({self._toggle}), kwargs {[*kwargs.keys()]}")
 
@@ -409,8 +409,8 @@ class Remedy(CCCommand):
 
     def __call__(self, slot, *args, **kwargs):
         """
-        !cc remedy [slot #]
-        Remedy-like effect, remove all "negative" statuses (except wounded).
+        !cc remedy [slot #: 1-4]
+        Remedy-like effect, remove all "negative" statuses (except wounded) from selected slot.
 
         Precondition: must be in battle, target must be valid and not dead
         """
@@ -469,8 +469,8 @@ class RandomStatus(SetStatus):
 
     def __call__(self, slot, **kwargs):
         """
-        !cc random_status [slot #]
-        Apply a random status from a preselected list
+        !cc random_status [slot #: 1-4]
+        Apply a random status from a preselected list to selected slot.
 
         Precondition: must be in battle, target must be valid and not dead
         """
@@ -503,8 +503,8 @@ class Life1(CCCommand):
 
     def __call__(self, slot, *args, **kwargs):
         """
-        !cc life_1 [slot #]
-        Life-like effect, remove wounded status and restore some HP.
+        !cc life_1 [slot #: 1-4]
+        Life-like effect, remove wounded status and restore some HP to selected slot.
 
         Precondition: must be in battle, target must be valid and dead
         """
@@ -544,8 +544,8 @@ class Life2(CCCommand):
 
     def __call__(self, slot, *args, **kwargs):
         """
-        !cc life_2 [slot #]
-        Life2-like effect, remove wounded status and restore all HP.
+        !cc life_2 [slot #: 1-4]
+        Life2-like effect, remove wounded status and restore all HP to selected slot.
 
         Precondition: must be in battle, target must be valid and dead
         """
@@ -572,7 +572,7 @@ def life_2(*args, **kwargs):
 class Life3(SetStatus):
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
-        self.label = "life3"
+        self.label = "life_3"
         self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, slot, **kwargs):
@@ -587,13 +587,13 @@ class Life3(SetStatus):
 
     def __call__(self, slot, *args, **kwargs):
         """
-        !cc life_3 [slot #]
-        Life3-like effect, adds life3 status to target.
+        !cc life_3 [slot #: 1-4]
+        Life3-like effect, adds life3 status to selected slot.
 
         Precondition: must be in battle, target must be valid
         """
-        logging.info(f"life3 | slot {slot}")
-        return super().__call__("life3", slot=slot, **kwargs)
+        logging.info(f"life_3 | slot {slot}")
+        return super().__call__("life_3", slot=slot, **kwargs)
 
 def life_3(*args, **kwargs):
     """
@@ -648,7 +648,12 @@ class SetName(CCCommand):
 
     def __call__(self, name, actor=0, **kwargs):
         """
-        !cc set_name [name] [actor]
+        !cc set_name [name] [actor: 1-14]
+        Set the name of the given *actor* index, e.g. Terra = 1.
+        Note that the name will be truncated to 6 characters, and some special characters are not yet supported.
+
+        Actor indices are: `Terra`, `Locke`, `Cyan`, `Shadow`, `Edgar`, `Sabin`, `Celes`,
+                           `Strago`, `Relm`, `Setzer`, `Mog`, `Gau`, `Gogo`, `Umaro`
 
         Precondition: None
         """
@@ -700,8 +705,8 @@ class PowerOverwhelming(SetStat):
 
     def __call__(self, slot, **kwargs):
         """
-        !cc power_overwhelming [slot #]
-        Make the specified slot very strong for this battle
+        !cc power_overwhelming [slot #: 1-4]
+        Make the specified slot very strong for this battle.
 
         Precondition: must be in battle and target valid slot
         """
@@ -748,6 +753,8 @@ class NullifyElement(CCCommand):
         """
         !cc nullify_element [element]
         Toggle a ForceField like effect (nullification) of the specified element.
+
+        Valid elements: `fire`, `ice`, `lightning`, `poison`, `wind`, `pearl`, `earth`, `water`
 
         Precondition: in battle
         """
@@ -823,7 +830,9 @@ class TriggerBattle(CCCommand):
     def __call__(self, *args, **kwargs):
         """
         !cc pick_fight
-        Max out threat counter to trigger battle.
+        Max out threat counter to trigger battle. Note that this command is pre-empted by moogle_charm
+        but will fire after that effect has expired. Will not work in areas where threat counter is
+        disabled, (e.g. most towns, event maps)
 
         Precondition: must not be in battle
         """
@@ -1034,7 +1043,8 @@ class GiveRestorative(GiveItem):
     def __call__(self, name, **kwargs):
         """
         !cc give_restorative [name]
-        [Admin Only] Add one of specified restorative item.
+        Add one of specified restorative item.
+        Allowed items: `tonic`, `potion`, `tincture`, `ether`, `x-potion`, `elixir`, `megalixir`
 
         Precondition: Item name must be valid and in the permitted list
         """
@@ -1069,8 +1079,14 @@ class GiveRareEquip(GiveItem):
 
     def __call__(self, **kwargs):
         """
-        !cc give_restorative [name]
-        [Admin Only] Add one of specified restorative item.
+        !cc give_rare_equip
+        Add a random rare equip from the following list into the inventory:
+        `genjiarmor`, `behemothsuit`, `dragonhorn`, `assassin`, `punisher`, `risingsun`, `drainer`, `hardened`,
+        `soulsabre`, `rainbowbrsh`, `tabbysuit`, `chocobosuit`, `mooglesuit`, `aura`, `redjacket`, `ogrenix`,
+        `doomdarts`, `thiefknife`, `dragonclaw`, `striker`, `pearllance`, `wingedge`, `strato`, `healrod`, `graedus`,
+        `scimitar`, `tigerfangs`, `stunner`, `auralance`, `genjishld`, `atmaweapon`, `cathood`, `skyrender`, `excalibur`,
+        `flameshld`, `iceshld`, `snowmuffler`, `tortoiseshld`, `magusrod`, `thundershld`, `forcearmor`, `fixeddice`,
+        `aegisshld`, `minerva`, `cursedshld`, `ragnarok`, `forceshld`, `valiantknife`, `illumina`, `paladinshld`
 
         Precondition: None
         """
@@ -1100,7 +1116,10 @@ class GiveRareRelic(GiveItem):
     def __call__(self, **kwargs):
         """
         !cc give_random_relic
-        Add one of a relic chosen randomly from a preselected list.
+        Add a random rare relic from the following list into the inventory:
+        `offering`, `meritaward`, `economizer`, `gembox`,
+        `marvelshoes`, `exp.egg`, `mooglecharm`, `podbracelet`, `genjiglove`
+
 
         Precondition: None
         """
@@ -1124,11 +1143,14 @@ if __name__ == "__main__":
     import sys
     import inspect
 
+    DOC_SKIP = {"cant_run", "mirror_buttons", "give_item",
+                "set_stat", "set_status", "set_relic_effect",
+                "write_arbitrary"}
+
     # Make docs
     with open("bcfcc.md", "w") as fout:
         print("# Beyond Chaos Fantasy / Crowd Control\n[image]\n\n", file=fout)
-        print("Use `!cc help` to get the current list of available commands. "
-              "Some commands can only be acted on once in/out of battle. "
+        print("Some commands can only be acted on once in/out of battle. "
               "If the required state isn't available, but may be soon, the command will be "
               "queued until such time as it is ready to fire."
               "Available commands and usage is below.", file=fout)
@@ -1137,11 +1159,11 @@ if __name__ == "__main__":
                                 in inspect.getmembers(sys.modules[__name__], inspect.isclass)
                                 if issubclass(cls, CCCommand)]:
             c = cmd(None)
-            if c.label is None:
+            if c.label is None or c.label in DOC_SKIP:
                 continue
             print(f"### {c.label}", file=fout)
             doc = c.__call__.__doc__ or ""
-            doc += f"\nCosts: {BCFCC_COSTS.get(c.label, 'N/A')}"
+            doc += f"\nCosts: {c.cost or BCFCC_COSTS.get(c.label, 'N/A')}"
             doc = doc.replace("[Admin Only]", "__Admin Only__")
             doc = [l.strip() for l in doc.split("\n")]
             if len(doc) > 1 and doc[1].startswith("!"):
