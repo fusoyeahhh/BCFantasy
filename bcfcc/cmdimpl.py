@@ -956,7 +956,9 @@ class SetRelicEffect(CCCommand):
 class RandomRelicEffect(SetRelicEffect):
     DISALLOWED_EFFECTS = set(1 << i for i in
                              # less common command changers
-                             [10, 11, 12, 13, 14, 15])
+                             [10, 11, 12, 13, 14, 15] +
+                             # less useful relic effects
+                             [16, 18, 19, 20, 23, 27, 28, 29, 34, 35, 36])
 
     ALLOWED_EFFECTS = list(set.union(*[{b << 8 * i for b in bits}
                                   for i, bits in enumerate(RELIC_EFFECTS.values())])
@@ -964,7 +966,7 @@ class RandomRelicEffect(SetRelicEffect):
 
     _BYTE_RANGE = list(range(0x11D5, 0x11DA))
 
-    def __init__(self, requestor, duration=30):
+    def __init__(self, requestor, duration=60):
         # FIXME:
         #super().__init__(label="random_relic_effect", cost=None, requestor=requestor)
         super().__init__(requestor=requestor)
@@ -981,7 +983,7 @@ class RandomRelicEffect(SetRelicEffect):
     def __call__(self, *args, **kwargs):
         """
         !cc random_relic_effect
-        Apply a random relic effect from a preselected list for a given duration, default is 30 seconds.
+        Apply a random relic effect from a preselected list for a given duration, default is 60 seconds.
 
         Precondition: must not be in battle
         """
