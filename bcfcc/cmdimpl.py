@@ -38,7 +38,8 @@ BCFCC_COSTS = {
  'random_relic_effect': 50,
  'random_status': 100,
  'remedy': 50,
- 'set_name': 25
+ 'set_name': 25,
+ 'cant_run': 100,
 }
 
 class CCCommand(object):
@@ -199,7 +200,7 @@ class CantRun(CCCommand):
     #       s: sprint shoes effect (1.5x walk speed)
     #       m: moogle charm effect (no random battles)
     #       c: charm bangle effect (50% less random battles)
-    _MASK = 1 << 2
+    _MASK = 1 << 3
 
     def __init__(self, requestor):
         super().__init__(label="cant_run", cost=None, requestor=requestor)
@@ -216,16 +217,24 @@ class CantRun(CCCommand):
         Precondition: must be in battle
         """
         logging.info(f"cant_run | toggle ({self._toggle}), kwargs {[*kwargs.keys()]}")
+        # !cc arb_write 0x3c88 0x8 0x3c8a 0x8 0x3c8c 0x8 0x3c8e 0x8 0x3c90 0x8 0x3c92 0x8
 
-        # FIXME: do raw read here instead?
-        val = kwargs["bf"]["cant_run"]
-        logging.info(f"cant_run | toggle ({self._toggle}), pre toggle value {val}")
-        if self._toggle is not None:
-            val ^= self._MASK
-        else:
-            val |= self._MASK
+        to_write = []
+        for addr, enemy in zip(range(0x3C88, 0x3C88 + 12, 2), kwargs["eparty"]):
+            val = enemy.cmd_imm
+            #logging.info(f"cant_run | toggle ({self._toggle}), pre toggle value {val}")
+            if self._toggle is not None:
+                val ^= self._MASK
+            else:
+                val |= self._MASK
 
-        return self.write(hex(self._ADDR), hex(val))
+            # FIXME: do this better than hardcoding addresses
+            #addr = [a for a, n in enemy._memmap.items() if "cmd_imm" == n][0]
+
+            to_write.extend([addr, val])
+
+        return self.write(*map(hex, to_write))
+
 
 def cant_run(toggle=None, **kwargs):
     mask = 1 << 2
@@ -703,7 +712,7 @@ class PowerOverwhelming(SetStat):
         self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, *args, **kwargs):
-        return 0 <= int(args[0]) < 4
+        return (0 <= int(args[0]) < 4) and kwargs["party"][args[0]].max_hp > 0
 
     def __call__(self, slot, **kwargs):
         """

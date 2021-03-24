@@ -1504,11 +1504,11 @@ if _ENABLE_CC:
         #"swap_chars": swap_chars,
 
         # These are here because they don't function (partially or at all)
-        "cant_run": bcfcc.cant_run,
         "ole_cape": bcfcc.ole_cape,
     }
 
     CC_CMDS = {
+        "cant_run": bcfcc.CantRun,
         "fallen_one": bcfcc.FallenOne,
         "activate_golem": bcfcc.ActivateGolem,
         "null_elem": bcfcc.NullifyElement,
