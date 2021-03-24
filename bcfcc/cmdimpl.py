@@ -442,6 +442,7 @@ class RandomStatus(SetStatus):
         super().__init__(requestor=requestor)
         self.label = "random_status"
         self.cost = BCFCC_COSTS.get(self.label, None)
+        self._status = None
 
     def precondition(self, slot, **kwargs):
         slot = int(slot)
@@ -451,21 +452,26 @@ class RandomStatus(SetStatus):
         #return pmem.is_valid() & not pmem.is_dead()
         return not is_dead
 
-    def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args)
+    @property
+    def status(self):
+        self._status = self._status or random.choice(self.ALLOWED_STATUSES)
+        return self._status
 
-    def __call__(self, slot, *args, **kwargs):
+    def _add_to_queue(self, queue, *args):
+        # the call to the property getter implicitly initializes it
+        super()._add_to_queue(queue, *args, descr=f"{self.status} {args[0]}")
+
+    def __call__(self, slot, **kwargs):
         """
         !cc random_status [slot #]
         Apply a random status from a preselected list
 
         Precondition: must be in battle, target must be valid and not dead
         """
-        slot = int(slot)
-        logging.info(f"random_status | args {args}, kwargs {[*kwargs.keys()]}")
-        status = random.choice(self.ALLOWED_STATUSES)
-        logging.info(f"random_status | selected {status} status, inflicting on {slot}")
-        return super().__call__(status, slot=slot, **kwargs)
+        if self._status is None:
+            self.status
+        logging.info(f"random_status | selected {self._status} status, inflicting on {slot}")
+        return super().__call__(self._status, slot=slot, **kwargs)
 
 def random_status(*args, **kwargs):
     logging.info(f"random_status | args {args}, kwargs {[*kwargs.keys()]}")
