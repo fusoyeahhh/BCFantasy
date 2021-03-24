@@ -1521,9 +1521,9 @@ if _ENABLE_CC:
         "add_gp": bcfcc.AddGP,
         "remove_gp": bcfcc.RemoveGP,
         #"give_doggo": give_interceptor, # enemy or player
-        "life1": bcfcc.Life1,
-        "life2": bcfcc.Life2,
-        "life3": bcfcc.Life3,
+        "life_1": bcfcc.Life1,
+        "life_2": bcfcc.Life2,
+        "life_3": bcfcc.Life3,
         "bs1a": bcfcc.SetBS1A,
         #"mirror_buttons": bcfcc.MirrorButtons,
         "random_relic_effect": bcfcc.RandomRelicEffect,
