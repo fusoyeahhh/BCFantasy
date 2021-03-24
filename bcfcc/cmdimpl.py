@@ -1110,6 +1110,16 @@ class GiveRareRelic(GiveItem):
         logging.info(f"give_rare_relic | id {item} ({name})")
         return super().__call__(*args, **kwargs)
 
+#
+# Utils
+#
+
+def _validate_slot(slot):
+    slot = int(slot)
+    if not (0 < slot <= 4):
+        raise ValueError("Slot {slot} invalid")
+    return slot - 1
+
 if __name__ == "__main__":
     import sys
     import inspect
