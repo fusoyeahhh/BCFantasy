@@ -1099,16 +1099,16 @@ class GiveRareRelic(GiveItem):
 
     def __call__(self, **kwargs):
         """
-        !cc give_restorative [name]
-        [Admin Only] Add one of specified restorative item.
+        !cc give_random_relic
+        Add one of a relic chosen randomly from a preselected list.
 
         Precondition: None
         """
         name = random.choice(self.ALLOWED_RELICS)
         item = ITEMS[name]
-        logging.info(f"give_rare_relic | id {item} ({name}), kwargs {[*kwargs.keys()]}")
-
-        return super().__call__(item, 1, **kwargs)
+        args = [item, 1]
+        logging.info(f"give_rare_relic | id {item} ({name})")
+        return super().__call__(*args, **kwargs)
 
 if __name__ == "__main__":
     import sys
