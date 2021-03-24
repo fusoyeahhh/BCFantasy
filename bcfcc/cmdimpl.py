@@ -577,8 +577,8 @@ def life_2(*args, **kwargs):
     targ = args[0]
     pmem = kwargs["party"][targ]
     # FIXME: move to Character class
-    return set_status("-wounded", slot=targ, **kwargs) \
-           + set_stat("cur_hp", val=pmem.max_hp, slot=targ, **kwargs)
+    return set_stat("cur_hp", val=pmem.max_hp, slot=targ, **kwargs) \
+           + set_status("-wounded", slot=targ, **kwargs)
 
 class Life3(SetStatus):
     def __init__(self, requestor):
