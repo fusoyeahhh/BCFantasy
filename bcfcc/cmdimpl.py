@@ -358,8 +358,8 @@ class SetStatus(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="set_status", cost=None, requestor=requestor, admin_only=True)
 
-    def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args, state="battle")
+    def _add_to_queue(self, queue, *args, **kwargs):
+        super()._add_to_queue(queue, *args, state="battle", **kwargs)
 
     def __call__(self, status, slot, **kwargs):
         """
