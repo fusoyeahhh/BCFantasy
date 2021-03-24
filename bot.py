@@ -1565,8 +1565,8 @@ if _ENABLE_CC:
         cmd = args.pop(0).lower()
 
         if cmd == "help":
-            await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())} "
-                           f"see {_GITHUB_DOC_BASE}bcfcc/bcfcc.md")
+            #await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())} "
+            await ctx.send(f"see {_GITHUB_DOC_BASE}bcfcc/bcfcc.md")
             return
         # admin only command
         if cmd == "clear" and auth_user:
