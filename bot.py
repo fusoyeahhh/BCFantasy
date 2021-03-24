@@ -1536,7 +1536,6 @@ if _ENABLE_CC:
     _CC_QUEUE = CCQueue()
     _CC_SLEEP_INTRV = 1.0
     _CC_TIME_INC = 60
-    _CC_COST_MOD = 0.5
     async def _check_queue():
         counter = _CC_TIME_INC
         while True:
@@ -1607,7 +1606,7 @@ if _ENABLE_CC:
             await ctx.send(f"@{user}: you are not registered, use !register first.")
             return
         elif (task.cost or 0) <= _USERS[user]["score"]:
-            _USERS[user]["score"] -= int(_CC_COST_MOD * (task.cost or 0))
+            _USERS[user]["score"] -= (task.cost or 0)
         else:
             await ctx.send(f"@{user}: insufficient funds.")
             return
