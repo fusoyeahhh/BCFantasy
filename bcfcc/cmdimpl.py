@@ -1011,8 +1011,8 @@ class GiveItem(CCCommand):
     def __init__(self, requestor):
         super().__init__(label="give_item", cost=None, requestor=requestor, admin_only=True)
 
-    def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args)
+    def _add_to_queue(self, queue, *args, **kwargs):
+        super()._add_to_queue(queue, *args, **kwargs)
 
     def precondition(self, *args, **kwargs):
         return (0 < int(args[0]) < 256) and (0 < int(args[1]) < 256)
@@ -1082,9 +1082,16 @@ class GiveRareEquip(GiveItem):
         super().__init__(requestor=requestor)
         self.label = "give_rare_equip"
         self.cost = BCFCC_COSTS.get(self.label, None)
+        self._equip = None
+
+    @property
+    def equip(self):
+        self._equip = self._equip or random.choice(self.ALLOWED_ITEMS)
+        return self._equip
 
     def _add_to_queue(self, queue):
-        super()._add_to_queue(queue)
+        # the call to the property getter implicitly initializes it
+        super()._add_to_queue(queue, descr=f"{self.equip}")
 
     def precondition(self, *args, **kwargs):
         return True
@@ -1102,9 +1109,8 @@ class GiveRareEquip(GiveItem):
 
         Precondition: None
         """
-        name = random.choice(self.ALLOWED_ITEMS)
-        item = ITEMS[name]
-        logging.info(f"give_rare_equip | id {item} ({name}), kwargs {[*kwargs.keys()]}")
+        item = ITEMS[self.equip]
+        logging.info(f"give_rare_equip | id {item} ({self._equip}), kwargs {[*kwargs.keys()]}")
 
         return super().__call__(item, 1, **kwargs)
 
@@ -1118,9 +1124,16 @@ class GiveRareRelic(GiveItem):
         super().__init__(requestor=requestor)
         self.label = "give_rare_relic"
         self.cost = BCFCC_COSTS.get(self.label, None)
+        self._relic = None
+
+    @property
+    def relic(self):
+        self._relic = self._relic or random.choice(self.ALLOWED_RELICS)
+        return self._relic
 
     def _add_to_queue(self, queue):
-        super()._add_to_queue(queue)
+        # the call to the property getter implicitly initializes it
+        super()._add_to_queue(queue, descr=f"{self.relic}")
 
     def precondition(self, *args, **kwargs):
         return True
@@ -1135,10 +1148,9 @@ class GiveRareRelic(GiveItem):
 
         Precondition: None
         """
-        name = random.choice(self.ALLOWED_RELICS)
-        item = ITEMS[name]
+        item = ITEMS[self.relic]
         args = [item, 1]
-        logging.info(f"give_rare_relic | id {item} ({name})")
+        logging.info(f"give_rare_relic | id {item} ({self._relic})")
         return super().__call__(*args, **kwargs)
 
 #

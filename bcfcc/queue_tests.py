@@ -1,7 +1,7 @@
 import time
 from bcfcc import activate_golem, add_gp
 from bcfcc.cmdimpl import AddGP, MoogleCharm, Remedy, RandomRelicEffect, MirrorButtons, GiveItem, \
-                          GiveRareRelic, RandomStatus, CantRun
+                          GiveRareRelic, GiveRareEquip, RandomStatus, CantRun
 from bcfcc.queue import CCQueue
 
 if __name__ == '__main__':
@@ -59,8 +59,16 @@ if __name__ == '__main__':
     print(ccq.write())
     ccq.reset()
 
-    print("[GiveRandomRelic] Checking random relic logic")
+    print("[GiveRareRelic] Checking random relic logic")
     req = GiveRareRelic("test")
+    req._add_to_queue(ccq)
+    print(ccq.write())
+    ccq.check(game_state, ignore_completion=True)
+    print(ccq.write())
+    ccq.reset()
+
+    print("[GiveRareEquip] Checking random equip logic")
+    req = GiveRareEquip("test")
     req._add_to_queue(ccq)
     print(ccq.write())
     ccq.check(game_state, ignore_completion=True)
