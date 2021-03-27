@@ -1503,6 +1503,9 @@ if _ENABLE_CC:
         #"modify_item": modify_item,
         #"swap_chars": swap_chars,
 
+        # Needs work
+        "random_relic_effect": bcfcc.RandomRelicEffect,
+
         # These are here because they don't function (partially or at all)
         "ole_cape": bcfcc.ole_cape,
     }
@@ -1526,7 +1529,6 @@ if _ENABLE_CC:
         "life_3": bcfcc.Life3,
         "bs1a": bcfcc.SetBS1A,
         #"mirror_buttons": bcfcc.MirrorButtons,
-        "random_relic_effect": bcfcc.RandomRelicEffect,
         "give_rare_relic": bcfcc.GiveRareRelic,
         "give_rare_equip": bcfcc.GiveRareEquip,
         "power_overwhelming": bcfcc.PowerOverwhelming
