@@ -59,8 +59,11 @@ class CCCommand(object):
         # FIXME: can do checks here?
         descr = kwargs.pop("descr", None)
 
+        kwargs["name"] = kwargs.get("name", self.label)
+        kwargs["user"] = kwargs.get("user", self._req)
+
         fcn = functools.partial(self, *args)
-        t = queue.make_task(fcn, name=self.label, user=self._req, **kwargs)
+        t = queue.make_task(fcn, **kwargs)
 
         # Annotate
         if descr is not None:
