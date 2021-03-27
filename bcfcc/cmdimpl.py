@@ -1152,8 +1152,8 @@ if __name__ == "__main__":
     import sys
     import inspect
 
-    DOC_SKIP = {"cant_run", "mirror_buttons", "give_item",
-                "set_stat", "set_status", "set_relic_effect",
+    DOC_SKIP = {"mirror_buttons", "random_relic_effect",
+                "give_item", "set_stat", "set_status", "set_relic_effect",
                 "write_arbitrary"}
 
     # Make docs

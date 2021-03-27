@@ -2,7 +2,7 @@
 [image]
 
 
-Some commands can only be acted on once in/out of battle. If the required state isn't available, but may be soon, the command will be queued until such time as it is ready to fire.Available commands and usage is below.
+Use !register to get started with 1000 points. You will also get 10 points for every one minute that you are registered. Some commands can only be acted on once in/out of battle. If the required state isn't available, but may be soon, the command will be queued until such time as it is ready to fire.Available commands and usage is below.
 ## Command List
 ### activate_golem
 
@@ -12,7 +12,7 @@ Activates the "Earth Wall" effect for the duration of the battle. Default HP res
 
 Precondition: in battle
 
-Costs: 250
+Costs: 125
 ### add_gp
 
 `!cc add_gp`
@@ -20,6 +20,15 @@ Costs: 250
 Add 1000 GP to total.
 
 Precondition: None
+
+Costs: 50
+### cant_run
+
+`!cc cant_run`
+
+Prevent player from running from current battle.
+
+Precondition: must be in battle
 
 Costs: 100
 ### fallen_one
@@ -30,7 +39,7 @@ Immediately drop all party members HP to one.
 
 Precondition: must be in battle
 
-Costs: 1000
+Costs: 500
 ### give_rare_equip
 
 `!cc give_rare_equip`
@@ -45,7 +54,7 @@ Add a random rare equip from the following list into the inventory:
 
 Precondition: None
 
-Costs: 300
+Costs: 150
 ### give_rare_relic
 
 `!cc give_random_relic`
@@ -57,18 +66,18 @@ Add a random rare relic from the following list into the inventory:
 
 Precondition: None
 
-Costs: 200
+Costs: 100
 ### give_restorative
 
 `!cc give_restorative [name]`
 
 Add one of specified restorative item.
 Allowed items: `tonic`, `potion`, `tincture`, `ether`, `x-potion`,
-`elixir`, `megalixir`, `x-ether` , `remedy`, `revivify`, `fenixdown
+`elixir`, `megalixir`, `x-ether` , `remedy`, `revivify`, `fenixdown`
 
 Precondition: Item name must be valid and in the permitted list
 
-Costs: {'elixir': 150, 'ether': 50, 'fenixdown': 100, 'megalixir': 200, 'potion': 50, 'tincture': 25, 'tonic': 25, 'x-ether': 100, 'x-potion': 100, 'revivify': 50, 'remedy': 50}
+Costs: {'elixir': 75, 'ether': 25, 'fenixdown': 50, 'megalixir': 100, 'potion': 25, 'tincture': 12, 'tonic': 12, 'x-ether': 50, 'x-potion': 50, 'revivify': 25, 'remedy': 25}
 ### life_1
 
 `!cc life_1 [slot #: 1-4]`
@@ -77,7 +86,7 @@ Life-like effect, remove wounded status and restore some HP to selected slot.
 
 Precondition: must be in battle, target must be valid and dead
 
-Costs: 100
+Costs: 50
 ### life_2
 
 `!cc life_2 [slot #: 1-4]`
@@ -86,7 +95,7 @@ Life2-like effect, remove wounded status and restore all HP to selected slot.
 
 Precondition: must be in battle, target must be valid and dead
 
-Costs: 250
+Costs: 125
 ### life_3
 
 `!cc life_3 [slot #: 1-4]`
@@ -95,7 +104,7 @@ Life3-like effect, adds life3 status to selected slot.
 
 Precondition: must be in battle, target must be valid
 
-Costs: 500
+Costs: 250
 ### moogle_charm
 
 `!cc moogle_charm`
@@ -104,7 +113,7 @@ Prevent encounters for a certain amount of time (default 30 seconds)
 
 Precondition: None
 
-Costs: 500
+Costs: 250
 ### nullify_element
 
 `!cc nullify_element [element]`
@@ -115,7 +124,7 @@ Valid elements: `fire`, `ice`, `lightning`, `poison`, `wind`, `pearl`, `earth`, 
 
 Precondition: in battle
 
-Costs: 100
+Costs: 50
 ### power_overwhelming
 
 `!cc power_overwhelming [slot #: 1-4]`
@@ -124,16 +133,7 @@ Make the specified slot very strong for this battle.
 
 Precondition: must be in battle and target valid slot
 
-Costs: 500
-### random_relic_effect
-
-`!cc random_relic_effect`
-
-Apply a random relic effect from a preselected list for a given duration, default is 30 seconds.
-
-Precondition: must not be in battle
-
-Costs: 100
+Costs: 250
 ### random_status
 
 `!cc random_status [slot #: 1-4]`
@@ -142,7 +142,7 @@ Apply a random status from a preselected list to selected slot.
 
 Precondition: must be in battle, target must be valid and not dead
 
-Costs: 200
+Costs: 100
 ### remedy
 
 `!cc remedy [slot #: 1-4]`
@@ -151,7 +151,7 @@ Remedy-like effect, remove all "negative" statuses (except wounded) from selecte
 
 Precondition: must be in battle, target must be valid and not dead
 
-Costs: 100
+Costs: 50
 ### remove_gp
 
 `!cc remove_gp`
@@ -160,7 +160,7 @@ Take 1000 GP from total.
 
 Precondition: None
 
-Costs: 200
+Costs: 100
 ### bs1a
 
 `!cc bs1a`
@@ -169,7 +169,7 @@ Sets battle speed to maximum and turns on active ATB.
 
 Precondition: None
 
-Costs: 200
+Costs: 100
 ### set_name
 
 `!cc set_name [name] [actor: 1-14]`
@@ -182,7 +182,7 @@ Actor indices are: `Terra`, `Locke`, `Cyan`, `Shadow`, `Edgar`, `Sabin`, `Celes`
 
 Precondition: None
 
-Costs: 50
+Costs: 25
 ### pick_fight
 
 `!cc pick_fight`
@@ -193,4 +193,4 @@ disabled, (e.g. most towns, event maps)
 
 Precondition: must not be in battle
 
-Costs: 100
+Costs: 50
