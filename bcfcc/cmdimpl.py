@@ -715,7 +715,10 @@ class PowerOverwhelming(SetStat):
         self.cost = BCFCC_COSTS.get(self.label, None)
 
     def precondition(self, *args, **kwargs):
-        return (0 <= int(args[0]) < 4) and kwargs["party"][args[0]].max_hp > 0
+        # The latter conditions is disabled since this is potentially called
+        # outside of battle when the memory region would not be valid
+        # and this check can return false positives
+        return (0 <= int(args[0]) < 4)# and kwargs["party"][args[0]].max_hp > 0
 
     def __call__(self, slot, **kwargs):
         """
