@@ -5,6 +5,30 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 from .cmdimpl import *
 
+_TEST_SUITE = {
+    "cant_run": None,
+    "fallen_one": None,
+    "activate_golem": None,
+    "null_elem": ("fire",),
+    "set_name": ('TEST', 1),
+    "pick_fight": None,
+    "moogle_charm": None,
+    "give_restorative": ("tonic",),
+    "random_status": (2,),
+    "remedy": (3,),
+    "add_gp": None,
+    "remove_gp": None,
+    # "give_doggo": give_interceptor, # enemy or player
+    "life_1": (1,),
+    "life_2": (2,),
+    "life_3": (3,),
+    "bs1a": None,
+    # "mirror_buttons": bcfcc.MirrorButtons,
+    "give_rare_relic": None,
+    "give_rare_equip": None,
+    "power_overwhelming": (4,),
+}
+
 class MemoryRegion(object):
     def __init__(self):
         self.mem = {}

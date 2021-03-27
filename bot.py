@@ -1502,6 +1502,7 @@ if _ENABLE_CC:
         # Unimplemented or in need of testing
         #"modify_item": modify_item,
         #"swap_chars": swap_chars,
+        "run_tests": None,
 
         # Needs work
         "random_relic_effect": bcfcc.RandomRelicEffect,
@@ -1570,10 +1571,17 @@ if _ENABLE_CC:
             #await ctx.send(f"Known CC commands: {', '.join(CC_CMDS.keys())} "
             await ctx.send(f"see {_GITHUB_DOC_BASE}bcfcc/bcfcc.md")
             return
-        # admin only command
+
+        # admin only commands
         if cmd == "clear" and auth_user:
             _CC_QUEUE.reset()
             return
+        elif cmd == "run_tests" and auth_user:
+            for cmd, args in bcfcc._TEST_SUITE.items():
+                task = CC_CMDS[cmd](user)
+                task._add_to_queue(_CC_QUEUE, *args)
+            return
+
         if cmd in CC_ADMIN_CMDS and not auth_user:
             await ctx.send(f"I'm sorry, @{user}, I can't do that...")
             return
