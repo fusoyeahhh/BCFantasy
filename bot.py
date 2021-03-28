@@ -1579,6 +1579,7 @@ if _ENABLE_CC:
         elif cmd == "run_tests" and auth_user:
             for cmd, args in bcfcc._TEST_SUITE.items():
                 task = CC_CMDS[cmd](user)
+                args = args or tuple()
                 task._add_to_queue(_CC_QUEUE, *args)
             return
 
