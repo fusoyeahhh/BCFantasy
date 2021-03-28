@@ -177,8 +177,9 @@ Costs: 100
 Set the name of the given *actor* index, e.g. Terra = 1.
 Note that the name will be truncated to 6 characters, and some special characters are not yet supported.
 
-Actor indices are: `Terra`, `Locke`, `Cyan`, `Shadow`, `Edgar`, `Sabin`, `Celes`,
-`Strago`, `Relm`, `Setzer`, `Mog`, `Gau`, `Gogo`, `Umaro`
+Actor indices are: 1 `Terra`, 2 `Locke`, 3 `Cyan`, 4 `Shadow`, 5 `Edgar`, 6 `Sabin`,
+7 `Celes`, 8 `Strago`, 9 `Relm`, 10 `Setzer`, 11 `Mog`, 12 `Gau`,
+13 `Gogo`, 14 `Umaro`
 
 Precondition: None
 
