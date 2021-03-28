@@ -419,7 +419,7 @@ class Remedy(CCCommand):
         return not is_dead
 
     def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args, state="battle")
+        super()._add_to_queue(queue, *args, state="battle", descr=f"{int(args[0]) + 1}")
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -479,7 +479,7 @@ class RandomStatus(SetStatus):
 
     def _add_to_queue(self, queue, *args):
         # the call to the property getter implicitly initializes it
-        super()._add_to_queue(queue, *args, descr=f"{self.status} {args[0]}")
+        super()._add_to_queue(queue, *args, descr=f"{self.status} {int(args[0]) + 1}")
 
     def __call__(self, slot, **kwargs):
         """
@@ -513,7 +513,7 @@ class Life1(CCCommand):
         return not is_dead
 
     def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args, state="battle")
+        super()._add_to_queue(queue, *args, state="battle", descr=f"{int(args[0]) + 1}")
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -554,7 +554,7 @@ class Life2(CCCommand):
         return not is_dead
 
     def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args, state="battle")
+        super()._add_to_queue(queue, *args, state="battle", descr=f"{int(args[0]) + 1}")
 
     def __call__(self, slot, *args, **kwargs):
         """
@@ -625,7 +625,7 @@ class SetStat(CCCommand):
         super().__init__(label="set_stat", cost=None, requestor=requestor, admin_only=True)
 
     def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args, state="battle")
+        super()._add_to_queue(queue, *args, state="battle", descr=f"{int(args[0]) + 1}")
 
     def __call__(self, stat, val, slot, **kwargs):
         """
@@ -781,7 +781,7 @@ class NullifyElement(CCCommand):
         self._toggle = True
 
     def _add_to_queue(self, queue, *args):
-        super()._add_to_queue(queue, *args, state="battle")
+        super()._add_to_queue(queue, *args, state="battle", descr=f"{args[0]}")
 
     def __call__(self, elem, **kwargs):
         """
