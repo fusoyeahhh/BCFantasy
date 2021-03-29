@@ -486,6 +486,7 @@ class RandomStatus(SetStatus):
         """
         !cc random_status [slot #: 1-4]
         Apply a random status from a preselected list to selected slot.
+        The game does enforce relic immunities which may invalidate this.
 
         Precondition: must be in battle, target must be valid and not dead
         """
