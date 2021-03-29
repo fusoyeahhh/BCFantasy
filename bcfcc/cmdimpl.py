@@ -608,7 +608,7 @@ class Life3(SetStatus):
         Precondition: must be in battle, target must be valid
         """
         logging.info(f"life_3 | slot {slot}")
-        return super().__call__("life_3", slot=slot, **kwargs)
+        return super().__call__("life3", slot=slot, **kwargs)
 
 def life_3(*args, **kwargs):
     """

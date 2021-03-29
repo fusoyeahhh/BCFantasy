@@ -1,7 +1,7 @@
 import time
 from bcfcc import activate_golem, add_gp
 from bcfcc.cmdimpl import AddGP, MoogleCharm, Remedy, RandomRelicEffect, MirrorButtons, GiveItem, \
-                          GiveRareRelic, GiveRareEquip, RandomStatus, CantRun
+                          GiveRareRelic, GiveRareEquip, RandomStatus, CantRun, Life3
 from bcfcc.queue import CCQueue
 
 if __name__ == '__main__':
@@ -36,6 +36,15 @@ if __name__ == '__main__':
     print("[CantRun] Checking can't run execution logic")
     req = CantRun("test")
     req._add_to_queue(ccq)
+    print(ccq.write())
+    ccq.check(game_state, ignore_completion=True)
+    print(ccq.write())
+    ccq.reset()
+
+    print("[Life3] Checking life_3 logic")
+    req = Life3("test")
+    inv = ccq.construct_game_context()["inv"]
+    req._add_to_queue(ccq, 1)
     print(ccq.write())
     ccq.check(game_state, ignore_completion=True)
     print(ccq.write())
