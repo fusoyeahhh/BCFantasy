@@ -25,7 +25,7 @@ def translate(word):
     :param word: list of integers to convert
     :return: string translation
     """
-    return "".join([_CHARS[i] for i in word])
+    return "".join([_CHARS.get(i, "?") for i in word])
 
 def transcode(word):
     """
