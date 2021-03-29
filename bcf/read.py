@@ -13,6 +13,7 @@ _CHARS.update({154 + i: chr(j) for i, j in enumerate(range(97, 97 + 26))})
 _CHARS.update({180 + i: chr(j) for i, j in enumerate(range(48, 48 + 10))})
 # FIXME: Will probably need symbols at some point
 _CHARS[191] = "?"
+_CHARS[197] = "."
 _CHARS[255] = ""
 
 def translate(word):
