@@ -219,7 +219,7 @@ def convert_buffer_to_commands(logf, **kwargs):
 
                 # This is the user-given names for the characters in the party
                 cparty = [s.lower() for s in status.get("cparty", [])]
-                logging.debug("Current party from status update: " + ", ".join(cparty))
+                logging.info("Current party from status update: " + ", ".join(cparty))
 
                 # Since the current party entries are indicated by the canonical names, we check this here before
                 # the names are translated
@@ -229,8 +229,10 @@ def convert_buffer_to_commands(logf, **kwargs):
                     if act.lower() in cparty:
                         in_cparty.append(act)
 
+                    logging.info(f"Pre-translate ({act}): " + status["party"][act])
                     # Translate the integer sequence to an ASCII string
                     status["party"][act] = read.translate(status["party"][act])
+                    logging.info(f"Post-translate ({act}): " + status["party"][act])
 
                 # Add parens around names of characters in the current party for easy identification
                 last_party = last_status.get("parsed_cparty", [])
