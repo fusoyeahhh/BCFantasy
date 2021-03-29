@@ -205,6 +205,7 @@ def convert_buffer_to_commands(logf, **kwargs):
             _in_battle = 1 < len(set(status["state"]) & {"0", "2", "4", "6", "255"}) <= 5
         if status["in_battle"] != _in_battle:
             logging.warning(f"Secondary state check differs from in_battle: {status['in_battle']} {_in_battle}")
+            status["in_battle"] = _in_battle
 
         # parse current party
         if "party" in status:
