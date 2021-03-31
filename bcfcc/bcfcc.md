@@ -116,7 +116,7 @@ Precondition: None
 Costs: 250
 ### nullify_element
 
-`!cc nullify_element [element]`
+`!cc null_elem [element]`
 
 Toggle a ForceField like effect (nullification) of the specified element.
 
