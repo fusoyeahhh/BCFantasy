@@ -1601,10 +1601,11 @@ if _ENABLE_CC:
 
         try:
             # Validate slot number and change to zero index
-            if cmd in {"set_name", "random_status", "remedy",
-                       "life_1", "life_2", "life_3",
-                       "power_overwhelming"}:
+            if cmd in {"random_status", "remedy", "power_overwhelming",
+                       "life_1", "life_2", "life_3"}:
                 args[-1] = bcfcc.cmdimpl._validate_slot(args[-1])
+            if cmd in {"set_name"}:
+                args[-1] = int(args[-1]) + 1
             if not task.precondition(*args, **_CC_QUEUE.construct_game_context()):
                 raise ValueError(f"Precondition with failed, args: {args}")
         except Exception as e:
