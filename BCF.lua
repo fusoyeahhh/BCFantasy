@@ -255,7 +255,7 @@ while true do
 		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
 		status = " killed by "
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255
-				and (curr_hp == 0 or is_wounded or is_zombied or is_petrified or final_kefka)
+				and (curr_hp == 0 or is_wounded or is_zombied or is_petrified)
 				and nenem_alive < enemies_alive then
 			status = status .. c_last_targetted
 
