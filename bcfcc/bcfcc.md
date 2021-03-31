@@ -134,6 +134,15 @@ Make the specified slot very strong for this battle.
 Precondition: must be in battle and target valid slot
 
 Costs: 250
+### power_underwhelming
+
+`!cc power_underwhelming [slot #: 1-4]`
+
+Make the specified slot very weak for this battle.
+
+Precondition: must be in battle and target valid slot
+
+Costs: 250
 ### random_status
 
 `!cc random_status [slot #: 1-4]`

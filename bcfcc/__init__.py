@@ -27,6 +27,7 @@ _TEST_SUITE = {
     "give_rare_relic": None,
     "give_rare_equip": None,
     "power_overwhelming": (4,),
+    "power_underwhelming": (4,),
 }
 
 class MemoryRegion(object):

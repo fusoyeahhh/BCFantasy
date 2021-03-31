@@ -35,6 +35,7 @@ BCFCC_COSTS = {
  'nullify_element': 50,
  'pick_fight': 50,
  'power_overwhelming': 250,
+ 'power_underwhelming': 250,
  'random_relic_effect': 50,
  'random_status': 100,
  'remedy': 50,
@@ -747,6 +748,52 @@ class PowerOverwhelming(SetStat):
         Precondition: must be in battle and target valid slot
         """
         logging.info(f"power_overwhelming | slot {slot}, kwargs {[*kwargs.keys()]}")
+        slot = int(slot)
+        if slot < 0 or slot >= 4:
+            raise IndexError(f"Invalid party slot {slot}.")
+
+        c = kwargs["party"][slot]
+        for stat, val in self._MAX_STATS.items():
+            c.change_stat(stat, int(val))
+
+        return self.write(*map(hex, c.flush()))
+
+class PowerUnderwhelming(SetStat):
+    _MIN_STATS = {
+        "level": 1,
+        "vigor": 1,
+        "stamina": 1,
+        # Where is this stored?
+        #"defense": 1,
+        "evade": 1,
+        "mblk": 1,
+        "magpwr": 1,
+        "speed": 1,
+        "cur_hp": 1,
+        "max_hp": 1,
+        "cur_mp": 1,
+        "max_mp": 1,
+    }
+    
+    def __init__(self, requestor):
+        super().__init__(requestor=requestor)
+        self.label = "power_underwhelming"
+        self.cost = BCFCC_COSTS.get(self.label, None)
+    
+    def precondition(self, *args, **kwargs):
+        # The latter conditions is disabled since this is potentially called
+        # outside of battle when the memory region would not be valid
+        # and this check can return false positives
+        return (0 <= int(args[0]) < 4)# and kwargs["party"][args[0]].max_hp > 0
+    
+    def __call__(self, slot, **kwargs):
+        """
+        !cc power_underwhelming [slot #: 1-4]
+        Make the specified slot very weak for this battle.
+
+        Precondition: must be in battle and target valid slot
+        """
+        logging.info(f"power_underwhelming | slot {slot}, kwargs {[*kwargs.keys()]}")
         slot = int(slot)
         if slot < 0 or slot >= 4:
             raise IndexError(f"Invalid party slot {slot}.")
