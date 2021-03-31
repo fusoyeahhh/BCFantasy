@@ -457,7 +457,7 @@ def remedy(*args, **kwargs):
     return write_arbitrary(*map(hex, c.flush()))
 
 class RandomStatus(SetStatus):
-    ALLOWED_STATUSES = list(ALL_STATUSES - UNUSABLE_STATUSES)
+    ALLOWED_STATUSES = list(ALL_STATUSES - UNUSABLE_STATUSES - {"wounded"})
 
     def __init__(self, requestor):
         super().__init__(requestor=requestor)
