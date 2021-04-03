@@ -87,12 +87,12 @@ while true do
 
 	map_change = bit.band(mainmemory.read_u16_le(0x1F64), 0x200 - 1)
 	map_change = map_change ~= map_id
-	final_kefka = memory.read_u8(0x9A)
 	map_id = bit.band(mainmemory.read_u16_le(0x1F64), 0x200 - 1)
 	area_id = mainmemory.read_u8(0x0520)
 	miab_id = mainmemory.read_u16_le(0x00D0)
 	eform_id = mainmemory.read_u16_le(0x11E0)
 	battle_type = mainmemory.read_u8(0x3EBC)
+	final_kefka = mainmemory.read_u8(0x9A) and in_battle
 
 	music_change = music_id
 	-- Music id detection, from Myriachan
@@ -404,7 +404,8 @@ while true do
         	    --mainmemory.read_u8(0x3A76) <= 4 --and mainmemory.read_u8(0x3A77) <= 6
 
 	--if in_battle or map_change then
-	if is_gameover or map_change or music_change or (prev_state ~= in_battle) or frame_counter % 600 == 0 then
+	if is_gameover or map_change or music_change or (prev_state ~= in_battle) or final_kefka
+			or frame_counter % 600 == 0 then
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
 		io.flush(logfile)
