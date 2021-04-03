@@ -6,8 +6,8 @@ pdeath = {}
 -- in_battle requires the number of enemies and characters alive to be greater
 -- than zero, and less than their allowed slot numbers (6 and 4 respectively).
 -- It's probably not perfect, but seems to work so far
-in_battle = memory.read_u8(0x3A76) > 0 and memory.read_u8(0x3A77) > 0
- 	    and memory.read_u8(0x3A76) <= 4 and memory.read_u8(0x3A77) <= 6
+in_battle = mainmemory.read_u8(0x3A76) > 0 and mainmemory.read_u8(0x3A77) > 0
+ 	    and mainmemory.read_u8(0x3A76) <= 4 and mainmemory.read_u8(0x3A77) <= 6
 enemies_alive = 0
 map_id = nil
 
@@ -75,31 +75,31 @@ while true do
 	emu.frameadvance()
 
 	prev_state = in_battle
-	in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
-			memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
+	in_battle = mainmemory.read_u8(0x3A76) > 0 and --mainmemory.read_u8(0x3A77) > 0 and
+			mainmemory.read_u8(0x3A76) <= 4 --and mainmemory.read_u8(0x3A77) <= 6
 	if prev_state ~= in_battle and in_battle then
-		enemies_alive = memory.read_u8(0x3A77)
+		enemies_alive = mainmemory.read_u8(0x3A77)
 		ekilled = {}
 		-- FIXME: Initialize this properly
 		wound = {}
 		cparty = {nil, nil, nil, nil}
 	end
 
-	map_change = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
+	map_change = bit.band(mainmemory.read_u16_le(0x1F64), 0x200 - 1)
 	map_change = map_change ~= map_id
-	map_id = bit.band(memory.read_u16_le(0x1F64), 0x200 - 1)
-	area_id = memory.read_u8(0x0520)
-	miab_id = memory.read_u16_le(0x00D0)
-	eform_id = memory.read_u16_le(0x11E0)
-	battle_type = memory.read_u8(0x3EBC)
 	final_kefka = memory.read_u8(0x9A)
+	map_id = bit.band(mainmemory.read_u16_le(0x1F64), 0x200 - 1)
+	area_id = mainmemory.read_u8(0x0520)
+	miab_id = mainmemory.read_u16_le(0x00D0)
+	eform_id = mainmemory.read_u16_le(0x11E0)
+	battle_type = mainmemory.read_u8(0x3EBC)
 
 	music_change = music_id
 	-- Music id detection, from Myriachan
 	-- "if 0x1304 is 0x10, 0x11, 0x14, or 0x15, then 0x1305 should contain a song ID."
-	mbit = memory.read_u8(0x1304)
+	mbit = mainmemory.read_u8(0x1304)
 	if mbit == 0x10 or mbit == 0x11 or mbit == 0x14 or mbit == 0x15 then
-		music_id = memory.read_u8(0x1305)
+		music_id = mainmemory.read_u8(0x1305)
 		music_change = music_change ~= music_id
 	else
 		music_id = -1
@@ -108,18 +108,18 @@ while true do
 	-- Game over detection
 	-- Another from Myria: "another way to identify game over is reading the 24-bit value at 0x00E5.
 	-- 0xCCE5C5 is one of the event script pointers for the game over script."
-	is_gameover = bit.band(memory.read_u32_le(0x00E5), 0xFFFFFF) == 0xCCE5C5
+	is_gameover = bit.band(mainmemory.read_u32_le(0x00E5), 0xFFFFFF) == 0xCCE5C5
 
 	-- MIAB detection, thanks to Myriachan
 	is_miab = miab_id == 0x0B90
 	-- clear miab flag
 	-- FIXME: Reenable after debug
 	--if is_miab then
-		--memory.write_u16_le(0x00D0, 0)
+		--mainmemory.write_u16_le(0x00D0, 0)
 	--end
 
 	-- Another from Myriachan
-	is_veldt = bit.band(memory.read_u8(0x11F9), 0x40) == 0x40
+	is_veldt = bit.band(mainmemory.read_u8(0x11F9), 0x40) == 0x40
 	is_veldt = is_veldt and (map_id == 0)
 
 	-- need to learn offsets relative to ASCII
@@ -133,11 +133,11 @@ while true do
 	--]]
 
 	-- next two work
-	nchar_alive = memory.read_u8(0x3A76)
-	nenem_alive = memory.read_u8(0x3A77)
+	nchar_alive = mainmemory.read_u8(0x3A76)
+	nenem_alive = mainmemory.read_u8(0x3A77)
 
 	-- appears to work, but only for party, not enemies
-	alive_mask = memory.read_u8(0x3A74)
+	alive_mask = mainmemory.read_u8(0x3A74)
 
 	if _HUD then
 		gui.text(20, 10, "in battle? " .. tostring(in_battle) .. " | eform id " .. eform_id .. " | is gameover " .. tostring(is_gameover) .. "(" .. tostring(is_miab) .. ")" .. " | map id " .. map_id .. " | music id " .. music_id)
@@ -148,17 +148,17 @@ while true do
 
 	-- $EBFF-$EC06 monster names (4 items, 2 bytes each)
 	-- must be pointers
-	e1_name = string.char(math.max(memory.read_u8(0xEBFF) - offset_lower, 0)) ..
-		  string.char(math.max(memory.read_u8(0xEC00) - offset_lower, 0))
+	e1_name = string.char(math.max(mainmemory.read_u8(0xEBFF) - offset_lower, 0)) ..
+		  string.char(math.max(mainmemory.read_u8(0xEC00) - offset_lower, 0))
 
     	-- $EC07-$EC0E number of monsters alive for each name (4 items, 2 bytes each)
-	e1_count = memory.read_u8(0xEC07)
+	e1_count = mainmemory.read_u8(0xEC07)
 	--gui.text(20, 70, "enemy slot 1: " .. e1_name .. " (" .. e1_count  .. ")")
 
 	-- map slot to actor
 	chars = {[0xFF] = "ERROR"}
 	for i,char in ipairs(_CHARS) do
-		cslot = memory.read_u8(0x3000 + i - 1)
+		cslot = mainmemory.read_u8(0x3000 + i - 1)
 		-- Strange mapping here
 		if cslot < 0xF then
 			chars[cslot] = char
@@ -192,17 +192,17 @@ while true do
 	-- TODO: short circuit all of this outside of battle
 	-- targetting 0x3290 - 0x3297 slots 1-4 (indicates "masks")
 	for i=0,3 do
-		c_last_targetted = memory.read_u8(0x3290 + i)
-		curr_hp = memory.read_u16_le(0x3BF4 + 2 * i)
-		slot_mask = memory.read_u16_le(0x3018 + 2 * i)
-		char_status_1 = memory.read_u16_le(0x2E98 + 2 * i)
+		c_last_targetted = mainmemory.read_u8(0x3290 + i)
+		curr_hp = mainmemory.read_u16_le(0x3BF4 + 2 * i)
+		slot_mask = mainmemory.read_u16_le(0x3018 + 2 * i)
+		char_status_1 = mainmemory.read_u16_le(0x2E98 + 2 * i)
 
 		char = "EMPTY?"
 		if chars[2 * i] ~= nil then
 			char = chars[2 * i]
 			cparty[i + 1] = char
 		end
-		slot_mask = bizstring.hex(memory.read_u16_le(0x3018 + 2 * i))
+		slot_mask = bizstring.hex(mainmemory.read_u16_le(0x3018 + 2 * i))
 
 		_wound = bit.band(char_status_1, bit.lshift(1, 7)) == 128
 		_petrify = bit.band(char_status_1, bit.lshift(1, 6)) == 64
@@ -233,13 +233,13 @@ while true do
 
 	-- 0x3298 monster slots 1-6? (indicates "masks")
 	for i=0,5 do
-		curr_hp = memory.read_u16_le(0x3BF4 + 8 + 2 * i)
-		_slot_mask = memory.read_u16_le(0x3020 + 2 * i)
-		slot_mask = bizstring.hex(memory.read_u16_le(0x3020 + 2 * i))
+		curr_hp = mainmemory.read_u16_le(0x3BF4 + 8 + 2 * i)
+		_slot_mask = mainmemory.read_u16_le(0x3020 + 2 * i)
+		slot_mask = bizstring.hex(mainmemory.read_u16_le(0x3020 + 2 * i))
 		status = ""
 
 		-- status reads
-		sbyte_1 = memory.read_u8(0x3EE4 + 8 + 2 * i)
+		sbyte_1 = mainmemory.read_u8(0x3EE4 + 8 + 2 * i)
 		is_wounded = bit.band(sbyte_1, 0x80)
 		is_petrified = bit.band(sbyte_1, 0x40)
 		is_zombied = bit.band(sbyte_1, 0x2)
@@ -252,7 +252,7 @@ while true do
 		-- 	* not have an invalid (read nil) character targetting us
 		-- 	* have curr_hp == 0 (this may not be sufficient)
 		-- 	* have less enemies alive than last time we checked
-		c_last_targetted = memory.read_u8(0x3298 + 2 * i)
+		c_last_targetted = mainmemory.read_u8(0x3298 + 2 * i)
 		status = " killed by "
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255
 				and (curr_hp == 0 or is_wounded or is_zombied or is_petrified)
@@ -371,8 +371,8 @@ while true do
 	-- party information
 	out_json = out_json .. ", \"party\": {"
 	for i=0,15 do
-		actor = memory.read_u8(0x1600 + i * 0x25)
-		name = memory.readbyterange(0x1602 + i * 0x25 - 1, 7)
+		actor = mainmemory.read_u8(0x1600 + i * 0x25)
+		name = mainmemory.readbyterange(0x1602 + i * 0x25 - 1, 7)
 		out_json = out_json .. "\"" .. actor .. "\": \""
 		for j,c in ipairs(name) do
 			out_json = out_json .. c .. " "
@@ -400,8 +400,8 @@ while true do
 	out_json = out_json .. "}" 
 
 	--prev_state = in_battle
-	--in_battle = memory.read_u8(0x3A76) > 0 and --memory.read_u8(0x3A77) > 0 and
-        	    --memory.read_u8(0x3A76) <= 4 --and memory.read_u8(0x3A77) <= 6
+	--in_battle = mainmemory.read_u8(0x3A76) > 0 and --mainmemory.read_u8(0x3A77) > 0 and
+        	    --mainmemory.read_u8(0x3A76) <= 4 --and mainmemory.read_u8(0x3A77) <= 6
 
 	--if in_battle or map_change then
 	if is_gameover or map_change or music_change or (prev_state ~= in_battle) or frame_counter % 600 == 0 then
