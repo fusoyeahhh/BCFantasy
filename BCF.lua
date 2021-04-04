@@ -66,7 +66,7 @@ logfile = io.open("logfile.txt", "w+")
 io.close(logfile)
 
 -- FIXME: remove this eventually
-_HUD = false
+_HUD = true
 
 -- Main loop
 while true do
