@@ -404,7 +404,7 @@ while true do
         	    --mainmemory.read_u8(0x3A76) <= 4 --and mainmemory.read_u8(0x3A77) <= 6
 
 	--if in_battle or map_change then
-	if is_gameover or map_change or music_change or (prev_state ~= in_battle) or final_kefka
+	if is_gameover or map_change or music_change or (prev_state ~= in_battle)-- or final_kefka
 			or frame_counter % 600 == 0 then
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
