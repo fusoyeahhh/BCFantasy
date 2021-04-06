@@ -85,7 +85,8 @@ while true do
 		cparty = {nil, nil, nil, nil}
 	end
 
-	if (eform_id ~= mainmemory.read_u16_le(0x11E0)) and in_battle then
+	if ((eform_id ~= mainmemory.read_u16_le(0x11E0)) and in_battle)
+		or (eform_id == 514 and mainmemory.read_u16_le(0x11E0) == 511) then
 		enemies_alive = mainmemory.read_u8(0x3A77)
 		ekilled = {}
 	end
