@@ -77,7 +77,7 @@ while true do
 	prev_state = in_battle
 	in_battle = mainmemory.read_u8(0x3A76) > 0 and --mainmemory.read_u8(0x3A77) > 0 and
 			mainmemory.read_u8(0x3A76) <= 4 --and mainmemory.read_u8(0x3A77) <= 6
-	if prev_state ~= in_battle and in_battle then
+	if (prev_state ~= in_battle) or (eform_id ~= mainmemory.read_u16_le(0x11E0)) and in_battle then
 		enemies_alive = mainmemory.read_u8(0x3A77)
 		ekilled = {}
 		-- FIXME: Initialize this properly
@@ -92,7 +92,7 @@ while true do
 	miab_id = mainmemory.read_u16_le(0x00D0)
 	eform_id = mainmemory.read_u16_le(0x11E0)
 	battle_type = mainmemory.read_u8(0x3EBC)
-	final_kefka = mainmemory.read_u8(0x9A) and eform_id == 511 and nenem_alive == 0
+	final_kefka = mainmemory.read_u8(0x9A) and eform_id == 511
 
 	music_change = music_id
 	-- Music id detection, from Myriachan
@@ -404,7 +404,8 @@ while true do
         	    --mainmemory.read_u8(0x3A76) <= 4 --and mainmemory.read_u8(0x3A77) <= 6
 
 	--if in_battle or map_change then
-	if is_gameover or map_change or music_change or (prev_state ~= in_battle) or final_kefka
+	if is_gameover or map_change or music_change or (prev_state ~= in_battle)
+			or (final_kefka and not in_battle)
 			or frame_counter % 600 == 0 then
 		logfile = io.open("logfile.txt", "a")
 		logfile:write(out_json .. "\n")
