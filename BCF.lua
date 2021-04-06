@@ -88,6 +88,7 @@ while true do
 	if ((eform_id ~= mainmemory.read_u16_le(0x11E0)) and in_battle)
 		or (eform_id == 514 and mainmemory.read_u16_le(0x11E0) == 511) then
 		enemies_alive = mainmemory.read_u8(0x3A77)
+		print("Formation updated, updating total enemies alive to " .. enemies_alive)
 		ekilled = {}
 	end
 
