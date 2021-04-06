@@ -77,12 +77,17 @@ while true do
 	prev_state = in_battle
 	in_battle = mainmemory.read_u8(0x3A76) > 0 and --mainmemory.read_u8(0x3A77) > 0 and
 			mainmemory.read_u8(0x3A76) <= 4 --and mainmemory.read_u8(0x3A77) <= 6
-	if (prev_state ~= in_battle) or (eform_id ~= mainmemory.read_u16_le(0x11E0)) and in_battle then
+	if (prev_state ~= in_battle) and in_battle then
 		enemies_alive = mainmemory.read_u8(0x3A77)
 		ekilled = {}
 		-- FIXME: Initialize this properly
 		wound = {}
 		cparty = {nil, nil, nil, nil}
+	end
+
+	if (eform_id ~= mainmemory.read_u16_le(0x11E0)) and in_battle then
+		enemies_alive = mainmemory.read_u8(0x3A77)
+		ekilled = {}
 	end
 
 	map_change = bit.band(mainmemory.read_u16_le(0x1F64), 0x200 - 1)
