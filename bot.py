@@ -912,6 +912,10 @@ async def sell(ctx):
 
     selection = ctx.content.lower().split(" ")[1:]
     cat = selection[0]
+    
+    if cat == "chat":
+        await ctx.send(f"HEY EVERYONE. @{user} IS TRYING TO SELL YOU AGAIN...")
+        return
 
     if cat not in _USERS[user]:
         await ctx.send(f"@{user}, you have no selection for {cat}.")
