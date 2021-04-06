@@ -92,7 +92,7 @@ while true do
 	miab_id = mainmemory.read_u16_le(0x00D0)
 	eform_id = mainmemory.read_u16_le(0x11E0)
 	battle_type = mainmemory.read_u8(0x3EBC)
-	final_kefka = mainmemory.read_u8(0x9A) and in_battle and eform_id == 511
+	final_kefka = mainmemory.read_u8(0x9A) and eform_id == 511 and nenem_alive == 0
 
 	music_change = music_id
 	-- Music id detection, from Myriachan
