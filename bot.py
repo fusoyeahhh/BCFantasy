@@ -176,9 +176,9 @@ async def _poll():
             bot._last_state_drop = mtime
             current_time = datetime.datetime.now().strftime("%H:%M:%S")
             mtime = datetime.datetime.fromtimestamp(mtime).strftime('%H:%M:%S')
-            print(f"{current_time}: New logfile update {mtime}")
+            logging.debug(f"{current_time}: New logfile update {mtime}")
             write_status()
-            print(f"{current_time}: Last state update {bot._last_state_drop}")
+            logging.debug(f"{current_time}: Last state update {bot._last_state_drop}")
             logging.debug("Serializing state...")
             serialize(pth=_CHKPT_DIR)
         await asyncio.sleep(1)
@@ -912,7 +912,7 @@ async def sell(ctx):
 
     selection = ctx.content.lower().split(" ")[1:]
     cat = selection[0]
-    
+
     if cat == "chat":
         await ctx.send(f"HEY EVERYONE. @{user} IS TRYING TO SELL YOU AGAIN...")
         return
