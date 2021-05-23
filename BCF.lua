@@ -265,6 +265,7 @@ while true do
 				and (curr_hp == 0 or is_wounded or is_zombied or is_petrified)
 				and nenem_alive < enemies_alive then
 			status = status .. c_last_targetted
+			print((curr_hp == 0) .. " " .. is_wounded .. " " .. is_zombied .. " " .. is_petrified)
 
 			-- Attribute kill to the last character that targetted this
 			if c_last_targetted ~= nil then
