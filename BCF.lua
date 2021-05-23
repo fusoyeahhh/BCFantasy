@@ -247,9 +247,9 @@ while true do
 
 		-- status reads
 		sbyte_1 = mainmemory.read_u8(0x3EE4 + 8 + 2 * i)
-		is_wounded = bit.band(sbyte_1, 0x80)
-		is_petrified = bit.band(sbyte_1, 0x40)
-		is_zombied = bit.band(sbyte_1, 0x2)
+		is_wounded = bit.band(sbyte_1, 0x80) == 0x80
+		is_petrified = bit.band(sbyte_1, 0x40) == 0x40
+		is_zombied = bit.band(sbyte_1, 0x2) == 0x2
 		sbyte_1 = bizstring.binary(sbyte_1)
 
 		-- Determine who killed this monster
@@ -262,10 +262,9 @@ while true do
 		c_last_targetted = mainmemory.read_u8(0x3298 + 2 * i)
 		status = " killed by "
 		if in_battle and _slot_mask ~= 255 and c_last_targetted ~= 255
-				and (curr_hp == 0 or is_wounded or is_zombied or is_petrified)
+				and ((curr_hp == 0) or is_wounded or is_zombied or is_petrified)
 				and nenem_alive < enemies_alive then
 			status = status .. c_last_targetted
-			print(tostring(curr_hp == 0) .. " " .. tostring(is_wounded) .. " " .. tostring(is_zombied) .. " " .. tostring(is_petrified))
 
 			-- Attribute kill to the last character that targetted this
 			if c_last_targetted ~= nil then
