@@ -130,7 +130,7 @@ def read_spoiler(spoilerf):
         line = lines.pop(0)
     lines = lines[2:]
 
-    music_map = []
+    music_map, sid = [], 0
     while True:
         # Mapping information for a single song
         _map = {}
@@ -143,23 +143,35 @@ def read_spoiler(spoilerf):
 
         line, mapped = line.split("->")
         mapped = mapped.strip()
-        sid, mapping = map(str.strip, line.split(":"))
-        # Integer song ID (hex)
-        _map["song_id"] = int(sid, 16)
+
+        # FIXME: remove when completely switched to new style spoilers
+        try:
+            sid, mapping = map(str.strip, line.split(":"))
+            # Integer song ID (hex)
+            _map["song_id"] = int(sid, 16)
+        except ValueError as e:
+            # FIXME: new spoiler does not have song id mapping
+            mapping = line.strip()
+
+            # FIXME: new spoiler has song name on new line
+            _map["descr"] = lines.pop(0).strip()
+            _map["song_id"] = sid
+            sid += 1
+
         # New song name
         _map["new"] = mapped
         # Original song name
         _map["orig"] = mapping
 
         # Song arranger / composer information
-        line = lines.pop(0).strip()
-        _map["descr"] = line
+        _map["descr"] += " | " + lines.pop(0).strip()
 
         # If there is no additional information do not generate a description
         if line == "":
             continue
 
         _map["descr"] += " | " + lines.pop(0).strip()
+
         # Skip blank line
         lines.pop(0)
 
