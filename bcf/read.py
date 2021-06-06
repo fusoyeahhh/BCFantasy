@@ -87,7 +87,7 @@ def read_spoiler(spoilerf):
         lines = fout.readlines()
 
     # Get seed
-    _, _, flags, seed = lines[0].split()[-1].strip().split(".")
+    _, _, flags, seed = lines[0].split(".")
 
     # Skip to characters section
     line = lines.pop(0)
