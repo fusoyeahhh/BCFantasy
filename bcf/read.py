@@ -152,7 +152,7 @@ def read_spoiler(spoilerf):
         # Original song name
         _map["orig"] = mapping
 
-        _map["descr"] = " | " + lines.pop(0).strip()
+        _map["descr"] = lines.pop(0).strip()
 
         # Song composer / arranger information
         line = lines.pop(0).strip()
