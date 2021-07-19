@@ -145,8 +145,8 @@ def read_spoiler(spoilerf):
         line, mapped = line.split("->")
         mapped = mapped.strip()
         sid, mapping = map(str.strip, line.split("."))
-        # Integer song ID (hex)
-        _map["song_id"] = int(sid, 16)
+        # Integer song ID
+        _map["song_id"] = int(sid)
         # New song name
         _map["new"] = mapped
         # Original song name
