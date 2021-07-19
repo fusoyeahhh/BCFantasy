@@ -58,7 +58,7 @@ else:
 # If the flags are listed in the configuration file, they override all else
 _FLAGS = opts.pop("flags", _FLAGS)
 # Same for seed
-_SEED = opts.pop("seed", _SEED).strip()
+_SEED = opts.pop("seed", _SEED)
 # Season label is used for archival and tracking purposes
 _SEASON_LABEL = opts.pop("season", None)
 # Where we keep our checkpointed user and game data

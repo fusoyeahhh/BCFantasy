@@ -88,6 +88,7 @@ def read_spoiler(spoilerf):
 
     # Get seed
     _, _, flags, seed = lines[0].split(".")
+    seed = seed.strip()
 
     # Skip to characters section
     line = lines.pop(0)
@@ -141,7 +142,6 @@ def read_spoiler(spoilerf):
         if "->" not in line:
             break
 
-        print(line)
         line, mapped = line.split("->")
         mapped = mapped.strip()
         sid, mapping = map(str.strip, line.split("."))
