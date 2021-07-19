@@ -141,9 +141,10 @@ def read_spoiler(spoilerf):
         if "->" not in line:
             break
 
+        print(line)
         line, mapped = line.split("->")
         mapped = mapped.strip()
-        sid, mapping = map(str.strip, line.split(":"))
+        sid, mapping = map(str.strip, line.split("."))
         # Integer song ID (hex)
         _map["song_id"] = int(sid, 16)
         # New song name
@@ -151,15 +152,22 @@ def read_spoiler(spoilerf):
         # Original song name
         _map["orig"] = mapping
 
-        # Song arranger / composer information
-        line = lines.pop(0).strip()
-        _map["descr"] = line
+        _map["descr"] = " | " + lines.pop(0).strip()
 
-        # If there is no additional information do not generate a description
-        if line == "":
+        # Song composer / arranger information
+        line = lines.pop(0).strip()
+        _map["descr"] += " | " + line
+        line = lines.pop(0).strip()
+        _map["descr"] += " | " + line
+
+        # If there is no additional information, continue to next entry
+        if lines[0].strip() == "":
             continue
 
-        _map["descr"] += " | " + lines.pop(0).strip()
+        # Jukebox title
+        line = lines.pop(0).strip()
+        _map["descr"] += " " + line
+
         # Skip blank line
         lines.pop(0)
 
