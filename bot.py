@@ -754,6 +754,10 @@ async def event_message(ctx):
 async def hi(ctx):
     await ctx.send("/me Hi. I'm BC Fantasy Bot. You may remember me from such seeds as the dumpster fire from last time and OHGODNOTHATCLOCKNOOOOOOO.")
 
+@bot.command(name='summon')
+async def summon(ctx):
+    await ctx.send("/me Insufficient MP.")
+
 #
 # User-based commands
 #
