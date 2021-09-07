@@ -537,7 +537,7 @@ def serialize(pth="./", reset=False, archive=None, season_update=False):
     # Create the serialization directory if it doesn't already exist
     if not os.path.exists(pth):
         logging.info(f"Creating serialization path {pth}")
-        os.makedirs(pth)
+        os.makedirs(pth.strip())
 
     # Save the current history to a JSON file in the serialization path
     logging.debug(f"Serializing path {pth}/history.json")
