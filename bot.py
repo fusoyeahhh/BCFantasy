@@ -976,8 +976,8 @@ async def buy(ctx):
                 return
             cost = info.set_index(lookup).loc[item]["Cost"]
 
-            if cat in _CONTEXT and _CONTEXT[cat] == item:
-                await ctx.send(f"@{user}: you cannot buy the current area / boss.")
+            if cat == "boss" and cat in _CONTEXT and _CONTEXT[cat] == item:
+                await ctx.send(f"@{user}: you cannot buy the current boss.")
                 return
 
             _user = _USERS[user]
