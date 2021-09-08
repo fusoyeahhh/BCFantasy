@@ -1018,6 +1018,49 @@ async def buy(ctx):
     await ctx.send(f"Sorry @{user}, that didn't work.")
 COMMANDS["buy"] = buy
 
+@bot.command(name='bet')
+async def bet(ctx):
+    """
+    !bet [boss|area] (value) bet that the next boss / area will cause a game over
+    """
+    user = ctx.author.name
+    if user not in _USERS:
+        await ctx.send(f"@{user}, you are not registered, use !register first.")
+        return
+
+    try:
+        selection = " ".join(ctx.content.lower().split(" ")[1:])
+        cat, value = selection.split(" ")
+        cat = cat.lower()
+    except Exception as e:
+        logging.error("Couldn't process bet:\n" + str(e))
+        await ctx.send(f"Sorry @{user}, that didn't work.")
+        return
+
+    is_boss = bot._last_status.get("eform_id", None) in set(_BOSS_INFO["Id"].values)
+    if cat == "boss" and bot._last_status["in_battle"] and is_boss:
+        await ctx.send(f"@{user}: you cannot bet on the current boss.")
+        return
+
+    _user = _USERS[user]
+    if value <= _user["score"]:
+        # FIXME: disallow if in area/boss
+        _user["score"] -= int(value)
+    else:
+        await ctx.send(f"@{user}: insufficient funds.")
+        return
+
+    if cat == "boss":
+        _user["bet_boss"] = int(value)
+    elif cat == "area":
+        _user["bet_area"] = int(value)
+    #elif cat not in {"boss", "area"}:
+    else:
+        await ctx.send(f"@{user}, valid bets are on 'area' or 'boss'")
+        return
+
+COMMANDS["bet"] = bet
+
 #
 # Context commands
 #

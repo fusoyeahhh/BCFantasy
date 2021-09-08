@@ -189,6 +189,14 @@ def handle_event(gamestate, event, *args):
                     logging.error(f"Failed lookup for {cat}: " + str(e))
                 continue
 
+            # Pay out bets
+            if event in "gameover" and sel.get("bet_area", False):
+                sel["score"] += sel.get["bet_area"] * 2
+                del sel["bet_area"]
+            if event in "bgameover" and sel.get("bet_boss", False):
+                sel["score"] += sel.get["bet_boss"] * 2
+                del sel["bet_boss"]
+
             _score = sel["score"]
             # FIXME, just map to appropriate column in row
             if event in {"gameover", "bgameover"} and has_item:
