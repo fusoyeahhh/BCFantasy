@@ -1058,8 +1058,34 @@ async def bet(ctx):
     else:
         await ctx.send(f"@{user}, valid bets are on 'area' or 'boss'")
         return
-
 COMMANDS["bet"] = bet
+
+@bot.command(name='listbets')
+async def list_bets(ctx):
+    """
+    !listbets list current user bets
+    """
+
+    user = ctx.author.name
+    if _authenticate(ctx):
+        bets = {}
+        for name, _user in _USERS.items():
+            bets.update({name + " " + b: _user[b]
+                         for b in ["bet_boss", "bet_area"] if b in _user[b]})
+    elif user not in _USERS:
+        await ctx.send(f"@{user}, you are not registered, use !register first.")
+        return
+    else:
+        _user = _USERS[user]
+        bets = {b: _user[b] for b in ["bet_boss", "bet_area"] if b in _user[b]}
+
+    if len(bets) == 0:
+        await ctx.send(f"@{user}: no current bets")
+        return
+
+    bets = [f"{b}: {v}" for b, v in bets.items()]
+    await ctx.send(f"@{user}, current bets: " + " | ".join(bets))
+COMMANDS["listbets"] = list_bets
 
 #
 # Context commands
