@@ -29,7 +29,7 @@ id,name,scoring_area
 0x1f,DUMMIED - Chocobo Stable,
 0x20,Narshe Outside,Narshe (WoR)
 0x21,"Narshe, Outside, North (WOR)",Narshe (WoR)
-0x22,"Narshe, Outside, Battlefield (WOR)",Narshe Ice Fields
+0x22,Narshe Ice Fields WoR,Narshe Ice Fields
 0x23,"Narshe, Outside, Northern Cliff (WOR)",Narshe Ice Fields
 0x24,"Narshe, Mines Cart Rail Rooms (WOR)",Narshe (WoR)
 0x25,"Narshe, Mines Battle Room (WOR)",Narshe (WoR)
@@ -305,7 +305,7 @@ id,name,scoring_area
 0x5c,Cave to Figaro Castle Room 1,South Figaro Cave
 0x5d,Sabin's House Outside,Towns
 0x5f,Mt. Kolts Entrance,Mt. Kolts
-0x63,DUMMIED,
+0x63,Fanatic's Tower Floor 4,Fanatic's Tower
 0x65,Mt. Kolts Exit Area,Mt. Kolts
 0x66,Mt. Kolts Cliffs Outside Areas 2,Mt. Kolts
 0x67,Mt. Kolts Save Point Cave,Mt. Kolts
