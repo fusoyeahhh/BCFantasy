@@ -12,11 +12,19 @@ _CHARS.update({154 + i: chr(j) for i, j in enumerate(range(97, 97 + 26))})
 # Numbers
 _CHARS.update({180 + i: chr(j) for i, j in enumerate(range(48, 48 + 10))})
 # FIXME: Will probably need symbols at some point
+_CHARS[190] = "!"
 _CHARS[191] = "?"
+_CHARS[193] = ":"
+_CHARS[195] = "'"
+_CHARS[196] = "-"
 _CHARS[197] = "."
+_CHARS[198] = ","
+_CHARS[0xd3] = "["
+_CHARS[0xc2] = "]"
+_CHARS[199] = "..." # ellipsis character
 _CHARS[255] = ""
 
-def translate(word):
+def translate(word, batt_msg=False):
     """
     Translate integer values to the FF6 character equivalents. Drops any value which does not have a character mapping.
 
@@ -25,6 +33,20 @@ def translate(word):
     :param word: list of integers to convert
     :return: string translation
     """
+    if batt_msg:
+        # terminator sequence
+        trns = word.replace(b'\x05\x00', b'|')
+        # newline
+        trns = trns.replace(b'\x05\x01', b'\n')
+        trns = trns.replace(b'\x05', b'\x01') # could actually be \x05\xff not sure
+        chars = _CHARS.copy()
+        # 0xFF is space in this scheme
+        chars[255] = " "
+        chars[124] = "|"
+        chars[10] = "\n"
+        chars[1] = "" # not sure what this is, some type of control character
+        return "".join([chars.get(i, "=") for i in trns])
+
     return "".join([_CHARS.get(i, "?") for i in word])
 
 def transcode(word):
