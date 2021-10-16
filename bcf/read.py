@@ -151,7 +151,8 @@ def read_spoiler(spoilerf):
     while "AESTHETICS" not in line:
         line = lines.pop(0)
     lines = lines[2:]
-    
+
+    # Opera character information
     opera = {}
     line = lines.pop(0)
     while line.strip() != "":
@@ -159,15 +160,20 @@ def read_spoiler(spoilerf):
         if "Opera" in line:
             opera[orig_char.replace("Opera", "").strip()] = new_char.strip()
         else:
-            char_map.append({"cname": "", "orig": orig_char.strip(), "appearance": new_char.strip()})
+            char_map.append({"cname": "",
+                             "orig": orig_char.strip().lower(),
+                             "appearance": new_char.strip()})
         line = lines.pop(0)
 
+    # Add an entry for the opera itself
     opera = " | ".join([f"{k} -> {v}" for k, v in opera.items()])
     char_map.append({"cname": "Opera", "orig": "opera", "appearance": opera})
-    
+
+    # Other NPCs
     line = lines.pop(0)
     while line.strip() != "":
         orig_char, new_char = [s.strip() for s in line.split(":")]
+        orig_char = orig_char.lower()
         if orig_char not in {c["orig"] for c in char_map}:
             char_map.append({"cname": "", "orig": orig_char, "appearance": new_char})
         line = lines.pop(0)    
