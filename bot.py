@@ -40,6 +40,7 @@ _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/
 MUSIC_INFO, CHAR_MAP = {}, {}
 _FLAGS, _SEED = None, None
 _SPOILER_LOG = opts.pop("spoiler", None)
+_REMONSTRATE_LOG = opts.pop("remonstrate", None)
 
 if _SPOILER_LOG and os.path.isdir(_SPOILER_LOG):
     try:
@@ -54,6 +55,11 @@ if _SPOILER_LOG and os.path.exists(_SPOILER_LOG):
     CHAR_MAP = pandas.DataFrame(cmaps).dropna()
 else:
     logging.warning(f"Path to spoiler log is not valid and was not read: {_SPOILER_LOG}")
+
+if _REMONSTRATE_LOG and os.path.exists(_REMONSTRATE_LOG):
+    REMONSTRATE_MAP = pandas.DataFrame(read.read_spoiler(_REMONSTRATE_LOG))
+else:
+    logging.warning(f"Path to remonstrate log is not valid and was not read: {_SPOILER_LOG}")
 
 # If the flags are listed in the configuration file, they override all else
 _FLAGS = opts.pop("flags", _FLAGS)
@@ -829,9 +835,14 @@ async def sprite(ctx):
                                     joiner=' '):
             await ctx.send(outstr)
 
-    orig = cmds[1].strip().lower()
-    logging.debug(f"Querying character sprite, argument {orig}")
-    char = CHAR_MAP.loc[CHAR_MAP["orig"] == orig]
+    if cmds[1] == "enemy":
+        orig = cmds[-1].strip().lower()
+        logging.debug(f"Querying monster sprite, argument {orig}")
+        char = REMONSTRATE_MAP.loc[REMONSTRATE_MAP["enemy_id"].str == orig]
+    else:
+        orig = cmds[1].strip().lower()
+        logging.debug(f"Querying character sprite, argument {orig}")
+        char = CHAR_MAP.loc[CHAR_MAP["orig"] == orig]
 
     if len(char) != 1:
         logging.error(f"Problem finding {orig}")
@@ -839,7 +850,10 @@ async def sprite(ctx):
         return
 
     char = char.iloc[0]
-    await ctx.send(f"{char['orig']} -> {char['cname']} | {char['appearance']}")
+    if cmds[1] == "enemy":
+        await ctx.send(f"{char['enemy_id']} -> {char['sprite']}")
+    else:
+        await ctx.send(f"{char['orig']} -> {char['cname']} | {char['appearance']}")
 COMMANDS["sprite"] = sprite
 
 @bot.command(name='register')
