@@ -226,6 +226,18 @@ def read_spoiler(spoilerf):
 
     return flags, seed, (music_map, char_map)
 
+def read_remonstrate(fname):
+    with open(fname) as fout:
+        lines = fout.readlines()
+
+    # Drop header
+    lines = lines[2:]
+
+    return {
+        "enemy_id": [int(line[:3], base=16) for line in lines],
+        "sprite": [line[4:].replace("/", " | ").strip().replace(".png", "")
+                                                                for line in lines]
+    }
 
 def read_memory(fname="memfile", ntries=3):
     """
