@@ -1048,12 +1048,8 @@ async def listareas(ctx):
         for outstr in _chunk_string(info):
             await ctx.send(outstr)
         return
-
-    # Users get a link to the list so as not to spam chat
-    await ctx.send("Use !bcfinfo, please. This command will go away soon.")
-    await ctx.send(f"{_GITHUB_DOC_BASE}data/bc_fantasy_data_areas.csv")
     return
-COMMANDS["listareas"] = listareas
+#COMMANDS["listareas"] = listareas
 
 @bot.command(name='areainfo')
 async def areainfo(ctx):
@@ -1106,11 +1102,8 @@ async def listbosses(ctx):
         for outstr in _chunk_string(info):
             await ctx.send(outstr)
         return
-
-    await ctx.send("Use !bcfinfo, please. This command will go away soon.")
-    await ctx.send(f"{_GITHUB_DOC_BASE}data/bc_fantasy_data_bosses.csv")
     return
-COMMANDS["listbosses"] = listbosses
+#COMMANDS["listbosses"] = listbosses
 
 @bot.command(name='bossinfo')
 async def bossinfo(ctx):
@@ -1134,11 +1127,8 @@ async def listchars(ctx):
         for outstr in _chunk_string(info):
             await ctx.send(outstr)
         return
-
-    await ctx.send("Use !bcfinfo, please. This command will go away soon.")
-    await ctx.send(f"{_GITHUB_DOC_BASE}data/bc_fantasy_data_areas.csv")
     return
-COMMANDS["listchars"] = listchars
+#COMMANDS["listchars"] = listchars
 
 @bot.command(name='charinfo')
 async def charinfo(ctx):
