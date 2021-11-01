@@ -844,7 +844,7 @@ async def sprite(ctx):
     if cmds[1] == "enemy":
         orig = cmds[-1].strip().lower()
         logging.debug(f"Querying monster sprite, argument {orig}")
-        char = REMONSTRATE_MAP.loc[REMONSTRATE_MAP["enemy_id"].str == orig]
+        char = REMONSTRATE_MAP.loc[REMONSTRATE_MAP["enemy_id"].astype(str) == orig]
     else:
         orig = cmds[1].strip().lower()
         logging.debug(f"Querying character sprite, argument {orig}")
