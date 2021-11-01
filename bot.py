@@ -40,7 +40,7 @@ _GITHUB_DOC_BASE = opts.pop("doc_url", "https://github.com/fusoyeahhh/BCFantasy/
 MUSIC_INFO, CHAR_MAP = {}, {}
 _FLAGS, _SEED = None, None
 _SPOILER_LOG = opts.pop("spoiler", None)
-_REMONSTRATE_LOG = opts.pop("remonstrate", None)
+_REMONSTRATE_LOG = opts.pop("remonsterate", None)
 
 if _SPOILER_LOG and os.path.isdir(_SPOILER_LOG):
     try:
@@ -55,6 +55,12 @@ if _SPOILER_LOG and os.path.exists(_SPOILER_LOG):
     CHAR_MAP = pandas.DataFrame(cmaps).dropna()
 else:
     logging.warning(f"Path to spoiler log is not valid and was not read: {_SPOILER_LOG}")
+
+if _REMONSTRATE_LOG and os.path.isdir(_REMONSTRATE_LOG):
+    try:
+        _REMONSTRATE_LOG = glob.glob(os.path.join(_SPOILER_LOG, "*.txt"))[0]
+    except IndexError:
+        logging.warning(f"Directory of remonstrate log is not valid, no texts found: {_REMONSTRATE_LOG}")
 
 if _REMONSTRATE_LOG and os.path.exists(_REMONSTRATE_LOG):
     REMONSTRATE_MAP = pandas.DataFrame(read.read_remonstrate(_REMONSTRATE_LOG))
