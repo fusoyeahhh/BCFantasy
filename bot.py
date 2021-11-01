@@ -58,7 +58,7 @@ else:
 
 if _REMONSTRATE_LOG and os.path.isdir(_REMONSTRATE_LOG):
     try:
-        _REMONSTRATE_LOG = glob.glob(os.path.join(_SPOILER_LOG, "*.txt"))[0]
+        _REMONSTRATE_LOG = glob.glob(os.path.join(_REMONSTRATE_LOG, "*.txt"))[0]
     except IndexError:
         logging.warning(f"Directory of remonstrate log is not valid, no texts found: {_REMONSTRATE_LOG}")
 
