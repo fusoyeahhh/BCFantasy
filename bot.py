@@ -57,7 +57,7 @@ else:
     logging.warning(f"Path to spoiler log is not valid and was not read: {_SPOILER_LOG}")
 
 if _REMONSTRATE_LOG and os.path.exists(_REMONSTRATE_LOG):
-    REMONSTRATE_MAP = pandas.DataFrame(read.read_spoiler(_REMONSTRATE_LOG))
+    REMONSTRATE_MAP = pandas.DataFrame(read.read_remonstrate(_REMONSTRATE_LOG))
 else:
     logging.warning(f"Path to remonstrate log is not valid and was not read: {_SPOILER_LOG}")
 
