@@ -65,7 +65,7 @@ if _REMONSTRATE_LOG and os.path.isdir(_REMONSTRATE_LOG):
 if _REMONSTRATE_LOG and os.path.exists(_REMONSTRATE_LOG):
     REMONSTRATE_MAP = pandas.DataFrame(read.read_remonstrate(_REMONSTRATE_LOG))
 else:
-    logging.warning(f"Path to remonstrate log is not valid and was not read: {_SPOILER_LOG}")
+    logging.warning(f"Path to remonstrate log is not valid and was not read: {_REMONSTRATE_LOG}")
 
 # If the flags are listed in the configuration file, they override all else
 _FLAGS = opts.pop("flags", _FLAGS)
