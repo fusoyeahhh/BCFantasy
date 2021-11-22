@@ -235,7 +235,7 @@ def read_remonstrate(fname):
 
     return {
         "enemy_id": [int(line[:3], base=16) for line in lines],
-        "sprite": [line[4:].replace("/", " | ").strip().replace(".png", "")
+        "sprite": [line[4:].replace("/", " | ").strip().replace(".png", "").replace(".PNG", "")
                                                                 for line in lines]
     }
 
